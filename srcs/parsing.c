@@ -57,7 +57,7 @@ void		get_object(t_object *object, t_json *json)
 //}
 
 
-int create_object(t_json *object, char *str, int i)
+int			create_object(t_json *object, char *str, int i)
 {
 	int		j;
 	t_json *tmp;
@@ -99,15 +99,12 @@ int create_object(t_json *object, char *str, int i)
 	return (i + 1);
 }
 
-int	parsing(t_object *object, char *src_file)
+int			parsing(t_object *object, char *src_file)
 {
 	t_parsing p;
 
 	if ((p.fd = open(src_file, O_RDONLY)) < 0)
-	{
-		perror(src_file);
-		exit (1);
-	}
+		ft_kill("This file doesn't exist or bad typography.");
 	p.j = 0;
 	while ((p.i = read(p.fd, p.buff, BUF_SIZ)) != 0)
 	{

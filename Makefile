@@ -30,6 +30,7 @@ SRCS		= 	srcs/main.c \
 				srcs/torus.c \
 				srcs/math_tools.c \
 				srcs/parsing_tools.c \
+				srcs/errors.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 
@@ -45,31 +46,27 @@ MLX			= 	./minilibx_macos/libmlx.a
 MLXINC		= 	-I./minilibx_macos/
 MLXLINK		= 	-L./minilibx_macos -framework OpenGL -framework AppKit -Iminilibx_macos
 
-.SILENT:
-
 all:		$(NAME)
 
-$(NAME): 	$(OBJS)
-			make -C ./libft
-			make -C ./minilibx_macos
-			$(CC) $(CFLAGS) $(INC) $(LIBFT) $(LIBFTLINK) $(MLXLINK) $(MLX) -o $@ $^
-			echo "\033[92m\n---> RTv1 program created ✓\n\033[0m"
+$(NAME):	$(OBJS)
+			@ make -C ./libft
+			@ $(CC) $(CFLAGS) $(INC) $(LIBFT) $(LIBFTLINK) $(MLXLINK) $(MLX) -o $@ $^
+			@ echo "\n\033[1;33m---> Libft created\033[0m \033[92m✓\033[0m"
+			@ echo "\n\033[92m---> RTv1 program created ✓\033[0m"
 
 objs/%.o: 	srcs/%.c
-			mkdir -p objs
-		 	$(CC) $(CFLAGS) $(INC) $(LIBFTINC) $(MLXINC) -c $< -o $@
+			@ mkdir -p objs
+		 	@ $(CC) $(CFLAGS) $(INC) $(LIBFTINC) $(MLXINC) -c $< -o $@
 
 clean:		
-			/bin/rm -rf objs/
-			make -C libft/ clean
-			make -C minilibx_macos/ clean
-			echo "\033[1;33m\n---> All .o files cleared\033[0m \033[92m✓\n\033[0m"
+			@ /bin/rm -rf objs/
+			@ make -C libft/ clean
+			@ echo "\033[1;33m---> All .o files cleared\033[0m \033[92m✓\033[0m"
 
 fclean:		clean
-			/bin/rm -f $(NAME)
-			make -C libft/ fclean
-			echo "\033[1;33m---> Everything cleared\033[2;00m \033[92m✓\n\033[0m"
-
+			@ /bin/rm -f $(NAME)
+			@ make -C libft/ fclean
+			@ echo "\n\033[1;33m---> Everything cleared\033[2;00m \033[92m✓\033[0m"
 re : fclean all
 
-.PHONY: all, clean, fclean, re
+.PHONY: clean, fclean, re

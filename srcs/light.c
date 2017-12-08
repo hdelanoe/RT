@@ -38,7 +38,8 @@ void			create_light(t_object *object, t_json *json)
 	{
 		light = (t_light*)ft_memalloc(sizeof(t_light));
 		tmp = json->member->member;
-		light->origin = set_vector(ft_atod(tmp->member->content), ft_atod(tmp->member->next->content), ft_atod(tmp->member->next->next->content));
+		light->origin = set_vector(ft_atod(tmp->member->content),
+		ft_atod(tmp->member->next->content), ft_atod(tmp->member->next->next->content));
 		tmp = tmp->next;	
 		light->color = set_color(ft_atod(tmp->member->content), ft_atod(tmp->member->next->content), ft_atod(tmp->member->next->next->content));
 //		tmp = tmp->next;
