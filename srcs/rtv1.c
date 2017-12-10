@@ -82,7 +82,7 @@ void	get_intersection(t_datas *d, t_mlx *mlx, int x, int y, t_object *object)
 	t_cone		*tmp_cone;
 	t_plane		*tmp_plane;
 	t_torus		*tmp_torus;
-	int reflect = 0;
+	double reflect = 0;
 
 	d->current_origin = d->camera.origin;
 	d->current_rayon = d->camera.rayon;
@@ -201,30 +201,29 @@ void	get_intersection(t_datas *d, t_mlx *mlx, int x, int y, t_object *object)
 	if (printable == 1)
 	{
 		t_color c = set_color(0, 0, 0); 
+		t_vector view_rayon = d->current_rayon;
+		t_vector node_normal = d->current_node_normal;
+		t_vector node = d->current_node;
+
 		get_light(d, object);
 		if (reflect)
 		{
+			d->id_plane = -1;
 			c = d->color_finale;
 
-	//		t_vector e = v_double_mult(&d->current_rayon, -1);
-			reflect =  dot_product(&d->current_rayon, &d->current_node_normal);
-			t_vector tmp = v_double_mult(&d->current_node_normal, 2.0 * reflect);
-	//		printf("x %f y %f z %f\n", d->current_node_normal.x, d->current_node_normal.y, d->current_node_normal.z);
-			t_vector r = v_double_mult(&tmp, reflect);
-			r = v_v_subs(&d->current_rayon, &tmp);
-
-
-	//		reflect =  dot_product(&d->current_rayon, &d->current_node_normal);
-	//		t_vector tmp = v_double_mult(&d->current_node_normal, reflect);
-	//		tmp = v_double_mult(&tmp, 2);
-	//		t_vector r = v_v_subs(&tmp, &d->current_rayon);
+	
+			reflect = dot_product(&view_rayon, &node_normal);
+			t_vector tmp = v_double_mult(&node_normal, 2);
+			tmp = v_double_mult(&tmp, reflect);
+			t_vector r = v_v_subs(&view_rayon, &tmp);
 
 			t_vector tmp2 = d->camera.rayon;
-			d->camera.rayon = r;
-
 			tmp = d->camera.origin;
-			d->camera.origin = d->current_node;
-	//		printf("x %f y %f z %f \n", d->camera.origin.x, d->camera.origin.y, d->camera.origin.z);
+
+			d->camera.rayon = r;
+			t_vector tmp3 = v_double_mult(&r, 0.001);
+			d->camera.origin = v_v_add(&node, &tmp3);
+
 
 			get_intersection(d, mlx, x, y, object);
 
@@ -246,8 +245,6 @@ void	draw(t_datas *d, t_mlx *mlx, t_object *object)
 	t_vector	viewplan_point;
 
 	d->camera.origin = set_vector(0, 0, -(double)WIN_X);
-
-//	viewPlaneUpLeft = camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) - (rightVec*(viewplaneWidth/2.0f))
 
 	y = 0;
 	y1 = (double)WIN_Y / 2;

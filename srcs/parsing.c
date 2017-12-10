@@ -33,30 +33,6 @@ void		get_object(t_object *object, t_json *json)
 	}
 }
 
-//int			parsing(t_object *object, char *src_file)
-//{
-//	char	*line;
-//	int		ret;
-//	int		fd;
-//	
-//	ret = 0;
-//	if ((fd = open(src_file, O_RDONLY)) < 0)
-//	{
-//		perror(src_file);
-//		return (ret);
-//	}
-//	while (get_next_line(fd, &line) > 0)
-//	{
-//
-//		get_object(object, line);
-//		ft_strdel(&line);
-//		ret = 1;
-//	}
-//	close(fd);
-//	return (ret);
-//}
-
-
 int			create_object(t_json *object, char *str, int i)
 {
 	int		j;
