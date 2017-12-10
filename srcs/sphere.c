@@ -75,12 +75,25 @@ int		sphere_intersection(t_datas *d, t_sphere *sphere)
 	i.object_rayon = v_v_subs(&d->current_origin, &sphere->center);
 	p.b = dot_product(&i.object_rayon, &d->current_rayon);
 	p.c = dot_product(&i.object_rayon, &i.object_rayon) - (sphere->radius * sphere->radius);
-	if(!(poly_2nd_degree_sphere(d, &p)))
+	p.discriminant = (p.b * p.b) - p.c;
+	if (p.discriminant < 0)
 		return (0);
-	i.tmp_node = v_double_mult(&d->current_rayon, d->solution);
-	sphere->node = v_v_add(&d->current_origin, &i.tmp_node);
-	sphere->node_normal = v_v_subs(&sphere->node, &sphere->center);
-	sphere->node_normal = normalize(&sphere->node_normal);
+	else
+	{
+		if (p.discriminant == 0)
+			d->solution = - p.b;
+		else
+		{
+			p.discriminant = sqrt(p.discriminant);
+			p.s1 = (- p.b + p.discriminant);
+			p.s2 = (- p.b - p.discriminant);
+			d->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
+		}
+		i.tmp_node = v_double_mult(&d->current_rayon, d->solution);
+		sphere->node = v_v_add(&d->current_origin, &i.tmp_node);
+		sphere->node_normal = v_v_subs(&sphere->node, &sphere->center);
+		sphere->node_normal = normalize(&sphere->node_normal);
+	}
 	return (1);
 }
 

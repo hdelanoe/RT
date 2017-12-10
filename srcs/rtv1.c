@@ -61,7 +61,7 @@ void	get_light(t_datas *d, t_object *object)
 				color_to_add = set_color(0, 0, 0);
 			else
 			{
-//				tmp_light->color = c_double_pow(&tmp_light->color, 2.2);
+
 				tmp_color_to_add = c_c_mult(&d->current_color, &tmp_light->color);
 				tmp_color_to_add = c_double_pow(&tmp_color_to_add, 1/2.2);
 				tmp_color_to_add = c_double_add(&tmp_color_to_add, phong(tmp_light, view_rayon, &d->current_node_normal));
@@ -70,7 +70,6 @@ void	get_light(t_datas *d, t_object *object)
 			}
 		}
 		d->color_finale = c_c_add(&d->color_finale, &color_to_add);
-//		d->color_finale = c_double_pow(&d->color_finale, 1/2.2);
 		tmp_light = tmp_light->next;
 	}
 }
@@ -83,6 +82,7 @@ void	get_intersection(t_datas *d, t_mlx *mlx, int x, int y, t_object *object)
 	t_cone		*tmp_cone;
 	t_plane		*tmp_plane;
 	t_torus		*tmp_torus;
+	int reflect = 0;
 
 	d->current_origin = d->camera.origin;
 	d->current_rayon = d->camera.rayon;
@@ -158,6 +158,7 @@ void	get_intersection(t_datas *d, t_mlx *mlx, int x, int y, t_object *object)
 		{
 			if (d->solution < d->distance)
 			{
+				reflect = 1;
 				printable = 1;
 				d->distance = d->solution;
 				d->current_node = tmp_plane->node;
@@ -168,11 +169,11 @@ void	get_intersection(t_datas *d, t_mlx *mlx, int x, int y, t_object *object)
 				d->id_cone = -1;
 				d->id_cylinder = -1;
 				d->id_torus = -1;
-				int carre = floor(tmp_plane->node.x) + floor(tmp_plane->node.z);
-				if ((carre % 2) == 0)
-					d->current_color = set_color(0, 0, 0);
-				else
-					d->current_color = tmp_plane->color;
+//				int carre = floor(tmp_plane->node.x) + floor(tmp_plane->node.z);
+//				if ((carre % 2) == 0)
+//					d->current_color = set_color(0, 0, 0);
+//				else
+//					d->current_color = tmp_plane->color;
 			}
 		}
 		tmp_plane = tmp_plane->next;
@@ -199,8 +200,40 @@ void	get_intersection(t_datas *d, t_mlx *mlx, int x, int y, t_object *object)
 	}
 	if (printable == 1)
 	{
+		t_color c = set_color(0, 0, 0); 
 		get_light(d, object);
-		print_color(&d->color_finale, mlx, x, y);
+		if (reflect)
+		{
+			c = d->color_finale;
+
+	//		t_vector e = v_double_mult(&d->current_rayon, -1);
+			reflect =  dot_product(&d->current_rayon, &d->current_node_normal);
+			t_vector tmp = v_double_mult(&d->current_node_normal, 2.0 * reflect);
+	//		printf("x %f y %f z %f\n", d->current_node_normal.x, d->current_node_normal.y, d->current_node_normal.z);
+			t_vector r = v_double_mult(&tmp, reflect);
+			r = v_v_subs(&d->current_rayon, &tmp);
+
+
+	//		reflect =  dot_product(&d->current_rayon, &d->current_node_normal);
+	//		t_vector tmp = v_double_mult(&d->current_node_normal, reflect);
+	//		tmp = v_double_mult(&tmp, 2);
+	//		t_vector r = v_v_subs(&tmp, &d->current_rayon);
+
+			t_vector tmp2 = d->camera.rayon;
+			d->camera.rayon = r;
+
+			tmp = d->camera.origin;
+			d->camera.origin = d->current_node;
+	//		printf("x %f y %f z %f \n", d->camera.origin.x, d->camera.origin.y, d->camera.origin.z);
+
+			get_intersection(d, mlx, x, y, object);
+
+			d->camera.rayon = tmp2;
+			d->camera.origin = tmp;
+
+		}
+		t_color ctmp = c_c_add(&c, &d->color_finale);
+		print_color(&ctmp, mlx, x, y);
 	}
 }
 
