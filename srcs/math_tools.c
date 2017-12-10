@@ -20,13 +20,13 @@ int poly_2nd_degree(t_datas **d, t_poly *p)
 	else
 	{
 		if (p->discriminant == 0)
-			(*d)->solution = - (p->b / (2 * p->a));
+			d->solution = - (p->b / (2 * p->a));
 		else
 		{
 			p->discriminant = sqrt(p->discriminant);
 			p->s1 = (- p->b + p->discriminant) / (2 * p->a);
 			p->s2 = (- p->b - p->discriminant) / (2 * p->a);
-			(*d)->solution = (p->s1 < p->s2) ? p->s1 : p->s2;
+			d->solution = (p->s1 < p->s2) ? p->s1 : p->s2;
 		}
 	}
 	return (1);
