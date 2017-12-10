@@ -75,13 +75,13 @@ int		cone_intersection(t_datas *d, t_cone *cone)
 	else
 	{
 		if (p.discriminant == 0)
-			(*d)->solution = - (p.b / (2 * p.a));
+			d->solution = - (p.b / (2 * p.a));
 		else
 		{
 			p.discriminant = sqrt(p.discriminant);
 			p.s1 = (- p.b + p.discriminant) / (2 * p.a);
 			p.s2 = (- p.b - p.discriminant) / (2 * p.a);
-			(*d)->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
+			d->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
 		}
 		i.tmp_node = v_double_mult(&d->current_rayon, d->solution);
 		cone->node = v_v_add(&d->current_origin, &i.tmp_node);
