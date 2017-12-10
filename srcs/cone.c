@@ -69,19 +69,19 @@ int		cone_intersection(t_datas *d, t_cone *cone)
 	p.a = 1 - (p.tmp1 * pow(p.tmp2, 2));
 	p.b = 2 * ((dot_product(&i.object_rayon, &d->current_rayon) - (p.tmp1 * (p.tmp2 * p.tmp3))));
 	p.c = dot_product(&i.object_rayon, &i.object_rayon) - (p.tmp1 * (p.tmp3 * p.tmp3));
-	p->discriminant = (p->b * p->b) - (4 * p->a * p->c);
-	if (p->discriminant < 0)
+	p.discriminant = (p.b * p.b) - (4 * p.a * p.c);
+	if (p.discriminant < 0)
 		return (0);
 	else
 	{
-		if (p->discriminant == 0)
-			(*d)->solution = - (p->b / (2 * p->a));
+		if (p.discriminant == 0)
+			(*d)->solution = - (p.b / (2 * p.a));
 		else
 		{
-			p->discriminant = sqrt(p->discriminant);
-			p->s1 = (- p->b + p->discriminant) / (2 * p->a);
-			p->s2 = (- p->b - p->discriminant) / (2 * p->a);
-			(*d)->solution = (p->s1 < p->s2) ? p->s1 : p->s2;
+			p.discriminant = sqrt(p.discriminant);
+			p.s1 = (- p.b + p.discriminant) / (2 * p.a);
+			p.s2 = (- p.b - p.discriminant) / (2 * p.a);
+			(*d)->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
 		}
 		i.tmp_node = v_double_mult(&d->current_rayon, d->solution);
 		cone->node = v_v_add(&d->current_origin, &i.tmp_node);
