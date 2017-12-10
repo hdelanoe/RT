@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-int poly_2nd_degree(t_datas **d, t_poly *p)
+int poly_2nd_degree(t_datas *d, t_poly *p)
 {
 	p->discriminant = (p->b * p->b) - (4 * p->a * p->c);
 	if (p->discriminant < 0)

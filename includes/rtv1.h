@@ -295,7 +295,7 @@ void							create_plane(t_object *object, t_json *json);
 void							create_torus(t_object *object, char *line);
 void							create_light(t_object *object, t_json *json);
 int								parsing(t_object *object, char *str);
-int								poly_2nd_degree(t_datas **d, t_poly *p);
+int								poly_2nd_degree(t_datas *d, t_poly *p);
 int								poly_2nd_degree_sphere(t_datas *d, t_poly *p);
 void							get_object(t_object *object, t_json *json);
 int								create_object(t_json *object, char *str, int i);
