@@ -29,29 +29,93 @@ t_plane	*add_new_plane(t_object *object, t_plane *new_plane)
 	return (tmp);
 }
 
-void	create_plane(t_object *object, t_json *json)
+double get_content_from_member(char *name, t_json **membre)
+{
+	t_json *tmp;
+
+	tmp = (*membre);
+	while (tmp)
+	{
+		if(ft_strcmp(tmp->name, name) == 0 )
+			return (ft_atod(tmp->content));
+		tmp = tmp->next;
+	}
+	return (0);  /// ERREUR : Manque une donnée
+}
+
+t_vector parse_point(t_json *membre)
+{
+	double x;
+	double y;
+	double z;
+	char *tmp;
+
+	x = get_content_from_member((tmp = ft_strdup("x")), &membre);
+	free(tmp);
+	y = get_content_from_member((tmp = ft_strdup("y")), &membre);
+	free(tmp);
+	z = get_content_from_member((tmp = ft_strdup("z")), &membre);
+	free(tmp);
+	return (set_vector(x, y, z));
+}
+
+t_vector parse_normal(t_json *membre)
+{
+	t_vector to_norm;
+
+	to_norm = parse_point(membre);
+	to_norm = normalize(&to_norm);
+	return (to_norm);
+}
+
+t_color  parse_color(t_json *membre)
+{
+	double r;
+	double g;
+	double b;
+	char *tmp;
+
+	r = get_content_from_member((tmp = ft_strdup("r")), &membre);
+	free(tmp);
+	g = get_content_from_member((tmp = ft_strdup("g")), &membre);
+	free(tmp);
+	b = get_content_from_member((tmp = ft_strdup("b")), &membre);
+	free(tmp);
+	return (set_color(b, g, r));
+}
+
+void debug_plane(t_plane *tmp)
+{
+	printf("PLANE:\n");
+	printf("coord :  x->%f\n", tmp->point.x);
+	printf("         y->%f\n", tmp->point.y);
+	printf("         z->%f\n", tmp->point.z);
+	printf("normal : x->%f\n", tmp->normal.x);
+	printf("         y->%f\n", tmp->normal.y);
+	printf("         z->%f\n", tmp->normal.z);
+	printf("colors : r->%f\n", tmp->color.r);
+	printf("         g->%f\n", tmp->color.g);
+	printf("         b->%f\n", tmp->color.b);
+}
+void		create_plane(t_object *object, t_json *json)
 {
 	t_plane		*plane;
-	t_json		*tmp;
 
 	while (json->member)
 	{
 		plane = (t_plane*)ft_memalloc(sizeof(t_plane));
-		tmp = json->member->member;
-		plane->point = set_vector(ft_atod(tmp->member->content),
-			ft_atod(tmp->member->next->content),
-			ft_atod(tmp->member->next->next->content));
-		tmp = tmp->next;
-		plane->normal = set_vector(ft_atod(tmp->member->content),
-			ft_atod(tmp->member->next->content),
-			ft_atod(tmp->member->next->next->content));
-		plane->normal = normalize(&plane->normal);
-		tmp = tmp->next;
-		plane->color = set_color(ft_atod(tmp->member->content),
-			ft_atod(tmp->member->next->content),
-			ft_atod(tmp->member->next->next->content));
-		tmp = tmp->next;
-		plane->id = ft_atoi(tmp->content);
+		plane->id = ft_atoi(json->member->name);
+		while(json->member->member)
+		{
+			if (ft_strcmp(json->member->member->name, "coord") == 0)
+				plane->point = parse_point(json->member->member->member);
+			if (ft_strcmp(json->member->member->name, "normal") == 0)
+				plane->normal = parse_normal(json->member->member->member);
+			if (ft_strcmp(json->member->member->name, "colors") == 0)
+				plane->color = parse_color(json->member->member->member);
+			json->member->member = json->member->member->next;
+		}
+		debug_plane(plane);
 		plane = add_new_plane(object, plane);
 		json->member = json->member->next;
 	}

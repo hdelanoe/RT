@@ -29,32 +29,45 @@ t_cylinder		*add_new_cylinder(t_object *object, t_cylinder *new_cylinder)
 	return (tmp);
 }
 
+void debug_cylinder(t_cylinder *tmp)
+{
+	printf("CYLINDER:\n");
+	printf("center:  x->%f\n", tmp->center.x);
+	printf("         y->%f\n", tmp->center.y);
+	printf("         z->%f\n", tmp->center.z);
+	printf("axis :   x->%f\n", tmp->axis.x);
+	printf("         y->%f\n", tmp->axis.y);
+	printf("         z->%f\n", tmp->axis.z);
+	printf("radius ->%f\n", tmp->radius);
+	printf("length ->%f\n", tmp->lenght_max);
+	printf("colors : r->%f\n", tmp->color.r);
+	printf("         g->%f\n", tmp->color.g);
+	printf("         b->%f\n", tmp->color.b);
+}
+
 void		create_cylinder(t_object *object, t_json *json)
 {
 	t_cylinder	*cylinder;
-	t_json		*tmp;
 
 	while (json->member)
 	{
 		cylinder = (t_cylinder*)ft_memalloc(sizeof(t_cylinder));
 		cylinder->id = ft_atoi(json->member->name);
-		tmp = json->member->member;
-		cylinder->center = set_vector(ft_atod(tmp->member->content),
-			ft_atod(tmp->member->next->content),
-			ft_atod(tmp->member->next->next->content));
-		tmp = tmp->next;	
-		cylinder->radius = ft_atod(tmp->content);
-		tmp = tmp->next;
-		cylinder->lenght_max = ft_atod(tmp->content);
-		tmp = tmp->next;
-		cylinder->axis = set_vector(ft_atod(tmp->member->content),
-			ft_atod(tmp->member->next->content),
-			ft_atod(tmp->member->next->next->content));
-		cylinder->axis = normalize(&cylinder->axis);
-		tmp = tmp->next;
-		cylinder->color = set_color(ft_atod(tmp->member->content),
-			ft_atod(tmp->member->next->content),
-			ft_atod(tmp->member->next->next->content));
+		while (json->member->member)
+		{
+			if (ft_strcmp(json->member->member->name, "coord") == 0)
+				cylinder->center = parse_point(json->member->member->member);
+			if (ft_strcmp(json->member->member->name, "normal") == 0)
+				cylinder->axis = parse_normal(json->member->member->member);
+			if (ft_strcmp(json->member->member->name, "radius") == 0)
+				cylinder->radius = ft_atod(json->member->member->content);
+			if (ft_strcmp(json->member->member->name, "length") == 0)
+				cylinder->lenght_max = ft_atod(json->member->member->content);
+			if (ft_strcmp(json->member->member->name, "colors") == 0)
+				cylinder->color = parse_color(json->member->member->member);
+			json->member->member = json->member->member->next;
+		}
+		debug_cylinder(cylinder);
 		cylinder = add_new_cylinder(object, cylinder);
 		json->member = json->member->next;
 	}

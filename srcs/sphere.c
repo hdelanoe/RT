@@ -29,24 +29,39 @@ t_sphere		*add_new_sphere(t_object *object, t_sphere *new_sphere)
 	return (tmp);
 }
 
+
+void debug_sphere(t_sphere *tmp)
+{
+	printf("SPHERE:\n");
+	printf("coord :  x->%f\n", tmp->center.x);
+	printf("         y->%f\n", tmp->center.y);
+	printf("         z->%f\n", tmp->center.z);
+	printf("radius ->%f\n", tmp->radius);
+	printf("colors : r->%f\n", tmp->color.r);
+	printf("         g->%f\n", tmp->color.g);
+	printf("         b->%f\n", tmp->color.b);
+}
+
+
 void		create_sphere(t_object *object, t_json *json)
 {
 	t_sphere	*sphere;
-	t_json		*tmp;
-
 
 	while (json->member)
 	{
 		sphere = (t_sphere*)ft_memalloc(sizeof(t_sphere));
 		sphere->id = ft_atoi(json->member->name);
-		tmp = json->member->member;
-		sphere->center = set_vector(ft_atod(tmp->member->content), ft_atod(tmp->member->next->content), ft_atod(tmp->member->next->next->content));
-		tmp = tmp->next;	
-		sphere->radius = ft_atod(tmp->content);
-		tmp = tmp->next;
-		sphere->color = set_color(ft_atod(tmp->member->content), ft_atod(tmp->member->next->content), ft_atod(tmp->member->next->next->content));
-//		tmp = tmp->next;
-//		sphere->id = ft_atoi(tmp->content);
+		while (json->member->member)
+		{
+			if (ft_strcmp(json->member->member->name, "coord") == 0)
+				sphere->center = parse_point(json->member->member->member);
+			if (ft_strcmp(json->member->member->name, "radius") == 0)
+				sphere->radius = ft_atod(json->member->member->content);
+			if (ft_strcmp(json->member->member->name, "colors") == 0)
+				sphere->color = parse_color(json->member->member->member);
+			json->member->member = json->member->member->next;
+		}
+		debug_sphere(sphere);
 		sphere = add_new_sphere(object, sphere);
 		json->member = json->member->next;
 	}

@@ -29,21 +29,33 @@ t_light		*add_new_light(t_object *object, t_light *new_light)
 	return (tmp);
 }
 
+void debug_light(t_light *tmp)
+{
+	printf("LIGHT:\n");
+	printf("origin : x->%f\n", tmp->origin.x);
+	printf("         y->%f\n", tmp->origin.y);
+	printf("         z->%f\n", tmp->origin.z);
+	printf("colors : r->%f\n", tmp->color.r);
+	printf("         g->%f\n", tmp->color.g);
+	printf("         b->%f\n", tmp->color.b);
+}
 void			create_light(t_object *object, t_json *json)
 {
 	t_light	*light;
-	t_json		*tmp;
 
 	while (json->member)
 	{
-		light = (t_light*)ft_memalloc(sizeof(t_light));
-		tmp = json->member->member;
-		light->origin = set_vector(ft_atod(tmp->member->content),
-		ft_atod(tmp->member->next->content), ft_atod(tmp->member->next->next->content));
-		tmp = tmp->next;	
-		light->color = set_color(ft_atod(tmp->member->content), ft_atod(tmp->member->next->content), ft_atod(tmp->member->next->next->content));
-//		tmp = tmp->next;
-//		light->id = ft_atoi(tmp->content);
+		light = ft_memalloc(sizeof(t_light));
+		light->next = NULL;
+		while (json->member->member)
+		{
+			if (ft_strcmp(json->member->member->name, "coord") == 0)
+				light->origin = parse_point(json->member->member->member);
+			if (ft_strcmp(json->member->member->name, "colors") == 0)
+				light->color = parse_color(json->member->member->member);
+			json->member->member = json->member->member->next;
+		}
+		debug_light(light);
 		light = add_new_light(object, light);
 		json->member = json->member->next;
 	}

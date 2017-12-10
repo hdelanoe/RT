@@ -198,6 +198,16 @@ struct							s_poly
 	double						len;
 };
 
+typedef struct 		s_paraboloid
+{
+	int 			id;
+	t_vector		origin;
+	t_vector		normal;
+	double 			distance;
+	t_color			color;
+	struct s_paraboloid *next;
+}					t_paraboloid;
+
 struct							s_inter
 {
 	t_vector					object_rayon;
@@ -232,6 +242,7 @@ struct							s_parsing
 	char						*stock;
 	char						*tmp;
 }; 
+
 
 void							exit_parser(int flag);
 void							parse(t_object *object, char **str);
@@ -291,5 +302,13 @@ int								create_object(t_json *object, char *str, int i);
 void							ft_print_err(int argc);
 void							ft_help(void);
 void							ft_kill(char *text);
+
+
+/// test titi
+t_vector parse_point(t_json *membre);
+t_color  parse_color(t_json *membre);
+t_vector parse_normal(t_json *membre);
+double get_content_from_member(char *name, t_json **membre);
+void create_paraboloid(t_object *object, t_json *json);
 
 #endif
