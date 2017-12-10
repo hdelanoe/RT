@@ -32,29 +32,26 @@ t_cone		*add_new_cone(t_object *object, t_cone *new_cone)
 void		create_cone(t_object *object, t_json *json)
 {
 	t_cone	*cone;
-	t_json		*tmp;
 
 	while (json->member)
 	{
-		ft_putendl(json->member->name);
 		cone = (t_cone*)ft_memalloc(sizeof(t_cone));
-		tmp = json->member->member;
-		ft_putendl(tmp->name);
-		cone->vertex = set_vector(ft_atod(tmp->member->content), ft_atod(tmp->member->next->content), ft_atod(tmp->member->next->next->content));
-		tmp = tmp->next;	
-		ft_putendl(tmp->name);
-		cone->tangent = ft_atod(tmp->content);
-		tmp = tmp->next;
-		cone->lenght_max = ft_atod(tmp->content);
-		tmp = tmp->next;
-		cone->axis = set_vector(ft_atod(tmp->member->content), ft_atod(tmp->member->next->content), ft_atod(tmp->member->next->next->content));
-		tmp = tmp->next;
-		cone->color = set_color(ft_atod(tmp->member->content), ft_atod(tmp->member->next->content), ft_atod(tmp->member->next->next->content));
-		tmp = tmp->next;
-		ft_putendl(tmp->name);
-		cone->id = ft_atoi(tmp->content);
+		cone->id = ft_atod(json->member->name);
+		while(json->member->member)
+		{
+			if (ft_strcmp(json->member->member->name, "vertex") == 0)
+				cone->vertex = parse_point(json->member->member->member);
+			if (ft_strcmp(json->member->member->name, "tangent") == 0)
+				cone->tangent = ft_atod(json->member->member->content);
+			if (ft_strcmp(json->member->member->name, "lenght") == 0)
+				cone->lenght_max = ft_atod(json->member->member->content);
+			if (ft_strcmp(json->member->member->name, "axis") == 0)
+				cone->axis = parse_point(json->member->member->member);
+			if (ft_strcmp(json->member->member->name, "colors") == 0)
+				cone->color = parse_color(json->member->member->member);
+			json->member->member = json->member->member->next;
+		}
 		cone = add_new_cone(object, cone);
-		ft_putendl("XD");
 		json->member = json->member->next;
 	}
 }
