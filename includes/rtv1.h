@@ -311,4 +311,7 @@ t_vector parse_normal(t_json *membre);
 double get_content_from_member(char *name, t_json **membre);
 void create_paraboloid(t_object *object, t_json *json);
 
+/// test nobi
+
+
 #endif

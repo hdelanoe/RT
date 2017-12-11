@@ -34,6 +34,12 @@ SRCS		= 	srcs/main.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 
+ifeq ($(DEBUG), yes)
+FLAGS=-g3 -fsanitize=address
+else
+FLAGS=-Wall -Wextra -Werror
+endif
+
 CC			= 	gcc
 CFLAGS		= 	-Wall -Wextra -Werror
 INC			= 	-I./includes/

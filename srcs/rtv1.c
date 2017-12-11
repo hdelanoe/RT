@@ -169,6 +169,7 @@ void	get_intersection(t_datas *d, t_mlx *mlx, int x, int y, t_object *object)
 				d->id_cone = -1;
 				d->id_cylinder = -1;
 				d->id_torus = -1;
+				/************   DAMIER SUR LE PLAN ***************/
 //				int carre = floor(tmp_plane->node.x) + floor(tmp_plane->node.z);
 //				if ((carre % 2) == 0)
 //					d->current_color = set_color(0, 0, 0);
