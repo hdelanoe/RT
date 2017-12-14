@@ -130,7 +130,7 @@ int		check_if_light_is_blocked(t_env *e)
 	tmp_object = e->object;
 	while (tmp_object)
 	{
-		if (tmp_object->id != e->id_object 
+		if (tmp_object->id != e->id_object// && tmp_object->refract == 0
 			&& sort_type(e, tmp_object) && e->solution < e->distance_light_object)
 				return (1);
 		tmp_object = tmp_object->next;

@@ -19,6 +19,7 @@ SRCS		= 	srcs/main.c \
 				srcs/vectors_op3.c \
 				srcs/colors_op1.c \
 				srcs/colors_op2.c \
+				srcs/math_tools.c \
 				srcs/user_interactions.c \
 				srcs/colors.c \
 				srcs/intersections.c \
@@ -29,7 +30,6 @@ SRCS		= 	srcs/main.c \
 				srcs/plane.c \
 				srcs/light.c \
 				srcs/torus.c \
-				srcs/math_tools.c \
 				srcs/parsing_tools.c \
 				srcs/errors.c \
 

@@ -26,7 +26,7 @@
 # define WIN_Y 1300
 
 #define MAX_RECURSION 1
-
+# define R_VOID 1.0
 # define R_AIR 1.000272
 # define R_ICE 1.31
 # define R_WATER 1.32612
