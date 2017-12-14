@@ -12,17 +12,25 @@
 
 #include "rtv1.h"
 
-void		display_window(t_object *object)
+void	exit_rt(int flag)
+{
+	if (flag == 1)
+	{
+		ft_putendl("Error in malloc");
+		exit(1);
+	}
+}
+
+void		display_window(t_env *env)
 {
 	t_mlx	mlx;
-	t_datas	d;
 
 	mlx.mlx_ptr = mlx_init();
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, WIN_X, WIN_Y, "RTv1");
 	mlx.img_ptr = mlx_new_image(mlx.mlx_ptr, WIN_X, WIN_Y);
 	mlx.data = (unsigned char*)mlx_get_data_addr(mlx.img_ptr,
 	&mlx.bpp, &mlx.l_size, &mlx.endian);
-	draw(&d, &mlx, object);
+	ray_tracer(env, &mlx);
 	mlx_hook(mlx.win_ptr, 2, (1L << 0), key_functions, &mlx);
 	mlx_put_image_to_window(mlx.mlx_ptr, mlx.win_ptr, mlx.img_ptr, 0, 0);
 	mlx_loop(mlx.mlx_ptr);
@@ -31,15 +39,21 @@ void		display_window(t_object *object)
 
 int			main(int argc, char **argv)
 {
-	t_object	*object;
-	int			ret;
+	t_env	*e;
+	int		ret;
 
 	ret = 0;
-	if (!(object = (t_object*)ft_memalloc(sizeof(t_object))))
-		return (0);
+	if (!(e = (t_env*)ft_memalloc(sizeof(t_env))))
+		exit_rt(1);
+	if (!(e->object = (t_object*)ft_memalloc(sizeof(t_object))))
+		exit_rt(1);
+	e->object->next = NULL;
+	if (!(e->light = (t_light*)ft_memalloc(sizeof(t_light))))
+		exit_rt(1);
+	e->light->next = NULL;
 	if (argc != 2)
 		ft_print_err(argc);
-	ret = parsing(object, argv[1]);
-	display_window(object);
+	ret = parsing(e, argv[1]);
+	display_window(e);
 	return (0);
 }

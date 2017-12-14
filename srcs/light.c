@@ -12,21 +12,21 @@
 
 #include "rtv1.h"
 
-t_light		*add_new_light(t_object *object, t_light *new_light)
+void		add_new_light(t_light **list, t_light *new_light)
 {
-	t_light		*tmp;
+	t_light	*tmp;
 
-	tmp = object->start_light;
-	if (tmp)
+	if (!(*list)->color.r)
 	{
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new_light;
-		new_light->next = NULL;
+		(*list) = new_light;
+		return ;
 	}
-	else
-		object->start_light = new_light;
-	return (tmp);
+	tmp = (*list);
+	while ((*list)->next)
+		(*list) = (*list)->next;
+	(*list)->next = new_light;
+	(*list) = tmp;
+
 }
 
 void debug_light(t_light *tmp)
@@ -39,7 +39,7 @@ void debug_light(t_light *tmp)
 	printf("         g->%f\n", tmp->color.g);
 	printf("         b->%f\n", tmp->color.b);
 }
-void			create_light(t_object *object, t_json *json)
+void			create_light(t_env *e, t_json *json)
 {
 	t_light	*light;
 
@@ -56,7 +56,7 @@ void			create_light(t_object *object, t_json *json)
 			json->member->member = json->member->member->next;
 		}
 		debug_light(light);
-		light = add_new_light(object, light);
+		add_new_light(&e->light, light);
 		json->member = json->member->next;
 	}
 }

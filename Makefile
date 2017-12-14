@@ -6,21 +6,22 @@
 #    By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/17 16:13:57 by dguy-caz          #+#    #+#              #
-#    Updated: 2017/06/17 19:49:33 by dguy-caz         ###   ########.fr        #
+#    Updated: 2017/12/12 19:59:04 by hdelanoe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= 	rtv1
 
 SRCS		= 	srcs/main.c \
-				srcs/rtv1.c \
+				srcs/ray_tracer.c \
 				srcs/vectors_op1.c \
 				srcs/vectors_op2.c \
 				srcs/vectors_op3.c \
+				srcs/colors_op1.c \
+				srcs/colors_op2.c \
 				srcs/user_interactions.c \
 				srcs/colors.c \
 				srcs/intersections.c \
-				srcs/light_blocked.c \
 				srcs/parsing.c \
 				srcs/sphere.c \
 				srcs/cone.c \
@@ -33,12 +34,6 @@ SRCS		= 	srcs/main.c \
 				srcs/errors.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
-
-ifeq ($(DEBUG), yes)
-FLAGS=-g3 -fsanitize=address
-else
-FLAGS=-Wall -Wextra -Werror
-endif
 
 CC			= 	gcc
 CFLAGS		= 	-Wall -Wextra -Werror

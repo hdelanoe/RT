@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-void		get_object(t_object *object, t_json *json)
+void		get_object(t_env *e, t_json *json)
 {
 	t_json *tmp;
 
@@ -20,15 +20,15 @@ void		get_object(t_object *object, t_json *json)
 	while (tmp)
 	{
 		if (!(ft_strcmp(tmp->name, "sphere")))
-			create_sphere(object, tmp);
+			create_sphere(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "plane")))
-			create_plane(object, tmp);
+			create_plane(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "cylinder")))
-			create_cylinder(object, tmp);
+			create_cylinder(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "cone")))
-			create_cone(object, tmp);
+			create_cone(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "light")))
-			create_light(object, tmp);
+			create_light(e, tmp);
 		tmp = tmp->next;
 	}
 }
@@ -75,7 +75,21 @@ int			create_object(t_json *object, char *str, int i)
 	return (i + 1);
 }
 
-int			parsing(t_object *object, char *src_file)
+void	create_tree(t_env *e, char **str)
+{
+	t_json	*json;
+
+	if (str)
+	{
+		json = new_object();
+		json->name = ft_strdup("scene");
+		create_object(json, (*str), 0);
+		get_object(e, json);
+		ft_strdel(str);
+	}
+}
+
+int			parsing(t_env *e, char *src_file)
 {
 	t_parsing p;
 
@@ -97,6 +111,6 @@ int			parsing(t_object *object, char *src_file)
 		}
 	}
 	close(p.fd);
-	parse(object, &p.stock);
+	create_tree(e, &p.stock);
 	return (p.j);
 }

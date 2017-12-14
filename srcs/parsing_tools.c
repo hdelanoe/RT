@@ -51,17 +51,3 @@ void	add(t_json **current, t_json *new)
 		tmp = tmp->next;
 	tmp->next = new;
 }
-
-void	parse(t_object *object, char **str)
-{
-	t_json	*json;
-
-	if (str)
-	{
-		json = new_object();
-		json->name = ft_strdup("scene");
-		create_object(json, (*str), 0);
-		get_object(object, json);
-		ft_strdel(str);
-	}
-}

@@ -12,25 +12,25 @@
 
 #include "rtv1.h"
 
-t_sphere		*add_new_sphere(t_object *object, t_sphere *new_sphere)
+void		add_new_object(t_object **list, t_object *new_object)
 {
-	t_sphere	*tmp;
+	t_object	*tmp;
 
-	tmp = object->start_sphere;
-	if (tmp)
+	if (!(*list)->type)
 	{
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new_sphere;
-		new_sphere->next = NULL;
+		(*list) = new_object;
+		return ;
 	}
-	else
-		object->start_sphere = new_sphere;
-	return (tmp);
+	tmp = (*list);
+	while ((*list)->next)
+		(*list) = (*list)->next;
+	(*list)->next = new_object;
+	(*list) = tmp;
+
 }
 
 
-void debug_sphere(t_sphere *tmp)
+void debug_sphere(t_object *tmp)
 {
 	printf("SPHERE:\n");
 	printf("coord :  x->%f\n", tmp->center.x);
@@ -43,13 +43,13 @@ void debug_sphere(t_sphere *tmp)
 }
 
 
-void		create_sphere(t_object *object, t_json *json)
+void		create_sphere(t_env *e, t_json *json)
 {
-	t_sphere	*sphere;
+	t_object	*sphere;
 
 	while (json->member)
 	{
-		sphere = (t_sphere*)ft_memalloc(sizeof(t_sphere));
+		sphere = (t_object*)ft_memalloc(sizeof(t_object));
 		sphere->id = ft_atoi(json->member->name);
 		while (json->member->member)
 		{
@@ -62,18 +62,21 @@ void		create_sphere(t_object *object, t_json *json)
 			json->member->member = json->member->member->next;
 		}
 		debug_sphere(sphere);
-		sphere = add_new_sphere(object, sphere);
+		sphere->type = ft_strdup("sphere");
+		sphere->reflect = 0;
+		sphere->refract = 1;
+		add_new_object(&e->object, sphere);
 		json->member = json->member->next;
 	}
 }
 
-int		sphere_intersection(t_datas *d, t_sphere *sphere)
+int		sphere_intersection(t_env *e, t_object *sphere)
 {
 	t_poly 	p;
 	t_inter i;
 
-	i.object_rayon = v_v_subs(&d->current_origin, &sphere->center);
-	p.b = dot_product(&i.object_rayon, &d->current_rayon);
+	i.object_rayon = v_v_subs(&e->current_origin, &sphere->center);
+	p.b = dot_product(&i.object_rayon, &e->current_rayon);
 	p.c = dot_product(&i.object_rayon, &i.object_rayon) - (sphere->radius * sphere->radius);
 	p.discriminant = (p.b * p.b) - p.c;
 	if (p.discriminant < 0)
@@ -81,40 +84,18 @@ int		sphere_intersection(t_datas *d, t_sphere *sphere)
 	else
 	{
 		if (p.discriminant == 0)
-			d->solution = - p.b;
+			e->solution = - p.b;
 		else
 		{
 			p.discriminant = sqrt(p.discriminant);
 			p.s1 = (- p.b + p.discriminant);
 			p.s2 = (- p.b - p.discriminant);
-			d->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
+			e->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
 		}
-		i.tmp_node = v_double_mult(&d->current_rayon, d->solution);
-		sphere->node = v_v_add(&d->current_origin, &i.tmp_node);
+		i.tmp_node = v_double_mult(&e->current_rayon, e->solution);
+		sphere->node = v_v_add(&e->current_origin, &i.tmp_node);
 		sphere->node_normal = v_v_subs(&sphere->node, &sphere->center);
 		sphere->node_normal = normalize(&sphere->node_normal);
 	}
 	return (1);
-}
-
-void 	blocked_by_a_sphere(t_datas *d, int *light_blocked, t_object *object)
-{
-	t_sphere	*tmp_sphere;
-
-	tmp_sphere = object->start_sphere;
-	while (tmp_sphere)
-	{
-		if (tmp_sphere->id != d->id_sphere)
-		{
-			if (sphere_intersection(d, tmp_sphere))
-			{
-				if (d->solution < d->distance_light_object)
-				{
-					*light_blocked = 1;
-					break;
-				}
-			}
-		}
-		tmp_sphere = tmp_sphere->next;
-	}
 }
