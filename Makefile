@@ -22,13 +22,13 @@ SRCS		= 	srcs/main.c \
 				srcs/math_tools.c \
 				srcs/user_interactions.c \
 				srcs/colors.c \
-				srcs/intersections.c \
+				srcs/intersection.c \
 				srcs/parsing.c \
-				srcs/sphere.c \
-				srcs/cone.c \
-				srcs/cylinder.c \
-				srcs/plane.c \
-				srcs/light.c \
+				srcs/parse_material.c \
+				srcs/get_parsing.c \
+				srcs/create_object.c \
+				srcs/create_light.c \
+				srcs/check_intersection.c \
 				srcs/torus.c \
 				srcs/parsing_tools.c \
 				srcs/errors.c \

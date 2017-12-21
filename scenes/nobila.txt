@@ -25,7 +25,8 @@
       "radius": "100",
       "colors": {
         "r": "0.7", "g": "0.5", "b": "0.3"
-        }
+        },
+      "material": "glass"
       },
       "3": {
       "coord": {
@@ -52,7 +53,8 @@
       "radius": "100",
       "colors": {
         "r": "0.5", "g": "0.5", "b": "1"
-        }
+        },
+      "material": "glass"
       },
       "6": {
       "coord": {
@@ -84,7 +86,7 @@
       "colors": {
         "r": "0.8", "g": "0.5","b": "0.8"
         },
-      "reflect": "1"
+      "material": "mirror"
       }
     }, 
   "light": {

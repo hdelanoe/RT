@@ -62,35 +62,23 @@ t_color	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 		 		pl.ior = R_VOID / R_AIR;
 		 	else
 		 		pl.ior = R_AIR / R_VOID;
-		 	t_vector inv = v_double_mult(&rayon, (double)-1);
+		 	t_vector inv = v_double_mult(&rayon, -1.0);
 		 	pl.cos1 = dot_product(&node.normal, &inv);
 		 	pl.cos2 = sqrt(1 - (pl.ior * pl.ior) * (1 - (pl.cos1 * pl.cos1)));
-
-		// 	if (pl.cos1 >= 0)
-		 //		pl.teta = pl.ior * pl.cos1 - pl.cos2;
-		 	//else
-		 		pl.teta = pl.ior * pl.cos1 + pl.cos2;
+   			// if (pl.cos1 >= 0) 
+      //   	 	pl.teta = pl.ior * pl.cos1 - pl.cos2; 
+      //  		else 
+         		pl.teta = pl.ior * pl.cos1 + pl.cos2; 
 		 	pl.tmp1 = v_double_mult(&node.normal, pl.teta);
 		 	pl.tmp2 = v_double_mult(&rayon, pl.ior);
 		 	refract.rayon = v_v_add(&pl.tmp2, &pl.tmp1);
 
-		// //	if (pl.cos2 > 1.0)
-		// //		return (c);
-		// 	pl.cos1 = dot_product(&node.normal, &rayon) * -1;
-		// 	pl.cos2 = pl.ior * pl.ior * (1 - pl.cos1 * pl.cos1);
-		// 	pl.cos2 = sqrt(1.0 - pl.cos2);
-		// 	pl.teta = pl.ior * pl.cos1 - pl.cos2;
-		// 	pl.tmp1 = v_double_mult(&node.normal, pl.teta);
-		// 	pl.tmp2 = v_double_mult(&rayon, pl.ior);
-		// 	refract.rayon = v_v_add(&pl.tmp2, &pl.tmp1);
-
 		 	pl.tmp1 = v_double_mult(&refract.rayon, 0.01);
 		 	refract.origin = v_v_add(&node.node, &pl.tmp1);
-		 	e->refract_color = c_double_mult(&c, 0.75);
+		 	e->refract_color = c_double_mult(&c, e->refract_inc);
 
 		 	t_color lol = cast_ray(e, refract.rayon, refract.origin);
-		 	printf("r %f g %f b %f\n", lol.r, lol.g, lol.b);
-		 	t_color xd2 = c_double_mult(&lol, 0.25);
+		 	t_color xd2 = c_double_mult(&lol, 1 - e->refract_inc);
 		 	e->color_finale = c_c_add(&e->refract_color, &xd2);
 		}
 	}

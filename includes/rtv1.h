@@ -79,6 +79,8 @@ struct					s_object
 	int			id;
 	int 		reflect;
 	int 		refract;
+	double 		refract_inc;
+
 	t_object	*next;
 };
 
@@ -122,6 +124,7 @@ struct 					s_env
 	int 		in_out;
 	int 		reflect;
 	int 		refract;
+	double 		refract_inc;
 	int 		intersect;
 };
 
@@ -228,7 +231,7 @@ struct							s_parsing
 	char						*tmp;
 }; 
 
-void		add_new_object(t_object **list, t_object *object);
+void							add_new_object(t_object **list, t_object *object);
 void							exit_parser(int flag);
 void							create_tree(t_env *e, char **str);
 void							char_is_valid(char a, char b);
@@ -260,10 +263,11 @@ t_color							c_c_add(t_color *a, t_color *b);
 t_color							c_double_add(t_color *a, double b);
 t_color							c_double_pow(t_color *a, double b);
 t_color							c_double_mult(t_color *a, double b);
-t_color	get_color(t_env *e);
+t_color							get_color(t_env *e);
 void							get_light(t_env *e);
+void							parse_material(char *material, t_object *object);
 t_color							cast_ray(t_env *e, t_vector rayon, t_vector origin);
-void	check_intersection(t_env *e, t_object *object);
+void							check_intersection(t_env *e, t_object *object);
 int								check_if_light_is_blocked(t_env *e);
 void							blocked_by_a_plane(t_env *e, int *light_blocked);
 void							blocked_by_a_cylinder(t_env *e, int *light_blocked);
@@ -284,6 +288,7 @@ int								create_object(t_json *object, char *str, int i);
 void							ft_print_err(int argc);
 void							ft_help(void);
 void							ft_kill(char *text);
+void							exit_rt(int flag);
 
 
 /// test titi

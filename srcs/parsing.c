@@ -29,6 +29,8 @@ void		get_object(t_env *e, t_json *json)
 			create_cone(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "light")))
 			create_light(e, tmp);
+		else
+			exit_parser(1);
 		tmp = tmp->next;
 	}
 }
