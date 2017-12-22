@@ -12,6 +12,20 @@
 
 #include "rtv1.h"
 
+void	get_object_values(t_env *e, t_object *object)
+{
+	e->current_node = object->node;
+	e->current_node_normal = object->node_normal;
+	e->current_color = object->color;
+	e->ambient = object->ambient;
+	e->diffuse = object->diffuse;
+	e->specular = object->specular;
+	e->reflect = object->reflect;
+	e->refract = object->refract;
+	e->specular = object->specular;
+	e->id_object = object->id;
+}
+
 int sort_type(t_env *e, t_object *object)
 {
 	int intersect;
@@ -35,14 +49,9 @@ void check_intersection(t_env *e, t_object *object)
 		if (sort_type(e, object) && e->solution < e->distance)
 		{
 			e->distance = e->solution; 
-			e->current_node = object->node;
-			e->current_node_normal = object->node_normal;
-			e->current_color = object->color;
-
-			e->reflect = object->reflect;
-			e->refract = object->refract;
-			e->refract_inc = object->refract_inc;
-			e->id_object = object->id;
+			get_object_values(e, object);
+			if (!(ft_strcmp("plane", object->type)))
+				e->bump = 1;
 
 			e->intersect = 1;
 		}

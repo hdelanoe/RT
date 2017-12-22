@@ -34,9 +34,11 @@ t_color	get_color(t_env *e)
 	t_vector	tmp_angle;
 	t_light		*tmp_light;
 	t_vector 	view_rayon;
-	t_color 	add;
+	t_color 	diffuse;
+	double 		specular;
 	
-	add = c_double_pow(&e->current_color, 1/2.2);
+	diffuse = c_double_mult(&e->current_color, e->diffuse);
+	diffuse = c_double_pow(&e->current_color, 2.2);
 	view_rayon = e->current_rayon;
 	tmp_light = e->light;
 	while (tmp_light)
@@ -48,24 +50,26 @@ t_color	get_color(t_env *e)
 		e->current_rayon = tmp_light->rayon;
 
 		if (check_if_light_is_blocked(e))
-			add = set_color(0, 0, 0); 
+			diffuse = set_color(0, 0, 0);
 		else
 		{
 			tmp_angle = v_double_mult(&tmp_light->rayon, (-1));
 			tmp_light->angle = dot_product(&e->current_node_normal, &tmp_angle);
+			specular = e->specular * get_specular(tmp_light, &e->current_rayon, &e->current_node_normal);
 			if (tmp_light->angle <= 0)
-				add = set_color(0, 0, 0);
+				diffuse = set_color(0, 0, 0);
 			else
 			{
-				add = c_c_mult(&add, &tmp_light->color);
-				add = c_double_pow(&add, 1/2.2);
-			 	add = c_double_add(&add, get_specular(tmp_light, &e->current_rayon, &e->current_node_normal));
-			//	printf("color r %f, g %f, b %f \n", add.r, add.g, add.b);
-				add = c_double_mult(&add, tmp_light->angle);
+			//	printf("c r %f g %f b%f\n",tmp_light->color.r, tmp_light->color.g, tmp_light->color.b);
+				diffuse = c_c_mult(&diffuse, &tmp_light->color);
+				diffuse = c_double_pow(&diffuse, 1/2.2);
+				diffuse = c_double_add(&diffuse, specular);
+				diffuse = c_double_mult(&diffuse, tmp_light->angle);
 			}
 		}
-		e->color_finale = c_c_add(&e->color_finale, &add);
+		e->color_finale = c_c_add(&e->color_finale, &diffuse);
 		tmp_light = tmp_light->next;
 	}
+	e->color_finale = c_double_add(&e->color_finale, e->ambient);
 	return (e->color_finale);
 }

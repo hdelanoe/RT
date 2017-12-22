@@ -39,19 +39,15 @@ void		create_plane(t_env *e, t_json *json)
 		plane->id = ft_atoi(json->member->name);
 		if (!(plane->type = ft_strdup("plane")))
 			exit_rt(1);
-		plane->reflect = 0;
-		plane->refract = 0;
-		plane->refract_inc = 0;
+		init_material(plane);
 		while(json->member->member)
 		{
 			if (ft_strcmp(json->member->member->name, "coord") == 0)
 				plane->point = parse_point(json->member->member->member);
 			else if (ft_strcmp(json->member->member->name, "normal") == 0)
 				plane->normal = parse_normal(json->member->member->member);
-			else if (ft_strcmp(json->member->member->name, "colors") == 0)
-				plane->color = parse_color(json->member->member->member);
 			else if (ft_strcmp(json->member->member->name, "material") == 0)
-				parse_material(json->member->member->content, plane);
+				parse_material(json->member->member, plane);
 			else
 				exit_parser(1);
 			json->member->member = json->member->member->next;
@@ -71,19 +67,15 @@ void		create_sphere(t_env *e, t_json *json)
 		sphere = (t_object*)ft_memalloc(sizeof(t_object));
 		sphere->id = ft_atoi(json->member->name);
 		sphere->type = ft_strdup("sphere");
-		sphere->reflect = 0;
-		sphere->refract = 0;
-		sphere->refract_inc = 0;
+		init_material(sphere);
 		while (json->member->member)
 		{
 			if (ft_strcmp(json->member->member->name, "coord") == 0)
 				sphere->center = parse_point(json->member->member->member);
 			else if (ft_strcmp(json->member->member->name, "radius") == 0)
 				sphere->radius = ft_atod(json->member->member->content);
-			else if (ft_strcmp(json->member->member->name, "colors") == 0)
-				sphere->color = parse_color(json->member->member->member);
 			else if (ft_strcmp(json->member->member->name, "material") == 0)
-				parse_material(json->member->member->content, sphere);
+				parse_material(json->member->member, sphere);
 			else
 				exit_parser(1);
 			json->member->member = json->member->member->next;
@@ -103,9 +95,7 @@ void		create_cylinder(t_env *e, t_json *json)
 		cylinder = (t_object*)ft_memalloc(sizeof(t_object));
 		cylinder->id = ft_atoi(json->member->name);
 		cylinder->type = ft_strdup("cylinder");
-		cylinder->reflect = 0;
-		cylinder->refract = 0;
-		cylinder->refract_inc = 0;
+		init_material(cylinder);
 		while (json->member->member)
 		{
 			if (ft_strcmp(json->member->member->name, "coord") == 0)
@@ -116,10 +106,8 @@ void		create_cylinder(t_env *e, t_json *json)
 				cylinder->radius = ft_atod(json->member->member->content);
 			else if (ft_strcmp(json->member->member->name, "length") == 0)
 				cylinder->lenght_max = ft_atod(json->member->member->content);
-			else if (ft_strcmp(json->member->member->name, "colors") == 0)
-				cylinder->color = parse_color(json->member->member->member);
 			else if (ft_strcmp(json->member->member->name, "material") == 0)
-				parse_material(json->member->member->content, cylinder);
+				parse_material(json->member->member, cylinder);
 			else
 				exit_parser(1);
 			json->member->member = json->member->member->next;
@@ -139,9 +127,7 @@ void		create_cone(t_env *e, t_json *json)
 		cone = (t_object*)ft_memalloc(sizeof(t_object));
 		cone->id = ft_atod(json->member->name);
 		cone->type = ft_strdup("cone");
-		cone->reflect = 0;
-		cone->refract = 0;
-		cone->refract_inc = 0;
+		init_material(cone);
 		while(json->member->member)
 		{
 			if (ft_strcmp(json->member->member->name, "vertex") == 0)
@@ -152,10 +138,8 @@ void		create_cone(t_env *e, t_json *json)
 				cone->lenght_max = ft_atod(json->member->member->content);
 			if (ft_strcmp(json->member->member->name, "axis") == 0)
 				cone->axis = parse_point(json->member->member->member);
-			if (ft_strcmp(json->member->member->name, "colors") == 0)
-				cone->color = parse_color(json->member->member->member);
 			else if (ft_strcmp(json->member->member->name, "material") == 0)
-				parse_material(json->member->member->content, cone);
+				parse_material(json->member->member, cone);
 			else
 				exit_parser(1);
 			json->member->member = json->member->member->next;

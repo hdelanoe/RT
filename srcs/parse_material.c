@@ -12,25 +12,37 @@
 
 #include "rtv1.h"
 
-void	parse_material(char *material, t_object *object)
+void	init_material(t_object *object)
 {
-	if (!(ft_strcmp(material, "mirror")))
-	{
-		object->reflect = 1;
-		object->refract = 0;
-		object->refract_inc = 0.0;
-	}
-	else if (!(ft_strcmp(material, "glass")))
-	{
+	object->color = set_color(0, 0, 0);
+	object->ambient = 0.125;
+	object->diffuse = 0.875;
+	object->specular = 0.9;
+	object->reflect = 0;
+	object->refract = 0;
+	object->absorbtion = 0;
+}
 
-		object->reflect = 0;
-		object->refract = 1;
-		object->refract_inc = 0.25;
-	}
-	else
+void	parse_material(t_json *material, t_object *object)
+{
+	while (material->member)
 	{
-		object->reflect = 0;
-		object->refract = 0;
-		object->refract_inc = 0;
-	}	
+		if (ft_strcmp(material->member->name, "color") == 0)
+			object->color = parse_color(material->member->member);
+		else if (ft_strcmp(material->member->name, "ambient") == 0)
+			object->ambient = ft_atod(material->member->content);
+		else if (ft_strcmp(material->member->name, "diffuse") == 0)
+			object->diffuse = ft_atod(material->member->content);
+		else if (ft_strcmp(material->member->name, "specular") == 0)
+			object->specular = ft_atod(material->member->content);
+		else if (ft_strcmp(material->member->name, "reflect") == 0)
+			object->reflect = ft_atod(material->member->content);
+		else if (ft_strcmp(material->member->name, "refract") == 0)
+			object->refract = ft_atod(material->member->content);
+		else if (ft_strcmp(material->member->name, "absorbtion") == 0)
+			object->absorbtion = ft_atod(material->member->content);
+		else
+			exit_parser(1);
+		material->member = material->member->next;
+	}
 }

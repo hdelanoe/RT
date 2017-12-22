@@ -42,6 +42,7 @@ int			main(int argc, char **argv)
 	t_env	*e;
 	int		ret;
 
+	loadPermutation();
 	ret = 0;
 	if (!(e = (t_env*)ft_memalloc(sizeof(t_env))))
 		exit_rt(1);

@@ -65,6 +65,7 @@ struct					s_color
 struct					s_object
 {
 	char 		*type;
+	int			id;
 	t_vector	point;
 	t_vector 	center;
 	t_vector	vertex;
@@ -73,13 +74,15 @@ struct					s_object
 	double		lenght_max;
 	double		tangent;
 	t_vector	axis;
-	t_color		color;
 	t_vector	node;
 	t_vector	node_normal;
-	int			id;
+	t_color		color;
+	double 		ambient;
+	double 		diffuse;
+	double 		specular;
 	int 		reflect;
 	int 		refract;
-	double 		refract_inc;
+	double 		absorbtion;
 
 	t_object	*next;
 };
@@ -122,9 +125,13 @@ struct 					s_env
 	double		distance;
 	double		solution;
 	int 		in_out;
+	int 		bump;
+	double 		ambient;
+	double 		diffuse;
+	double 		specular;
 	int 		reflect;
 	int 		refract;
-	double 		refract_inc;
+	double 		absorbtion;
 	int 		intersect;
 };
 
@@ -231,6 +238,8 @@ struct							s_parsing
 	char						*tmp;
 }; 
 
+int p[512];
+
 void							add_new_object(t_object **list, t_object *object);
 void							exit_parser(int flag);
 void							create_tree(t_env *e, char **str);
@@ -265,7 +274,7 @@ t_color							c_double_pow(t_color *a, double b);
 t_color							c_double_mult(t_color *a, double b);
 t_color							get_color(t_env *e);
 void							get_light(t_env *e);
-void							parse_material(char *material, t_object *object);
+void							parse_material(t_json *material, t_object *object);
 t_color							cast_ray(t_env *e, t_vector rayon, t_vector origin);
 void							check_intersection(t_env *e, t_object *object);
 int								check_if_light_is_blocked(t_env *e);
@@ -289,6 +298,12 @@ void							ft_print_err(int argc);
 void							ft_help(void);
 void							ft_kill(char *text);
 void							exit_rt(int flag);
+double 							fade(double t);
+double 							lerp(double t, double a, double b);
+double 							grad(int hash, double x, double y, double z);
+double 							noise(double x, double y, double z);
+void							init_material(t_object *object);
+void 							loadPermutation(void);
 
 
 /// test titi

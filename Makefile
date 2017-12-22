@@ -22,7 +22,7 @@ SRCS		= 	srcs/main.c \
 				srcs/math_tools.c \
 				srcs/user_interactions.c \
 				srcs/colors.c \
-				srcs/intersection.c \
+				srcs/basic_intersection.c \
 				srcs/parsing.c \
 				srcs/parse_material.c \
 				srcs/get_parsing.c \
@@ -32,6 +32,7 @@ SRCS		= 	srcs/main.c \
 				srcs/torus.c \
 				srcs/parsing_tools.c \
 				srcs/errors.c \
+				srcs/perlin_noise.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 

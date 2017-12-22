@@ -12,6 +12,25 @@
 
 #include "rtv1.h"
 
+void 	init_rayon_values(t_env *e, t_vector rayon, t_vector origin)
+{
+	e->current_rayon = rayon;
+	e->current_origin = origin;
+	e->color_finale = e->refract_color;
+	e->intersect = 0;
+	e->reflect = 0;
+	e->refract = 0;
+	e->bump = 0;
+}
+
+t_vector bump_normal(t_vector normal)
+{
+	double n;
+
+	n = noise(normal.x, normal.y, normal.z);
+	return (v_double_mult(&normal, n));
+}
+
 t_color	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 {
 	t_physics	pl;
@@ -19,20 +38,23 @@ t_color	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 	t_camera 	refract;
 	t_node		node;
 	t_object 	*tmp_object;
-	t_color c = set_color(0, 0, 0);
-	e->current_rayon = rayon;
-	e->current_origin = origin;
-	e->color_finale = e->refract_color;
-	e->intersect = 0;
-	e->reflect = 0;
-	e->refract = 0;
+	t_color 	c;
+
+	c = set_color(0, 0, 0);
+	init_rayon_values(e, rayon, origin);
 //	printf("r %f g %f b %f\n", e->color_finale.r, e->color_finale.g, e->color_finale.b);
 	tmp_object = e->object;
 	check_intersection(e, tmp_object);
 	if (e->intersect)
 	{
+
 		node.node = e->current_node;
 		node.normal = e->current_node_normal;
+		if (e->bump)
+		{
+			node.node = bump_normal(e->current_node);
+			node.normal = bump_normal(e->current_node_normal);
+		}
 		e->color_finale = get_color(e);
 		if (e->reflect == 1)
 		{
@@ -75,10 +97,10 @@ t_color	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 
 		 	pl.tmp1 = v_double_mult(&refract.rayon, 0.01);
 		 	refract.origin = v_v_add(&node.node, &pl.tmp1);
-		 	e->refract_color = c_double_mult(&c, e->refract_inc);
+		 	e->refract_color = c_double_mult(&c, 1 - e->absorbtion);
 
 		 	t_color lol = cast_ray(e, refract.rayon, refract.origin);
-		 	t_color xd2 = c_double_mult(&lol, 1 - e->refract_inc);
+		 	t_color xd2 = c_double_mult(&lol, e->absorbtion);
 		 	e->color_finale = c_c_add(&e->refract_color, &xd2);
 		}
 	}
@@ -91,7 +113,7 @@ void	ray_tracer(t_env *e, t_mlx *mlx)
 	t_vector	viewplan_point;
 
 	e->in_out = -1;
-	e->camera.origin = set_vector(0, 0, -(double)WIN_Y);
+	e->camera.origin = set_vector(0, 0, -(double)WIN_X);
 
 	grid.y = 0;
 	grid.y1 = (double)WIN_Y / 2;
@@ -102,7 +124,6 @@ void	ray_tracer(t_env *e, t_mlx *mlx)
 		while (grid.x < WIN_X)
 		{
 			e->refract_color = set_color(0, 0, 0);
-			e->color_finale = e->refract_color;
 			e->distance = 100000;
 			viewplan_point = set_vector(grid.x1, grid.y1, 0);
 			e->camera.rayon = v_v_subs(&viewplan_point, &e->camera.origin);
