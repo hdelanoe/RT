@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pixelizatoin.c                                     :+:      :+:    :+:   */
+/*   pixelization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: notraore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nobila <nobila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 13:07:11 by notraore          #+#    #+#             */
-/*   Updated: 2017/12/08 13:07:13 by notraore         ###   ########.fr       */
+/*   Updated: 2017/12/23 17:58:26 by nobila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
+//antialiasing
 void	draw(t_datas *d, t_mlx *mlx, t_object *object)
 {
 	double		x;
@@ -68,7 +68,8 @@ void	draw(t_datas *d, t_mlx *mlx, t_object *object)
 	}
 }
 
-void		pxl_raytracing(t_all *all, int pxlnbr)
+//antialiasing
+void		pxl_raytracing(t_all *all)
 {
 	int			x1;
 	int			y1;
@@ -76,6 +77,7 @@ void		pxl_raytracing(t_all *all, int pxlnbr)
 	int			tmpy;
 
 	all->y = 0;
+	init_lst(all);
 	y1 = (HEIGHT / 2);
 	while (all->y < HEIGHT)
 	{
@@ -85,6 +87,7 @@ void		pxl_raytracing(t_all *all, int pxlnbr)
 		{
 			all->dist = 200000;
 			all->ray = init_ray(all, x1, y1);
+			cast_smo();
 			tmpy = all->y;
 			tmpx = all->x;
 			while (all->y < tmpy + pxlnbr)
@@ -107,6 +110,6 @@ void		pxl_raytracing(t_all *all, int pxlnbr)
 			all->o_tmp = all->head;
 		}
 		all->y += pxlnbr;
-		y1 -= pxlnbr;
+		// y1 -= pxlnbr;
 	}
 }

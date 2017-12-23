@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors_op2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nobila <nobila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 17:55:04 by hdelanoe          #+#    #+#             */
-/*   Updated: 2017/12/12 17:55:05 by hdelanoe         ###   ########.fr       */
+/*   Updated: 2017/12/23 18:31:59 by nobila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ t_color		c_double_mult(t_color *a, double b)
 
 void		print_color(t_color *color, t_env *e, int x, int y)
 {
-	*color = c_double_mult(color, 255);
-	e->mlx.data[(x + y * WIN_X) * 4 + 0] = color->b;
-	e->mlx.data[(x + y * WIN_X) * 4 + 1] = color->g;
-	e->mlx.data[(x + y * WIN_X) * 4 + 2] = color->r;
+	e->mlx.data[(x + y * WIN_X) * 4 + 0] = color->b * 255;
+	e->mlx.data[(x + y * WIN_X) * 4 + 1] = color->g * 255;
+	e->mlx.data[(x + y * WIN_X) * 4 + 2] = color->r * 255;
 }

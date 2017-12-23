@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nobila <nobila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/16 22:53:25 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/12/12 19:41:17 by hdelanoe         ###   ########.fr       */
+/*   Updated: 2017/12/23 18:52:46 by nobila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 # include <time.h>
 # include <errno.h>
 # include <stdio.h>
+# include <stdbool.h>
 # define A printf("File = [%s]\nLine = [%d]\nFunction = [%s]\n", __FILE__, __LINE__, __FUNCTION__);
 
-# define WIN_X 400
-# define WIN_Y 300
+# define WIN_X 1000
+# define WIN_Y 1000
 
 #define MAX_RECURSION 1
 # define R_VOID 1.0
@@ -178,6 +179,7 @@ struct 					s_env
 	double			x1;
 	double			y1;
 	double			z1;
+	int				pixelize;
 };
 
 
@@ -279,6 +281,9 @@ struct							s_parsing
 }; 
 
 int p[512];
+
+int								proper_exit(t_env *e);
+void							pxl_tracer(t_env *e);
 
 void							add_new_object(t_object **list, t_object *object);
 void							exit_parser(int flag);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_tracer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nobila <nobila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 20:12:37 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/12/14 16:07:51 by hdelanoe         ###   ########.fr       */
+/*   Updated: 2017/12/23 18:56:50 by nobila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ void	ray_tracer(t_env *e)
 	t_vector	tmp_vp_pointx;
 	t_vector	tmp_vp_pointy;
 
-
 	e->in_out = -1;
 	y = 0;
 	while (y < WIN_Y)
@@ -136,5 +135,84 @@ void	ray_tracer(t_env *e)
 			x++;
 		}
 		y++;
+	}
+}
+
+// while (y < HEIGHT)
+// 	{
+// 		x = 0;
+// 		x1 = -(WIDTH / 2);
+// 		while (x < WIDTH)
+// 		{
+// 			all->dist = 200000;
+// 			all->ray = init_ray(all, x1, y1);
+// 			tmpy = all->y;
+// 			tmpx = x;
+// 			while (all->y < tmpy + pxlnbr)
+// 			{
+// 				if (x != tmpx)
+// 				{
+// 					x -= pxlnbr;
+// 					x1 -= pxlnbr;
+// 				}
+// 				while (x < tmpx + pxlnbr)
+// 				{
+// 					if (x > 0 && x < WIDTH && all->y < HEIGHT && all->y > 0)
+// 						pixel_puts(&all->clr, all);
+// 					x++;
+// 					x1++;
+// 				}
+// 				all->y++;
+// 			}
+// 			all->y = tmpy;
+// 			all->o_tmp = all->head;
+// 		}
+// 		all->y += pxlnbr;
+// 		y1 -= pxlnbr;
+// 	}
+
+void	pxl_tracer(t_env *e)
+{
+	int			x;
+	int			y;
+
+	int			tmpx;
+	int			tmpy;
+	t_vector	viewplane_point;
+	t_vector	tmp_vp_pointx;
+	t_vector	tmp_vp_pointy;
+
+	e->in_out = -1;
+	y = 0;
+	while (y < WIN_Y)
+	{
+		x = 0;
+		while (x < WIN_X)
+		{
+			tmpx = x;
+			tmpy = y;
+			e->refract_color = set_color(0, 0, 0);
+			e->distance = 100000;
+			tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
+			tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
+			viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);
+			viewplane_point = v_v_subs(&viewplane_point, &tmp_vp_pointy);
+			e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
+			e->camera.rayon = normalize(&e->camera.rayon);
+			cast_ray(e, e->camera.rayon, e->camera.origin);
+			while (y < tmpy + 13)
+			{
+				if (x != tmpx)
+					x -= 13;
+				while (x < tmpx + 13)
+				{
+ 					print_color(&e->color_finale, e, x, y);
+ 					x++;
+ 				}
+ 				y++;
+ 			}
+			y = tmpy;
+		}
+		y+=13;
 	}
 }

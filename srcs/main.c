@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nobila <nobila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 20:12:37 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/06/16 19:50:51 by dguy-caz         ###   ########.fr       */
+/*   Updated: 2017/12/23 18:52:24 by nobila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void		display_window(t_env *env)
 	camera_transformation(env);
 	ray_tracer(env);
 	mlx_hook(env->mlx.win_ptr, 2, (1L << 0), key_functions, env);
+	mlx_hook(env->mlx.win_ptr, 17, (1L << 17), proper_exit, env);
 	mlx_put_image_to_window(env->mlx.mlx_ptr, env->mlx.win_ptr, env->mlx.img_ptr, 0, 0);
 	mlx_loop(env->mlx.mlx_ptr);
 	mlx_destroy_window(env->mlx.mlx_ptr, env->mlx.win_ptr);
@@ -44,6 +45,7 @@ int			main(int argc, char **argv)
 
 	loadPermutation();
 	ret = 0;
+
 	if (!(e = (t_env*)ft_memalloc(sizeof(t_env))))
 		exit_rt(1);
 	if (!(e->object = (t_object*)ft_memalloc(sizeof(t_object))))
@@ -52,6 +54,7 @@ int			main(int argc, char **argv)
 	if (!(e->light = (t_light*)ft_memalloc(sizeof(t_light))))
 		exit_rt(1);
 	e->light->next = NULL;
+	e->pixelize = 0;
 	if (argc != 2)
 		ft_print_err(argc);
 	ret = parsing(e, argv[1]);
