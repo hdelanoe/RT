@@ -1,0 +1,10 @@
+-W avancer
+-S reculer
+-A straffer gauche
+-D straffer droite
+-Q lift up
+-E lift down
+-Z incliner gauche
+-X incliner droite
+Fleches directionnelles pour se regarder haut bas gauche droite
+ESPACE pour activer/desactiver la pixelisation
