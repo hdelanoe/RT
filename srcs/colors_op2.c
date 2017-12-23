@@ -22,10 +22,10 @@ t_color		c_double_mult(t_color *a, double b)
 	return (color);
 }
 
-void		print_color(t_color *color, t_mlx *mlx, int x, int y)
+void		print_color(t_color *color, t_env *e, int x, int y)
 {
 	*color = c_double_mult(color, 255);
-	mlx->data[(x + y * WIN_X) * 4 + 0] = color->b;
-	mlx->data[(x + y * WIN_X) * 4 + 1] = color->g;
-	mlx->data[(x + y * WIN_X) * 4 + 2] = color->r;
+	e->mlx.data[(x + y * WIN_X) * 4 + 0] = color->b;
+	e->mlx.data[(x + y * WIN_X) * 4 + 1] = color->g;
+	e->mlx.data[(x + y * WIN_X) * 4 + 2] = color->r;
 }

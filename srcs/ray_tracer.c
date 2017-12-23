@@ -107,35 +107,34 @@ t_color	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 	return (e->color_finale);
 }
 
-void	ray_tracer(t_env *e, t_mlx *mlx)
+void	ray_tracer(t_env *e)
 {
-	t_grid		grid;
-	t_vector	viewplan_point;
+	int			x;
+	int			y;
+	t_vector	viewplane_point;
+	t_vector	tmp_vp_pointx;
+	t_vector	tmp_vp_pointy;
+
 
 	e->in_out = -1;
-	e->camera.origin = set_vector(0, 0, -(double)WIN_X);
-
-	grid.y = 0;
-	grid.y1 = (double)WIN_Y / 2;
-	while (grid.y < WIN_Y)
+	y = 0;
+	while (y < WIN_Y)
 	{
-		grid.x = 0;
-		grid.x1 = -(double)WIN_X / 2;
-		while (grid.x < WIN_X)
+		x = 0;
+		while (x < WIN_X)
 		{
 			e->refract_color = set_color(0, 0, 0);
 			e->distance = 100000;
-			viewplan_point = set_vector(grid.x1, grid.y1, 0);
-			e->camera.rayon = v_v_subs(&viewplan_point, &e->camera.origin);
+			tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
+			tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
+			viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);
+			viewplane_point = v_v_subs(&viewplane_point, &tmp_vp_pointy);
+			e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
 			e->camera.rayon = normalize(&e->camera.rayon);
 			cast_ray(e, e->camera.rayon, e->camera.origin);
- 			print_color(&e->color_finale, mlx, grid.x, grid.y);
-			grid.x++;
-			grid.x1++;
+ 			print_color(&e->color_finale, e, x, y);
+			x++;
 		}
-		grid.y++;
-		grid.y1--;
+		y++;
 	}
 }
-
-

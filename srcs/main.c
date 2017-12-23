@@ -23,18 +23,18 @@ void	exit_rt(int flag)
 
 void		display_window(t_env *env)
 {
-	t_mlx	mlx;
-
-	mlx.mlx_ptr = mlx_init();
-	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, WIN_X, WIN_Y, "RTv1");
-	mlx.img_ptr = mlx_new_image(mlx.mlx_ptr, WIN_X, WIN_Y);
-	mlx.data = (unsigned char*)mlx_get_data_addr(mlx.img_ptr,
-	&mlx.bpp, &mlx.l_size, &mlx.endian);
-	ray_tracer(env, &mlx);
-	mlx_hook(mlx.win_ptr, 2, (1L << 0), key_functions, &mlx);
-	mlx_put_image_to_window(mlx.mlx_ptr, mlx.win_ptr, mlx.img_ptr, 0, 0);
-	mlx_loop(mlx.mlx_ptr);
-	mlx_destroy_window(mlx.mlx_ptr, mlx.win_ptr);
+	env->mlx.mlx_ptr = mlx_init();
+	env->mlx.win_ptr = mlx_new_window(env->mlx.mlx_ptr, WIN_X, WIN_Y, "RTv1");
+	env->mlx.img_ptr = mlx_new_image(env->mlx.mlx_ptr, WIN_X, WIN_Y);
+	env->mlx.data = (unsigned char*)mlx_get_data_addr(env->mlx.img_ptr,
+		&env->mlx.bpp, &env->mlx.l_size, &env->mlx.endian);
+	init_camera(env);
+	camera_transformation(env);
+	ray_tracer(env);
+	mlx_hook(env->mlx.win_ptr, 2, (1L << 0), key_functions, env);
+	mlx_put_image_to_window(env->mlx.mlx_ptr, env->mlx.win_ptr, env->mlx.img_ptr, 0, 0);
+	mlx_loop(env->mlx.mlx_ptr);
+	mlx_destroy_window(env->mlx.mlx_ptr, env->mlx.win_ptr);
 }
 
 int			main(int argc, char **argv)

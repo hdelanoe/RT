@@ -22,8 +22,8 @@
 # include <stdio.h>
 # define A printf("File = [%s]\nLine = [%d]\nFunction = [%s]\n", __FILE__, __LINE__, __FUNCTION__);
 
-# define WIN_X 1600
-# define WIN_Y 1300
+# define WIN_X 400
+# define WIN_Y 300
 
 #define MAX_RECURSION 1
 # define R_VOID 1.0
@@ -61,6 +61,16 @@ struct					s_color
 	double	g;
 	double	r;
 };
+
+typedef struct		s_matrix4x4
+{
+	double			m[4][4];
+}					t_matrix4x4;
+
+typedef struct		s_matrix4x1
+{
+	double			m[4][1];
+}					t_matrix4x1;
 
 struct					s_object
 {
@@ -104,12 +114,33 @@ struct 					s_node
 
 struct					s_camera
 {
-	t_vector	origin;
-	t_vector	rayon;
+	t_vector		origin;
+	t_vector		rayon;
+	t_vector		lookat;
+	t_vector		up;
+	t_vector		x_vector;
+	t_vector		y_vector;
+	t_vector		z_vector;
+	double			viewplane_width;
+	double			viewplane_height;
+	double			viewplane_distance;
+	double			*matrix;
 };
+
+typedef struct			s_mlx
+{
+	void			*win_ptr;
+	void			*mlx_ptr;
+	void			*img_ptr;
+	unsigned char	*data;
+	int				l_size;
+	int				bpp;
+	int				endian;
+}						t_mlx;
 
 struct 					s_env
 {
+	t_mlx			mlx;
 	t_object	*object;
 	t_light		*light;
 	t_camera	camera;
@@ -133,18 +164,22 @@ struct 					s_env
 	int 		refract;
 	double 		absorbtion;
 	int 		intersect;
+	t_vector		viewplane_point_up_left;
+	t_matrix4x4		rotation_matrix;
+	t_matrix4x4		translation_matrix;
+	t_matrix4x4		matrix_camera_system;
+	t_matrix4x1		matrix_camera_origin;
+	double			move_x;
+	double			move_y;
+	double			move_z;
+	double			rotate_x;
+	double			rotate_y;
+	double			rotate_z;
+	double			x1;
+	double			y1;
+	double			z1;
 };
 
-struct					s_mlx
-{
-	void			*win_ptr;
-	void			*mlx_ptr;
-	void			*img_ptr;
-	unsigned char	*data;
-	int				l_size;
-	int				bpp;
-	int				endian;
-};
 
 
 struct 					s_grid
@@ -179,18 +214,24 @@ struct							s_poly
 	double						c;
 	double						d;
 	double						e;
+	double						f;
 	double						p;
 	double						q;
 	double						r;
 	double						x;
 	double						y;
 	double						z;
+	double						ad;
+	double						bd;
 	double						s1;
 	double						s2;
 	double						s3;
 	double						s4;
 	double						discriminant;
 	double						len;
+	double						radian_x;
+	double						radian_y;
+	double						radian_z;
 };
 
 typedef struct 		s_paraboloid
@@ -213,7 +254,6 @@ struct							s_inter
 
 # define BUF_SIZ 2
 # include <stdlib.h>
-# include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
 
@@ -252,8 +292,8 @@ int								cone_intersection(t_env *e, t_object *cone);
 int								sphere_intersection(t_env *e, t_object *sphere);
 int								cylinder_intersection(t_env *e, t_object *cylinder);
 int								torus_intersection(t_env *e, t_object *torus);
-void							ray_tracer(t_env *e, t_mlx *mlx);
-int								key_functions(int keycode, t_mlx *mlx);
+void							ray_tracer(t_env *e);
+int								key_functions(int keycode, t_env *e);
 t_vector						set_vector(double x, double y, double z);
 double							magnitude(t_vector *a);
 t_vector						normalize(t_vector *a);
@@ -266,7 +306,7 @@ t_vector						v_double_subs(t_vector *a, double b);
 t_vector						v_double_mult(t_vector *a, double b);
 t_vector						v_double_div(t_vector *a, double b);
 t_color							set_color(double b, double g, double r);
-void							print_color(t_color *color, t_mlx *mlx, int x, int y);
+void							print_color(t_color *color, t_env *e, int x, int y);
 t_color							c_c_mult(t_color *a, t_color *b);
 t_color							c_c_add(t_color *a, t_color *b);
 t_color							c_double_add(t_color *a, double b);
@@ -282,7 +322,7 @@ void							blocked_by_a_plane(t_env *e, int *light_blocked);
 void							blocked_by_a_cylinder(t_env *e, int *light_blocked);
 void							blocked_by_a_sphere(t_env *e, int *light_blocked);
 void							blocked_by_a_cone(t_env *e, int *light_blocked);
-void						add_new_light(t_light **list, t_light *new_light);
+void							add_new_light(t_light **list, t_light *new_light);
 void							create_sphere(t_env *e, t_json *json);
 void							create_cone(t_env *e, t_json *json);
 void							create_cylinder(t_env *e, t_json *json);
@@ -304,6 +344,20 @@ double 							grad(int hash, double x, double y, double z);
 double 							noise(double x, double y, double z);
 void							init_material(t_object *object);
 void 							loadPermutation(void);
+void							init_camera(t_env *e);
+void							camera_transformation(t_env *e);
+void							viewplane_transformation(t_env *e);
+void							matrix_4x4_to_vectors(t_vector *a, t_vector *b, t_vector *c, t_matrix4x4 *matrix);
+double							degree_to_radian(double degree_angle);
+t_matrix4x4						rotation(double degree_x, double degree_y, double degree_z);
+void							rotation_matrix(t_matrix4x4 *rotation, t_poly *p);
+t_matrix4x4						matrix_camera_system(t_vector *a, t_vector *b, t_vector *c);
+t_matrix4x4						m4x4_m4x4_mult(t_matrix4x4 *camera_matrix, t_matrix4x4 *rotation);
+void							matrix_4x1_to_vectors(t_vector *a, t_matrix4x1 *matrix);
+void							update_system_translation(t_env *e, t_matrix4x4 *rot);
+t_matrix4x4						translation(t_env *e, t_matrix4x4 *rot);
+t_matrix4x1						matrix_camera_origin(t_vector *a);
+t_matrix4x1						m4x4_m4x1_mult_reduced(t_matrix4x4 *translation, t_matrix4x1 *matrix);
 
 
 /// test titi

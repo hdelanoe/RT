@@ -31,12 +31,17 @@ int		plane_intersection(t_env *e, t_object *plane)
 	else
 	{
 		e->solution = s;
-		tmp_node = v_double_mult(&e->current_rayon, e->solution);
-		plane->node = v_v_add(&e->current_origin, &tmp_node);
-		if (a < 0)
-			plane->node_normal = plane->normal;
+		if (e->solution < 0)
+			return (0);
 		else
-			plane->node_normal = v_double_mult(&plane->normal, (-1));
+		{
+			tmp_node = v_double_mult(&e->current_rayon, e->solution);
+			plane->node = v_v_add(&e->current_origin, &tmp_node);
+			if (a < 0)
+				plane->node_normal = plane->normal;
+			else
+				plane->node_normal = v_double_mult(&plane->normal, (-1));
+		}
 		return (1);
 	}
 }
@@ -63,10 +68,15 @@ int		sphere_intersection(t_env *e, t_object *sphere)
 			p.s2 = (- p.b - p.discriminant);
 			e->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
 		}
-		i.tmp_node = v_double_mult(&e->current_rayon, e->solution);
-		sphere->node = v_v_add(&e->current_origin, &i.tmp_node);
-		sphere->node_normal = v_v_subs(&sphere->node, &sphere->center);
-		sphere->node_normal = normalize(&sphere->node_normal);
+		if (e->solution < 0)
+			return (0);
+		else
+		{
+			i.tmp_node = v_double_mult(&e->current_rayon, e->solution);
+			sphere->node = v_v_add(&e->current_origin, &i.tmp_node);
+			sphere->node_normal = v_v_subs(&sphere->node, &sphere->center);
+			sphere->node_normal = normalize(&sphere->node_normal);
+		}
 	}
 	return (1);
 }
@@ -95,16 +105,21 @@ int		cylinder_intersection(t_env *e, t_object *cylinder)
 			p.s2 = (- p.b - p.discriminant) / (2 * p.a);
 			e->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
 		}
-		i.tmp_node = v_double_mult(&e->current_rayon, e->solution);
-		cylinder->node = v_v_add(&e->current_origin, &i.tmp_node);
-
-		p.tmp1 = (dot_product(&e->current_rayon, &cylinder->axis) * e->solution) + dot_product(&i.object_rayon, &cylinder->axis);
-		if (p.tmp1 > cylinder->lenght_max || p.tmp1 < 0)
+		if (e->solution < 0)
 			return (0);
-		i.tmp_node_normal1 = v_v_subs(&cylinder->node, &cylinder->center);
-		i.tmp_node_normal2 = v_double_mult(&cylinder->axis, p.tmp1);
-		cylinder->node_normal = v_v_subs(&i.tmp_node_normal1, &i.tmp_node_normal2);
-		cylinder->node_normal = normalize(&cylinder->node_normal);
+		else
+		{
+			i.tmp_node = v_double_mult(&e->current_rayon, e->solution);
+			cylinder->node = v_v_add(&e->current_origin, &i.tmp_node);
+
+			p.tmp1 = (dot_product(&e->current_rayon, &cylinder->axis) * e->solution) + dot_product(&i.object_rayon, &cylinder->axis);
+			if (p.tmp1 > cylinder->lenght_max || p.tmp1 < 0)
+				return (0);
+			i.tmp_node_normal1 = v_v_subs(&cylinder->node, &cylinder->center);
+			i.tmp_node_normal2 = v_double_mult(&cylinder->axis, p.tmp1);
+			cylinder->node_normal = v_v_subs(&i.tmp_node_normal1, &i.tmp_node_normal2);
+			cylinder->node_normal = normalize(&cylinder->node_normal);
+		}
 	}
 		return (1);
 }
@@ -136,17 +151,22 @@ int		cone_intersection(t_env *e, t_object *cone)
 			p.s2 = (- p.b - p.discriminant) / (2 * p.a);
 			e->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
 		}
-		i.tmp_node = v_double_mult(&e->current_rayon, e->solution);
-		cone->node = v_v_add(&e->current_origin, &i.tmp_node);
-
-		p.len = (p.tmp2 * e->solution) + p.tmp3;
-		if (p.len > cone->lenght_max || p.len < 0)
+		if (e->solution < 0)
 			return (0);
-		i.tmp_node_normal1 = v_v_subs(&cone->node, &cone->vertex);
-		i.tmp_node_normal2 = v_double_mult(&cone->axis, p.len);
-		i.tmp_node_normal2 = v_double_mult(&i.tmp_node_normal2, p.tmp1);
-		cone->node_normal = v_v_subs(&i.tmp_node_normal1, &i.tmp_node_normal2);
-		cone->node_normal = normalize(&cone->node_normal);
+		else
+		{
+			i.tmp_node = v_double_mult(&e->current_rayon, e->solution);
+			cone->node = v_v_add(&e->current_origin, &i.tmp_node);
+
+			p.len = (p.tmp2 * e->solution) + p.tmp3;
+			if (p.len > cone->lenght_max || p.len < 0)
+				return (0);
+			i.tmp_node_normal1 = v_v_subs(&cone->node, &cone->vertex);
+			i.tmp_node_normal2 = v_double_mult(&cone->axis, p.len);
+			i.tmp_node_normal2 = v_double_mult(&i.tmp_node_normal2, p.tmp1);
+			cone->node_normal = v_v_subs(&i.tmp_node_normal1, &i.tmp_node_normal2);
+			cone->node_normal = normalize(&cone->node_normal);
+		}
 		return (1);
 	}
 }

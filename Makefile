@@ -33,6 +33,9 @@ SRCS		= 	srcs/main.c \
 				srcs/parsing_tools.c \
 				srcs/errors.c \
 				srcs/perlin_noise.c \
+				srcs/camera.c \
+				srcs/matrix_rotation.c \
+				srcs/matrix_translation.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 
