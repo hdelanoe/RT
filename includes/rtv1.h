@@ -180,6 +180,8 @@ struct 					s_env
 	double			y1;
 	double			z1;
 	int				pixelize;
+	int				aa_flag;
+
 };
 
 
@@ -283,6 +285,7 @@ struct							s_parsing
 int p[512];
 
 int								proper_exit(t_env *e);
+void							aa_tracer(t_env *e);
 void							pxl_tracer(t_env *e);
 
 void							add_new_object(t_object **list, t_object *object);

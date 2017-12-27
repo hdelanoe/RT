@@ -59,7 +59,6 @@ void	draw(t_datas *d, t_mlx *mlx, t_object *object)
 			tmpclr.g /= 25;
 			tmpclr.b /= 25;
 			print_color(&tmpclr, mlx, x, y);
-
 			x++;
 			x1++;
 		}

@@ -24,7 +24,10 @@ t_color		c_double_mult(t_color *a, double b)
 
 void		print_color(t_color *color, t_env *e, int x, int y)
 {
-	e->mlx.data[(x + y * WIN_X) * 4 + 0] = color->b * 255;
-	e->mlx.data[(x + y * WIN_X) * 4 + 1] = color->g * 255;
-	e->mlx.data[(x + y * WIN_X) * 4 + 2] = color->r * 255;
+	if (x > 0 && x < WIN_X && y > 0 && y < WIN_Y)
+	{
+		e->mlx.data[(x + y * WIN_X) * 4 + 0] = color->b * 255;
+		e->mlx.data[(x + y * WIN_X) * 4 + 1] = color->g * 255;
+		e->mlx.data[(x + y * WIN_X) * 4 + 2] = color->r * 255;
+	}
 }

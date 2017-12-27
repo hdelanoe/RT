@@ -138,6 +138,60 @@ void	ray_tracer(t_env *e)
 	}
 }
 
+void	aa_tracer(t_env *e)
+{
+	int			x;
+	int			y;
+	int			ns;
+	double		aax;
+	double		aay;
+	t_color		aaclr;
+
+	t_vector	viewplane_point;
+	t_vector	tmp_vp_pointx;
+	t_vector	tmp_vp_pointy;
+
+	e->in_out = -1;
+	y = 0;
+	ns = 1;
+	while (y < WIN_Y)
+	{
+		x = 0;
+		while (x < WIN_X)
+		{
+			aay = 0;
+			aaclr = set_color(0,0,0);
+			while (aay < ns)
+			{
+				aax = 0;
+				while (aax < ns)
+				{
+					e->refract_color = set_color(0, 0, 0);
+					e->distance = 100000;
+					tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x + aax);
+					tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y + aay);
+					viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);
+					viewplane_point = v_v_subs(&viewplane_point, &tmp_vp_pointy);
+					e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
+					e->camera.rayon = normalize(&e->camera.rayon);
+					cast_ray(e, e->camera.rayon, e->camera.origin);
+					aaclr.r += e->color_finale.r;
+					aaclr.g += e->color_finale.g;
+					aaclr.b += e->color_finale.b;
+					aax += 0.25;
+				}
+				aay += 0.25;
+			}
+			aaclr.r /= 16;
+			aaclr.g /= 16;
+			aaclr.b /= 16;
+ 			print_color(&aaclr, e, x, y);
+			x++;
+		}
+		y++;
+	}
+}
+
 // while (y < HEIGHT)
 // 	{
 // 		x = 0;
