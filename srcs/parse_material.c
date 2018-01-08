@@ -14,7 +14,7 @@
 
 void	init_material(t_object *object)
 {
-	object->color = set_color(0, 0, 0);
+	object->color = set_color(0.5, 0.5, 0.5);
 	object->ambient = 0.125;
 	object->diffuse = 0.875;
 	object->specular = 0.9;

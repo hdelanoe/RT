@@ -30,7 +30,10 @@ void		get_object(t_env *e, t_json *json)
 		else if (!(ft_strcmp(tmp->name, "light")))
 			create_light(e, tmp);
 		else
+		{
+			A
 			exit_parser(1);
+		}
 		tmp = tmp->next;
 	}
 }

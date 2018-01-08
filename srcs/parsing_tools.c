@@ -37,7 +37,9 @@ void	char_is_valid(char a, char b)
 {
 	if (a != b)
 	{
+		ft_putchar('*');
 		ft_putchar(a);
+		ft_putchar('*');
 		exit_parser(1);
 	}
 }

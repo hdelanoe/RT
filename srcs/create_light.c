@@ -39,6 +39,7 @@ void debug_light(t_light *tmp)
 	printf("         g->%f\n", tmp->color.g);
 	printf("         b->%f\n", tmp->color.b);
 }
+
 void			create_light(t_env *e, t_json *json)
 {
 	t_light	*light;
@@ -51,7 +52,7 @@ void			create_light(t_env *e, t_json *json)
 		{
 			if (ft_strcmp(json->member->member->name, "coord") == 0)
 				light->origin = parse_point(json->member->member->member);
-			if (ft_strcmp(json->member->member->name, "color") == 0)
+			if (ft_strcmp(json->member->member->name, "colors") == 0)
 				light->color = parse_color(json->member->member->member);
 			json->member->member = json->member->member->next;
 		}

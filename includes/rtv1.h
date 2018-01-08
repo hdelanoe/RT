@@ -47,6 +47,7 @@ typedef struct s_vector	t_vector;
 typedef struct s_node	t_node;
 typedef struct s_poly	t_poly;
 typedef struct s_inter	t_inter;
+typedef struct s_wave 	t_wave;
 
 struct					s_vector
 {
@@ -61,6 +62,14 @@ struct					s_color
 	double	b;
 	double	g;
 	double	r;
+};
+
+struct 					s_wave
+{
+	t_color	issued;
+	t_color	diffuse;
+	t_color	add;
+	double 	specular;
 };
 
 typedef struct		s_matrix4x4

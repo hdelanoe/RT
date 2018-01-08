@@ -29,6 +29,27 @@ void		add_new_object(t_object **list, t_object *new_object)
 
 }
 
+void debug_object(t_object *tmp)
+{
+	t_vector origin;
+
+	if (!(ft_strcmp(tmp->type, "sphere")))
+			origin = tmp->center;
+		else if (!(ft_strcmp(tmp->type, "plane")))
+			origin = tmp->point;
+		else if (!(ft_strcmp(tmp->type, "cylinder")))
+			origin = tmp->center;
+		else if (!(ft_strcmp(tmp->type, "cone")))
+			origin = tmp->vertex;
+	printf("OBJECT :%s %i\n", tmp->type, tmp->id);
+	printf("origin : x->%f\n", origin.x);
+	printf("         y->%f\n", origin.y);
+	printf("         z->%f\n", origin.z);
+	printf("colors : r->%f\n", tmp->color.r);
+	printf("         g->%f\n", tmp->color.g);
+	printf("         b->%f\n", tmp->color.b);
+}
+
 void		create_plane(t_env *e, t_json *json)
 {
 	t_object	*plane;
@@ -48,11 +69,9 @@ void		create_plane(t_env *e, t_json *json)
 				plane->normal = parse_normal(json->member->member->member);
 			else if (ft_strcmp(json->member->member->name, "material") == 0)
 				parse_material(json->member->member, plane);
-			else
-				exit_parser(1);
 			json->member->member = json->member->member->next;
 		}
-	//	debug_plane(plane);
+		debug_object(plane);
 		add_new_object(&e->object, plane);
 		json->member = json->member->next;
 	}
@@ -76,11 +95,9 @@ void		create_sphere(t_env *e, t_json *json)
 				sphere->radius = ft_atod(json->member->member->content);
 			else if (ft_strcmp(json->member->member->name, "material") == 0)
 				parse_material(json->member->member, sphere);
-			else
-				exit_parser(1);
 			json->member->member = json->member->member->next;
 		}
-//		debug_sphere(sphere);
+		debug_object(sphere);
 		add_new_object(&e->object, sphere);
 		json->member = json->member->next;
 	}
@@ -108,11 +125,9 @@ void		create_cylinder(t_env *e, t_json *json)
 				cylinder->lenght_max = ft_atod(json->member->member->content);
 			else if (ft_strcmp(json->member->member->name, "material") == 0)
 				parse_material(json->member->member, cylinder);
-			else
-				exit_parser(1);
 			json->member->member = json->member->member->next;
 		}
-//		debug_cylinder(cylinder);
+		debug_object(cylinder);
 		add_new_object(&e->object, cylinder);
 		json->member = json->member->next;
 	}
@@ -140,11 +155,9 @@ void		create_cone(t_env *e, t_json *json)
 				cone->axis = parse_point(json->member->member->member);
 			else if (ft_strcmp(json->member->member->name, "material") == 0)
 				parse_material(json->member->member, cone);
-			else
-				exit_parser(1);
 			json->member->member = json->member->member->next;
 		}
-	//	cone->type = ft_strdup("cone");
+		debug_object(cone);
 		add_new_object(&e->object, cone);
 		json->member = json->member->next;
 	}
