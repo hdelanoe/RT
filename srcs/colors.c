@@ -74,6 +74,6 @@ t_color	get_color(t_env *e)
 		e->color_finale = c_c_add(&e->color_finale, &wave.add);
 		tmp_light = tmp_light->next;
 	}
-	e->color_finale = c_double_add(&e->color_finale, e->ambient);
+//	e->color_finale = c_double_add(&e->color_finale, e->ambient);
 	return (e->color_finale);
 }

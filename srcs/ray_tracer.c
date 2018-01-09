@@ -50,11 +50,11 @@ t_color	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 
 		node.node = e->current_node;
 		node.normal = e->current_node_normal;
-		if (e->bump)
-		{
-			node.node = bump_normal(e->current_node);
-			node.normal = bump_normal(e->current_node_normal);
-		}
+	//	if (e->bump)
+	//	{
+	//		node.node = bump_normal(e->current_node);
+	//		node.normal = bump_normal(e->current_node_normal);
+	//	}
 		e->color_finale = get_color(e);
 		if (e->reflect == 1)
 		{
@@ -81,9 +81,9 @@ t_color	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 			e->in_out *= -1;
 			c = e->color_finale;
 		 	if (e->in_out > 0)
-		 		pl.ior = R_VOID / R_AIR;
+		 		pl.ior = R_AIR / R_PMMA;
 		 	else
-		 		pl.ior = R_AIR / R_VOID;
+		 		pl.ior = R_PMMA / R_AIR;
 		 	t_vector inv = v_double_mult(&rayon, -1.0);
 		 	pl.cos1 = dot_product(&node.normal, &inv);
 		 	pl.cos2 = sqrt(1 - (pl.ior * pl.ior) * (1 - (pl.cos1 * pl.cos1)));

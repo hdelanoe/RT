@@ -277,8 +277,8 @@ struct							s_json
 {
 	char						*name;
 	char						*content;
-	struct s_json				*member;
-	struct s_json				*next;
+	t_json						*member;
+	t_json						*next;
 };
 
 struct							s_parsing
@@ -300,8 +300,9 @@ void							pxl_tracer(t_env *e);
 void							add_new_object(t_object **list, t_object *object);
 void							exit_parser(int flag);
 void							create_tree(t_env *e, char **str);
-void							char_is_valid(char a, char b);
+void							char_is_valid(char a, char b, char *str);
 void							add(t_json **current, t_json *new);
+int								get_content(char **content, char *str, int i);
 t_json							*new_object(void);
 void							display_window(t_env *e);
 int								plane_intersection(t_env *e, t_object *plane);
@@ -340,11 +341,11 @@ void							blocked_by_a_cylinder(t_env *e, int *light_blocked);
 void							blocked_by_a_sphere(t_env *e, int *light_blocked);
 void							blocked_by_a_cone(t_env *e, int *light_blocked);
 void							add_new_light(t_light **list, t_light *new_light);
-void							create_sphere(t_env *e, t_json *json);
-void							create_cone(t_env *e, t_json *json);
-void							create_cylinder(t_env *e, t_json *json);
-void							create_plane(t_env *e, t_json *json);
-void							create_torus(t_env *e, t_json *json);
+void							create_sphere(t_env *e, t_json *json, int *id);
+void							create_cone(t_env *e, t_json *json, int *id);
+void							create_cylinder(t_env *e, t_json *json, int *id);
+void							create_plane(t_env *e, t_json *json, int *id);
+void							create_torus(t_env *e, t_json *json, int *id);
 void							create_light(t_env *e, t_json *json);
 int								parsing(t_env *e, char *str);
 int								poly_2nd_degree(t_env *e, t_poly *p);
@@ -361,6 +362,7 @@ double 							grad(int hash, double x, double y, double z);
 double 							noise(double x, double y, double z);
 void							init_material(t_object *object);
 void 							loadPermutation(void);
+void							free_json(t_json *json);
 void							init_camera(t_env *e);
 void							camera_transformation(t_env *e);
 void							viewplane_transformation(t_env *e);

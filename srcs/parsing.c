@@ -14,84 +14,90 @@
 
 void		get_object(t_env *e, t_json *json)
 {
-	t_json *tmp;
+	int		id;
+	t_json	*tmp;
 
-	tmp = json->member;
-	while (tmp)
+	id = 0;
+	while (json->member)
 	{
-		if (!(ft_strcmp(tmp->name, "sphere")))
-			create_sphere(e, tmp);
-		else if (!(ft_strcmp(tmp->name, "plane")))
-			create_plane(e, tmp);
-		else if (!(ft_strcmp(tmp->name, "cylinder")))
-			create_cylinder(e, tmp);
-		else if (!(ft_strcmp(tmp->name, "cone")))
-			create_cone(e, tmp);
-		else if (!(ft_strcmp(tmp->name, "light")))
-			create_light(e, tmp);
+		if (!(ft_strcmp(json->member->name, "sphere")))
+			create_sphere(e, json->member, &id);
+		else if (!(ft_strcmp(json->member->name, "plane")))
+			create_plane(e, json->member, &id);
+		else if (!(ft_strcmp(json->member->name, "cylinder")))
+			create_cylinder(e, json->member, &id);
+		else if (!(ft_strcmp(json->member->name, "cone")))
+			create_cone(e, json->member, &id);
+		else if (!(ft_strcmp(json->member->name, "light")))
+			create_light(e, json->member);
 		else
 		{
 			A
 			exit_parser(1);
-		}
-		tmp = tmp->next;
+		tmp = json->member;
+		json->member = json->member->next;
+		free(tmp->name);
+		free(tmp->content);
+		free(tmp);
 	}
+}
+
+void		add_new_member(t_json **list, t_json *new_member)
+{
+	t_json	*tmp;
+
+	if (!(*list)->name)
+	{
+		free((*list));
+		(*list) = new_member;
+		return ;
+	}
+	tmp = (*list);
+	while ((*list)->next)
+		(*list) = (*list)->next;
+	(*list)->next = new_member;
+	(*list) = tmp;
+
 }
 
 int			create_object(t_json *object, char *str, int i)
 {
-	int		j;
-	t_json *tmp;
+	t_json *member;
 
 	object->member = new_object();
-	tmp = object->member;
-	char_is_valid(str[i], '{');
 	while (str[++i] && str[i] != '}')
 	{
 		if (str[i] == '"')
 		{
-			j = 1;
-			while (str[i + j] != str[i])
-					j++;
-			object->member->name = ft_strsub(&str[i + 1], 0, j - 1);
-			i += j + 1;
-			char_is_valid(str[i], ':');
-			while (!(str[i] == '"' || str[i] == '{'))
+			member = new_object();
+			 i += get_content(&member->name, str, i) + 1;
+			char_is_valid(str[i], ':', &str[i]);
+			while (str[i] && !(str[i] == '"' || str[i] == '{'))
 				i++;
 			if (str[i] == '{')
-				i = create_object(object->member, str, i);
+				i = create_object(member, str, i);
 			else
-			{
-				j = 1;
-				while (str[i + j] != str[i])
-					j++;
-				object->member->content = ft_strsub(&str[i + 1], 0, j - 1);
-				i += j + 1;
-			}
-			if (str[i] == ',')
-			{
-				object->member->next = new_object();
-				object->member = object->member->next;
-			}
+				i += get_content(&member->content, str, i);
+			add_new_member(&object->member, member);
 		}	
 	}
-	object->member = tmp;
-	char_is_valid(str[i], '}');
-	return (i + 1);
+	char_is_valid(str[i], '}', &str[i]);
+	return (i);
 }
 
 void	create_tree(t_env *e, char **str)
 {
 	t_json	*json;
 
-	if (str)
+	if ((*str)[0] == '{')
 	{
 		json = new_object();
-		json->name = ft_strdup("scene");
 		create_object(json, (*str), 0);
 		get_object(e, json);
-		ft_strdel(str);
+		free_json(json);
 	}
+	else
+		exit_parser(1);
 }
 
 int			parsing(t_env *e, char *src_file)
@@ -117,5 +123,6 @@ int			parsing(t_env *e, char *src_file)
 	}
 	close(p.fd);
 	create_tree(e, &p.stock);
+	free(p.stock);
 	return (p.j);
 }

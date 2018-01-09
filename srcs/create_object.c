@@ -18,6 +18,7 @@ void		add_new_object(t_object **list, t_object *new_object)
 
 	if (!(*list)->type)
 	{
+		free((*list));
 		(*list) = new_object;
 		return ;
 	}
@@ -50,115 +51,135 @@ void debug_object(t_object *tmp)
 	printf("         b->%f\n", tmp->color.b);
 }
 
-void		create_plane(t_env *e, t_json *json)
+void		create_plane(t_env *e, t_json *json, int *id)
 {
 	t_object	*plane;
+	t_json		*tmp;
 
-	while (json->member)
+	plane = (t_object*)ft_memalloc(sizeof(t_object));
+	plane->id = *id;
+	*id += 1;
+	if (!(plane->type = ft_strdup("plane")))
+		exit_rt(1);
+	init_material(plane);
+	while(json->member)
 	{
-		plane = (t_object*)ft_memalloc(sizeof(t_object));
-		plane->id = ft_atoi(json->member->name);
-		if (!(plane->type = ft_strdup("plane")))
-			exit_rt(1);
-		init_material(plane);
-		while(json->member->member)
-		{
-			if (ft_strcmp(json->member->member->name, "coord") == 0)
-				plane->point = parse_point(json->member->member->member);
-			else if (ft_strcmp(json->member->member->name, "normal") == 0)
-				plane->normal = parse_normal(json->member->member->member);
-			else if (ft_strcmp(json->member->member->name, "material") == 0)
-				parse_material(json->member->member, plane);
-			json->member->member = json->member->member->next;
-		}
-		debug_object(plane);
-		add_new_object(&e->object, plane);
+		if (ft_strcmp(json->member->name, "coord") == 0)
+			plane->point = parse_point(json->member->member);
+		else if (ft_strcmp(json->member->name, "normal") == 0)
+			plane->normal = parse_normal(json->member->member);
+		else if (ft_strcmp(json->member->name, "material") == 0)
+			parse_material(json->member, plane);
+		else if (ft_strcmp(json->member->name, "color") == 0)
+			plane->color = parse_color(json->member->member);
+		tmp = json->member;
 		json->member = json->member->next;
+		free(tmp->name);
+		free(tmp->content);
+		free(tmp);
 	}
+	debug_object(plane);
+	add_new_object(&e->object, plane);
 }
 
-void		create_sphere(t_env *e, t_json *json)
+void		create_sphere(t_env *e, t_json *json, int *id)
 {
 	t_object	*sphere;
+	t_json		*tmp;
 
+	sphere = (t_object*)ft_memalloc(sizeof(t_object));
+	sphere->id = *id;
+	*id += 1;
+	if (!(sphere->type = ft_strdup("sphere")))
+		exit_rt(1);
+	init_material(sphere);
 	while (json->member)
 	{
-		sphere = (t_object*)ft_memalloc(sizeof(t_object));
-		sphere->id = ft_atoi(json->member->name);
-		sphere->type = ft_strdup("sphere");
-		init_material(sphere);
-		while (json->member->member)
-		{
-			if (ft_strcmp(json->member->member->name, "coord") == 0)
-				sphere->center = parse_point(json->member->member->member);
-			else if (ft_strcmp(json->member->member->name, "radius") == 0)
-				sphere->radius = ft_atod(json->member->member->content);
-			else if (ft_strcmp(json->member->member->name, "material") == 0)
-				parse_material(json->member->member, sphere);
-			json->member->member = json->member->member->next;
-		}
-		debug_object(sphere);
-		add_new_object(&e->object, sphere);
+		ft_putendl(json->member->name);
+		if (ft_strcmp(json->member->name, "coord") == 0)
+			sphere->center = parse_point(json->member->member);
+		else if (ft_strcmp(json->member->name, "radius") == 0)
+			sphere->radius = ft_atod(json->member->content);
+		else if (ft_strcmp(json->member->name, "material") == 0)
+			parse_material(json->member, sphere);
+		else if (ft_strcmp(json->member->name, "color") == 0)
+			sphere->color = parse_color(json->member->member);
+		tmp = json->member;
 		json->member = json->member->next;
+		free(tmp->name);
+		free(tmp->content);
+		free(tmp);
 	}
+	debug_object(sphere);
+	add_new_object(&e->object, sphere);
 }
 
-void		create_cylinder(t_env *e, t_json *json)
+void		create_cylinder(t_env *e, t_json *json, int *id)
 {
 	t_object	*cylinder;
+	t_json		*tmp;
 
+	cylinder = (t_object*)ft_memalloc(sizeof(t_object));
+	cylinder->id = *id;
+	*id += 1;
+	if (!(cylinder->type = ft_strdup("cylinder")))
+		exit_rt(1);
+	init_material(cylinder);
 	while (json->member)
 	{
-		cylinder = (t_object*)ft_memalloc(sizeof(t_object));
-		cylinder->id = ft_atoi(json->member->name);
-		cylinder->type = ft_strdup("cylinder");
-		init_material(cylinder);
-		while (json->member->member)
-		{
-			if (ft_strcmp(json->member->member->name, "coord") == 0)
-				cylinder->center = parse_point(json->member->member->member);
-			else if (ft_strcmp(json->member->member->name, "normal") == 0)
-				cylinder->axis = parse_normal(json->member->member->member);
-			else if (ft_strcmp(json->member->member->name, "radius") == 0)
-				cylinder->radius = ft_atod(json->member->member->content);
-			else if (ft_strcmp(json->member->member->name, "length") == 0)
-				cylinder->lenght_max = ft_atod(json->member->member->content);
-			else if (ft_strcmp(json->member->member->name, "material") == 0)
-				parse_material(json->member->member, cylinder);
-			json->member->member = json->member->member->next;
-		}
-		debug_object(cylinder);
-		add_new_object(&e->object, cylinder);
+		if (ft_strcmp(json->member->name, "coord") == 0)
+			cylinder->center = parse_point(json->member->member);
+		else if (ft_strcmp(json->member->name, "normal") == 0)
+			cylinder->axis = parse_normal(json->member->member);
+		else if (ft_strcmp(json->member->name, "radius") == 0)
+			cylinder->radius = ft_atod(json->member->content);
+		else if (ft_strcmp(json->member->name, "length") == 0)
+			cylinder->lenght_max = ft_atod(json->member->content);
+		else if (ft_strcmp(json->member->name, "material") == 0)
+			parse_material(json->member, cylinder);
+		else if (ft_strcmp(json->member->name, "color") == 0)
+			cylinder->color = parse_color(json->member->member);
+		tmp = json->member;
 		json->member = json->member->next;
+		free(tmp->name);
+		free(tmp->content);
+		free(tmp);
 	}
+	debug_object(cylinder);
+	add_new_object(&e->object, cylinder);
 }
 
-void		create_cone(t_env *e, t_json *json)
+void		create_cone(t_env *e, t_json *json, int *id)
 {
 	t_object	*cone;
+	t_json 		*tmp;
 
-	while (json->member)
+	cone = (t_object*)ft_memalloc(sizeof(t_object));
+	cone->id = *id;
+	*id += 1;
+	if (!(cone->type = ft_strdup("cone")))
+		exit_rt(1);
+	init_material(cone);
+	while(json->member)
 	{
-		cone = (t_object*)ft_memalloc(sizeof(t_object));
-		cone->id = ft_atod(json->member->name);
-		cone->type = ft_strdup("cone");
-		init_material(cone);
-		while(json->member->member)
-		{
-			if (ft_strcmp(json->member->member->name, "vertex") == 0)
-				cone->vertex = parse_point(json->member->member->member);
-			if (ft_strcmp(json->member->member->name, "tangent") == 0)
-				cone->tangent = ft_atod(json->member->member->content);
-			if (ft_strcmp(json->member->member->name, "lenght") == 0)
-				cone->lenght_max = ft_atod(json->member->member->content);
-			if (ft_strcmp(json->member->member->name, "axis") == 0)
-				cone->axis = parse_point(json->member->member->member);
-			else if (ft_strcmp(json->member->member->name, "material") == 0)
-				parse_material(json->member->member, cone);
-			json->member->member = json->member->member->next;
-		}
-		debug_object(cone);
-		add_new_object(&e->object, cone);
+		if (ft_strcmp(json->member->name, "vertex") == 0)
+			cone->vertex = parse_point(json->member->member);
+		if (ft_strcmp(json->member->name, "tangent") == 0)
+			cone->tangent = ft_atod(json->member->content);
+		if (ft_strcmp(json->member->name, "lenght") == 0)
+			cone->lenght_max = ft_atod(json->member->content);
+		if (ft_strcmp(json->member->name, "axis") == 0)
+			cone->axis = parse_point(json->member->member);
+		else if (ft_strcmp(json->member->name, "material") == 0)
+			parse_material(json->member, cone);
+		else if (ft_strcmp(json->member->name, "color") == 0)
+			cone->color = parse_color(json->member->member);
+		tmp = json->member;
 		json->member = json->member->next;
+		free(tmp->name);
+		free(tmp->content);
+		free(tmp);
 	}
+	debug_object(cone);
+	add_new_object(&e->object, cone);
 }

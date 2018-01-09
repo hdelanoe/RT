@@ -12,18 +12,34 @@
 
 #include "rtv1.h"
 
-double get_content_from_member(char *name, t_json **membre)
+void	free_content(t_json *member)
 {
 	t_json *tmp;
 
+	while (member)
+	{
+		tmp = member;
+		member = member->next;
+		free(tmp->name);
+		free(tmp->content);
+		free(tmp);
+	}
+}
+
+double get_content_from_member(char *name, t_json **membre)
+{
+	double res;
+	t_json	*tmp;
+
+	res = 0;
 	tmp = (*membre);
 	while (tmp)
 	{
 		if(ft_strcmp(tmp->name, name) == 0)
-			return (ft_atod(tmp->content));
+			res = ft_atod(tmp->content);
 		tmp = tmp->next;
 	}
-	return (0);  /// ERREUR : Manque une donnée
+	return (res);
 }
 
 t_vector parse_point(t_json *membre)
@@ -35,6 +51,7 @@ t_vector parse_point(t_json *membre)
 	x = get_content_from_member("x", &membre);
 	y = get_content_from_member("y", &membre);
 	z = get_content_from_member("z", &membre);
+	free_content(membre);
 	return (set_vector(x, y, z));
 }
 
@@ -56,19 +73,6 @@ t_color  parse_color(t_json *membre)
 	r = get_content_from_member("r", &membre);
 	g = get_content_from_member("g", &membre);
 	b = get_content_from_member("b", &membre);
+	free_content(membre);
 	return (set_color(b, g, r));
-}
-
-void debug_plane(t_object *tmp)
-{
-	printf("PLANE:\n");
-	printf("coord :  x->%f\n", tmp->point.x);
-	printf("         y->%f\n", tmp->point.y);
-	printf("         z->%f\n", tmp->point.z);
-	printf("normal : x->%f\n", tmp->normal.x);
-	printf("         y->%f\n", tmp->normal.y);
-	printf("         z->%f\n", tmp->normal.z);
-	printf("colors : r->%f\n", tmp->color.r);
-	printf("         g->%f\n", tmp->color.g);
-	printf("         b->%f\n", tmp->color.b);
 }
