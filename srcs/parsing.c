@@ -17,7 +17,7 @@ void		get_object(t_env *e, t_json *json)
 	int		id;
 	t_json	*tmp;
 
-	id = 0;
+	id = 1;
 	while (json->member)
 	{
 		if (!(ft_strcmp(json->member->name, "sphere")))
@@ -29,7 +29,7 @@ void		get_object(t_env *e, t_json *json)
 		else if (!(ft_strcmp(json->member->name, "cone")))
 			create_cone(e, json->member, &id);
 		else if (!(ft_strcmp(json->member->name, "light")))
-			create_light(e, json->member);
+			create_light(e, json->member, &id);
 		else
 			exit_parser(1);
 		tmp = json->member;

@@ -22,12 +22,13 @@ void		anti_aliasing_clr_merge(t_color *anti, t_color *clr)
 t_anti_a	antialias_loop_init(t_anti_a *anti, t_env *e, int sample)
 {
 	t_anti_a new;
+	t_color 	color;
 
 	new = *anti;
 	new.x1 = 0;
 	while (new.x1 < sample)
 	{
-		e->refract_color = set_color(0, 0, 0);
+		color = set_color(0, 0, 0);
 		e->distance = 100000;
 		new.tmp_vp_pointx = v_double_mult(&e->camera.x_vector, new.x + new.x1);
 		new.tmp_vp_pointy = v_double_mult(&e->camera.y_vector, new.y + new.y1);
@@ -37,8 +38,9 @@ t_anti_a	antialias_loop_init(t_anti_a *anti, t_env *e, int sample)
 		&new.tmp_vp_pointy);
 		e->camera.rayon = v_v_subs(&new.viewplane_point, &e->camera.origin);
 		e->camera.rayon = normalize(&e->camera.rayon);
-		cast_ray(e, e->camera.rayon, e->camera.origin);
-		anti_aliasing_clr_merge(&new.aaclr, &e->color_finale);
+		if (cast_ray(e, e->camera.rayon, e->camera.origin))
+			color = get_color(e);
+		anti_aliasing_clr_merge(&new.aaclr, &color);
 		new.x1 += 0.25;
 	}
 	return (new);

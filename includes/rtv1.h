@@ -26,7 +26,6 @@
 # define WIN_X 1000
 # define WIN_Y 1000
 
-#define MAX_RECURSION 1
 # define R_VOID 1.0
 # define R_AIR 1.000272
 # define R_ICE 1.31
@@ -118,28 +117,13 @@ struct					s_light
 	t_light		*next;
 };
 
-struct					s_pixel
+struct  				s_rayon
 {
 	int					x;
-	int					y;
-	int					tmpx;
-	int					tmpy;
-	t_vector			viewplane_point;
-	t_vector			tmp_vp_pointx;
-	t_vector			tmp_vp_pointy;
-};
-
-struct					s_anti_a
-{
-	int					x;
-	int					y;
-	int					sample;
-	double				x1;
-	double				y1;
-	t_color				aaclr;
-	t_vector			viewplane_point;
-	t_vector			tmp_vp_pointx;
-	t_vector			tmp_vp_pointy;
+	t_vector 	origin;
+	t_vector 	rayon;
+	t_vector 	node;
+	t_vector 	normal;
 };
 
 struct 					s_node
@@ -182,11 +166,9 @@ struct 					s_env
 	t_camera	camera;
 	t_vector	current_origin;
 	t_vector	current_rayon;
-	t_color		current_color;
 	t_vector	current_node;
 	t_vector	current_node_normal;
-	t_color		color_finale;
-	t_color 	refract_color;
+	t_color		current_color;
 	int			id_object;
 	double		distance_light_object;
 	double		distance;
@@ -216,6 +198,7 @@ struct 					s_env
 	double			z1;
 	int				pixelize;
 	int				aa_flag;
+	int 			recursion;
 
 };
 
@@ -335,6 +318,10 @@ t_color							c_double_div(t_color *a, double b);
 
 
 int								proper_exit(t_env *e);
+void							aa_tracer(t_env *e);
+void							pxl_tracer(t_env *e);
+int 							cast_reflect_ray(t_env *e, t_rayon origin);
+int 							cast_refract_ray(t_env *e, t_rayon origin);
 void							add_new_object(t_object **list, t_object *object);
 void							exit_parser(int flag);
 void							create_tree(t_env *e, char **str);
@@ -371,7 +358,7 @@ t_color							c_double_mult(t_color *a, double b);
 t_color							get_color(t_env *e);
 void							get_light(t_env *e);
 void							parse_material(t_json *material, t_object *object);
-t_color							cast_ray(t_env *e, t_vector rayon, t_vector origin);
+int								cast_ray(t_env *e, t_vector rayon, t_vector origin);
 void							check_intersection(t_env *e, t_object *object);
 int								check_if_light_is_blocked(t_env *e);
 void							blocked_by_a_plane(t_env *e, int *light_blocked);

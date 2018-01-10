@@ -21,6 +21,7 @@ SRCS		= 	srcs/main.c \
 				srcs/colors_op2.c \
 				srcs/math_tools.c \
 				srcs/user_interactions.c \
+				srcs/cast_ray.c \
 				srcs/colors.c \
 				srcs/basic_intersection.c \
 				srcs/parsing.c \

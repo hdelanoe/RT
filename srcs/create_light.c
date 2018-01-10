@@ -41,13 +41,15 @@ void debug_light(t_light *tmp)
 	printf("         b->%f\n", tmp->color.b);
 }
 
-void			create_light(t_env *e, t_json *json)
+void			create_light(t_env *e, t_json *json, int *id)
 {
 	t_light	*light;
 	t_json 	*tmp;
 
 	if(!(light = ft_memalloc(sizeof(t_light))))
 		exit_rt(1);
+	light->id = *id;
+	*id += 1;
 	while (json->member)
 	{
 		if (ft_strcmp(json->member->name, "coord") == 0)

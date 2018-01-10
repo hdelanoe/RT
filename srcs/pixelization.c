@@ -30,6 +30,7 @@ t_pixel		pixel_vp_init(t_pixel *pxl, t_env *e)
 void		pxl_tracer(t_env *e, int sample)
 {
 	t_pixel		pxl;
+	t_color 	color;
 
 	e->in_out = -1;
 	pxl.y = 0;
@@ -38,17 +39,18 @@ void		pxl_tracer(t_env *e, int sample)
 		pxl.x = 0;
 		while (pxl.x < WIN_X)
 		{
-			e->refract_color = set_color(0, 0, 0);
+			color = set_color(0, 0, 0);
 			e->distance = 100000;
 			pxl = pixel_vp_init(&pxl, e);
 			e->camera.rayon = v_v_subs(&pxl.viewplane_point, &e->camera.origin);
 			e->camera.rayon = normalize(&e->camera.rayon);
-			cast_ray(e, e->camera.rayon, e->camera.origin);
+			if (cast_ray(e, e->camera.rayon, e->camera.origin))
+				color = get_color(e);
 			while (pxl.y++ < pxl.tmpy + sample)
 			{
 				pxl.x = pxl.x != pxl.tmpx ? pxl.x - sample : pxl.x;
 				while (pxl.x < pxl.tmpx + sample)
-					print_color(&e->color_finale, e, pxl.x++, pxl.y);
+					print_color(&color, e, pxl.x++, pxl.y);
 			}
 			pxl.y = pxl.tmpy;
 		}
