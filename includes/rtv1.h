@@ -65,13 +65,29 @@ struct					s_color
 	double	r;
 };
 
-struct 					s_wave
-{
-	t_color	issued;
-	t_color	diffuse;
-	t_color	add;
-	double 	specular;
-};
+struct          s_pixel 
+{ 
+  int          x; 
+  int          y; 
+  int          tmpx; 
+  int          tmpy; 
+  t_vector      viewplane_point; 
+  t_vector      tmp_vp_pointx; 
+  t_vector      tmp_vp_pointy; 
+}; 
+ 
+struct          s_anti_a 
+{ 
+  int          x; 
+  int          y; 
+  int          sample; 
+  double        x1; 
+  double        y1; 
+  t_color        aaclr; 
+  t_vector      viewplane_point; 
+  t_vector      tmp_vp_pointx; 
+  t_vector      tmp_vp_pointy; 
+}; 
 
 typedef struct		s_matrix4x4
 {
@@ -110,6 +126,7 @@ struct					s_object
 
 struct					s_light
 {
+	int 		id;
 	t_vector	origin;
 	t_vector	rayon;
 	double		angle;
@@ -119,7 +136,6 @@ struct					s_light
 
 struct  				s_rayon
 {
-	int					x;
 	t_vector 	origin;
 	t_vector 	rayon;
 	t_vector 	node;
@@ -318,8 +334,7 @@ t_color							c_double_div(t_color *a, double b);
 
 
 int								proper_exit(t_env *e);
-void							aa_tracer(t_env *e);
-void							pxl_tracer(t_env *e);
+
 int 							cast_reflect_ray(t_env *e, t_rayon origin);
 int 							cast_refract_ray(t_env *e, t_rayon origin);
 void							add_new_object(t_object **list, t_object *object);
@@ -371,7 +386,7 @@ void							create_cone(t_env *e, t_json *json, int *id);
 void							create_cylinder(t_env *e, t_json *json, int *id);
 void							create_plane(t_env *e, t_json *json, int *id);
 void							create_torus(t_env *e, t_json *json, int *id);
-void							create_light(t_env *e, t_json *json);
+void							create_light(t_env *e, t_json *json, int *id);
 int								parsing(t_env *e, char *str);
 int								poly_2nd_degree(t_env *e, t_poly *p);
 int								poly_2nd_degree_sphere(t_env *e, t_poly *p);
