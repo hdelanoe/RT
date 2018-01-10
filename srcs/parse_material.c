@@ -20,7 +20,7 @@ void	init_material(t_object *object)
 	object->specular = 0.9;
 	object->reflect = 0;
 	object->refract = 0;
-	object->absorbtion = 0.5;
+	object->absorbtion = 0.125;
 }
 
 void	parse_material(t_json *material, t_object *object)

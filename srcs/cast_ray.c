@@ -16,6 +16,7 @@ void 	init_rayon_values(t_env *e, t_vector rayon, t_vector origin)
 {
 	e->current_rayon = rayon;
 	e->current_origin = origin;
+	e->ambient = 0;
 	e->intersect = 0;
 	e->reflect = 0;
 	e->refract = 0;
@@ -78,16 +79,16 @@ int cast_refract_ray(t_env *e, t_rayon origin)
 
 	e->in_out *= -1;
 	if (e->in_out > 0)
-		pl.ior = R_VOID / R_PMMA;
+		pl.ior = R_VOID / R_AIR;
  	else
- 		pl.ior = R_PMMA / R_VOID;
+ 		pl.ior = R_AIR / R_VOID;
  	inv = v_double_mult(&origin.rayon, -1.0);
  	pl.cos1 = dot_product(&origin.normal, &inv);
  	pl.cos2 = sqrt(1 - (pl.ior * pl.ior) * (1 - (pl.cos1 * pl.cos1)));
- 			// if (pl.cos1 >= 0) 
-    //   	 	pl.teta = pl.ior * pl.cos1 - pl.cos2; 
-    //  		else 
-    pl.teta = pl.ior * pl.cos1 + pl.cos2; 
+ 	if (pl.cos1 >= 0) 
+    	pl.teta = pl.ior * pl.cos1 + pl.cos2; 
+    else 
+    	pl.teta = pl.ior * pl.cos1 - pl.cos2; 
  	pl.tmp1 = v_double_mult(&origin.normal, pl.teta);
  	pl.tmp2 = v_double_mult(&origin.rayon, pl.ior);
  	refract.rayon = v_v_add(&pl.tmp2, &pl.tmp1);

@@ -39,7 +39,8 @@ t_anti_a	antialias_loop_init(t_anti_a *anti, t_env *e, int sample)
 		e->camera.rayon = v_v_subs(&new.viewplane_point, &e->camera.origin);
 		e->camera.rayon = normalize(&e->camera.rayon);
 		if (cast_ray(e, e->camera.rayon, e->camera.origin))
-			color = get_color(e);
+//			color = get_color(e);
+			color = ambient_occlusion(e);
 		anti_aliasing_clr_merge(&new.aaclr, &color);
 		new.x1 += 0.25;
 	}

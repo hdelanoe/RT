@@ -48,20 +48,25 @@ void init_ray_values(t_rayon *ray, t_env *e)
 	ray->normal = e->current_node_normal;
 }
 
-void	recurse_color(t_env *e, t_rayon ray, t_color *c)
+void	shoot_new_color(t_env *e, t_color *c, double coef)
 {
 	t_color shade;
 
+		shade = get_color(e);
+		shade = c_double_mult(&shade, coef);
+		*c = c_c_add(c, &shade);
+		e->recursion--;
+}
+
+void	recurse_color(t_env *e, t_rayon ray, t_color *c)
+{
 	while (e->recursion > 0)
 	{
 		if (e->reflect)
 		{
 			if (cast_reflect_ray(e, ray))
 			{
-				shade = get_color(e);
-				shade = c_double_mult(&shade, e->diffuse);
-				*c = c_c_add(c, &shade);
-				e->recursion--;
+				shoot_new_color(e, c, e->diffuse);
 				continue ;
 			}
 		}
@@ -69,16 +74,45 @@ void	recurse_color(t_env *e, t_rayon ray, t_color *c)
 		{
 			if (cast_refract_ray(e, ray))
 			{
-				shade =  get_color(e);
-				shade = c_double_mult(&shade, e->absorbtion);
-				*c = c_c_add(c, &shade);
-				e->recursion--;
+				shoot_new_color(e, c, 1 - e->absorbtion);
 				continue ;
 			}
 
 		}
 		e->recursion--;
 	}
+}
+
+t_color	ambient_occlusion(t_env *e)
+{
+	t_color c;
+	t_rayon origin;
+	t_rayon ray;
+	t_vector tmp;
+	int sample;
+	int hit;
+
+
+	c = set_color(1, 1, 1);
+	init_ray_values(&origin, e);
+	sample = 16;
+	hit = 0;
+	while (sample > 0)
+	{
+		ray.rayon.x = RANDOM;
+		ray.rayon.y = RANDOM;
+		ray.rayon.z = RANDOM;
+		ray.rayon = v_v_add(&ray.rayon, &origin.normal);
+		ray.rayon = normalize(&ray.rayon);
+		tmp = v_double_mult(&ray.rayon, 0.01);
+		ray.origin = v_v_add(&origin.node, &tmp);
+		if (cast_ray(e, ray.rayon, ray.origin))
+			hit++;
+		sample--;
+	}
+	if (hit)
+		c = c_double_mult(&c, (double)1/hit);
+	return (c);
 }
 
 t_color	get_color(t_env *e)

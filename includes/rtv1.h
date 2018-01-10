@@ -21,10 +21,12 @@
 # include <errno.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <stdlib.h>
 # define A printf("File = [%s]\nLine = [%d]\nFunction = [%s]\n", __FILE__, __LINE__, __FUNCTION__);
 
 # define WIN_X 1000
 # define WIN_Y 1000
+# define RANDOM (double)rand()/RAND_MAX
 
 # define R_VOID 1.0
 # define R_AIR 1.000272
@@ -334,7 +336,7 @@ t_color							c_double_div(t_color *a, double b);
 
 
 int								proper_exit(t_env *e);
-
+t_color							ambient_occlusion(t_env *e);
 int 							cast_reflect_ray(t_env *e, t_rayon origin);
 int 							cast_refract_ray(t_env *e, t_rayon origin);
 void							add_new_object(t_object **list, t_object *object);
