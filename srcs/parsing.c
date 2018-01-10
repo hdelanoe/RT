@@ -31,8 +31,6 @@ void		get_object(t_env *e, t_json *json)
 		else if (!(ft_strcmp(json->member->name, "light")))
 			create_light(e, json->member);
 		else
-		{
-			A
 			exit_parser(1);
 		tmp = json->member;
 		json->member = json->member->next;
@@ -94,7 +92,6 @@ void	create_tree(t_env *e, char **str)
 		json = new_object();
 		create_object(json, (*str), 0);
 		get_object(e, json);
-		free_json(json);
 	}
 	else
 		exit_parser(1);

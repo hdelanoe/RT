@@ -36,6 +36,8 @@ SRCS		= 	srcs/main.c \
 				srcs/camera.c \
 				srcs/matrix_rotation.c \
 				srcs/matrix_translation.c \
+				srcs/pixelization.c \
+				srcs/anti_aliasing.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 

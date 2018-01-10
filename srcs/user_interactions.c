@@ -63,7 +63,8 @@ int			key_functions(int keycode, t_env *e)
 		proper_exit(e);
 	if (keycode == 2 || keycode == 0 || keycode == 12 || keycode == 14 ||
 	keycode == 13 || keycode == 1 || keycode == 126 || keycode == 123 ||
-	keycode == 125 || keycode == 124 || keycode == 6 || keycode == 7 || keycode == 49 || keycode == 15)
+	keycode == 125 || keycode == 124 || keycode == 6 || keycode == 7 ||
+	keycode == 49 || keycode == 15)
 	{
 		inputs(keycode, e);
 		if (keycode == 49)
@@ -73,13 +74,13 @@ int			key_functions(int keycode, t_env *e)
 		ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 		camera_transformation(e);
 		if (e->aa_flag == 1 && e->pixelize == 0)
-			aa_tracer(e);
+			aa_tracer(e, 1);
 		else if (e->pixelize == 1)
-			pxl_tracer(e);
+			pxl_tracer(e, 13);
 		else
 			ray_tracer(e);
-		printf("keycode == %d\n", keycode);
-		mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr, 0, 0);
+		mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
+		0, 0);
 	}
 	reset_mov_rotate(e);
 	return (0);

@@ -48,6 +48,8 @@ typedef struct s_node	t_node;
 typedef struct s_poly	t_poly;
 typedef struct s_inter	t_inter;
 typedef struct s_wave 	t_wave;
+typedef struct s_pixel	t_pixel;
+typedef struct s_anti_a	t_anti_a;
 
 struct					s_vector
 {
@@ -114,6 +116,30 @@ struct					s_light
 	double		angle;
 	t_color		color;
 	t_light		*next;
+};
+
+struct					s_pixel
+{
+	int					x;
+	int					y;
+	int					tmpx;
+	int					tmpy;
+	t_vector			viewplane_point;
+	t_vector			tmp_vp_pointx;
+	t_vector			tmp_vp_pointy;
+};
+
+struct					s_anti_a
+{
+	int					x;
+	int					y;
+	int					sample;
+	double				x1;
+	double				y1;
+	t_color				aaclr;
+	t_vector			viewplane_point;
+	t_vector			tmp_vp_pointx;
+	t_vector			tmp_vp_pointy;
 };
 
 struct 					s_node
@@ -293,10 +319,22 @@ struct							s_parsing
 
 int p[512];
 
-int								proper_exit(t_env *e);
-void							aa_tracer(t_env *e);
-void							pxl_tracer(t_env *e);
+/*
+**pixelisation.c
+*/
+t_pixel							pixel_vp_init(t_pixel *pxl, t_env *e);
+void							pxl_tracer(t_env *e, int sample);
+/*
+**anti_aliasing.c
+*/
+void							aa_tracer(t_env *e, int sample);
+void							anti_aliasing_clr_merge(t_color *anti, t_color *clr);
+t_anti_a						antialias_loop_init(t_anti_a *anti, t_env *e, int sample);
 
+t_color							c_double_div(t_color *a, double b);
+
+
+int								proper_exit(t_env *e);
 void							add_new_object(t_object **list, t_object *object);
 void							exit_parser(int flag);
 void							create_tree(t_env *e, char **str);

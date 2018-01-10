@@ -22,9 +22,22 @@ t_color		c_double_mult(t_color *a, double b)
 	return (color);
 }
 
+t_color		c_double_div(t_color *a, double b)
+{
+	t_color	new;
+
+	new.b = a->b / b;
+	new.g = a->g / b;
+	new.r = a->r / b;
+	new.b = new.b > 1 ? 1 : new.b;
+	new.g = new.g > 1 ? 1 : new.g;
+	new.r = new.r > 1 ? 1 : new.r;
+	return (new);
+}
+
 void		print_color(t_color *color, t_env *e, int x, int y)
 {
-	if (x > 0 && x < WIN_X && y > 0 && y < WIN_Y)
+	if (x >= 0 && x < WIN_X && y >= 0 && y < WIN_Y)
 	{
 		e->mlx.data[(x + y * WIN_X) * 4 + 0] = color->b * 255;
 		e->mlx.data[(x + y * WIN_X) * 4 + 1] = color->g * 255;
