@@ -96,7 +96,7 @@ t_color	get_color(t_env *e)
 	c = c_double_mult(&e->current_color, e->ambient);
 //	printf("%f %f %f\n", c.r, c.g, c.b);
 	tmp_light = e->light;
-	while (tmp_light->id)
+	while (tmp_light)
 	{
 		diffuse = set_color(0, 0, 0);
 		tmp_light->rayon = v_v_subs(&e->current_node, &tmp_light->origin);
