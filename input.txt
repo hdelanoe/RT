@@ -6,6 +6,6 @@
 -E -> Lift down
 -Z -> Incliner gauche
 -X -> Incliner droite
--T -> Anti-Aliasing
+-R -> Anti-Aliasing
 Utilise les fleches directionnelles pour se regarder haut bas gauche droite
 - Espace pour activer/desactiver la pixelisation pour fluidifier les deplacement (recommande)
