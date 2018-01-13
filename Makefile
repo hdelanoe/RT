@@ -14,7 +14,6 @@ NAME		= 	rtv1
 
 SRCS		= 	srcs/main.c \
 				srcs/ray_tracer.c \
-				srcs/math_tools.c \
 				srcs/cast_ray.c \
 				srcs/basic_intersection.c \
 				srcs/check_intersection.c \
