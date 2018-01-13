@@ -12,7 +12,7 @@
 
 #ifndef JSON_PARSER_H
 # define JSON_PARSER_H
-# include "../libft/includes/libft.h"
+# include "../libft/libft.h"
 # include "rtv1.h"
 # define BUF_SIZ 2
 # include <stdlib.h>

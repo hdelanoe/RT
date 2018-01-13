@@ -3,25 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: notraore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/15 14:48:40 by notraore          #+#    #+#             */
-/*   Updated: 2017/03/15 15:05:28 by notraore         ###   ########.fr       */
+/*   Created: 2017/04/11 19:12:54 by hdelanoe          #+#    #+#             */
+/*   Updated: 2017/06/14 21:26:00 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "libft.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	unsigned int	i;
-	unsigned char	*tmp_s1;
-	unsigned char	*tmp_s2;
+	unsigned long	i;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-	tmp_s1 = (unsigned char *)s1;
-	tmp_s2 = (unsigned char *)s2;
 	i = 0;
-	while (tmp_s1[i] == tmp_s2[i] && (tmp_s1[i] || tmp_s2[i]))
+	if (s1 == NULL || s2 == NULL)
+		return (-1);
+	str1 = (unsigned char*)s1;
+	str2 = (unsigned char*)s2;
+	while (str1[i] == str2[i] && str1[i] != '\0' && str2[i] != '\0')
 		i++;
-	return (tmp_s1[i] - tmp_s2[i]);
+	return (str1[i] - str2[i]);
 }

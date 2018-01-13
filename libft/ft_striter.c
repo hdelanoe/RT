@@ -3,20 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/30 18:21:39 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/05/04 19:58:56 by dguy-caz         ###   ########.fr       */
+/*   Created: 2017/04/12 10:49:23 by hdelanoe          #+#    #+#             */
+/*   Updated: 2017/04/13 12:09:01 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "libft.h"
 
-void	ft_striter(char *s, void (*f)(char*))
+void	ft_striter(char *s, void (*f)(char *))
 {
-	while (*s != '\0')
+	unsigned int	i;
+
+	i = 0;
+	while (s[i] != '\0')
 	{
-		(*f)(s);
-		s++;
+		f(&s[i]);
+		i++;
 	}
 }

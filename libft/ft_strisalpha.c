@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lenwords.c                                      :+:      :+:    :+:   */
+/*   ft_strisalpha.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/04 18:47:28 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/05/05 01:20:24 by dguy-caz         ###   ########.fr       */
+/*   Created: 2017/03/14 15:07:43 by hdelanoe          #+#    #+#             */
+/*   Updated: 2017/04/16 09:55:24 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "libft.h"
 
-int		ft_lenwords(char const *s, char c)
+int	ft_strisalpha(const char *str)
 {
-	int		len;
+	int i;
 
-	len = 0;
-	while (*s == c && *s)
-		s++;
-	while (*s != c && *s)
-	{
-		s++;
-		len++;
-	}
-	return (len);
+	i = 0;
+	while (ft_isalpha(str[i] == 1))
+		i++;
+	if (str[i] == '\0')
+		return (1);
+	else
+		return (0);
 }

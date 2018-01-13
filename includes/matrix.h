@@ -12,7 +12,7 @@
 
 #ifndef MATRIX_H
 # define MATRIX_H
-# include "../libft/includes/libft.h"
+# include "../libft/libft.h"
 # include "rtv1.h"
 
 typedef struct		s_matrix4x4

@@ -6,11 +6,11 @@
 /*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 17:59:20 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/04/24 17:13:40 by dguy-caz         ###   ########.fr       */
+/*   Updated: 2018/01/11 13:30:11 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "libft.h"
 
 double		decimal(const char *str, double	res, int i, int negative)
 {

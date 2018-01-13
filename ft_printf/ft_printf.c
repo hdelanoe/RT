@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlowcase.c                                    :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/16 14:34:59 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/05/04 19:40:35 by dguy-caz         ###   ########.fr       */
+/*   Created: 2017/05/16 02:49:06 by hdelanoe          #+#    #+#             */
+/*   Updated: 2017/06/08 12:03:36 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "printf.h"
 
-char	*ft_strlowcase(char *s)
+int	ft_printf(const char *format, ...)
 {
-	int	i;
+	va_list	arg;
+	int		len;
 
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] >= 65 && s[i] <= 90)
-			s[i] = s[i] + 32;
-		i++;
-	}
-	return (s);
+	va_start(arg, format);
+	len = ft_vfprintf((char*)format, arg);
+	va_end(arg);
+	return (len);
 }

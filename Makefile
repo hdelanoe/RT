@@ -11,6 +11,9 @@
 # **************************************************************************** #
 
 NAME		= 	rtv1
+LIBFT 		= 	libft/libft.a
+PRINTF 		= 	ft_printf/libftprintf.a
+MLX			= 	minilibx_macos/libmlx.a
 
 SRCS		= 	srcs/main.c \
 				srcs/ray_tracer.c \
@@ -45,11 +48,9 @@ CC			= 	gcc
 CFLAGS		= 	-Wall -Wextra -Werror
 INC			= 	-I./includes/
 
-LIBFT		= 	./libft/libft.a
 LIBFTINC	= 	-I./libft/includes/
 LIBFTLINK	= 	-L./libft -lft
 
-MLX			= 	./minilibx_macos/libmlx.a
 MLXINC		= 	-I./minilibx_macos/
 MLXLINK		= 	-L./minilibx_macos -framework OpenGL -framework AppKit -Iminilibx_macos
 
@@ -57,7 +58,8 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 			@ make -C ./libft all
-			@ $(CC) $(CFLAGS) $(LIBFT) $(LIBFTLINK) $(MLXLINK) $(MLX) -o $@ $^
+			@ make -C ./ft_printf all
+			@ $(CC) $(CFLAGS) $(LIBFT) $(PRINTF) $(MLX) $(LIBFTLINK) $(MLXLINK) -o $@ $^
 			@ echo "\n\033[1;33m---> Libft created\033[0m \033[92m✓\033[0m"
 			@ echo "\n\033[92m---> RTv1 program created ✓\033[0m"
 
@@ -73,11 +75,13 @@ objs/%.o: 	srcs/%.c
 clean:		
 			@ /bin/rm -rf objs/
 			@ make -C libft/ clean
+			@ make -C ./ft_printf clean
 			@ echo "\033[1;33m---> All .o files cleared\033[0m \033[92m✓\033[0m"
 
 fclean:		clean
 			@ /bin/rm -f $(NAME)
 			@ make -C libft/ fclean
+			@ make -C ./ft_printf fclean
 			@ echo "\n\033[1;33m---> Everything cleared\033[2;00m \033[92m✓\033[0m"
 re : fclean all
 

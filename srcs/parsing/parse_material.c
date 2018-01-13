@@ -14,14 +14,14 @@
 
 void	parse_scene(t_env *e, t_json *json)
 {
-	if (!(ft_strcmp(json->name, "width")))
+	if (!(ft_strcmp(json->name, "width")) && json->content)
 		e->width = ft_atod(json->content);
-	else if (!(ft_strcmp(json->name, "height")))
+	else if (!(ft_strcmp(json->name, "height")) && json->content)
 		e->height = ft_atod(json->content);
-	else if (!(ft_strcmp(json->name, "recursion")))
+	else if (!(ft_strcmp(json->name, "recursion")) && json->content)
 		e->recursion = ft_atoi(json->content); 
 	else
-		exit_parser(1);
+		ft_printf("{R}WARNING:{E} %s is not valid\n", json->name);
 }
 
 void	init_material(t_object *object)
@@ -37,33 +37,33 @@ void	init_material(t_object *object)
 
 void	parse_material(t_json *material, t_object *object)
 {
-	t_json *tmp;
+	t_json 	*tmp;
 
 	while (material->member)
 	{
-		if (ft_strcmp(material->member->name, "color") == 0)
-			object->color = parse_color(material->member->member);
+		tmp = material->member;
+		if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+			object->color = parse_color(tmp->member);
 		else 
 		{
-			if (ft_strcmp(material->member->name, "ambient") == 0)
-				object->ambient = ft_atod(material->member->content);
-			else if (ft_strcmp(material->member->name, "diffuse") == 0)
-				object->diffuse = ft_atod(material->member->content);
-			else if (ft_strcmp(material->member->name, "specular") == 0)
-				object->specular = ft_atod(material->member->content);
-			else if (ft_strcmp(material->member->name, "reflect") == 0)
-				object->reflect = ft_atod(material->member->content);
-			else if (ft_strcmp(material->member->name, "refract") == 0)
-				object->refract = ft_atod(material->member->content);
-			else if (ft_strcmp(material->member->name, "absorbtion") == 0)
-				object->absorbtion = ft_atod(material->member->content);
+			if (!(ft_strcmp(tmp->name, "ambient")) && tmp->content)
+				object->ambient = ft_atod(tmp->content);
+			else if (!(ft_strcmp(tmp->name, "diffuse")) && tmp->content)
+				object->diffuse = ft_atod(tmp->content);
+			else if (!(ft_strcmp(tmp->name, "specular")) && tmp->content)
+				object->specular = ft_atod(tmp->content);
+			else if (!(ft_strcmp(tmp->name, "reflect")) && tmp->content)
+				object->reflect = ft_atod(tmp->content);
+			else if (!(ft_strcmp(tmp->name, "refract")) && tmp->content)
+				object->refract = ft_atod(tmp->content);
+			else if (!(ft_strcmp(tmp->name, "absorbtion")) && tmp->content)
+				object->absorbtion = ft_atod(tmp->content);
 			else
-				exit_parser(1);
-			free(material->member->content);
+				ft_printf("{R}WARNING:{E} material %s is not valid\n", tmp->name);
+			free(tmp->content);
 		}
-		free(material->member->name);
-		tmp = material->member;
 		material->member = material->member->next;
+		free(tmp->name);
 		free(tmp);
 	}
 }

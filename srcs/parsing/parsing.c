@@ -20,19 +20,19 @@ void		get_object(t_env *e, t_json *json)
 	id = 1;
 	while (json->member)
 	{
-		if (!(ft_strcmp(json->member->name, "sphere")))
-			create_sphere(e, json->member, &id);
-		else if (!(ft_strcmp(json->member->name, "plane")))
-			create_plane(e, json->member, &id);
-		else if (!(ft_strcmp(json->member->name, "cylinder")))
-			create_cylinder(e, json->member, &id);
-		else if (!(ft_strcmp(json->member->name, "cone")))
-			create_cone(e, json->member, &id);
-		else if (!(ft_strcmp(json->member->name, "light")))
-			create_light(e, json->member, &id);
-		else
-			parse_scene(e, json->member);
 		tmp = json->member;
+		if (!(ft_strcmp(tmp->name, "sphere")) && tmp->member)
+			create_sphere(e, tmp, &id);
+		else if (!(ft_strcmp(tmp->name, "plane")) && tmp->member)
+			create_plane(e, tmp, &id);
+		else if (!(ft_strcmp(tmp->name, "cylinder")) && tmp->member)
+			create_cylinder(e, tmp, &id);
+		else if (!(ft_strcmp(tmp->name, "cone")) && tmp->member)
+			create_cone(e, tmp, &id);
+		else if (!(ft_strcmp(tmp->name, "light")) && tmp->member)
+			create_light(e, tmp, &id);
+		else if (tmp->member)
+			parse_scene(e, tmp);
 		json->member = json->member->next;
 		free(tmp->name);
 		free(tmp->content);

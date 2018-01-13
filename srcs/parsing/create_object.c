@@ -64,15 +64,17 @@ void		create_plane(t_env *e, t_json *json, int *id)
 	init_material(plane);
 	while(json->member)
 	{
-		if (ft_strcmp(json->member->name, "coord") == 0)
-			plane->point = parse_point(json->member->member);
-		else if (ft_strcmp(json->member->name, "normal") == 0)
-			plane->normal = parse_normal(json->member->member);
-		else if (ft_strcmp(json->member->name, "material") == 0)
-			parse_material(json->member, plane);
-		else if (ft_strcmp(json->member->name, "color") == 0)
-			plane->color = parse_color(json->member->member);
 		tmp = json->member;
+		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+			plane->point = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "normal")) && tmp->member)
+			plane->normal = parse_normal(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+			plane->color = parse_color(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+			parse_material(tmp, plane);
+		else
+			ft_printf("{R}WARNING:{E} plane %d as a bad attribut\n", plane->id);
 		json->member = json->member->next;
 		free(tmp->name);
 		free(tmp->content);
@@ -95,15 +97,17 @@ void		create_sphere(t_env *e, t_json *json, int *id)
 	init_material(sphere);
 	while (json->member)
 	{
-		if (ft_strcmp(json->member->name, "coord") == 0)
-			sphere->center = parse_point(json->member->member);
-		else if (ft_strcmp(json->member->name, "radius") == 0)
-			sphere->radius = ft_atod(json->member->content);
-		else if (ft_strcmp(json->member->name, "material") == 0)
-			parse_material(json->member, sphere);
-		else if (ft_strcmp(json->member->name, "color") == 0)
-			sphere->color = parse_color(json->member->member);
 		tmp = json->member;
+		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+			sphere->center = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "radius")) && tmp->content)
+			sphere->radius = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+			sphere->color = parse_color(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+			parse_material(tmp, sphere);
+		else
+			ft_printf("{R}WARNING:{E} sphere %d as a bad attribut\n", sphere->id);
 		json->member = json->member->next;
 		free(tmp->name);
 		free(tmp->content);
@@ -126,19 +130,21 @@ void		create_cylinder(t_env *e, t_json *json, int *id)
 	init_material(cylinder);
 	while (json->member)
 	{
-		if (ft_strcmp(json->member->name, "coord") == 0)
-			cylinder->center = parse_point(json->member->member);
-		else if (ft_strcmp(json->member->name, "normal") == 0)
-			cylinder->axis = parse_normal(json->member->member);
-		else if (ft_strcmp(json->member->name, "radius") == 0)
-			cylinder->radius = ft_atod(json->member->content);
-		else if (ft_strcmp(json->member->name, "length") == 0)
-			cylinder->lenght_max = ft_atod(json->member->content);
-		else if (ft_strcmp(json->member->name, "material") == 0)
-			parse_material(json->member, cylinder);
-		else if (ft_strcmp(json->member->name, "color") == 0)
-			cylinder->color = parse_color(json->member->member);
 		tmp = json->member;
+		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+			cylinder->center = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "normal")) && tmp->member)
+			cylinder->axis = parse_normal(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "radius")) && tmp->content)
+			cylinder->radius = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
+			cylinder->lenght_max = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+			cylinder->color = parse_color(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+			parse_material(tmp, cylinder);
+		else
+			ft_printf("{R}WARNING:{E} cylinder %d as a bad attribut\n", cylinder->id);
 		json->member = json->member->next;
 		free(tmp->name);
 		free(tmp->content);
@@ -161,19 +167,21 @@ void		create_cone(t_env *e, t_json *json, int *id)
 	init_material(cone);
 	while(json->member)
 	{
-		if (ft_strcmp(json->member->name, "vertex") == 0)
-			cone->vertex = parse_point(json->member->member);
-		if (ft_strcmp(json->member->name, "tangent") == 0)
-			cone->tangent = ft_atod(json->member->content);
-		if (ft_strcmp(json->member->name, "lenght") == 0)
-			cone->lenght_max = ft_atod(json->member->content);
-		if (ft_strcmp(json->member->name, "axis") == 0)
-			cone->axis = parse_point(json->member->member);
-		else if (ft_strcmp(json->member->name, "material") == 0)
-			parse_material(json->member, cone);
-		else if (ft_strcmp(json->member->name, "color") == 0)
-			cone->color = parse_color(json->member->member);
 		tmp = json->member;
+		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+			cone->vertex = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "tangent")) &&tmp->content)
+			cone->tangent = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
+			cone->lenght_max = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
+			cone->axis = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+			cone->color = parse_color(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+			parse_material(tmp, cone);
+		else
+			ft_printf("{R}WARNING:{E} cone %d as a bad attribut\n", cone->id);
 		json->member = json->member->next;
 		free(tmp->name);
 		free(tmp->content);

@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbwords.c                                       :+:      :+:    :+:   */
+/*   ft_lstclr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/04 18:37:59 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/05/04 18:52:47 by dguy-caz         ###   ########.fr       */
+/*   Created: 2017/03/23 17:39:33 by hdelanoe          #+#    #+#             */
+/*   Updated: 2017/04/16 10:00:56 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "libft.h"
+#include <stdlib.h>
 
-int		ft_nbwords(char const *s, char c)
+void	ft_lstclr(t_list **lst)
 {
-	size_t	nb;
+	t_list *tmp;
 
-	nb = 0;
-	while (*s)
+	if ((*lst) == NULL)
+		return ;
+	while ((*lst) != NULL)
 	{
-		if (*s == c)
-			s++;
-		while (*s != c && *s)
-			s++;
-		nb++;
+		tmp = (*lst);
+		(*lst) = (*lst)->next;
+		free(tmp);
+		tmp = NULL;
 	}
-	return (nb);
 }

@@ -3,27 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/04 03:08:32 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/05/04 17:51:32 by dguy-caz         ###   ########.fr       */
+/*   Created: 2017/04/15 13:42:00 by hdelanoe          #+#    #+#             */
+/*   Updated: 2017/04/16 11:06:53 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "libft.h"
+#include <stdlib.h>
 
 t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	t_list	*newlist;
-	t_list	*link;
+	t_list	*list_cpy;
+	t_list	*tmp2;
+	t_list	*new_lst;
 
-	link = f(lst);
-	newlist = link;
-	while (lst->next)
+	if (lst == NULL)
+		return (NULL);
+	list_cpy = ft_lstnew((*f)(lst)->content, (*f)(lst)->content_size);
+	if (list_cpy == NULL)
+		return (NULL);
+	lst = lst->next;
+	tmp2 = list_cpy;
+	while (lst != NULL)
 	{
+		new_lst = ft_lstnew((*f)(lst)->content, (*f)(lst)->content_size);
+		if (new_lst == NULL)
+			return (NULL);
 		lst = lst->next;
-		link->next = f(lst);
-		link = link->next;
+		tmp2->next = new_lst;
+		tmp2 = tmp2->next;
 	}
-	return (newlist);
+	return (list_cpy);
 }

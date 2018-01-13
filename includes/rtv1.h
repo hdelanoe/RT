@@ -13,7 +13,8 @@
 #ifndef RTV1_H
 # define RTV1_H
 
-# include "../libft/includes/libft.h"
+# include "../libft/libft.h"
+# include "../ft_printf/printf.h"
 # include "../minilibx_macos/mlx.h"
 # include "json_parser.h"
 # include "color.h"

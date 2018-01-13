@@ -3,38 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/30 22:55:32 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/05/02 23:57:23 by dguy-caz         ###   ########.fr       */
+/*   Created: 2017/04/12 12:24:12 by hdelanoe          #+#    #+#             */
+/*   Updated: 2017/04/16 15:28:46 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "libft.h"
 
-char	*ft_strtrim(char const *s)
+static size_t	ft_start(const char *s)
 {
-	char	*dest;
-	size_t	i;
-	size_t	len;
-	size_t	j;
+	size_t i;
 
 	i = 0;
-	len = ft_strlen(s);
-	while (s[len - 1] == ' ' || s[len - 1] == '\n' || s[len - 1] == '\t')
-		len--;
 	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
-	{
 		i++;
-		len--;
-		if (s[i] == '\0')
-			return ("\0");
-	}
-	if (!(dest = ft_strnew(len)))
-		return (NULL);
-	j = 0;
-	while (j < len)
-		dest[j++] = s[i++];
-	dest[j] = '\0';
-	return (dest);
+	return (i);
+}
+
+static size_t	ft_end(const char *s)
+{
+	size_t i;
+
+	i = ft_strlen(s);
+	while ((s[i] == ' ' || s[i] == '\n' || s[i] == '\t' || s[i] == '\0')
+			&& i > 0)
+		i--;
+	return (i);
+}
+
+char			*ft_strtrim(const char *s)
+{
+	size_t	i;
+	size_t	j;
+
+	i = ft_start(s);
+	j = ft_end(s);
+	if (i > j)
+		return ("");
+	else
+		return (ft_strsub(s, i, j - i + 1));
 }

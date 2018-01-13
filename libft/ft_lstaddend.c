@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strupcase.c                                     :+:      :+:    :+:   */
+/*   ft_lstaddend.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/16 13:28:03 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/05/04 19:39:40 by dguy-caz         ###   ########.fr       */
+/*   Created: 2017/03/23 11:13:21 by hdelanoe          #+#    #+#             */
+/*   Updated: 2017/04/16 09:15:54 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "libft.h"
 
-char	*ft_strupcase(char *s)
+void	ft_lstaddend(t_list **alst, t_list *new)
 {
-	int	i;
+	t_list *tmp;
 
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] >= 97 && s[i] <= 122)
-			s[i] = s[i] - 32;
-		i++;
-	}
-	return (s);
+	tmp = (*alst);
+	while ((*alst)->next != NULL)
+		(*alst) = (*alst)->next;
+	(*alst)->next = new;
+	(*alst) = tmp;
 }

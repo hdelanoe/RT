@@ -3,28 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/13 17:39:10 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/05/04 16:34:43 by dguy-caz         ###   ########.fr       */
+/*   Created: 2017/04/11 19:08:43 by hdelanoe          #+#    #+#             */
+/*   Updated: 2017/04/16 14:40:30 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/libft.h"
+#include "libft.h"
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
-	size_t	len_little;
+	char	*str;
 
 	i = 0;
-	if (!*little)
-		return ((char *)big);
-	len_little = ft_strlen(little);
-	while (big[i] != '\0' && (i + len_little) <= len)
+	str = (char*)big;
+	if (ft_strlen(little) == 0)
+		return (str);
+	if (ft_strlen(big) == 0 || len < ft_strlen(little))
+		return (NULL);
+	while (i <= len - ft_strlen(little) && str[i] != '\0')
 	{
-		if (ft_strncmp(big + i, little, len_little) == 0)
-			return ((char*)big + i);
+		if (ft_strncmp(&str[i], little, ft_strlen(little)) == 0)
+			return (&str[i]);
 		i++;
 	}
 	return (NULL);
