@@ -24,20 +24,19 @@ void	ft_print_err(int argc)
 void	ft_help(void)
 {
 	ft_putendl("usage : ./rtv1 [scene]\n");
-	ft_putendl("\t\t\t\t\t\t\t\tScene instruction:\n");
-	ft_putstr("'S' for sphere -> ");
-	ft_putstr("Separated by tabulation enter the xPos, yPos, zPos, radius ");
-	ft_putendl("and normalized red, green, blue, alpha colors.\n");
-	ft_putstr("'L' for Light -> ");
-	ft_putstr("Separated by tabulation enter the xPos, yPos, zPos ");
-	ft_putendl("and normalized red, green, blue, alpha colors.\n");
-	ft_putstr("'C' for Cylinder -> ");
-	ft_putendl("Separated by tabulation enter the xPos, yPos, zPos, radius\n");
-	ft_putstr("'K' for Cone -> ");
-	ft_putendl("Separated by tabulation enter the xPos, yPos, zPos\n");
-	ft_putstr("'P' for Plan -> ");
-	ft_putstr("Separated by tabulation enter the xPos, yPos, zPos");
-	ft_putendl(" and normalized Red, Green, Blue and Alpha colors.");
+	ft_putendl("Scene instruction:\n");
+	ft_putendl("Scene attributs: width, height, recursion and objects");
+	ft_putendl("Objects name");
+	ft_putendl("sphere, plane, cylinder, cone and light\n");
+	ft_putendl("Each object as coord and color attribut");
+	ft_putendl("sphere additionnal attributs : radius");
+	ft_putendl("plane additionnal attributs : normal");
+	ft_putendl("cylinder additionnal attributs : normal, radius, length");
+	ft_putendl("cone additionnal attributs : tangent, length, axis");
+	ft_putendl("Vector are set with x, y and z component");
+	ft_putendl("Color are set with r, g and b component\n");
+	ft_putendl("Each variable must be set like \"name\": \"value\"");
+	ft_putendl("Each object must be set like \"object\": {component}");
 	exit(EXIT_FAILURE);
 }
 

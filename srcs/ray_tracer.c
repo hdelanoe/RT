@@ -25,10 +25,10 @@ void	ray_tracer(t_env *e)
 
 	e->in_out = -1;
 	y = 0;
-	while (y < WIN_Y)
+	while (y < e->height)
 	{
 		x = 0;
-		while (x < WIN_X)
+		while (x < e->width)
 		{
 			color = set_color(0, 0, 0);
 			e->distance = 100000;

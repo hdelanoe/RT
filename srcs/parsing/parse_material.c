@@ -12,6 +12,18 @@
 
 #include "rtv1.h"
 
+void	parse_scene(t_env *e, t_json *json)
+{
+	if (!(ft_strcmp(json->name, "width")))
+		e->width = ft_atod(json->content);
+	else if (!(ft_strcmp(json->name, "height")))
+		e->height = ft_atod(json->content);
+	else if (!(ft_strcmp(json->name, "recursion")))
+		e->recursion = ft_atoi(json->content); 
+	else
+		exit_parser(1);
+}
+
 void	init_material(t_object *object)
 {
 	object->color = set_color(0.5, 0.5, 0.5);

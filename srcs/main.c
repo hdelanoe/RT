@@ -24,8 +24,8 @@ void	exit_rt(int flag)
 void		display_window(t_env *env)
 {
 	env->mlx.mlx_ptr = mlx_init();
-	env->mlx.win_ptr = mlx_new_window(env->mlx.mlx_ptr, WIN_X, WIN_Y, "RTv1");
-	env->mlx.img_ptr = mlx_new_image(env->mlx.mlx_ptr, WIN_X, WIN_Y);
+	env->mlx.win_ptr = mlx_new_window(env->mlx.mlx_ptr, env->width, env->height, "RTv1");
+	env->mlx.img_ptr = mlx_new_image(env->mlx.mlx_ptr, env->width, env->height);
 	env->mlx.data = (unsigned char*)mlx_get_data_addr(env->mlx.img_ptr,
 		&env->mlx.bpp, &env->mlx.l_size, &env->mlx.endian);
 	init_camera(env);
@@ -38,6 +38,25 @@ void		display_window(t_env *env)
 	mlx_destroy_window(env->mlx.mlx_ptr, env->mlx.win_ptr);
 }
 
+t_env		*init()
+{
+	t_env *e;
+
+	if (!(e = (t_env*)ft_memalloc(sizeof(t_env))))
+		exit_rt(1);
+	if (!(e->object = (t_object*)ft_memalloc(sizeof(t_object))))
+		exit_rt(1);
+//	e->object->next = NULL;
+	if (!(e->light = (t_light*)ft_memalloc(sizeof(t_light))))
+		exit_rt(1);
+//	e->light->next = NULL;
+	e->width = WIN_X;
+	e->height = WIN_Y;
+	e->recursion = 1;
+	e->pixelize = 0;
+	return (e);
+}
+
 int			main(int argc, char **argv)
 {
 	t_env	*e;
@@ -45,16 +64,8 @@ int			main(int argc, char **argv)
 
 	loadPermutation();
 	ret = 0;
-
-	if (!(e = (t_env*)ft_memalloc(sizeof(t_env))))
-		exit_rt(1);
-	if (!(e->object = (t_object*)ft_memalloc(sizeof(t_object))))
-		exit_rt(1);
-	e->object->next = NULL;
-	if (!(e->light = (t_light*)ft_memalloc(sizeof(t_light))))
-		exit_rt(1);
-	e->light->next = NULL;
-	e->pixelize = 0;
+	e = init();
+	
 	if (argc != 2)
 		ft_print_err(argc);
 	ret = parsing(e, argv[1]);

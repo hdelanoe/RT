@@ -31,7 +31,7 @@ void		get_object(t_env *e, t_json *json)
 		else if (!(ft_strcmp(json->member->name, "light")))
 			create_light(e, json->member, &id);
 		else
-			exit_parser(1);
+			parse_scene(e, json->member);
 		tmp = json->member;
 		json->member = json->member->next;
 		free(tmp->name);

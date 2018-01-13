@@ -165,6 +165,8 @@ struct 					s_env
 	t_vector	current_node;
 	t_vector	current_node_normal;
 	t_color		current_color;
+	double 		width;
+	double 		height;
 	int			id_object;
 	double		distance_light_object;
 	double		distance;
@@ -278,6 +280,7 @@ void							create_tree(t_env *e, char **str);
 void							get_light(t_env *e);
 void							get_object(t_env *e, t_json *json);
 void							init_material(t_object *object);
+void							parse_scene(t_env *e, t_json *json);
 void							parse_material(t_json *material, t_object *object);
 void							create_sphere(t_env *e, t_json *json, int *id);
 void							create_cone(t_env *e, t_json *json, int *id);

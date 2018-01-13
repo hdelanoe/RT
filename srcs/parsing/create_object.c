@@ -95,7 +95,6 @@ void		create_sphere(t_env *e, t_json *json, int *id)
 	init_material(sphere);
 	while (json->member)
 	{
-		ft_putendl(json->member->name);
 		if (ft_strcmp(json->member->name, "coord") == 0)
 			sphere->center = parse_point(json->member->member);
 		else if (ft_strcmp(json->member->name, "radius") == 0)
