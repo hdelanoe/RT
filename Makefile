@@ -14,31 +14,31 @@ NAME		= 	rtv1
 
 SRCS		= 	srcs/main.c \
 				srcs/ray_tracer.c \
-				srcs/vectors_op1.c \
-				srcs/vectors_op2.c \
-				srcs/vectors_op3.c \
-				srcs/colors_op1.c \
-				srcs/colors_op2.c \
 				srcs/math_tools.c \
-				srcs/user_interactions.c \
 				srcs/cast_ray.c \
-				srcs/colors.c \
 				srcs/basic_intersection.c \
-				srcs/parsing.c \
-				srcs/parse_material.c \
-				srcs/get_parsing.c \
-				srcs/create_object.c \
-				srcs/create_light.c \
 				srcs/check_intersection.c \
 				srcs/torus.c \
-				srcs/parsing_tools.c \
 				srcs/errors.c \
 				srcs/perlin_noise.c \
-				srcs/camera.c \
-				srcs/matrix_rotation.c \
-				srcs/matrix_translation.c \
-				srcs/pixelization.c \
-				srcs/anti_aliasing.c \
+				srcs/render/user_interactions.c \
+				srcs/render/anti_aliasing.c \
+				srcs/render/pixelization.c \
+				srcs/matrix/camera.c \
+				srcs/matrix/matrix_rotation.c \
+				srcs/matrix/matrix_translation.c \
+				srcs/parsing/parsing.c \
+				srcs/parsing/parse_material.c \
+				srcs/parsing/parsing_tools.c \
+				srcs/parsing/get_parsing.c \
+				srcs/parsing/create_object.c \
+				srcs/parsing/create_light.c \
+				srcs/color/colors.c \
+				srcs/color/colors_op1.c \
+				srcs/color/colors_op2.c \
+				srcs/vector/vectors_op1.c \
+				srcs/vector/vectors_op2.c \
+				srcs/vector/vectors_op3.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 
@@ -57,13 +57,18 @@ MLXLINK		= 	-L./minilibx_macos -framework OpenGL -framework AppKit -Iminilibx_ma
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			@ make -C ./libft
-			@ $(CC) $(CFLAGS) $(INC) $(LIBFT) $(LIBFTLINK) $(MLXLINK) $(MLX) -o $@ $^
+			@ make -C ./libft all
+			@ $(CC) $(CFLAGS) $(LIBFT) $(LIBFTLINK) $(MLXLINK) $(MLX) -o $@ $^
 			@ echo "\n\033[1;33m---> Libft created\033[0m \033[92m✓\033[0m"
 			@ echo "\n\033[92m---> RTv1 program created ✓\033[0m"
 
 objs/%.o: 	srcs/%.c
 			@ mkdir -p objs
+			@ mkdir -p objs/parsing
+			@ mkdir -p objs/color
+			@ mkdir -p objs/vector
+			@ mkdir -p objs/matrix
+			@ mkdir -p objs/render
 		 	@ $(CC) $(CFLAGS) $(INC) $(LIBFTINC) $(MLXINC) -c $< -o $@
 
 clean:		

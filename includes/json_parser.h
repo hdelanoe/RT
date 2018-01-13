@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   xml_parser.h                                       :+:      :+:    :+:   */
+/*   json_parser.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,37 +9,41 @@
 /*   Updated: 2017/11/30 13:35:56 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef XML_PARSER_H
-# define XML_PARSER_H
+
+#ifndef JSON_PARSER_H
+# define JSON_PARSER_H
+# include "../libft/includes/libft.h"
+# include "rtv1.h"
 # define BUF_SIZ 2
-# define BALISE_SIZE 64
-# define A printf("LOL\n");
 # include <stdlib.h>
-# include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "../libft/includes/libft.h"
 
-typedef struct		s_object
+typedef struct s_json		t_json;
+typedef struct s_parsing	t_parsing;
+
+struct						s_json
 {
-	t_sphere		*start_sphere;
-	t_cylinder		*start_cylinder;
-	t_plane			*start_plane;
-	t_cone			*start_cone;
-	t_light			*start_light;
-	t_torus			*start_torus;
-	char			**tab_line;
-}					t_object;
+	char					*name;
+	char					*content;
+	t_json					*member;
+	t_json					*next;
+};
 
-typedef struct 	s_json
+struct						s_parsing
 {
-	char			*name;
-	char			*content;
-	struct s_json	*member;
-	struct s_json	*next;
-}				t_json;
-
-void	exit_parser(int flag);
-void	parse(t_object *object, char *str);
-int		is_valid(char *str);
+	int						fd;
+	int						i;
+	int						j;
+	char					buff[BUF_SIZ + 1];
+	char					*stock;
+	char					*tmp;
+}; 
+t_json						*new_object(void);
+void						add(t_json **current, t_json *new);
+void						char_is_valid(char a, char b, char *str);
+int							create_object(t_json *object, char *str, int i);
+double 						get_content_from_member(char *name, t_json **membre);
+int							get_content(char **content, char *str, int i);
+void						free_json_member(t_json **elem);
 #endif
