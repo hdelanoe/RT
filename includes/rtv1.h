@@ -217,6 +217,7 @@ struct							s_poly
 	double						tmp1;
 	double						tmp2;
 	double						tmp3;
+	double						tmp4;
 	double						a;
 	double						b;
 	double						c;
@@ -240,12 +241,6 @@ struct							s_poly
 	double						radian_x;
 	double						radian_y;
 	double						radian_z;
-};
-
-struct							s_inter
-{
-	t_vector					object_rayon;
-	t_vector					tmp_node;
 };
 
 int p[512];

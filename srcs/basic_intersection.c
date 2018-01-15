@@ -40,6 +40,7 @@ int		sphere_intersection(t_env *e, t_object *sphere)
 	p.b = dot_product(&p.object_rayon, &e->current_rayon);
 	p.c = dot_product(&p.object_rayon, &p.object_rayon) - (sphere->radius * sphere->radius);
 	p.discriminant = (p.b * p.b) - p.c;
+	
 	return (sphere_solution(e, sphere, p));
 }
 
