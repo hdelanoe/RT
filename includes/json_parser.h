@@ -14,8 +14,6 @@
 # define JSON_PARSER_H
 # include "../libft/libft.h"
 # include "rtv1.h"
-# define BUF_SIZ 2
-# include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
 
@@ -35,7 +33,7 @@ struct						s_parsing
 	int						fd;
 	int						i;
 	int						j;
-	char					buff[BUF_SIZ + 1];
+	char					*buff;
 	char					*stock;
 	char					*tmp;
 }; 

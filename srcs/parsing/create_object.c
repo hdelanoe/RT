@@ -165,9 +165,10 @@ void		create_cylinder(t_env *e, t_json *json, int *id)
 			cylinder->center = parse_point(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "normal")) && tmp->member)
 			cylinder->axis = parse_normal(tmp->member);
+
 		else if (!(ft_strcmp(tmp->name, "radius")) && tmp->content)
 			cylinder->radius = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "lenght")) && tmp->content)
+		else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
 			cylinder->lenght_max = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "cap")) && tmp->content)
 			cylinder->cap = ft_atod(tmp->content);
@@ -277,9 +278,9 @@ void		create_cone(t_env *e, t_json *json, int *id)
 			cone->vertex = parse_point(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "tangent")) &&tmp->content)
 			cone->tangent = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "maxlenght")) && tmp->content)
+		else if (!(ft_strcmp(tmp->name, "maxlength")) && tmp->content)
 			cone->lenght_max = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "minlenght")) && tmp->content)
+		else if (!(ft_strcmp(tmp->name, "minlength")) && tmp->content)
 			cone->radius = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "cap")) && tmp->content)
 			cone->cap = ft_atod(tmp->content);

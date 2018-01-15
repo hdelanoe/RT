@@ -101,29 +101,25 @@ void	create_tree(t_env *e, char **str)
 		exit_parser(1);
 }
 
-int			parsing(t_env *e, char *src_file)
+int		parsing(t_env *e, char *src_file)
 {
 	t_parsing p;
 
+	p.buff = ft_memalloc(sizeof(p.buff));
+	p.stock = NULL;
 	if ((p.fd = open(src_file, O_RDONLY)) < 0)
 		ft_kill("This file doesn't exist or bad typography.");
 	p.j = 0;
-	while ((p.i = read(p.fd, p.buff, BUF_SIZ)) != 0)
+
+	while (get_next_line(p.fd, &p.buff) == 1)
 	{
-		if (p.j == 0)
-		{
-			p.stock = ft_strdup(p.buff);
-			p.j = 1;
-		}
-		else
-		{
-			p.tmp = p.stock;
-			p.stock = ft_strjoin(p.tmp, p.buff);
-			ft_strdel(&p.tmp);
-		}
+		p.j = 1;
+		p.tmp = p.stock;
+		p.stock = ft_strjoin(p.tmp, p.buff);
+		ft_strdel(&p.tmp);
 	}
 	close(p.fd);
-	create_tree(e, &p.stock);
-	free(p.stock);
+	if (p.i >= 0)
+		create_tree(e, &p.stock);
 	return (p.j);
 }

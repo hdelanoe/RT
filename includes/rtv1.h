@@ -124,12 +124,6 @@ struct  				s_rayon
 	t_vector 	normal;
 };
 
-struct 					s_node
-{
-	t_vector 	node;
-	t_vector 	normal;
-};
-
 struct					s_camera
 {
 	t_vector		origin;
@@ -202,14 +196,6 @@ struct 					s_env
 
 };
 
-struct 					s_grid
-{
-	double 		x;
-	double 		y;
-	double 		x1;
-	double 		y1;
-};
-
 typedef struct 					s_physics
 {
 		double 		ior;
@@ -224,6 +210,10 @@ typedef struct 					s_physics
 
 struct							s_poly
 {
+	t_vector					object_rayon;
+	t_vector					tmp_node;
+	t_vector					tmp_node_normal1;
+	t_vector					tmp_node_normal2;
 	double						tmp1;
 	double						tmp2;
 	double						tmp3;
@@ -256,8 +246,6 @@ struct							s_inter
 {
 	t_vector					object_rayon;
 	t_vector					tmp_node;
-	t_vector					tmp_node_normal1;
-	t_vector					tmp_node_normal2;
 };
 
 int p[512];
@@ -311,6 +299,9 @@ int								sphere_intersection(t_env *e, t_object *sphere);
 int								cylinder_intersection(t_env *e, t_object *cylinder);
 int 							disk_intersection(t_env *e, t_object *disk);
 int								torus_intersection(t_env *e, t_object *torus);
+int								sphere_solution(t_env *e, t_object *sphere, t_poly p);
+int								cylinder_solution(t_env *e, t_object *cylinder, t_poly p);
+int								cone_solution(t_env *e, t_object *cone, t_poly p);
 t_color							get_color(t_env *e);
 int 							cast_reflect_ray(t_env *e, t_rayon origin);
 int 							cast_refract_ray(t_env *e, t_rayon origin);

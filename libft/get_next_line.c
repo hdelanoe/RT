@@ -3,66 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/28 16:24:39 by hdelanoe          #+#    #+#             */
-/*   Updated: 2017/05/05 04:14:48 by hdelanoe         ###   ########.fr       */
+/*   Created: 2017/05/25 16:49:05 by dguy-caz          #+#    #+#             */
+/*   Updated: 2017/05/25 18:40:54 by dguy-caz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include "libft.h"
 
-static void	set_rest(char **rest, char *buff)
+int		ft_storage(char **stocker, char *target, char **line)
 {
-	char	*tmp;
+	t_stock		tool;
 
-	tmp = ft_strjoin(*rest, buff);
-	if (*rest)
-		free(*rest);
-	*rest = tmp;
+	tool.save = *stocker;
+	if (target != NULL)
+	{
+		tool.rest = ft_strchr(target, '\n');
+		*tool.rest = '\0';
+		*line = ft_strjoin(tool.save, target);
+		*stocker = ft_strdup(tool.rest + 1);
+	}
+	else
+	{
+		tool.rest = ft_strchr(*stocker, '\n');
+		*tool.rest = '\0';
+		*line = ft_strdup(*stocker);
+		*stocker = ft_strdup(tool.rest + 1);
+	}
+	free(tool.save);
+	return (1);
 }
 
-static int	get_line(char **line, char **rest)
+int		get_next_line(int fd, char **line)
 {
-	char	*ptr;
-	char	*tmp;
+	t_stock			tool;
+	static char		*stocker = NULL;
 
-	if ((ptr = ft_strchr(*rest, '\n')))
+	if (BUFF_SIZE <= 0 || (!line) || fd < 0)
+		return (-1);
+	stocker = (!stocker) ? ft_strnew(0) : stocker;
+	if (ft_strchr(stocker, '\n') != 0)
+		return (ft_storage(&stocker, NULL, line));
+	while ((tool.ret = read(fd, tool.buff, BUFF_SIZE)))
 	{
-		*line = ft_strsub(*rest, 0, ft_strlen(*rest) - ft_strlen(ptr));
-		tmp = ft_strdup(ptr + 1);
-		free(*rest);
-		*rest = tmp;
+		if (tool.ret < 0)
+			return (-1);
+		tool.buff[tool.ret] = '\0';
+		if (ft_strchr(tool.buff, '\n') != 0)
+			return (ft_storage(&stocker, tool.buff, line));
+		tool.tmp = stocker;
+		stocker = ft_strjoin(stocker, tool.buff);
+		free(tool.tmp);
+	}
+	if (stocker != 0 && ft_strlen(stocker) != 0 && (*line = ft_strdup(stocker)))
+	{
+		ft_strdel(&stocker);
 		return (1);
 	}
 	return (0);
-}
-
-int			get_next_line(const int fd, char **line)
-{
-	static char	*rest = 0;
-	char		buff[BUFF_SIZE + 1];
-	int			i;
-
-	if ((fd < 0 || !line || read(fd, buff, 0) < 0))
-		return (-1);
-	if (rest && get_line(line, &rest))
-		return (1);
-	while ((i = read(fd, buff, BUFF_SIZE)) != 0)
-	{
-		buff[i] = '\0';
-		set_rest(&rest, buff);
-		if (get_line(line, &rest))
-			return (1);
-	}
-	if (rest == NULL || rest[0] == '\0')
-		return (0);
-	*line = ft_strdup(rest);
-	free(rest);
-	rest = NULL;
-	return (1);
 }

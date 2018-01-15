@@ -20,6 +20,7 @@ SRCS		= 	srcs/main.c \
 				srcs/cast_ray.c \
 				srcs/basic_intersection.c \
 				srcs/check_intersection.c \
+				srcs/solution.c \
 				srcs/torus.c \
 				srcs/errors.c \
 				srcs/perlin_noise.c \

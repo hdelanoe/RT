@@ -46,12 +46,12 @@ t_env		*init()
 		exit_rt(1);
 	if (!(e->object = (t_object*)ft_memalloc(sizeof(t_object))))
 		exit_rt(1);
-//	e->object->next = NULL;
+
 	if (!(e->light = (t_light*)ft_memalloc(sizeof(t_light))))
 		exit_rt(1);
-//	e->light->next = NULL;
 	e->width = WIN_X;
 	e->height = WIN_Y;
+	e->distance = WIN_X;
 	e->recursion = 1;
 	e->pixelize = 0;
 	return (e);

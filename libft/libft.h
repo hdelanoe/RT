@@ -12,7 +12,11 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# define BUFF_SIZE 1024
 # include <string.h>
+# include <math.h>
+# include <unistd.h>
+# include <stdlib.h>
 # include <math.h>
 
 typedef struct	s_octect
@@ -22,6 +26,16 @@ typedef struct	s_octect
 	unsigned int	t;
 	unsigned int	q;
 }				t_octet;
+
+typedef struct		s_stock
+{
+	int				ret;
+	char			buff[BUFF_SIZE + 1];
+	char			*tmp;
+	char			*save;
+	char			*rest;
+}					t_stock;
+
 void			*ft_memset(void *s, int c, size_t n);
 void			ft_bzero(void *s, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);

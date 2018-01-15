@@ -91,6 +91,7 @@ SRC =	ft_memccpy.c \
 		ft_lstfind.c \
 		ft_lstrev.c \
 		ft_lstclr.c \
+		get_next_line.c \
 
 OBJ	=	$(SRC:.c=.o)
 CC	= gcc
