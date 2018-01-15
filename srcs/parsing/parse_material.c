@@ -14,18 +14,28 @@
 
 void	parse_scene(t_env *e, t_json *json)
 {
-	if (!(ft_strcmp(json->name, "width")) && json->content)
-		e->width = ft_atod(json->content);
+	if (!(ft_strcmp(json->name, "camera")) && json->member)
+		e->camera.origin = parse_point(json->member);
+	else if (!(ft_strcmp(json->name, "width")) && json->content)
+		e->camera.width = ft_atod(json->content);
 	else if (!(ft_strcmp(json->name, "height")) && json->content)
-		e->height = ft_atod(json->content);
+		e->camera.height = ft_atod(json->content);
+	else if (!(ft_strcmp(json->name, "distance")) && json->content)
+		e->camera.distance = ft_atod(json->content);
 	else if (!(ft_strcmp(json->name, "recursion")) && json->content)
 		e->recursion = ft_atoi(json->content); 
 	else
 		ft_printf("{R}WARNING:{E} %s is not valid\n", json->name);
 }
 
-void	init_material(t_object *object)
+t_object	*init_material(int *id)
 {
+	t_object *object;
+
+	if (!(object = (t_object*)ft_memalloc(sizeof(t_object))))
+		ft_kill("Error in malloc object");
+	object->id = *id;
+	*id += 1;
 	object->color = set_color(0.5, 0.5, 0.5);
 	object->ambient = 0.125;
 	object->diffuse = 0.875;
@@ -33,6 +43,8 @@ void	init_material(t_object *object)
 	object->reflect = 0;
 	object->refract = 0;
 	object->absorbtion = 0.125;
+	object->radius = 0;
+	return (object);
 }
 
 void	parse_material(t_json *material, t_object *object)
@@ -66,4 +78,11 @@ void	parse_material(t_json *material, t_object *object)
 		free(tmp->name);
 		free(tmp);
 	}
+}
+
+void	free_json_member(t_json **member)
+{
+	free((*member)->name);
+	free((*member)->content);
+	free((*member));
 }

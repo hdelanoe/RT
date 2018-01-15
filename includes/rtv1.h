@@ -133,9 +133,9 @@ struct					s_camera
 	t_vector		x_vector;
 	t_vector		y_vector;
 	t_vector		z_vector;
-	double			viewplane_width;
-	double			viewplane_height;
-	double			viewplane_distance;
+	double			width;
+	double			height;
+	double			distance;
 	double			*matrix;
 };
 
@@ -264,7 +264,7 @@ int								parsing(t_env *e, char *str);
 void							create_tree(t_env *e, char **str);
 void							get_light(t_env *e);
 void							get_object(t_env *e, t_json *json);
-void							init_material(t_object *object);
+t_object						*init_material(int *id);
 void							parse_scene(t_env *e, t_json *json);
 void							parse_material(t_json *material, t_object *object);
 void							create_sphere(t_env *e, t_json *json, int *id);

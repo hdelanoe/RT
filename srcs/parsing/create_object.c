@@ -56,12 +56,9 @@ void		create_plane(t_env *e, t_json *json, int *id)
 	t_object	*plane;
 	t_json		*tmp;
 
-	plane = (t_object*)ft_memalloc(sizeof(t_object));
-	plane->id = *id;
-	*id += 1;
+	plane = init_material(id);
 	if (!(plane->type = ft_strdup("plane")))
 		exit_rt(1);
-	init_material(plane);
 	while(json->member)
 	{
 		tmp = json->member;
@@ -76,9 +73,7 @@ void		create_plane(t_env *e, t_json *json, int *id)
 		else
 			ft_printf("{R}WARNING:{E} plane %d as a bad attribut\n", plane->id);
 		json->member = json->member->next;
-		free(tmp->name);
-		free(tmp->content);
-		free(tmp);
+		free_json_member(&tmp);
 	}
 	debug_object(plane);
 	add_new_object(&e->object, plane);
@@ -89,12 +84,9 @@ void		create_sphere(t_env *e, t_json *json, int *id)
 	t_object	*sphere;
 	t_json		*tmp;
 
-	sphere = (t_object*)ft_memalloc(sizeof(t_object));
-	sphere->id = *id;
-	*id += 1;
+	sphere = init_material(id);
 	if (!(sphere->type = ft_strdup("sphere")))
 		exit_rt(1);
-	init_material(sphere);
 	while (json->member)
 	{
 		tmp = json->member;
@@ -109,9 +101,7 @@ void		create_sphere(t_env *e, t_json *json, int *id)
 		else
 			ft_printf("{R}WARNING:{E} sphere %d as a bad attribut\n", sphere->id);
 		json->member = json->member->next;
-		free(tmp->name);
-		free(tmp->content);
-		free(tmp);
+		free_json_member(&tmp);
 	}
 	debug_object(sphere);
 	add_new_object(&e->object, sphere);
@@ -121,30 +111,24 @@ void create_cap_cylinder(t_env *e, t_object *cylinder, int *id)
 {
 	t_object *disk;
 
-	disk = (t_object*)ft_memalloc(sizeof(t_object));
-	if (!(disk->type = ft_strdup("disk")))
-		exit_rt(1);
+	disk = init_material(id);
+		if (!(disk->type = ft_strdup("disk")))
+			exit_rt(1);
 	t_vector tmp = v_double_mult(&cylinder->axis, cylinder->lenght_max / 2);
-	disk->id = (*id)++;
-	init_material(disk);
 	disk->point = v_v_subs(&cylinder->center, &tmp);
 	disk->normal = cylinder->axis;
 	disk->radius = cylinder->radius;
 	disk->color = cylinder->color;
 	debug_object(disk);
 	add_new_object(&e->object, disk);
-	disk = (t_object*)ft_memalloc(sizeof(t_object));
-	if (!(disk->type = ft_strdup("disk")))
-		exit_rt(1);
-	disk->normal = cylinder->axis;
-	disk->id = (*id)++;
-	init_material(disk);
+	disk = init_material(id);
+		if (!(disk->type = ft_strdup("disk")))
+			exit_rt(1);
 	disk->radius = cylinder->radius;
 	disk->color = cylinder->color;
 	disk->point = v_v_add(&cylinder->center, &tmp);
 	debug_object(disk);
 	add_new_object(&e->object, disk);
-
 }
 
 void		create_cylinder(t_env *e, t_json *json, int *id)
@@ -152,12 +136,9 @@ void		create_cylinder(t_env *e, t_json *json, int *id)
 	t_object	*cylinder;
 	t_json		*tmp;
 
-	cylinder = (t_object*)ft_memalloc(sizeof(t_object));
-	cylinder->id = *id;
-	*id += 1;
+	cylinder = init_material(id);
 	if (!(cylinder->type = ft_strdup("cylinder")))
 		exit_rt(1);
-	init_material(cylinder);
 	while (json->member)
 	{
 		tmp = json->member;
@@ -179,9 +160,7 @@ void		create_cylinder(t_env *e, t_json *json, int *id)
 		else
 			ft_printf("{R}WARNING:{E} cylinder %d as a bad attribut\n", cylinder->id);
 		json->member = json->member->next;
-		free(tmp->name);
-		free(tmp->content);
-		free(tmp);
+		free_json_member(&tmp);
 	}
 	if (cylinder->cap > 0)
 		create_cap_cylinder(e, cylinder, id);
@@ -196,12 +175,9 @@ void create_disk(t_env *e, t_json *json, int *id)
 	t_object	*disk;
 	t_json		*tmp;
 
-	disk = (t_object*)ft_memalloc(sizeof(t_object));
-	disk->id = *id;
-	*id += 1;
+	disk = init_material(id);
 	if (!(disk->type = ft_strdup("disk")))
 		exit_rt(1);
-	init_material(disk);
 	while(json->member)
 	{
 		if (ft_strcmp(json->member->name, "coord") == 0)
@@ -216,9 +192,7 @@ void create_disk(t_env *e, t_json *json, int *id)
 			disk->color = parse_color(json->member->member);
 		tmp = json->member;
 		json->member = json->member->next;
-		free(tmp->name);
-		free(tmp->content);
-		free(tmp);
+		free_json_member(&tmp);
 	}
 	debug_object(disk);
 	add_new_object(&e->object, disk);
@@ -229,11 +203,9 @@ void create_cap_cone(t_env *e, t_object *cone, int *id)
 	t_object *disk;
 	t_vector tmp;
 
-	disk = (t_object*)ft_memalloc(sizeof(t_object));
+	disk = init_material(id);
 	if (!(disk->type = ft_strdup("disk")))
 		exit_rt(1);
-	disk->id = (*id)++;
-	init_material(disk);
 	tmp = v_double_mult(&cone->axis, cone->lenght_max);
 	disk->point = v_v_add(&tmp, &cone->vertex);
 	disk->normal = cone->axis;
@@ -243,11 +215,9 @@ void create_cap_cone(t_env *e, t_object *cone, int *id)
 	add_new_object(&e->object, disk);
 	if (cone->radius < cone->lenght_max)
 	{
-		disk = (t_object*)ft_memalloc(sizeof(t_object));
+		disk = init_material(id);
 		if (!(disk->type = ft_strdup("disk")))
 			exit_rt(1);
-		disk->id = (*id)++;
-		init_material(disk);
 		tmp = v_double_mult(&cone->axis, cone->radius);
 		disk->point = v_v_add(&tmp, &cone->vertex);
 		disk->normal = cone->axis;
@@ -264,13 +234,9 @@ void		create_cone(t_env *e, t_json *json, int *id)
 	t_object	*cone;
 	t_json 		*tmp;
 
-	cone = (t_object*)ft_memalloc(sizeof(t_object));
-	cone->id = *id;
-	*id += 1;
+	cone = init_material(id);
 	if (!(cone->type = ft_strdup("cone")))
 		exit_rt(1);
-	init_material(cone);
-	cone->radius = 0;
 	while(json->member)
 	{
 		tmp = json->member;
@@ -296,9 +262,7 @@ void		create_cone(t_env *e, t_json *json, int *id)
 		else
 			ft_printf("{R}WARNING:{E} cone %d as a bad attribut\n", cone->id);
 		json->member = json->member->next;
-		free(tmp->name);
-		free(tmp->content);
-		free(tmp);
+		free_json_member(&tmp);
 	}
 	// CHECK IF MAX_LENGHT < MIN_LENGHT  FT_SWAP
 	if (cone->cap > 0)
@@ -317,12 +281,9 @@ void		create_torus(t_env *e, t_json *json, int *id)
 	t_object	*torus;
 	t_json 		*tmp;
 
-	torus = (t_object*)ft_memalloc(sizeof(t_object));
-	torus->id = *id;
-	*id += 1;
+	torus = init_material(id);
 	if (!(torus->type = ft_strdup("torus")))
 		exit_rt(1);
-	init_material(torus);
 	while(json->member)
 	{
 		tmp = json->member;
@@ -341,9 +302,7 @@ void		create_torus(t_env *e, t_json *json, int *id)
 		else
 			ft_printf("{R}WARNING:{E} torus %d as a bad attribut\n", torus->id);
 		json->member = json->member->next;
-		free(tmp->name);
-		free(tmp->content);
-		free(tmp);
+		free_json_member(&tmp);
 	}
 	debug_object(torus);
 	add_new_object(&e->object, torus);

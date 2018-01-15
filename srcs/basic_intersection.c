@@ -38,9 +38,10 @@ int		sphere_intersection(t_env *e, t_object *sphere)
 
 	p.object_rayon = v_v_subs(&e->current_origin, &sphere->center);
 	p.b = dot_product(&p.object_rayon, &e->current_rayon);
-	p.c = dot_product(&p.object_rayon, &p.object_rayon) - (sphere->radius * sphere->radius);
+	p.c = dot_product(&p.object_rayon, &p.object_rayon) -
+	(sphere->radius * sphere->radius);
 	p.discriminant = (p.b * p.b) - p.c;
-	
+
 	return (sphere_solution(e, sphere, p));
 }
 
@@ -49,9 +50,15 @@ int		cylinder_intersection(t_env *e, t_object *cylinder)
 	t_poly	p;
 
 	p.object_rayon = v_v_subs(&e->current_origin, &cylinder->center);
-	p.a = 1 - (dot_product(&e->current_rayon, &cylinder->axis) * dot_product(&e->current_rayon, &cylinder->axis));
-	p.b = 2 * (dot_product(&p.object_rayon, &e->current_rayon) - (dot_product(&e->current_rayon, &cylinder->axis) * dot_product(&p.object_rayon, &cylinder->axis)));
-	p.c = dot_product(&p.object_rayon, &p.object_rayon) - (dot_product(&p.object_rayon, &cylinder->axis) * dot_product(&p.object_rayon, &cylinder->axis)) - (cylinder->radius * cylinder->radius);
+	p.a = 1 - (dot_product(&e->current_rayon, &cylinder->axis) *
+		dot_product(&e->current_rayon, &cylinder->axis));
+	p.b = 2 * (dot_product(&p.object_rayon, &e->current_rayon) -
+		(dot_product(&e->current_rayon, &cylinder->axis) *
+			dot_product(&p.object_rayon, &cylinder->axis)));
+	p.c = dot_product(&p.object_rayon, &p.object_rayon) -
+	(dot_product(&p.object_rayon, &cylinder->axis) *
+		dot_product(&p.object_rayon, &cylinder->axis)) -
+	(cylinder->radius * cylinder->radius);
 	p.discriminant = (p.b * p.b) - (4 * p.a * p.c);
 	return (cylinder_solution(e, cylinder, p));
 }
@@ -76,10 +83,11 @@ int		cone_intersection(t_env *e, t_object *cone)
 	p.tmp1 = (1 + pow(cone->tangent, 2));
 	p.tmp2 = dot_product(&e->current_rayon, &cone->axis);
 	p.tmp3 = dot_product(&p.object_rayon, &cone->axis);
-
 	p.a = 1 - (p.tmp1 * pow(p.tmp2, 2));
-	p.b = 2 * ((dot_product(&p.object_rayon, &e->current_rayon) - (p.tmp1 * (p.tmp2 * p.tmp3))));
-	p.c = dot_product(&p.object_rayon, &p.object_rayon) - (p.tmp1 * (p.tmp3 * p.tmp3));
+	p.b = 2 * ((dot_product(&p.object_rayon,&e->current_rayon) -
+		(p.tmp1 * (p.tmp2 * p.tmp3))));
+	p.c = dot_product(&p.object_rayon, &p.object_rayon) -
+	(p.tmp1 * (p.tmp3 * p.tmp3));
 	p.discriminant = (p.b * p.b) - (4 * p.a * p.c);
 	return (cone_solution(e, cone, p));
 }

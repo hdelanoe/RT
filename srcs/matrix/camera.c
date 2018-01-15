@@ -17,9 +17,9 @@ void	init_camera(t_env *e)
 	e->camera.origin = set_vector(0, 0, -(double)WIN_X);
 	e->camera.lookat = set_vector(0, 0, 0);
 	e->camera.up = set_vector(0, 1, 0);
-	e->camera.viewplane_width = (double)WIN_X;
-	e->camera.viewplane_height = (double)WIN_Y;
-	e->camera.viewplane_distance = (double)WIN_X;
+	e->camera.width = (double)WIN_X;
+	e->camera.height = (double)WIN_Y;
+	e->camera.distance = (double)WIN_X;
 	e->camera.z_vector = v_v_subs(&e->camera.lookat, &e->camera.origin);
     e->camera.z_vector = normalize(&e->camera.z_vector);
     e->camera.y_vector = e->camera.up;
@@ -48,9 +48,9 @@ void	viewplane_transformation(t_env *e)
 	t_vector	tmp_vpY;
 	t_vector	tmp_vpX;
 
-	tmp_vpX = v_double_mult(&e->camera.x_vector, (e->camera.viewplane_width * 0.5));
-	tmp_vpY = v_double_mult(&e->camera.y_vector, (e->camera.viewplane_height * 0.5));
-	tmp_vpZ = v_double_mult(&e->camera.z_vector, (e->camera.viewplane_distance));
+	tmp_vpX = v_double_mult(&e->camera.x_vector, (e->camera.width * 0.5));
+	tmp_vpY = v_double_mult(&e->camera.y_vector, (e->camera.height * 0.5));
+	tmp_vpZ = v_double_mult(&e->camera.z_vector, (e->camera.distance));
 	e->viewplane_point_up_left = v_v_add(&tmp_vpZ, &tmp_vpY);
 	e->viewplane_point_up_left = v_v_add(&e->camera.origin, &e->viewplane_point_up_left);
 	e->viewplane_point_up_left = v_v_subs(&e->viewplane_point_up_left, &tmp_vpX);

@@ -38,9 +38,7 @@ void		get_object(t_env *e, t_json *json)
 		else if (tmp->member)
 			parse_scene(e, tmp);
 		json->member = json->member->next;
-		free(tmp->name);
-		free(tmp->content);
-		free(tmp);
+		free_json_member(&tmp);
 	}
 }
 
