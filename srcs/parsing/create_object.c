@@ -96,6 +96,10 @@ void		create_sphere(t_env *e, t_json *json, int *id)
 			sphere->radius = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 			sphere->color = parse_color(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "cap")) && tmp->member)
+			sphere->cap = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "plan_cut")) && tmp->member)
+			sphere->normal = parse_normal(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
 			parse_material(tmp, sphere);
 		else
@@ -124,6 +128,7 @@ void create_cap_cylinder(t_env *e, t_object *cylinder, int *id)
 	disk = init_material(id);
 		if (!(disk->type = ft_strdup("disk")))
 			exit_rt(1);
+	disk->normal = cylinder->axis;
 	disk->radius = cylinder->radius;
 	disk->color = cylinder->color;
 	disk->point = v_v_add(&cylinder->center, &tmp);
@@ -144,9 +149,8 @@ void		create_cylinder(t_env *e, t_json *json, int *id)
 		tmp = json->member;
 		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
 			cylinder->center = parse_point(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "normal")) && tmp->member)
+		else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
 			cylinder->axis = parse_normal(tmp->member);
-
 		else if (!(ft_strcmp(tmp->name, "radius")) && tmp->content)
 			cylinder->radius = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)

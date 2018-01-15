@@ -1,11 +1,11 @@
 {
-  "cone": {
+  "cylinder": {
     "coord": {"x": "0", "y": "10", "z": "0"},
-    "tangent": "0.3",
-    "axis": {"x": "1", "y": "1", "z": "0"},
-    "maxlenght": "50",
-    "minlenght": "-20",
-    "cap": "1",
+  
+    "axis": {"x": "1", "y": "1", "z": "1"},
+    "length": "50",
+    "radius": "50",
+    "cap": "1";
     "material": {
       "color": {"r": "0.8", "g": "0.6", "b": "0.4"}
         }

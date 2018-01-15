@@ -32,6 +32,17 @@ int		plane_intersection(t_env *e, t_object *plane)
 	return (1);
 }
 
+/*int 	check_demisphere(t_object *sphere, t_inter *i)
+{
+	t_vector distance;
+
+	distance = v_v_subs(&i->tmp_node, &sphere->center);
+	if (distance.y < 0)
+		return (1);
+	else
+		return (0);
+}*/
+
 int		sphere_intersection(t_env *e, t_object *sphere)
 {
 	t_poly 	p;
@@ -41,7 +52,6 @@ int		sphere_intersection(t_env *e, t_object *sphere)
 	p.c = dot_product(&p.object_rayon, &p.object_rayon) -
 	(sphere->radius * sphere->radius);
 	p.discriminant = (p.b * p.b) - p.c;
-
 	return (sphere_solution(e, sphere, p));
 }
 
