@@ -117,6 +117,36 @@ void		create_sphere(t_env *e, t_json *json, int *id)
 	add_new_object(&e->object, sphere);
 }
 
+void create_cap_cylinder(t_env *e, t_object *cylinder, int *id)
+{
+	t_object *disk;
+
+	disk = (t_object*)ft_memalloc(sizeof(t_object));
+	if (!(disk->type = ft_strdup("disk")))
+		exit_rt(1);
+	disk->id = (*id)++;
+	init_material(disk);
+	disk->point = cylinder->center;
+	disk->normal = cylinder->axis;
+	disk->radius = cylinder->radius;
+	disk->color = cylinder->color;
+	debug_object(disk);
+	add_new_object(&e->object, disk);
+	disk = (t_object*)ft_memalloc(sizeof(t_object));
+	t_vector tmp = v_double_mult(&cylinder->axis, cylinder->lenght_max);
+	if (!(disk->type = ft_strdup("disk")))
+		exit_rt(1);
+	disk->normal = cylinder->axis;
+	disk->id = (*id)++;
+	init_material(disk);
+	disk->radius = cylinder->radius;
+	disk->color = cylinder->color;
+	disk->point = v_v_add(&cylinder->center, &tmp);
+	debug_object(disk);
+	add_new_object(&e->object, disk);
+
+}
+
 void		create_cylinder(t_env *e, t_json *json, int *id)
 {
 	t_object	*cylinder;
@@ -150,8 +180,42 @@ void		create_cylinder(t_env *e, t_json *json, int *id)
 		free(tmp->content);
 		free(tmp);
 	}
+	create_cap_cylinder(e, cylinder, id);
 	debug_object(cylinder);
 	add_new_object(&e->object, cylinder);
+}
+
+void create_disk(t_env *e, t_json *json, int *id)
+{
+	t_object	*disk;
+	t_json		*tmp;
+
+	disk = (t_object*)ft_memalloc(sizeof(t_object));
+	disk->id = *id;
+	*id += 1;
+	if (!(disk->type = ft_strdup("disk")))
+		exit_rt(1);
+	init_material(disk);
+	while(json->member)
+	{
+		if (ft_strcmp(json->member->name, "coord") == 0)
+			disk->point = parse_point(json->member->member);
+		else if (ft_strcmp(json->member->name, "normal") == 0)
+			disk->normal = parse_normal(json->member->member);
+		else if (ft_strcmp(json->member->name, "radius") == 0)
+			disk->radius = ft_atod(json->member->content);
+		else if (ft_strcmp(json->member->name, "material") == 0)
+			parse_material(json->member, disk);
+		else if (ft_strcmp(json->member->name, "color") == 0)
+			disk->color = parse_color(json->member->member);
+		tmp = json->member;
+		json->member = json->member->next;
+		free(tmp->name);
+		free(tmp->content);
+		free(tmp);
+	}
+	debug_object(disk);
+	add_new_object(&e->object, disk);
 }
 
 void		create_cone(t_env *e, t_json *json, int *id)

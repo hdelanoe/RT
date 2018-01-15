@@ -31,6 +31,8 @@ void		get_object(t_env *e, t_json *json)
 			create_cone(e, tmp, &id);
 		else if (!(ft_strcmp(tmp->name, "light")) && tmp->member)
 			create_light(e, tmp, &id);
+		else if (!(ft_strcmp(tmp->name, "disk")) && tmp->member)
+			create_disk(e, tmp, &id);
 		else if (tmp->member)
 			parse_scene(e, tmp);
 		json->member = json->member->next;
