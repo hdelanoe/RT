@@ -34,6 +34,7 @@
 
 # define R_VOID 1.0
 # define R_AIR 1.000272
+# define R_TEST 1.21
 # define R_ICE 1.31
 # define R_WATER 1.32612
 # define R_PMMA 1.4917
