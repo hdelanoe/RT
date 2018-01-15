@@ -124,16 +124,16 @@ void create_cap_cylinder(t_env *e, t_object *cylinder, int *id)
 	disk = (t_object*)ft_memalloc(sizeof(t_object));
 	if (!(disk->type = ft_strdup("disk")))
 		exit_rt(1);
+	t_vector tmp = v_double_mult(&cylinder->axis, cylinder->lenght_max / 2);
 	disk->id = (*id)++;
 	init_material(disk);
-	disk->point = cylinder->center;
+	disk->point = v_v_subs(&cylinder->center, &tmp);
 	disk->normal = cylinder->axis;
 	disk->radius = cylinder->radius;
 	disk->color = cylinder->color;
 	debug_object(disk);
 	add_new_object(&e->object, disk);
 	disk = (t_object*)ft_memalloc(sizeof(t_object));
-	t_vector tmp = v_double_mult(&cylinder->axis, cylinder->lenght_max);
 	if (!(disk->type = ft_strdup("disk")))
 		exit_rt(1);
 	disk->normal = cylinder->axis;
@@ -167,8 +167,10 @@ void		create_cylinder(t_env *e, t_json *json, int *id)
 			cylinder->axis = parse_normal(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "radius")) && tmp->content)
 			cylinder->radius = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
+		else if (!(ft_strcmp(tmp->name, "lenght")) && tmp->content)
 			cylinder->lenght_max = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "cap")) && tmp->content)
+			cylinder->cap = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 			cylinder->color = parse_color(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
@@ -180,7 +182,10 @@ void		create_cylinder(t_env *e, t_json *json, int *id)
 		free(tmp->content);
 		free(tmp);
 	}
-	create_cap_cylinder(e, cylinder, id);
+	if (cylinder->cap > 0)
+		create_cap_cylinder(e, cylinder, id);
+	else
+		cylinder->lenght_max = 100000;
 	debug_object(cylinder);
 	add_new_object(&e->object, cylinder);
 }
@@ -218,6 +223,41 @@ void create_disk(t_env *e, t_json *json, int *id)
 	add_new_object(&e->object, disk);
 }
 
+void create_cap_cone(t_env *e, t_object *cone, int *id)
+{
+	t_object *disk;
+	t_vector tmp;
+
+	disk = (t_object*)ft_memalloc(sizeof(t_object));
+	if (!(disk->type = ft_strdup("disk")))
+		exit_rt(1);
+	disk->id = (*id)++;
+	init_material(disk);
+	tmp = v_double_mult(&cone->axis, cone->lenght_max);
+	disk->point = v_v_add(&tmp, &cone->vertex);
+	disk->normal = cone->axis;
+	disk->radius = cone->tangent * cone->lenght_max;
+	disk->color = cone->color;
+	debug_object(disk);
+	add_new_object(&e->object, disk);
+	if (cone->radius < cone->lenght_max)
+	{
+		disk = (t_object*)ft_memalloc(sizeof(t_object));
+		if (!(disk->type = ft_strdup("disk")))
+			exit_rt(1);
+		disk->id = (*id)++;
+		init_material(disk);
+		tmp = v_double_mult(&cone->axis, cone->radius);
+		disk->point = v_v_add(&tmp, &cone->vertex);
+		disk->normal = cone->axis;
+		disk->radius = cone->tangent * cone->radius;
+		disk->color = cone->color;
+		debug_object(disk);
+		add_new_object(&e->object, disk);
+	}
+
+}
+
 void		create_cone(t_env *e, t_json *json, int *id)
 {
 	t_object	*cone;
@@ -229,6 +269,7 @@ void		create_cone(t_env *e, t_json *json, int *id)
 	if (!(cone->type = ft_strdup("cone")))
 		exit_rt(1);
 	init_material(cone);
+	cone->radius = 0;
 	while(json->member)
 	{
 		tmp = json->member;
@@ -236,10 +277,17 @@ void		create_cone(t_env *e, t_json *json, int *id)
 			cone->vertex = parse_point(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "tangent")) &&tmp->content)
 			cone->tangent = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
+		else if (!(ft_strcmp(tmp->name, "maxlenght")) && tmp->content)
 			cone->lenght_max = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "minlenght")) && tmp->content)
+			cone->radius = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "cap")) && tmp->content)
+			cone->cap = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
+		{
 			cone->axis = parse_point(tmp->member);
+			cone->axis = normalize(&cone->axis);
+		}
 		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 			cone->color = parse_color(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
@@ -251,6 +299,51 @@ void		create_cone(t_env *e, t_json *json, int *id)
 		free(tmp->content);
 		free(tmp);
 	}
+	// CHECK IF MAX_LENGHT < MIN_LENGHT  FT_SWAP
+	if (cone->cap > 0)
+		create_cap_cone(e, cone, id);
+	else
+	{
+		cone->lenght_max = 10000;
+		cone->radius = 10000;
+	}
 	debug_object(cone);
 	add_new_object(&e->object, cone);
+}
+
+void		create_torus(t_env *e, t_json *json, int *id)
+{
+	t_object	*torus;
+	t_json 		*tmp;
+
+	torus = (t_object*)ft_memalloc(sizeof(t_object));
+	torus->id = *id;
+	*id += 1;
+	if (!(torus->type = ft_strdup("torus")))
+		exit_rt(1);
+	init_material(torus);
+	while(json->member)
+	{
+		tmp = json->member;
+		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+			torus->center = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "sradius")) &&tmp->content)
+			torus->radius = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "bradius")) && tmp->content)
+			torus->lenght_max = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
+			torus->axis = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+			torus->color = parse_color(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+			parse_material(tmp, torus);
+		else
+			ft_printf("{R}WARNING:{E} torus %d as a bad attribut\n", torus->id);
+		json->member = json->member->next;
+		free(tmp->name);
+		free(tmp->content);
+		free(tmp);
+	}
+	debug_object(torus);
+	add_new_object(&e->object, torus);
 }

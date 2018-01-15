@@ -39,8 +39,8 @@ void	ray_tracer(t_env *e)
 			e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
 			e->camera.rayon = normalize(&e->camera.rayon);
 			if (cast_ray(e, e->camera.rayon, e->camera.origin))
-//				color = get_color(e);
-				color = ambient_occlusion(e);
+				color = get_color(e);
+//				color = ambient_occlusion(e);
 			print_color(&color, e, x, y);
 			x++;
 		}

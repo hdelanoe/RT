@@ -100,8 +100,7 @@ int		cylinder_intersection(t_env *e, t_object *cylinder)
 	i.tmp_node = v_double_mult(&e->current_rayon, e->solution);
 	cylinder->node = v_v_add(&e->current_origin, &i.tmp_node);
 	p.tmp1 = (dot_product(&e->current_rayon, &cylinder->axis) * e->solution) + dot_product(&i.object_rayon, &cylinder->axis);
-	p.tmp2 = (dot_product(&e->current_rayon, &cylinder->axis) * p.s2) + dot_product(&i.object_rayon, &cylinder->axis);
-	if (p.tmp1 > cylinder->lenght_max || p.tmp1 < 0)
+	if (p.tmp1 > (cylinder->lenght_max / 2) || p.tmp1 < (-cylinder->lenght_max / 2))
 		return (0);
 	i.tmp_node_normal1 = v_v_subs(&cylinder->node, &cylinder->center);
 	i.tmp_node_normal2 = v_double_mult(&cylinder->axis, p.tmp1);
@@ -146,19 +145,34 @@ int		cone_intersection(t_env *e, t_object *cone)
 		p.s1 = (- p.b + p.discriminant) / (2 * p.a);
 		p.s2 = (- p.b - p.discriminant) / (2 * p.a);
 		e->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
+		if (p.s1 > p.s2) // FT_SWAP
+        {
+            double tmp;
+            tmp = p.s1;
+            p.s1 = p.s2;
+            p.s2 = tmp;
+            e->solution = p.s1;
+        }
 	}
 	if (e->solution < 0)
 		return (0);
 	i.tmp_node = v_double_mult(&e->current_rayon, e->solution);
 	cone->node = v_v_add(&e->current_origin, &i.tmp_node);
-
 	p.len = (p.tmp2 * e->solution) + p.tmp3;
-	if (p.len > cone->lenght_max || p.len < 0)
+	if (p.len > cone->lenght_max || p.len < cone->radius)
 		return (0);
 	i.tmp_node_normal1 = v_v_subs(&cone->node, &cone->vertex);
 	i.tmp_node_normal2 = v_double_mult(&cone->axis, p.len);
 	i.tmp_node_normal2 = v_double_mult(&i.tmp_node_normal2, p.tmp1);
 	cone->node_normal = v_v_subs(&i.tmp_node_normal1, &i.tmp_node_normal2);
 	cone->node_normal = normalize(&cone->node_normal);
+	return (1);
+}
+
+int torus_intersection(t_env *e, t_object *torus)
+{
+	t_inter i;
+
+	i.object_rayon = v_v_subs(&e->current_origin, &torus->center);
 	return (1);
 }

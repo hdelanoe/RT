@@ -95,6 +95,7 @@ struct					s_object
 	t_vector	node;
 	t_vector	node_normal;
 	t_color		color;
+	int 		cap;
 	double 		ambient;
 	double 		diffuse;
 	double 		specular;
