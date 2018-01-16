@@ -24,6 +24,7 @@ void	get_object_values(t_env *e, t_object *object)
 	e->refract = object->refract;
 	e->specular = object->specular;
 	e->id_object = object->id;
+	e->copy = object;
 }
 
 int sort_type(t_env *e, t_object *object)
@@ -50,7 +51,7 @@ void check_intersection(t_env *e, t_object *object)
 	{
 		if (sort_type(e, object) && e->solution < e->distance && e->solution >= 0)
 		{
-			e->distance = e->solution; 
+			 e->distance = e->solution; 
 			get_object_values(e, object);
 			if (!(ft_strcmp("plane", object->type)))
 				e->bump = 1;

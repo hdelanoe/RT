@@ -38,7 +38,6 @@ void	ray_tracer(t_env *e)
 		while (x < e->fin)
 		{
 			color = set_color(0, 0, 0);
-			e->distance = 100000;
 			tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
 			tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
 			viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);

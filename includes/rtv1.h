@@ -198,6 +198,8 @@ struct 					s_env
 	int				begin;
 	int				fin;
 	int				am_flag;
+	t_object		*copy;
+	int 			is_copy;
 
 };
 
@@ -324,6 +326,7 @@ t_color							c_double_div(t_color *a, double b);
 t_pixel							pixel_vp_init(t_pixel *pxl, t_env *e);
 void							pxl_tracer(t_env *e, int sample);
 t_color							ambient_occlusion(t_env *e);
+int								mouse(int button, int x, int y, t_env *e);
 /*
 ERROR
 */

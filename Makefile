@@ -23,6 +23,7 @@ SRCS		= 	srcs/main.c \
 				srcs/solution.c \
 				srcs/torus.c \
 				srcs/errors.c \
+				srcs/mouse.c \
 				srcs/perlin_noise.c \
 				srcs/render/user_interactions.c \
 				srcs/render/anti_aliasing.c \

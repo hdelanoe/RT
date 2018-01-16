@@ -8,7 +8,7 @@
       "ambient": "0.5", 
       "diffuse": "0.5", 
       "specular": "0.9", 
-      "reflect": "0", 
+      "reflect": "1", 
       "refract": "0"
       "absorbtion": "0.7" 
       }  
@@ -22,7 +22,7 @@
       "diffuse": "0.5", 
       "specular": "0.9", 
       "reflect": "0", 
-      "refract": "1"
+
       "absorbtion": "0.7" 
       }  
     },
@@ -32,7 +32,6 @@
     "radius": "100"
     "cap": "1",
     "material": {
-      "refract": "1",
     }
     }
   "sphere": {

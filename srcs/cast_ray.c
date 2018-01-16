@@ -22,6 +22,7 @@ void 	init_rayon_values(t_env *e, t_vector rayon, t_vector origin)
 	e->refract = 0;
 	e->bump = 0;
 	e->recursion = 1;
+	e->distance = 100000;
 }
 
 t_vector bump_normal(t_vector normal)
@@ -59,14 +60,6 @@ int cast_reflect_ray(t_env *e, t_rayon incident)
 	pl.cos1 = 2.0 * dot_product(&incident.rayon, &incident.normal);
 	reflect.rayon = v_double_mult(&incident.normal, pl.cos1);
 	reflect.rayon = v_v_subs(&incident.rayon, &reflect.rayon);
-	// inv = v_double_mult(&origin.rayon, (double)-1);
-	// pl.cos1 = dot_product(&inv, &origin.normal);
-	// if (pl.cos1 >= 0)
-	// 	pl.teta = 2 * pl.cos1;
-	// else
-	// 	pl.teta = -2 * pl.cos1;
-	// pl.tmp1 = v_double_mult(&origin.normal, pl.teta);
-	// reflect.rayon = v_v_add(&origin.rayon, &pl.tmp1);
 	 	pl.tmp1 = v_double_mult(&reflect.rayon, 0.01);
 	 reflect.origin = v_v_add(&incident.node, &pl.tmp1);
 	 normalize(&reflect.rayon);
@@ -99,7 +92,7 @@ int cast_refract_ray(t_env *e, t_rayon origin)
  	refract.rayon = v_v_add(&pl.tmp1, &pl.tmp2);
 	pl.tmp1 = v_double_mult(&refract.rayon, 0.01);
  	refract.origin = v_v_add(&origin.node, &pl.tmp1);
-	normalize(&refract.rayon);
+//	normalize(&refract.rayon);
 	e->in_out *= -1;
  	if (cast_ray(e, refract.rayon, refract.origin))
  		return (1);

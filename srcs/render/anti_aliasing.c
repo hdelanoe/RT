@@ -60,7 +60,7 @@ void		aa_tracer(t_env *e, int sample)
 
 	e->in_out = -1;
 	aa.y = 0;
-	// pthread_mutex_lock(&mutex0);
+	pthread_mutex_lock(&mutex0);
 	while (aa.y < WIN_Y)
 	{
 		aa.x = e->begin;
@@ -79,5 +79,5 @@ void		aa_tracer(t_env *e, int sample)
 		}
 		aa.y++;
 	}
-	// pthread_mutex_unlock(&mutex0);
+	pthread_mutex_unlock(&mutex0);
 }

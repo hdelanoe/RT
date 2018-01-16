@@ -32,11 +32,19 @@ void		display_window(t_env *env)
 	camera_transformation(env);
 	ft_pthread(env, ray_tracer_void);
 	// ray_tracer(env);
+	mlx_put_image_to_window(env->mlx.mlx_ptr, env->mlx.win_ptr, env->mlx.img_ptr, 0, 0);
 	mlx_hook(env->mlx.win_ptr, 2, (1L << 0), key_functions, env);
 	mlx_hook(env->mlx.win_ptr, 17, (1L << 17), proper_exit, env);
-	mlx_put_image_to_window(env->mlx.mlx_ptr, env->mlx.win_ptr, env->mlx.img_ptr, 0, 0);
+	mlx_mouse_hook(env->mlx.win_ptr, mouse, env);
 	mlx_loop(env->mlx.mlx_ptr);
 	mlx_destroy_window(env->mlx.mlx_ptr, env->mlx.win_ptr);
+}
+
+void 	init_copy(t_env *e)
+{
+	if (!(e->copy = (t_object*)ft_memalloc(sizeof(t_object))))
+		ft_kill("Error in malloc object");
+//	e->copy->type = ft_strdup(NULL);
 }
 
 t_env		*init()
@@ -47,7 +55,6 @@ t_env		*init()
 		exit_rt(1);
 	if (!(e->object = (t_object*)ft_memalloc(sizeof(t_object))))
 		exit_rt(1);
-
 	if (!(e->light = (t_light*)ft_memalloc(sizeof(t_light))))
 		exit_rt(1);
 	e->width = WIN_X;
@@ -55,6 +62,7 @@ t_env		*init()
 	e->distance = WIN_X;
 	e->recursion = 6;
 	e->pixelize = 0;
+	init_copy(e);
 	return (e);
 }
 
