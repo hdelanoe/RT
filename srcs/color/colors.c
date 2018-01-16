@@ -52,25 +52,26 @@ void	shoot_new_color(t_env *e, t_color *c, double coef)
 {
 	t_color shade;
 
-		shade = get_color(e);
-		shade = c_double_mult(&shade, coef);
-		*c = c_c_add(c, &shade);
-		e->recursion--;
+	shade = get_color(e);
+	shade = c_double_mult(&shade, coef);
+	*c = c_c_add(c, &shade);
+	// e->recursion--;
 }
 
 void	recurse_color(t_env *e, t_rayon ray, t_color *c)
 {
-	while (e->recursion > 0)
+	while (--(e->recursion) > 0)
 	{
+
 		if (e->reflect)
 		{
-			if (cast_reflect_ray(e, ray))
+			if (e->recursion > 0 && cast_reflect_ray(e, ray))
 			{
 				shoot_new_color(e, c, e->diffuse);
-				continue ;
+				// continue ;
 			}
 		}
-		if (e->refract)
+		/*if (e->refract)
 		{
 			if (cast_refract_ray(e, ray))
 			{
@@ -78,8 +79,7 @@ void	recurse_color(t_env *e, t_rayon ray, t_color *c)
 				continue ;
 			}
 
-		}
-		e->recursion--;
+		}*/
 	}
 }
 

@@ -53,7 +53,6 @@ t_env		*init()
 	e->width = WIN_X;
 	e->height = WIN_Y;
 	e->distance = WIN_X;
-	e->recursion = 6;
 	e->pixelize = 0;
 	e->is_past = 0;
 	e->is_copy = 0;

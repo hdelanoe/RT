@@ -38,7 +38,7 @@ void		pxl_tracer(t_env *e, int sample)
 		pxl.x = 0;
 		while (pxl.x < WIN_X)
 		{
-			e->in_out = -1;
+			e->recursion = 6;
 			color = set_color(0, 0, 0);
 			pxl = pixel_vp_init(&pxl, e);
 			e->camera.rayon = v_v_subs(&pxl.viewplane_point, &e->camera.origin);

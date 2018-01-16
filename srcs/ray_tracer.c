@@ -29,6 +29,7 @@ void	ray_tracer(t_env *e)
 	t_vector	tmp_vp_pointy;
 	t_color 	color;
 
+	
 	y = 0;
 //	 pthread_mutex_lock(&mutex1);
 	while (y < e->height)
@@ -37,6 +38,7 @@ void	ray_tracer(t_env *e)
 		while (x < e->width)
 		{
 			e->in_out = -1;
+			e->recursion = 6;
 			color = set_color(0, 0, 0);
 			tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
 			tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);

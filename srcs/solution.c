@@ -46,7 +46,7 @@ int	solve_solution(t_env *e, t_poly *p)
 		(*p).s1 = (- (*p).b + (*p).discriminant) / (2 * (*p).a);
 		(*p).s2 = (- (*p).b - (*p).discriminant) / (2 * (*p).a);
 		e->solution = ((*p).s1 < (*p).s2) ? (*p).s1 : (*p).s2;
-		if ((*p).s1 > (*p).s2)
+		if ((*p).s1 < (*p).s2)
         {
             (*p).tmp4 = (*p).s1;
             (*p).s1 = (*p).s2;
@@ -85,6 +85,7 @@ int	cone_solution(t_env *e, t_object *cone, t_poly p)
 	p.len = (p.tmp2 * e->solution) + p.tmp3;
 	if (p.len > cone->lenght_max || p.len < cone->radius)
 		return (0);
+	
 	p.tmp_node_normal1 = v_v_subs(&cone->node, &cone->vertex);
 	p.tmp_node_normal2 = v_double_mult(&cone->axis, p.len);
 	p.tmp_node_normal2 = v_double_mult(&p.tmp_node_normal2, p.tmp1);

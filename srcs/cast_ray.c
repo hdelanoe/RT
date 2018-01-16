@@ -21,7 +21,6 @@ void 	init_rayon_values(t_env *e, t_vector rayon, t_vector origin)
 	e->reflect = 0;
 	e->refract = 0;
 	e->bump = 0;
-	e->recursion = 1;
 	e->distance = 100000;
 }
 
@@ -75,25 +74,30 @@ int cast_refract_ray(t_env *e, t_rayon origin)
 	t_vector	inv;
 
 
-	if (e->in_out < 0)
-		pl.ior = R_VOID / R_VOID;
- 	else
- 		pl.ior = R_VOID / R_VOID;
+	//printf("%d\n", e->in_out);
+ 	//if (e->in_out < 0)
+	pl.ior = R_VOID / R_ICE;
  	inv = v_double_mult(&origin.rayon, 1.0);
  	pl.cos1 = dot_product(&origin.normal, &inv);
- 	pl.cos2 = sqrt(1 - (pl.ior * pl.ior) * (1 - (pl.cos1 * pl.cos1))); 
- 	if ( pl.cos1 < 0)
+ 	
+ 	if (pl.cos1 < 0)
  		pl.cos1 = -pl.cos1;
  	else 
+ 	{
  		origin.normal = v_double_mult(&origin.normal, (-1.00));
-    pl.teta = pl.ior * pl.cos1 - pl.cos2; 
+ 		pl.ior = R_ICE / R_VOID;
+ 	}
+	pl.cos2 = 1 - (pl.ior * pl.ior) * (1 - (pl.cos1 * pl.cos1)); 
+	if (pl.cos2 < 0)
+		return (0);
+    pl.teta = pl.ior * pl.cos1 - sqrt(pl.cos2); 
  	pl.tmp1 = v_double_mult(&origin.normal, pl.teta);
  	pl.tmp2 = v_double_mult(&origin.rayon, pl.ior);
  	refract.rayon = v_v_add(&pl.tmp1, &pl.tmp2);
 	pl.tmp1 = v_double_mult(&refract.rayon, 0.01);
  	refract.origin = v_v_add(&origin.node, &pl.tmp1);
-//	normalize(&refract.rayon);
-	e->in_out *= -1;
+	//normalize(&refract.rayon);
+//	e->in_out *= -1;
  	if (cast_ray(e, refract.rayon, refract.origin))
  		return (1);
  	return (0);
