@@ -15,16 +15,23 @@
 void		add_new_object(t_object **list, t_object *new_object)
 {
 	t_object	*tmp;
+	int 		id;
 
+	id = 1;
 	if (!(*list)->type)
 	{
 		free((*list));
+		new_object->id = 1;
 		(*list) = new_object;
 		return ;
 	}
 	tmp = (*list);
 	while ((*list)->next)
+	{
 		(*list) = (*list)->next;
+		id++;
+	}
+	new_object->id = id;
 	(*list)->next = new_object;
 	(*list) = tmp;
 

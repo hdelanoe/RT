@@ -200,6 +200,7 @@ struct 					s_env
 	int				am_flag;
 	t_object		*copy;
 	int 			is_copy;
+	int 			is_past;
 
 };
 

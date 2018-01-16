@@ -37,7 +37,6 @@ t_anti_a	antialias_loop_init(t_anti_a *anti, t_env *e, int sample)
 	while (new.x1 < sample)
 	{
 		color = set_color(0, 0, 0);
-		e->distance = 100000;
 		new.tmp_vp_pointx = v_double_mult(&e->camera.x_vector, new.x + new.x1);
 		new.tmp_vp_pointy = v_double_mult(&e->camera.y_vector, new.y + new.y1);
 		new.viewplane_point = v_v_add(&e->viewplane_point_up_left,
@@ -60,11 +59,11 @@ void		aa_tracer(t_env *e, int sample)
 
 	e->in_out = -1;
 	aa.y = 0;
-	pthread_mutex_lock(&mutex0);
+//	pthread_mutex_lock(&mutex0);
 	while (aa.y < WIN_Y)
 	{
-		aa.x = e->begin;
-		while (aa.x < e->fin)
+		aa.x = 0;
+		while (aa.x < WIN_X)
 		{
 			aa.y1 = 0;
 			aa.aaclr = set_color(0, 0, 0);
@@ -79,5 +78,5 @@ void		aa_tracer(t_env *e, int sample)
 		}
 		aa.y++;
 	}
-	pthread_mutex_unlock(&mutex0);
+//	pthread_mutex_unlock(&mutex0);
 }

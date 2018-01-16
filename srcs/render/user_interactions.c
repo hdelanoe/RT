@@ -19,37 +19,37 @@ int			proper_exit(t_env *e)
 	return (0);
 }
 
-void		inputs2(int keycode, t_env *e)
-{
-	if (keycode == 17)
-		e->am_flag = e->am_flag == 1 ? 0 : 1;
-}
+void    inputs2(int keycode, t_env *e) 
+{ 
+  if (keycode == 17) 
+    e->am_flag = e->am_flag == 1 ? 0 : 1; 
+} 
 
 void		inputs(int keycode, t_env *e)
 {
 	if (keycode == 2)
 		e->move_x = 25;
-	else if (keycode == 0)
+	if (keycode == 0)
 		e->move_x = -25;
-	else if (keycode == 12)
+	if (keycode == 12)
 		e->move_y = 25;
-	else if (keycode == 14)
+	if (keycode == 14)
 		e->move_y = -25;
-	else if (keycode == 13)
+	if (keycode == 13)
 		e->move_z = 25;
-	else if (keycode == 1)
+	if (keycode == 1)
 		e->move_z = -25;
-	else if (keycode == 126)
+	if (keycode == 126)
 		e->rotate_x = 1.5;
-	else if (keycode == 125)
+	if (keycode == 125)
 		e->rotate_x = -1.5;
-	else if (keycode == 123)
+	if (keycode == 123)
 		e->rotate_y = 1.5;
-	else if (keycode == 124)
+	if (keycode == 124)
 		e->rotate_y = -1.5;
-	else if (keycode == 6)
+	if (keycode == 6)
 		e->rotate_z = 1.5;
-	else if (keycode == 7)
+	if (keycode == 7)
 		e->rotate_z = -1.5;
 	inputs2(keycode, e);
 }
@@ -81,11 +81,11 @@ int			key_functions(int keycode, t_env *e)
 		ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 		camera_transformation(e);
 		if (e->aa_flag == 1 && e->pixelize == 0)
-			ft_pthread(e, aa_tracer_void);
+			aa_tracer(e, 1);
 		else if (e->pixelize == 1)
 			pxl_tracer(e, 13);
 		else
-			ft_pthread(e, ray_tracer_void);
+			ray_tracer(e);
 		mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
 		0, 0);
 	}

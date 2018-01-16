@@ -24,7 +24,8 @@ void	get_object_values(t_env *e, t_object *object)
 	e->refract = object->refract;
 	e->specular = object->specular;
 	e->id_object = object->id;
-	e->copy = object;
+	if (e->is_copy)
+		e->copy = object;
 }
 
 int sort_type(t_env *e, t_object *object)

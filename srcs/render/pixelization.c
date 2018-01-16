@@ -32,15 +32,14 @@ void		pxl_tracer(t_env *e, int sample)
 	t_pixel		pxl;
 	t_color 	color;
 
-	e->in_out = -1;
 	pxl.y = 0;
 	while (pxl.y < WIN_Y)
 	{
 		pxl.x = 0;
 		while (pxl.x < WIN_X)
 		{
+			e->in_out = -1;
 			color = set_color(0, 0, 0);
-			e->distance = 100000;
 			pxl = pixel_vp_init(&pxl, e);
 			e->camera.rayon = v_v_subs(&pxl.viewplane_point, &e->camera.origin);
 			e->camera.rayon = normalize(&e->camera.rayon);

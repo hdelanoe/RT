@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
+// pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 
 void		*ray_tracer_void(void *e)
 {
@@ -22,21 +22,21 @@ void		*ray_tracer_void(void *e)
 
 void	ray_tracer(t_env *e)
 {
-	int			x;
-	int			y;
+	static int			x;
+	static int			y;
 	t_vector	viewplane_point;
 	t_vector	tmp_vp_pointx;
 	t_vector	tmp_vp_pointy;
 	t_color 	color;
 
-	e->in_out = -1;
 	y = 0;
-	pthread_mutex_lock(&mutex1);
+//	 pthread_mutex_lock(&mutex1);
 	while (y < e->height)
 	{
-		x = e->begin;
-		while (x < e->fin)
+		x = 0;
+		while (x < e->width)
 		{
+			e->in_out = -1;
 			color = set_color(0, 0, 0);
 			tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
 			tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
@@ -51,5 +51,5 @@ void	ray_tracer(t_env *e)
 		}
 		y++;
 	}
-	pthread_mutex_unlock(&mutex1);
+	// pthread_mutex_unlock(&mutex1);
 }
