@@ -12,6 +12,14 @@
 
 #include "rtv1.h"
 
+pthread_mutex_t mutex0 = PTHREAD_MUTEX_INITIALIZER;
+
+void		*aa_tracer_void(void *e)
+{
+	aa_tracer(e, 1);
+	return ((void *)(1));
+}
+
 void		anti_aliasing_clr_merge(t_color *anti, t_color *clr)
 {
 	anti->r += clr->r;
@@ -39,8 +47,7 @@ t_anti_a	antialias_loop_init(t_anti_a *anti, t_env *e, int sample)
 		e->camera.rayon = v_v_subs(&new.viewplane_point, &e->camera.origin);
 		e->camera.rayon = normalize(&e->camera.rayon);
 		if (cast_ray(e, e->camera.rayon, e->camera.origin))
-//			color = get_color(e);
-			color = ambient_occlusion(e);
+			color = e->am_flag == 1 ? ambient_occlusion(e) :get_color(e);
 		anti_aliasing_clr_merge(&new.aaclr, &color);
 		new.x1 += 0.25;
 	}
@@ -53,10 +60,11 @@ void		aa_tracer(t_env *e, int sample)
 
 	e->in_out = -1;
 	aa.y = 0;
+	// pthread_mutex_lock(&mutex0);
 	while (aa.y < WIN_Y)
 	{
-		aa.x = 0;
-		while (aa.x < WIN_X)
+		aa.x = e->begin;
+		while (aa.x < e->fin)
 		{
 			aa.y1 = 0;
 			aa.aaclr = set_color(0, 0, 0);
@@ -71,4 +79,5 @@ void		aa_tracer(t_env *e, int sample)
 		}
 		aa.y++;
 	}
+	// pthread_mutex_unlock(&mutex0);
 }

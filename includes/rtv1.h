@@ -26,6 +26,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include <pthread.h>
 # define A printf("File = [%s]\nLine = [%d]\nFunction = [%s]\n", __FILE__, __LINE__, __FUNCTION__);
 
 # define WIN_X 1000
@@ -154,29 +155,29 @@ typedef struct			s_mlx
 struct 					s_env
 {
 	t_mlx			mlx;
-	t_object	*object;
-	t_light		*light;
-	t_camera	camera;
-	t_vector	current_origin;
-	t_vector	current_rayon;
-	t_vector	current_node;
-	t_vector	current_node_normal;
-	t_color		current_color;
-	double 		width;
-	double 		height;
-	int			id_object;
-	double		distance_light_object;
-	double		distance;
-	double		solution;
-	int 		in_out;
-	int 		bump;
-	double 		ambient;
-	double 		diffuse;
-	double 		specular;
-	int 		reflect;
-	int 		refract;
-	double 		absorbtion;
-	int 		intersect;
+	t_object		*object;
+	t_light			*light;
+	t_camera		camera;
+	t_vector		current_origin;
+	t_vector		current_rayon;
+	t_vector		current_node;
+	t_vector		current_node_normal;
+	t_color			current_color;
+	double 			width;
+	double 			height;
+	int				id_object;
+	double			distance_light_object;
+	double			distance;
+	double			solution;
+	int 			in_out;
+	int 			bump;
+	double 			ambient;
+	double 			diffuse;
+	double 			specular;
+	int 			reflect;
+	int 			refract;
+	double 			absorbtion;
+	int 			intersect;
 	t_vector		viewplane_point_up_left;
 	t_matrix4x4		rotation_matrix;
 	t_matrix4x4		translation_matrix;
@@ -194,6 +195,9 @@ struct 					s_env
 	int				pixelize;
 	int				aa_flag;
 	int 			recursion;
+	int				begin;
+	int				fin;
+	int				am_flag;
 
 };
 
@@ -282,6 +286,12 @@ t_vector 						parse_normal(t_json *membre);
 void							add_new_object(t_object **list, t_object *object);
 void							add_new_light(t_light **list, t_light *new_light);
 void							exit_parser(int flag);
+/*
+**MULTITHREAD
+*/
+void							ft_pthread(t_env *e, void *(*f)(void *param));
+void							*ray_tracer_void(void *e);
+void							*aa_tracer_void(void *e);
 /*
 RAYTRACER
 */

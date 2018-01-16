@@ -30,7 +30,8 @@ void		display_window(t_env *env)
 		&env->mlx.bpp, &env->mlx.l_size, &env->mlx.endian);
 	init_camera(env);
 	camera_transformation(env);
-	ray_tracer(env);
+	ft_pthread(env, ray_tracer_void);
+	// ray_tracer(env);
 	mlx_hook(env->mlx.win_ptr, 2, (1L << 0), key_functions, env);
 	mlx_hook(env->mlx.win_ptr, 17, (1L << 17), proper_exit, env);
 	mlx_put_image_to_window(env->mlx.mlx_ptr, env->mlx.win_ptr, env->mlx.img_ptr, 0, 0);

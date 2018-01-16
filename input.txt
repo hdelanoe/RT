@@ -1,11 +1,12 @@
--W -> Avancer
--S -> Reculer
--A -> Straffer gauche
--D -> Straffer droite
+-W -> Forward
+-S -> Back
+-A -> Straff left
+-D -> Straffer right
 -Q -> Lift up
 -E -> Lift down
--Z -> Incliner gauche
--X -> Incliner droite
--R -> Anti-Aliasing
-Utilise les fleches directionnelles pour se regarder haut bas gauche droite
-- Espace pour activer/desactiver la pixelisation pour fluidifier les deplacement (recommande)
+-Z -> Lean left
+-X -> Incliner right
+-R -> Toggle Anti-Aliasing
+-T -> Toggle Ambient-Occlusion
+Spape -> Toggle pixelization (recommanded)
+Use the directional arrow to look right, up, left and right.

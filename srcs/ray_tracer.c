@@ -12,7 +12,13 @@
 
 #include "rtv1.h"
 
+pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 
+void		*ray_tracer_void(void *e)
+{
+	ray_tracer(e);
+	return ((void *)(1));
+}
 
 void	ray_tracer(t_env *e)
 {
@@ -25,10 +31,11 @@ void	ray_tracer(t_env *e)
 
 	e->in_out = -1;
 	y = 0;
+	pthread_mutex_lock(&mutex1);
 	while (y < e->height)
 	{
-		x = 0;
-		while (x < e->width)
+		x = e->begin;
+		while (x < e->fin)
 		{
 			color = set_color(0, 0, 0);
 			e->distance = 100000;
@@ -39,11 +46,11 @@ void	ray_tracer(t_env *e)
 			e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
 			e->camera.rayon = normalize(&e->camera.rayon);
 			if (cast_ray(e, e->camera.rayon, e->camera.origin))
-				color = get_color(e);
-//				color = ambient_occlusion(e);
+				color = e->am_flag == 1 ? ambient_occlusion(e) :get_color(e);
 			print_color(&color, e, x, y);
 			x++;
 		}
 		y++;
 	}
+	pthread_mutex_unlock(&mutex1);
 }
