@@ -301,7 +301,7 @@ RAYTRACER
 void							ray_tracer(t_env *e);
 int								cast_ray(t_env *e, t_vector rayon, t_vector origin);
 void							check_intersection(t_env *e, t_object *object);
-int								check_if_light_is_blocked(t_env *e);
+t_color							light_intersection(t_env *e, t_light *light);
 int								plane_intersection(t_env *e, t_object *plane);
 int								cone_intersection(t_env *e, t_object *cone);
 int								sphere_intersection(t_env *e, t_object *sphere);
