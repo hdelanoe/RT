@@ -42,7 +42,9 @@ int	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 	check_intersection(e, tmp_object);
 	if (e->intersect)
 		return (1);
-	return (0);
+	else
+		e->current_color = set_color(0, 0, 0);
+	return (1);
 }
 	//	if (e->bump)
 	//	{

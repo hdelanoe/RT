@@ -158,6 +158,8 @@ struct 					s_env
 	t_object		*object;
 	t_light			*light;
 	t_camera		camera;
+	t_camera 		lstereo;
+	t_camera 		rstereo;
 	t_vector		current_origin;
 	t_vector		current_rayon;
 	t_vector		current_node;
@@ -179,6 +181,8 @@ struct 					s_env
 	double 			absorbtion;
 	int 			intersect;
 	t_vector		viewplane_point_up_left;
+	t_vector		lviewplane;
+	t_vector		rviewplane;		
 	t_matrix4x4		rotation_matrix;
 	t_matrix4x4		translation_matrix;
 	t_matrix4x4		matrix_camera_system;
@@ -201,6 +205,12 @@ struct 					s_env
 	t_object		*copy;
 	int 			is_copy;
 	int 			is_past;
+	int 			stereo_flag;
+	t_vector 		lookat;
+	t_matrix4x4		matrix_lstereo_system;
+	t_matrix4x1		matrix_lstereo_origin;
+	t_matrix4x4		matrix_rstereo_system;
+	t_matrix4x1		matrix_rstereo_origin;
 
 };
 
@@ -259,6 +269,8 @@ CAMERA/MATRIX
 void							init_camera(t_env *e);
 void							camera_transformation(t_env *e);
 void							viewplane_transformation(t_env *e);
+void							init_stereo(t_env *e);
+void 							reset_stereo(t_env *e);
 void							matrix_4x4_to_vectors(t_vector *a, t_vector *b, t_vector *c, t_matrix4x4 *matrix);
 void							rotation_matrix(t_matrix4x4 *rotation, t_poly *p);
 t_matrix4x4						matrix_camera_system(t_vector *a, t_vector *b, t_vector *c);
@@ -328,6 +340,7 @@ t_pixel							pixel_vp_init(t_pixel *pxl, t_env *e);
 void							pxl_tracer(t_env *e, int sample);
 t_color							ambient_occlusion(t_env *e);
 int								mouse(int button, int x, int y, t_env *e);
+void							stereo_tracer(t_env *e);
 /*
 ERROR
 */

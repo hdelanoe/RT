@@ -40,10 +40,15 @@ void init_ray_values(t_rayon *ray, t_env *e)
 void	shoot_new_color(t_env *e, t_color *c, double coef)
 {
 	t_color shade;
+	t_color shade_sub;
 
 	shade = get_color(e);
+	shade_sub = set_color(0.5, 0.5, 0.5);
 	shade = c_double_mult(&shade, coef);
-	*c = c_c_add(c, &shade);
+	if (shade.r < 0.1 && shade.g < 0.1 && shade.b < 0.1)
+		*c = c_c_subs(c, &shade_sub);
+	else
+		*c = c_c_add(c, &shade);		
 	// e->recursion--;
 }
 
@@ -117,6 +122,8 @@ t_color	get_color(t_env *e)
 
 	init_ray_values(&ray, e);
 	c = c_double_mult(&e->current_color, e->ambient);
+	if (c.r == 0 && c.g == 0 && c.b == 0 && e->intersect == 0)
+		return (c);
 //	printf("%f %f %f\n", c.r, c.g, c.b);
 	tmp_light = e->light;
 	while (tmp_light)

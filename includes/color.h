@@ -30,5 +30,6 @@ t_color					c_c_add(t_color *a, t_color *b);
 t_color					c_double_add(t_color *a, double b);
 t_color					c_double_pow(t_color *a, double b);
 t_color					c_double_mult(t_color *a, double b);
+t_color					c_c_subs(t_color *a, t_color *b);
 
 #endif

@@ -21,23 +21,23 @@ void	exit_rt(int flag)
 	}
 }
 
-void		display_window(t_env *env)
+void		display_window(t_env *e)
 {
-	env->mlx.mlx_ptr = mlx_init();
-	env->mlx.win_ptr = mlx_new_window(env->mlx.mlx_ptr, env->width, env->height, "RTv1");
-	env->mlx.img_ptr = mlx_new_image(env->mlx.mlx_ptr, env->width, env->height);
-	env->mlx.data = (unsigned char*)mlx_get_data_addr(env->mlx.img_ptr,
-		&env->mlx.bpp, &env->mlx.l_size, &env->mlx.endian);
-	init_camera(env);
-	camera_transformation(env);
-//	 ft_pthread(env, ray_tracer_void);
-	ray_tracer(env);
-	mlx_put_image_to_window(env->mlx.mlx_ptr, env->mlx.win_ptr, env->mlx.img_ptr, 0, 0);
-	mlx_hook(env->mlx.win_ptr, 2, (1L << 0), key_functions, env);
-	mlx_hook(env->mlx.win_ptr, 17, (1L << 17), proper_exit, env);
-	mlx_mouse_hook(env->mlx.win_ptr, mouse, env);
-	mlx_loop(env->mlx.mlx_ptr);
-	mlx_destroy_window(env->mlx.mlx_ptr, env->mlx.win_ptr);
+	e->mlx.mlx_ptr = mlx_init();
+	e->mlx.win_ptr = mlx_new_window(e->mlx.mlx_ptr, e->width, e->height, "RT");
+	e->mlx.img_ptr = mlx_new_image(e->mlx.mlx_ptr, e->width, e->height);
+	e->mlx.data = (unsigned char*)mlx_get_data_addr(e->mlx.img_ptr,
+		&e->mlx.bpp, &e->mlx.l_size, &e->mlx.endian);
+	init_camera(e);
+	camera_transformation(e);
+	init_stereo(e);		
+	ray_tracer(e);
+	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr, 0, 0);
+	mlx_hook(e->mlx.win_ptr, 2, (1L << 0), key_functions, e);
+	mlx_hook(e->mlx.win_ptr, 17, (1L << 17), proper_exit, e);
+	mlx_mouse_hook(e->mlx.win_ptr, mouse, e);
+	mlx_loop(e->mlx.mlx_ptr);
+	mlx_destroy_window(e->mlx.mlx_ptr, e->mlx.win_ptr);
 }
 
 t_env		*init()
@@ -56,6 +56,7 @@ t_env		*init()
 	e->pixelize = 0;
 	e->is_past = 0;
 	e->is_copy = 0;
+	e->lookat = set_vector(0, 0, 0);
 	return (e);
 }
 

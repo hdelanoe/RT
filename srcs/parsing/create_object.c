@@ -26,6 +26,7 @@ void		add_new_object(t_object **list, t_object *new_object)
 		return ;
 	}
 	tmp = (*list);
+	id++;
 	while ((*list)->next)
 	{
 		(*list) = (*list)->next;

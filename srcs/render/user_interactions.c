@@ -21,8 +21,10 @@ int			proper_exit(t_env *e)
 
 void    inputs2(int keycode, t_env *e) 
 { 
-  if (keycode == 17) 
-    e->am_flag = e->am_flag == 1 ? 0 : 1; 
+  	if (keycode == 17) 
+    	e->am_flag = e->am_flag == 1 ? 0 : 1;
+	if (keycode == 35)
+    	e->stereo_flag = e->stereo_flag == 1 ? 0 : 1; 
 } 
 
 void		inputs(int keycode, t_env *e)
@@ -71,7 +73,7 @@ int			key_functions(int keycode, t_env *e)
 	if (keycode == 2 || keycode == 0 || keycode == 12 || keycode == 14 ||
 	keycode == 13 || keycode == 1 || keycode == 126 || keycode == 123 ||
 	keycode == 125 || keycode == 124 || keycode == 6 || keycode == 7 ||
-	keycode == 49 || keycode == 15 || keycode == 17)
+	keycode == 49 || keycode == 15 || keycode == 17 || keycode == 35)
 	{
 		inputs(keycode, e);
 		if (keycode == 49)
@@ -80,10 +82,18 @@ int			key_functions(int keycode, t_env *e)
 			e->aa_flag = e->aa_flag == 1 ? 0 : 1;
 		ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 		camera_transformation(e);
+//		reset_stereo(e);
+	//	e->viewplane_point_up_left = viewplane_transformation(e->camera);
+	//	camera_transformation(e, &e->lstereo);
+	//	e->lviewplane = viewplane_transformation(e->lstereo);
+	//	camera_transformation(e, &e->rstereo);
+	//	e->rviewplane = viewplane_transformation(e->rstereo);
 		if (e->aa_flag == 1 && e->pixelize == 0)
 			aa_tracer(e, 1);
 		else if (e->pixelize == 1)
 			pxl_tracer(e, 13);
+	//	else if (e->stereo_flag == 1)
+	//		stereo_tracer(e);
 		else
 			ray_tracer(e);
 		mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,

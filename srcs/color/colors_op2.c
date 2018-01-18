@@ -35,6 +35,22 @@ t_color		c_double_div(t_color *a, double b)
 	return (new);
 }
 
+t_color		c_c_subs(t_color *a, t_color *b)
+{
+	t_color	color;
+
+	color.b = a->b - b->b;
+	color.g = a->g - b->g;
+	color.r = a->r - b->r;
+	if (color.b < 0)
+		color.b = 0;
+	if (color.g < 0)
+		color.g = 0;
+	if (color.r < 0)
+		color.r = 0;
+	return (color);
+}
+
 void		print_color(t_color *color, t_env *e, int x, int y)
 {
 	if (x >= 0 && x < WIN_X && y >= 0 && y < WIN_Y)
