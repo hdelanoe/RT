@@ -46,6 +46,8 @@ void debug_object(t_object *tmp)
 			origin = tmp->center;
 		else if (!(ft_strcmp(tmp->type, "plane")))
 			origin = tmp->point;
+		else if (!(ft_strcmp(tmp->type, "triangle")))
+			origin = tmp->point_1;
 		else if (!(ft_strcmp(tmp->type, "cylinder")))
 			origin = tmp->center;
 		else if (!(ft_strcmp(tmp->type, "cone")))
@@ -86,6 +88,37 @@ void		create_plane(t_env *e, t_json *json, int *id)
 	debug_object(plane);
 	add_new_object(&e->object, plane);
 }
+
+void		create_triangle(t_env *e, t_json *json, int *id)
+{
+	t_object	*triangle;
+	t_json		*tmp;
+
+	triangle = init_material(id);
+	if (!(triangle->type = ft_strdup("triangle")))
+		exit_rt(1);
+	while(json->member)
+	{
+		tmp = json->member;
+		if (!(ft_strcmp(tmp->name, "coord_1")) && tmp->member)
+			triangle->point = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "coord_2")) && tmp->member)
+			triangle->point_2 = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "coord_3")) && tmp->member)
+			triangle->point_3 = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+			triangle->color = parse_color(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+			parse_material(tmp, triangle);
+		else
+			ft_printf("{R}WARNING:{E} triangle %d as a bad attribut\n", triangle->id);
+		json->member = json->member->next;
+		free_json_member(&tmp);
+	}
+	debug_object(triangle);
+	add_new_object(&e->object, triangle);
+}
+
 
 void		create_sphere(t_env *e, t_json *json, int *id)
 {

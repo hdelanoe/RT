@@ -35,6 +35,8 @@ int sort_type(t_env *e, t_object *object)
 	intersect = 0;
 	if (!(ft_strcmp(object->type, "plane")))
 		intersect = plane_intersection(e, object);
+	else if (!(ft_strcmp(object->type, "triangle")))
+		intersect = triangle_intersection(e, object);
 	else if (!(ft_strcmp(object->type, "sphere")))
 		intersect = sphere_intersection(e, object);
 	else if (!(ft_strcmp(object->type, "cylinder")))

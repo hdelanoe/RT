@@ -29,8 +29,8 @@
 # include <pthread.h>
 # define A printf("File = [%s]\nLine = [%d]\nFunction = [%s]\n", __FILE__, __LINE__, __FUNCTION__);
 
-# define WIN_X 1000
-# define WIN_Y 1000
+# define WIN_X 800
+# define WIN_Y 600
 # define RANDOM (double)rand()/RAND_MAX
 
 # define R_VOID 1.0
@@ -87,6 +87,9 @@ struct					s_object
 	char 		*type;
 	int			id;
 	t_vector	point;
+	t_vector	point_1;
+	t_vector	point_2;
+	t_vector	point_3;
 	t_vector 	center;
 	t_vector	vertex;
 	t_vector	normal;
@@ -234,6 +237,16 @@ struct							s_poly
 	t_vector					tmp_node;
 	t_vector					tmp_node_normal1;
 	t_vector					tmp_node_normal2;
+	t_vector					v1_2;
+	t_vector					v1_3;
+	t_vector					v3_1;
+	t_vector					v2_3;
+	t_vector					v1_node;
+	t_vector					v2_node;
+	t_vector					v3_node;
+	t_vector					cp_1;
+	t_vector					cp_2;
+	t_vector					cp_3;
 	double						tmp1;
 	double						tmp2;
 	double						tmp3;
@@ -293,6 +306,7 @@ void							create_sphere(t_env *e, t_json *json, int *id);
 void							create_cone(t_env *e, t_json *json, int *id);
 void							create_cylinder(t_env *e, t_json *json, int *id);
 void							create_plane(t_env *e, t_json *json, int *id);
+void							create_triangle(t_env *e, t_json *json, int *id);
 void							create_torus(t_env *e, t_json *json, int *id);
 void							create_light(t_env *e, t_json *json, int *id);
 void 							create_paraboloid(t_object *object, t_json *json);
@@ -317,6 +331,7 @@ int								cast_ray(t_env *e, t_vector rayon, t_vector origin);
 void							check_intersection(t_env *e, t_object *object);
 t_color							light_intersection(t_env *e, t_light *light);
 int								plane_intersection(t_env *e, t_object *plane);
+int								triangle_intersection(t_env *e, t_object *triangle);
 int								cone_intersection(t_env *e, t_object *cone);
 int								sphere_intersection(t_env *e, t_object *sphere);
 int								cylinder_intersection(t_env *e, t_object *cylinder);
