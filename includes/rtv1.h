@@ -207,6 +207,7 @@ struct 					s_env
 	int 			is_past;
 	int 			stereo_flag;
 	int 			filter_flag;
+	int 			edit_flag;
 	t_vector 		lookat;
 	t_matrix4x4		matrix_lstereo_system;
 	t_matrix4x1		matrix_lstereo_origin;

@@ -53,11 +53,8 @@ void add_object(t_env *e, int x, int y)
 	viewplane_point = v_v_subs(&viewplane_point, &tmp_vp_pointy);
 	e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
 	e->camera.rayon = normalize(&e->camera.rayon);
-	A
 	copy->center = viewplane_point;
-	A
 	add_new_object(&e->object, copy);
-	A
 	ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 	if (e->aa_flag == 1 && e->pixelize == 0)
 		aa_tracer(e, 1);
@@ -119,7 +116,8 @@ int copy_object(t_env *e, int x, int y)
 int		mouse(int button, int x, int y, t_env *e)
 {
 //	static t_object *copy;
-
+	if (!e->edit_flag)
+		return (0);
 	if (e->stereo_flag && (button == 1 || button == 5))
 	{
 		if(set_lookat(e, x, y))

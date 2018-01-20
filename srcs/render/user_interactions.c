@@ -39,6 +39,8 @@ void    inputs2(int keycode, t_env *e)
     	e->filter_flag = 5;
     if (keycode == 88) 
     	e->filter_flag = 6;
+    if (keycode == 36)
+    	e->edit_flag = e->edit_flag == 1 ? 0 : 1; 
 
 } 
 
@@ -90,7 +92,7 @@ int			key_functions(int keycode, t_env *e)
 	keycode == 125 || keycode == 124 || keycode == 6 || keycode == 7 ||
 	keycode == 49 || keycode == 15 || keycode == 17 || keycode == 35 ||
 	keycode == 82 || keycode == 83 || keycode == 84 || keycode == 85 ||
-	keycode == 86 || keycode == 87 || keycode == 88)
+	keycode == 86 || keycode == 87 || keycode == 88 || keycode == 36)
 	{
 		inputs(keycode, e);
 		if (keycode == 49)
