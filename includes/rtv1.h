@@ -206,6 +206,7 @@ struct 					s_env
 	int 			is_copy;
 	int 			is_past;
 	int 			stereo_flag;
+	int 			filter_flag;
 	t_vector 		lookat;
 	t_matrix4x4		matrix_lstereo_system;
 	t_matrix4x1		matrix_lstereo_origin;
@@ -341,6 +342,7 @@ void							pxl_tracer(t_env *e, int sample);
 t_color							ambient_occlusion(t_env *e);
 int								mouse(int button, int x, int y, t_env *e);
 void							stereo_tracer(t_env *e);
+t_color							set_filter(t_env *e, t_color c);
 /*
 ERROR
 */

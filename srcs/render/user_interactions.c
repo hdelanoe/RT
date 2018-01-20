@@ -24,7 +24,22 @@ void    inputs2(int keycode, t_env *e)
   	if (keycode == 17) 
     	e->am_flag = e->am_flag == 1 ? 0 : 1;
 	if (keycode == 35)
-    	e->stereo_flag = e->stereo_flag == 1 ? 0 : 1; 
+    	e->stereo_flag = e->stereo_flag == 1 ? 0 : 1;
+    if (keycode == 82) 
+    	e->filter_flag = 0;
+    if (keycode == 83) 
+    	e->filter_flag = 1;
+    if (keycode == 84) 
+    	e->filter_flag = 2;
+    if (keycode == 85) 
+    	e->filter_flag = 3;
+    if (keycode == 86) 
+    	e->filter_flag = 4;
+    if (keycode == 87) 
+    	e->filter_flag = 5;
+    if (keycode == 88) 
+    	e->filter_flag = 6;
+
 } 
 
 void		inputs(int keycode, t_env *e)
@@ -73,7 +88,9 @@ int			key_functions(int keycode, t_env *e)
 	if (keycode == 2 || keycode == 0 || keycode == 12 || keycode == 14 ||
 	keycode == 13 || keycode == 1 || keycode == 126 || keycode == 123 ||
 	keycode == 125 || keycode == 124 || keycode == 6 || keycode == 7 ||
-	keycode == 49 || keycode == 15 || keycode == 17 || keycode == 35)
+	keycode == 49 || keycode == 15 || keycode == 17 || keycode == 35 ||
+	keycode == 82 || keycode == 83 || keycode == 84 || keycode == 85 ||
+	keycode == 86 || keycode == 87 || keycode == 88)
 	{
 		inputs(keycode, e);
 		if (keycode == 49)

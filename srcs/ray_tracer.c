@@ -76,10 +76,8 @@ void	ray_tracer(t_env *e)
 	t_vector	tmp_vp_pointx;
 	t_vector	tmp_vp_pointy;
 	t_color 	color;
-
 	
 	y = 0;
-
 	while (y < e->height)
 	{
 		x = 0;
@@ -95,6 +93,7 @@ void	ray_tracer(t_env *e)
 			e->camera.rayon = normalize(&e->camera.rayon);
 			if (cast_ray(e, e->camera.rayon, e->camera.origin))
 				color = e->am_flag == 1 ? ambient_occlusion(e) :get_color(e);
+			color = set_filter(e, color);
 			print_color(&color, e, x, y);
 			x++;
 		}
