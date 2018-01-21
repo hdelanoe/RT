@@ -376,4 +376,8 @@ double 							grad(int hash, double x, double y, double z);
 double 							noise(double x, double y, double z);
 void 							loadPermutation(void);
 
+void create_cap_cylinder(t_env *e, t_object *cylinder, int *id);
+void create_cap_cone(t_env *e, t_object *cone, int *id);
+
+
 #endif

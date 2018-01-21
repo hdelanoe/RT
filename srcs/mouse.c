@@ -55,6 +55,12 @@ void add_object(t_env *e, int x, int y)
 	e->camera.rayon = normalize(&e->camera.rayon);
 	copy->center = viewplane_point;
 	add_new_object(&e->object, copy);
+	if (!ft_strcmp(copy->type, "cylinder"))
+		if(copy->cap > 0)
+			create_cap_cylinder(e, copy, &copy->id);
+	if (!ft_strcmp(copy->type, "cone"))
+		if(copy->cap > 0)
+			create_cap_cone(e, copy, &copy->id);
 	ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 	if (e->aa_flag == 1 && e->pixelize == 0)
 		aa_tracer(e, 1);
