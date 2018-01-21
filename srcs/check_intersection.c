@@ -44,7 +44,7 @@ int sort_type(t_env *e, t_object *object)
 	else if (!(ft_strcmp(object->type, "cone")))
 		intersect = cone_intersection(e, object);
 	else if (!(ft_strcmp(object->type, "disk")))
-		intersect = disk_intersection(e, object);
+		intersect = disk_intersection(e, object, NULL);
 	return (intersect);	
 }
 

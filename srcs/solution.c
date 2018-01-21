@@ -66,8 +66,11 @@ int	cylinder_solution(t_env *e, t_object *cylinder, t_poly p)
 	p.tmp_node = v_double_mult(&e->current_rayon, e->solution);
 	cylinder->node = v_v_add(&e->current_origin, &p.tmp_node);
 	p.tmp1 = (dot_product(&e->current_rayon, &cylinder->axis) * e->solution) + dot_product(&p.object_rayon, &cylinder->axis);
-	if (p.tmp1 > (cylinder->lenght_max / 2) || p.tmp1 < -(cylinder->lenght_max / 2))
-		return (0);
+	p.tmp2 = (dot_product(&e->current_rayon, &cylinder->axis) * p.s2) + dot_product(&p.object_rayon, &cylinder->axis);
+	if (p.tmp1 > (cylinder->lenght_max / 2) && (p.tmp2 > 0))
+		return (disk_intersection(e, cylinder->sub_object->next, cylinder));
+	if( p.tmp1 < -(cylinder->lenght_max / 2) && (p.tmp2 < 0))
+		return (disk_intersection(e, cylinder->sub_object, cylinder));
 	p.tmp_node_normal1 = v_v_subs(&cylinder->node, &cylinder->center);
 	p.tmp_node_normal2 = v_double_mult(&cylinder->axis, p.tmp1);
 	cylinder->node_normal = v_v_subs(&p.tmp_node_normal1, &p.tmp_node_normal2);
@@ -83,9 +86,10 @@ int	cone_solution(t_env *e, t_object *cone, t_poly p)
 	cone->node = v_v_add(&e->current_origin, &p.tmp_node);
 
 	p.len = (p.tmp2 * e->solution) + p.tmp3;
-	if (p.len > cone->lenght_max || p.len < cone->radius)
-		return (0);
-	
+	if (p.len > cone->lenght_max)
+		return (disk_intersection(e, cone->sub_object, cone));
+	if (cone->radius && p.len < cone->radius)
+		return (disk_intersection(e, cone->sub_object->next, cone));
 	p.tmp_node_normal1 = v_v_subs(&cone->node, &cone->vertex);
 	p.tmp_node_normal2 = v_double_mult(&cone->axis, p.len);
 	p.tmp_node_normal2 = v_double_mult(&p.tmp_node_normal2, p.tmp1);

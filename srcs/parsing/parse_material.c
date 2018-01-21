@@ -44,6 +44,7 @@ t_object	*init_material(int *id)
 	object->refract = 0;
 	object->absorbtion = 0.125;
 	object->radius = 0;
+	object->sub_object = NULL;
 	return (object);
 }
 

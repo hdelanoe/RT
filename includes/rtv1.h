@@ -107,7 +107,7 @@ struct					s_object
 	int 		reflect;
 	int 		refract;
 	double 		absorbtion;
-
+	t_object	*sub_object;
 	t_object	*next;
 };
 
@@ -335,7 +335,7 @@ int								triangle_intersection(t_env *e, t_object *triangle);
 int								cone_intersection(t_env *e, t_object *cone);
 int								sphere_intersection(t_env *e, t_object *sphere);
 int								cylinder_intersection(t_env *e, t_object *cylinder);
-int 							disk_intersection(t_env *e, t_object *disk);
+int 							disk_intersection(t_env *e, t_object *disk, t_object *parent);
 int								torus_intersection(t_env *e, t_object *torus);
 int								sphere_solution(t_env *e, t_object *sphere, t_poly p);
 int								cylinder_solution(t_env *e, t_object *cylinder, t_poly p);
