@@ -14,29 +14,27 @@
 
 void		get_object(t_env *e, t_json *json)
 {
-	int		id;
 	t_json	*tmp;
 
-	id = 1;
 	while (json->member)
 	{
 		tmp = json->member;
 		if (!(ft_strcmp(tmp->name, "sphere")) && tmp->member)
-			create_sphere(e, tmp, &id);
+			create_sphere(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "plane")) && tmp->member)
-			create_plane(e, tmp, &id);
+			create_plane(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "triangle")) && tmp->member)
-			create_triangle(e, tmp, &id);
+			create_triangle(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "cylinder")) && tmp->member)
-			create_cylinder(e, tmp, &id);
+			create_cylinder(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "cone")) && tmp->member)
-			create_cone(e, tmp, &id);
+			create_cone(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "light")) && tmp->member)
-			create_light(e, tmp, &id);
+			create_light(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "disk")) && tmp->member)
-			create_disk(e, tmp, &id);
+			create_disk(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "torus")) && tmp->member)
-			create_torus(e, tmp, &id);
+			create_torus(e, tmp);
 		else if (tmp->member)
 			parse_scene(e, tmp);
 		json->member = json->member->next;

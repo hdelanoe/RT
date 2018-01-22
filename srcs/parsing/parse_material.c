@@ -28,14 +28,13 @@ void	parse_scene(t_env *e, t_json *json)
 		ft_printf("{R}WARNING:{E} %s is not valid\n", json->name);
 }
 
-t_object	*init_material(int *id)
+t_object	*init_material()
 {
 	t_object *object;
 
 	if (!(object = (t_object*)ft_memalloc(sizeof(t_object))))
 		ft_kill("Error in malloc object");
-	object->id = *id;
-	*id += 1;
+	object->id = -1;
 	object->color = set_color(0.5, 0.5, 0.5);
 	object->ambient = 0.125;
 	object->diffuse = 0.875;

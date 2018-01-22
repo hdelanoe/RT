@@ -90,7 +90,7 @@ int	cone_solution(t_env *e, t_object *cone, t_poly p)
 		return (disk_intersection(e, cone->sub_object, cone));
 	if (cone->radius && p.len < cone->radius)
 		return (disk_intersection(e, cone->sub_object->next, cone));
-	p.tmp_node_normal1 = v_v_subs(&cone->node, &cone->vertex);
+	p.tmp_node_normal1 = v_v_subs(&cone->node, &cone->center);
 	p.tmp_node_normal2 = v_double_mult(&cone->axis, p.len);
 	p.tmp_node_normal2 = v_double_mult(&p.tmp_node_normal2, p.tmp1);
 	cone->node_normal = v_v_subs(&p.tmp_node_normal1, &p.tmp_node_normal2);

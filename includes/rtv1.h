@@ -299,18 +299,18 @@ int								parsing(t_env *e, char *str);
 void							create_tree(t_env *e, char **str);
 void							get_light(t_env *e);
 void							get_object(t_env *e, t_json *json);
-t_object						*init_material(int *id);
+t_object						*init_material(void);
 void							parse_scene(t_env *e, t_json *json);
 void							parse_material(t_json *material, t_object *object);
-void							create_sphere(t_env *e, t_json *json, int *id);
-void							create_cone(t_env *e, t_json *json, int *id);
-void							create_cylinder(t_env *e, t_json *json, int *id);
-void							create_plane(t_env *e, t_json *json, int *id);
-void							create_triangle(t_env *e, t_json *json, int *id);
-void							create_torus(t_env *e, t_json *json, int *id);
-void							create_light(t_env *e, t_json *json, int *id);
+void							create_sphere(t_env *e, t_json *json);
+void							create_cone(t_env *e, t_json *json);
+void							create_cylinder(t_env *e, t_json *json);
+void							create_plane(t_env *e, t_json *json);
+void							create_triangle(t_env *e, t_json *json);
+void							create_torus(t_env *e, t_json *json);
+void							create_light(t_env *e, t_json *json);
 void 							create_paraboloid(t_object *object, t_json *json);
-void 							create_disk(t_env *e, t_json *json, int *id);
+void 							create_disk(t_env *e, t_json *json);
 t_vector 						parse_point(t_json *membre);
 t_color 						parse_color(t_json *membre);
 t_vector 						parse_normal(t_json *membre);
@@ -376,8 +376,8 @@ double 							grad(int hash, double x, double y, double z);
 double 							noise(double x, double y, double z);
 void 							loadPermutation(void);
 
-void create_cap_cylinder(t_env *e, t_object *cylinder, int *id);
-void create_cap_cone(t_env *e, t_object *cone, int *id);
+void create_cap_cylinder(t_object *cylinder);
+void create_cap_cone(t_object *cone);
 
 
 #endif

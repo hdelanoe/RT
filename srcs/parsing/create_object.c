@@ -62,12 +62,12 @@ void debug_object(t_object *tmp)
 	printf("         b->%f\n", tmp->color.b);
 }
 
-void		create_plane(t_env *e, t_json *json, int *id)
+void		create_plane(t_env *e, t_json *json)
 {
 	t_object	*plane;
 	t_json		*tmp;
 
-	plane = init_material(id);
+	plane = init_material();
 	if (!(plane->type = ft_strdup("plane")))
 		exit_rt(1);
 	while(json->member)
@@ -90,12 +90,12 @@ void		create_plane(t_env *e, t_json *json, int *id)
 	add_new_object(&e->object, plane);
 }
 
-void		create_triangle(t_env *e, t_json *json, int *id)
+void		create_triangle(t_env *e, t_json *json)
 {
 	t_object	*triangle;
 	t_json		*tmp;
 
-	triangle = init_material(id);
+	triangle = init_material();
 	if (!(triangle->type = ft_strdup("triangle")))
 		exit_rt(1);
 	while(json->member)
@@ -121,12 +121,12 @@ void		create_triangle(t_env *e, t_json *json, int *id)
 }
 
 
-void		create_sphere(t_env *e, t_json *json, int *id)
+void		create_sphere(t_env *e, t_json *json)
 {
 	t_object	*sphere;
 	t_json		*tmp;
 
-	sphere = init_material(id);
+	sphere = init_material();
 	if (!(sphere->type = ft_strdup("sphere")))
 		exit_rt(1);
 	while (json->member)
@@ -153,12 +153,11 @@ void		create_sphere(t_env *e, t_json *json, int *id)
 	add_new_object(&e->object, sphere);
 }
 
-void create_cap_cylinder(t_env *e, t_object *cylinder, int *id)
+void create_cap_cylinder(t_object *cylinder)
 {
 	t_object *disk;
 
-	(void)e;
-	disk = init_material(id);
+	disk = init_material();
 		if (!(disk->type = ft_strdup("disk")))
 			exit_rt(1);
 	t_vector tmp = v_double_mult(&cylinder->axis, cylinder->lenght_max / 2);
@@ -168,7 +167,7 @@ void create_cap_cylinder(t_env *e, t_object *cylinder, int *id)
 	disk->color = cylinder->color;
 	debug_object(disk);
 	add_new_object(&cylinder->sub_object, disk);
-	disk = init_material(id);
+	disk = init_material();
 		if (!(disk->type = ft_strdup("disk")))
 			exit_rt(1);
 	disk->normal = cylinder->axis;
@@ -179,12 +178,12 @@ void create_cap_cylinder(t_env *e, t_object *cylinder, int *id)
 	add_new_object(&cylinder->sub_object, disk);
 }
 
-void		create_cylinder(t_env *e, t_json *json, int *id)
+void		create_cylinder(t_env *e, t_json *json)
 {
 	t_object	*cylinder;
 	t_json		*tmp;
 
-	cylinder = init_material(id);
+	cylinder = init_material();
 	if (!(cylinder->type = ft_strdup("cylinder")))
 		exit_rt(1);
 	while (json->member)
@@ -211,19 +210,19 @@ void		create_cylinder(t_env *e, t_json *json, int *id)
 		free_json_member(&tmp);
 	}
 	if (cylinder->cap > 0)
-		create_cap_cylinder(e, cylinder, id);
+		create_cap_cylinder(cylinder);
 	else
 		cylinder->lenght_max = 100000;
 	debug_object(cylinder);
 	add_new_object(&e->object, cylinder);
 }
 
-void create_disk(t_env *e, t_json *json, int *id)
+void create_disk(t_env *e, t_json *json)
 {
 	t_object	*disk;
 	t_json		*tmp;
 
-	disk = init_material(id);
+	disk = init_material();
 	if (!(disk->type = ft_strdup("disk")))
 		exit_rt(1);
 	while(json->member)
@@ -246,17 +245,16 @@ void create_disk(t_env *e, t_json *json, int *id)
 	add_new_object(&e->object, disk);
 }
 
-void create_cap_cone(t_env *e, t_object *cone, int *id)
+void create_cap_cone(t_object *cone)
 {
 	t_object *disk;
 	t_vector tmp;
 
-	(void)e;
-	disk = init_material(id);
+	disk = init_material();
 	if (!(disk->type = ft_strdup("disk")))
 		exit_rt(1);
 	tmp = v_double_mult(&cone->axis, cone->lenght_max);
-	disk->point = v_v_add(&tmp, &cone->vertex);
+	disk->point = v_v_add(&tmp, &cone->center);
 	disk->normal = cone->axis;
 	disk->radius = cone->tangent * cone->lenght_max;
 	disk->color = cone->color;
@@ -264,11 +262,11 @@ void create_cap_cone(t_env *e, t_object *cone, int *id)
 	add_new_object(&cone->sub_object, disk);
 	if (cone->radius < cone->lenght_max)
 	{
-		disk = init_material(id);
+		disk = init_material();
 		if (!(disk->type = ft_strdup("disk")))
 			exit_rt(1);
 		tmp = v_double_mult(&cone->axis, cone->radius);
-		disk->point = v_v_add(&tmp, &cone->vertex);
+		disk->point = v_v_add(&tmp, &cone->center);
 		disk->normal = cone->axis;
 		disk->radius = cone->tangent * cone->radius;
 		disk->color = cone->color;
@@ -278,23 +276,26 @@ void create_cap_cone(t_env *e, t_object *cone, int *id)
 
 }
 
-void		create_cone(t_env *e, t_json *json, int *id)
+void		create_cone(t_env *e, t_json *json)
 {
 	t_object	*cone;
 	t_json 		*tmp;
 
-	cone = init_material(id);
+	cone = init_material();
 	if (!(cone->type = ft_strdup("cone")))
 		exit_rt(1);
 	while(json->member)
 	{
 		tmp = json->member;
 		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
-			cone->vertex = parse_point(tmp->member);
+			cone->center = parse_point(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "tangent")) &&tmp->content)
 			cone->tangent = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "maxlength")) && tmp->content)
+		{
+			cone->cap = 1;
 			cone->lenght_max = ft_atod(tmp->content);
+		}
 		else if (!(ft_strcmp(tmp->name, "minlength")) && tmp->content)
 			cone->radius = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
@@ -313,7 +314,7 @@ void		create_cone(t_env *e, t_json *json, int *id)
 	}
 	// CHECK IF MAX_LENGHT < MIN_LENGHT  FT_SWAP
 	if (cone->lenght_max > 0 || cone->radius)
-		create_cap_cone(e, cone, id);
+		create_cap_cone(cone);
 	else
 	{
 		cone->lenght_max = 10000;
@@ -323,12 +324,12 @@ void		create_cone(t_env *e, t_json *json, int *id)
 	add_new_object(&e->object, cone);
 }
 
-void		create_torus(t_env *e, t_json *json, int *id)
+void		create_torus(t_env *e, t_json *json)
 {
 	t_object	*torus;
 	t_json 		*tmp;
 
-	torus = init_material(id);
+	torus = init_material();
 	if (!(torus->type = ft_strdup("torus")))
 		exit_rt(1);
 	while(json->member)

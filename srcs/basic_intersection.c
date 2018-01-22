@@ -96,7 +96,7 @@ int		cone_intersection(t_env *e, t_object *cone)
 {
 	t_poly 	p;
 
-	p.object_rayon = v_v_subs(&e->current_origin, &cone->vertex);
+	p.object_rayon = v_v_subs(&e->current_origin, &cone->center);
 	p.tmp1 = (1 + pow(cone->tangent, 2));
 	p.tmp2 = dot_product(&e->current_rayon, &cone->axis);
 	p.tmp3 = dot_product(&p.object_rayon, &cone->axis);
