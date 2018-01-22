@@ -35,6 +35,8 @@ void		get_object(t_env *e, t_json *json)
 			create_disk(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "torus")) && tmp->member)
 			create_torus(e, tmp);
+		else if (!(ft_strcmp(tmp->name, "glass")) && tmp->member)
+			create_glass(e, tmp);
 		else if (tmp->member)
 			parse_scene(e, tmp);
 		json->member = json->member->next;

@@ -39,10 +39,12 @@ void		add_new_object(t_object **list, t_object *new_object)
 
 }
 
+
 void debug_object(t_object *tmp)
 {
 	t_vector origin;
 
+	origin = tmp->center;
 	if (!(ft_strcmp(tmp->type, "sphere")))
 			origin = tmp->center;
 		else if (!(ft_strcmp(tmp->type, "plane")))
@@ -60,6 +62,101 @@ void debug_object(t_object *tmp)
 	printf("colors : r->%f\n", tmp->color.r);
 	printf("         g->%f\n", tmp->color.g);
 	printf("         b->%f\n", tmp->color.b);
+}
+
+void create_cap_sphere(t_object *sphere)
+{
+	t_object *disk;
+
+	disk = init_material();
+	if (!(disk->type = ft_strdup("disk")))
+		exit_rt(1);
+	disk->point = sphere->center;
+	disk->normal = sphere->normal;
+	disk->radius = sphere->radius;
+	disk->color = sphere->color;
+	debug_object(disk);
+	add_new_object(&sphere->sub_object, disk);
+}
+
+void create_child_glass(t_object *glass)
+{
+	t_object *g_cylinder;
+	t_object *g_cone;
+	t_object *g_sphere;
+	t_vector tmp;
+
+	g_cylinder = init_material();
+	if (!(g_cylinder->type = ft_strdup("cylinder")))
+		exit_rt(1);
+	g_cylinder->center = glass->center;
+	g_cylinder->lenght_max = glass->lenght_max;
+	g_cylinder->radius = 10;
+	g_cylinder->cap = 1;
+	g_cylinder->color = glass->color;
+	g_cylinder->axis = glass->axis;
+	create_cap_cylinder(g_cylinder);
+	debug_object(g_cylinder);
+	add_new_object(&glass->sub_object, g_cylinder);
+	g_cone = init_material();
+	if (!(g_cone->type = ft_strdup("cone")))
+		exit_rt(1);	
+	g_cone->axis = v_double_mult(&glass->axis, -1.00);
+	tmp = v_double_mult(&glass->axis, (g_cylinder->lenght_max * 0.7)/ 2);
+	g_cone->center = v_v_subs(&glass->center, &tmp);
+	g_cone->lenght_max =  glass->lenght_max;
+	g_cone->cap = 1;
+	g_cone->tangent = 1;
+	g_cone->color = glass->color;
+	create_cap_cone(g_cone);
+	debug_object(g_cone);
+	add_new_object(&glass->sub_object, g_cone);
+
+	g_sphere = init_material();
+	if (!(g_sphere->type = ft_strdup("sphere")))
+		exit_rt(1);	
+	g_sphere->normal = v_double_mult(&glass->axis, -1.00);
+	tmp = v_double_mult(&glass->axis, (g_cylinder->lenght_max )/ 2 + g_cylinder->radius * 10);
+	g_sphere->center = v_v_add(&glass->center, &tmp);
+	g_sphere->radius =  g_cylinder->radius * 10;
+	g_sphere->cap = 1;
+	g_sphere->color = glass->color;
+	create_cap_sphere(g_sphere);
+	debug_object(g_sphere);
+	add_new_object(&glass->sub_object, g_sphere);
+}
+
+void create_glass(t_env *e, t_json *json)
+{
+	t_object	*glass;
+	t_json		*tmp;
+
+	glass = init_material();
+	if (!(glass->type = ft_strdup("glass")))
+		exit_rt(1);
+	while(json->member)
+	{
+		tmp = json->member;
+		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+		{
+			glass->center = parse_point(tmp->member);
+		}
+		else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
+			glass->axis = parse_normal(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+			glass->color = parse_color(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
+			glass->lenght_max = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+			parse_material(tmp, glass);
+		else
+			ft_printf("{R}WARNING:{E} plane as a bad attribut\n");
+		json->member = json->member->next;
+		free_json_member(&tmp);
+	}
+	create_child_glass(glass);
+	debug_object(glass);
+	add_new_object(&e->object, glass);
 }
 
 void		create_plane(t_env *e, t_json *json)
@@ -82,7 +179,7 @@ void		create_plane(t_env *e, t_json *json)
 		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
 			parse_material(tmp, plane);
 		else
-			ft_printf("{R}WARNING:{E} plane %d as a bad attribut\n", plane->id);
+			ft_printf("{R}WARNING:{E} plane as a bad attribut\n");
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
@@ -112,13 +209,14 @@ void		create_triangle(t_env *e, t_json *json)
 		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
 			parse_material(tmp, triangle);
 		else
-			ft_printf("{R}WARNING:{E} triangle %d as a bad attribut\n", triangle->id);
+			ft_printf("{R}WARNING:{E} triangle as a bad attribut\n");
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
 	debug_object(triangle);
 	add_new_object(&e->object, triangle);
 }
+
 
 
 void		create_sphere(t_env *e, t_json *json)
@@ -138,17 +236,20 @@ void		create_sphere(t_env *e, t_json *json)
 			sphere->radius = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 			sphere->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "cap")) && tmp->member)
-			sphere->cap = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "plan_cut")) && tmp->member)
+		{
+			sphere->cap = 1;
 			sphere->normal = parse_normal(tmp->member);
+		}
 		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
 			parse_material(tmp, sphere);
 		else
-			ft_printf("{R}WARNING:{E} sphere %d as a bad attribut\n", sphere->id);
+			ft_printf("{R}WARNING:{E} sphere as a bad attribut\n");
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
+	if (sphere->cap)
+		create_cap_sphere(sphere);
 	debug_object(sphere);
 	add_new_object(&e->object, sphere);
 }
@@ -205,7 +306,7 @@ void		create_cylinder(t_env *e, t_json *json)
 		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
 			parse_material(tmp, cylinder);
 		else
-			ft_printf("{R}WARNING:{E} cylinder %d as a bad attribut\n", cylinder->id);
+			ft_printf("{R}WARNING:{E} cylinder as a bad attribut\n");
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
@@ -308,7 +409,7 @@ void		create_cone(t_env *e, t_json *json)
 		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
 			parse_material(tmp, cone);
 		else
-			ft_printf("{R}WARNING:{E} cone %d as a bad attribut\n", cone->id);
+			ft_printf("{R}WARNING:{E} cone as a bad attribut\n");
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
@@ -348,7 +449,7 @@ void		create_torus(t_env *e, t_json *json)
 		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
 			parse_material(tmp, torus);
 		else
-			ft_printf("{R}WARNING:{E} torus %d as a bad attribut\n", torus->id);
+			ft_printf("{R}WARNING:{E} torus as a bad attribut\n");
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}

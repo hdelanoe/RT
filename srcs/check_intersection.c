@@ -45,6 +45,8 @@ int sort_type(t_env *e, t_object *object)
 		intersect = cone_intersection(e, object);
 	else if (!(ft_strcmp(object->type, "disk")))
 		intersect = disk_intersection(e, object, NULL);
+	else if (!(ft_strcmp(object->type, "glass")))
+		intersect = glass_intersection(e, object);
 	return (intersect);	
 }
 

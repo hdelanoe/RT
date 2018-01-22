@@ -42,6 +42,30 @@ int		plane_intersection(t_env *e, t_object *plane)
 	else
 		return (0);
 }*/
+void save_node(t_object *buff, t_object *source)
+{
+	buff->node = source->node;
+	buff->node_normal = source->node_normal;
+}
+
+int glass_intersection(t_env *e, t_object *parent)
+{
+	int tmp;
+
+	if((tmp = cylinder_intersection(e, parent->sub_object)))
+	{
+		save_node(parent, parent->sub_object);
+	}
+	if((tmp += cone_intersection(e, parent->sub_object->next)))
+	{
+		save_node(parent, parent->sub_object->next);
+	}
+	if((tmp += sphere_intersection(e, parent->sub_object->next->next)))
+	{
+		save_node(parent, parent->sub_object->next->next);
+	}
+	return (tmp);
+}
 
 int		sphere_intersection(t_env *e, t_object *sphere)
 {

@@ -330,6 +330,7 @@ void							ray_tracer(t_env *e);
 int								cast_ray(t_env *e, t_vector rayon, t_vector origin);
 void							check_intersection(t_env *e, t_object *object);
 t_color							light_intersection(t_env *e, t_light *light);
+int 							glass_intersection(t_env *e, t_object *parent);
 int								plane_intersection(t_env *e, t_object *plane);
 int								triangle_intersection(t_env *e, t_object *triangle);
 int								cone_intersection(t_env *e, t_object *cone);
@@ -378,6 +379,7 @@ void 							loadPermutation(void);
 
 void create_cap_cylinder(t_object *cylinder);
 void create_cap_cone(t_object *cone);
-
+void create_glass(t_env *e, t_json *json);
+void	get_object_values(t_env *e, t_object *object);
 
 #endif
