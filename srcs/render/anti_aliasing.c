@@ -73,7 +73,8 @@ void		aa_tracer(t_env *e, int sample)
 				aa.y1 += 0.25;
 			}
 			aa.aaclr = c_double_div(&aa.aaclr, 16);
-			print_color(&aa.aaclr, e, aa.x, aa.y);
+			if (aa.aaclr.r != 0 || aa.aaclr.g != 0 || aa.aaclr.b != 0)
+				print_color(&aa.aaclr, e, aa.x, aa.y);
 			aa.x++;
 		}
 		aa.y++;

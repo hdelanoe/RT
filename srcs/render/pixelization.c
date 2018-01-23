@@ -39,12 +39,41 @@ void		pxl_tracer(t_env *e, int sample)
 		while (pxl.x < WIN_X)
 		{
 			e->recursion = 6;
-			color = set_color(0, 0, 0);
 			pxl = pixel_vp_init(&pxl, e);
 			e->camera.rayon = v_v_subs(&pxl.viewplane_point, &e->camera.origin);
 			e->camera.rayon = normalize(&e->camera.rayon);
 			if (cast_ray(e, e->camera.rayon, e->camera.origin))
-				color = e->am_flag == 1 ? ambient_occlusion(e) :get_color(e);
+				color = e->am_flag == 1 ? ambient_occlusion(e) : get_color(e);
+			while (pxl.y++ < pxl.tmpy + sample)
+			{
+				pxl.x = pxl.x != pxl.tmpx ? pxl.x - sample : pxl.x;
+				while (pxl.x < pxl.tmpx + sample)
+					print_color(&color, e, pxl.x++, pxl.y);
+			}
+			pxl.y = pxl.tmpy;
+		}
+		pxl.y += sample;
+	}
+}
+
+
+void		pxl_edit_tracer(t_env *e, int sample)
+{
+	t_pixel		pxl;
+	t_color 	color;
+
+	pxl.y = 0;
+	while (pxl.y < WIN_Y)
+	{
+		pxl.x = 0;
+		while (pxl.x < WIN_X)
+		{
+			e->recursion = 6;
+			pxl = pixel_vp_init(&pxl, e);
+			e->camera.rayon = v_v_subs(&pxl.viewplane_point, &e->camera.origin);
+			e->camera.rayon = normalize(&e->camera.rayon);
+			if (cast_ray(e, e->camera.rayon, e->camera.origin))
+				color = e->current_color;
 			while (pxl.y++ < pxl.tmpy + sample)
 			{
 				pxl.x = pxl.x != pxl.tmpx ? pxl.x - sample : pxl.x;

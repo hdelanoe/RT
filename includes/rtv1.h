@@ -29,8 +29,8 @@
 # include <pthread.h>
 # define A printf("File = [%s]\nLine = [%d]\nFunction = [%s]\n", __FILE__, __LINE__, __FUNCTION__);
 
-# define WIN_X 800
-# define WIN_Y 600
+# define WIN_X 1000
+# define WIN_Y 1000
 # define RANDOM (double)rand()/RAND_MAX
 
 # define R_VOID 1.0
@@ -59,7 +59,7 @@ typedef struct s_pixel	t_pixel;
 typedef struct s_anti_a	t_anti_a;
 
 struct          s_pixel 
-{ 
+{
   int          x; 
   int          y; 
   int          tmpx; 
@@ -106,6 +106,7 @@ struct					s_object
 	double 		specular;
 	int 		reflect;
 	int 		refract;
+	double		emit;
 	double 		absorbtion;
 	t_object	*sub_object;
 	t_object	*next;
@@ -149,6 +150,7 @@ typedef struct			s_mlx
 	void			*win_ptr;
 	void			*mlx_ptr;
 	void			*img_ptr;
+	void			*pen;
 	unsigned char	*data;
 	int				l_size;
 	int				bpp;
@@ -216,7 +218,8 @@ struct 					s_env
 	t_matrix4x1		matrix_lstereo_origin;
 	t_matrix4x4		matrix_rstereo_system;
 	t_matrix4x1		matrix_rstereo_origin;
-
+	int 			hide;
+	int 			tmp_rad;
 };
 
 typedef struct 					s_physics
@@ -278,6 +281,14 @@ struct							s_poly
 
 int p[512];
 
+
+/*
+**TEXTURE.C
+*/
+void							load_texture(t_env *e);
+void							wrap_sphere(t_env *e, t_object *object);
+t_color							get_texture_info(char *tex_data, t_env *e);
+t_color							normalize_color(t_color *color);
 /*
 CAMERA/MATRIX
 */
@@ -376,6 +387,10 @@ double 							lerp(double t, double a, double b);
 double 							grad(int hash, double x, double y, double z);
 double 							noise(double x, double y, double z);
 void 							loadPermutation(void);
+
+void							pxl_edit_tracer(t_env *e, int sample);
+void							edit_tracer(t_env *e);
+void							print_info(t_env *e);
 
 void create_cap_cylinder(t_object *cylinder);
 void create_cap_cone(t_object *cone);

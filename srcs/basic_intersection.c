@@ -53,17 +53,11 @@ int glass_intersection(t_env *e, t_object *parent)
 	int tmp;
 
 	if((tmp = cylinder_intersection(e, parent->sub_object)))
-	{
 		save_node(parent, parent->sub_object);
-	}
 	if((tmp += cone_intersection(e, parent->sub_object->next)))
-	{
 		save_node(parent, parent->sub_object->next);
-	}
 	if((tmp += sphere_intersection(e, parent->sub_object->next->next)))
-	{
 		save_node(parent, parent->sub_object->next->next);
-	}
 	return (tmp);
 }
 

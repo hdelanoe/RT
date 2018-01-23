@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-void 	init_copy(t_object **copy, t_object *object)
+void 	init_copy(t_object **copy, t_object *object, t_env *e)
 {
 	if (!((*copy) = (t_object*)ft_memalloc(sizeof(t_object))))
 		ft_kill("Error in malloc object");
@@ -22,7 +22,7 @@ void 	init_copy(t_object **copy, t_object *object)
 	(*copy)->center = object->center;
 	(*copy)->vertex = object->vertex;
 	(*copy)->normal = object->normal;
-	(*copy)->radius = object->radius;
+	(*copy)->radius = e->tmp_rad;
 	(*copy)->lenght_max = object->lenght_max;
 	(*copy)->tangent = object->tangent;
 	(*copy)->axis = object->axis;
@@ -46,7 +46,7 @@ void add_object(t_env *e, int x, int y)
 	t_vector	tmp_vp_pointy;
 	t_object	*copy;
 
-	init_copy(&copy, e->copy);
+	init_copy(&copy, e->copy, e);
 	tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
 	tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
 	viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);
@@ -65,11 +65,21 @@ void add_object(t_env *e, int x, int y)
 	if (e->aa_flag == 1 && e->pixelize == 0)
 		aa_tracer(e, 1);
 	else if (e->pixelize == 1)
-		pxl_tracer(e, 13);
+	{
+		if (e->edit_flag == 1)
+			pxl_edit_tracer(e, 13);
+		else
+			pxl_tracer(e, 13);
+	}
+	else if (e->edit_flag == 1)
+		edit_tracer(e);
 	else
 		ray_tracer(e);
 	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
 	0, 0);
+	if (e->hide)
+		print_info(e);
+
 }
 
 int set_lookat(t_env *e, int x, int y)
@@ -122,35 +132,40 @@ int copy_object(t_env *e, int x, int y)
 int		mouse(int button, int x, int y, t_env *e)
 {
 //	static t_object *copy;
-	if (!e->edit_flag)
-		return (0);
-	if (e->stereo_flag && (button == 1 || button == 5))
+	if (x > 0 && x < WIN_X && y > 0 && y < WIN_Y) // Sans cette protection, si on clique sur la le mot "RT" au dessus, ca segfault
 	{
-		if(set_lookat(e, x, y))
+		if (!e->edit_flag)
+			return (0);
+		if (e->stereo_flag && (button == 1 || button == 5))
 		{
-			ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
-			camera_transformation(e);
-			reset_stereo(e);
-			e->stereo_flag = 0;
-			stereo_tracer(e);
-			mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr, 0, 0);
+			if(set_lookat(e, x, y))
+			{
+				ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
+				camera_transformation(e);
+				reset_stereo(e);
+				e->stereo_flag = 0;
+				stereo_tracer(e);
+				mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr, 0, 0);
+			}
 		}
-	}
-	else if (!e->is_past && (button == 1 || button == 5))
-	{
-		if (copy_object(e, x, y))
+		else if (!e->is_past && (button == 1 || button == 5))
 		{
-			ft_printf("copy %s\n", e->copy->type);
-			e->is_past = 1;
+			if (copy_object(e, x, y))
+			{
+				ft_printf("copy %s\n", e->copy->type);
+				e->is_past = 1;
+				e->tmp_rad = e->copy->radius;
+			}
 		}
-	}
-	else if (e->is_past && (button == 1 || button == 5))
-	{
-		ft_printf("past %s\n", e->copy->type);
-		add_object(e, x, y);
-	//	free(copy->type);
-	//	ft_bzero(copy, sizeof(t_object*));
-		e->is_past = 0;
+		else if (e->is_past && (button == 1 || button == 5))
+		{
+			ft_printf("past %s\n", e->copy->type);
+			e->tmp_rad = e->tmp_rad < 5 ? 5 : e->tmp_rad;
+			add_object(e, x, y);
+		//	free(copy->type);
+		//	ft_bzero(copy, sizeof(t_object*));
+			e->is_past = 0;
+		}
 	}
 	return (0);
 }

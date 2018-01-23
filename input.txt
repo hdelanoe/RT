@@ -8,5 +8,9 @@
 -X -> Incliner right
 -R -> Toggle Anti-Aliasing
 -T -> Toggle Ambient-Occlusion
-Spape -> Toggle pixelization (recommanded)
+-H -> Toggle info on screen
+-Return -> Edit mode
+-Mouse click -> copy and paste an object
+
+Space  bar-> Toggle pixelization (recommanded)
 Use the directional arrow to look right, up, left and right.

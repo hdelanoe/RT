@@ -12,6 +12,12 @@
 
 #include "rtv1.h"
 
+void	*ray_tracer_void(void *e) 
+{
+	ray_tracer(e);
+	return ((void *)(1));
+}
+
 void	ft_pthread(t_env *e, void *(*f)(void *param))
 {
 	t_env		tab[10];
@@ -21,13 +27,20 @@ void	ft_pthread(t_env *e, void *(*f)(void *param))
 	i = 0;
 	while (i < 10)
 	{
-		ft_memcpy((void*)&tab[i], (void*)e, sizeof(t_env));
+		// ft_memcpy((void*)&tab[i], (void*)e, sizeof(t_env));
+		printf("i = %d\n", i);
+		// init_camera(tab[i]);
 		tab[i].begin = 100 * i;
 		tab[i].fin = 100 * (i + 1);
+		printf("tab[%d] = %d\n", i, tab[i].begin);
 		pthread_create(&t[i], NULL, f, &tab[i]);
 		i++;
 	}
-	while (--i)
+	i = 0;
+	while (i < 10)
+	{
 		pthread_join(t[i], NULL);
+		i++;
+	}
 	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr, 0, 0);
 }
