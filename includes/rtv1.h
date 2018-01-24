@@ -396,5 +396,6 @@ void create_cap_cylinder(t_object *cylinder);
 void create_cap_cone(t_object *cone);
 void create_glass(t_env *e, t_json *json);
 void	get_object_values(t_env *e, t_object *object);
-
+void create_child_glass(t_object *glass);
+void create_cap_sphere(t_object *sphere);
 #endif

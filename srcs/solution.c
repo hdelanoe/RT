@@ -92,8 +92,6 @@ int	cone_solution(t_env *e, t_object *cone, t_poly p)
 	p.len = (p.tmp2 * e->solution) + p.tmp3;
 	if (p.len > cone->lenght_max)
 		return (disk_intersection(e, cone->sub_object, cone));
-	if (cone->cap == 1 && p.len < cone->radius)
-		return (0);
 	if (cone->cap && p.len < cone->radius)
 		return (disk_intersection(e, cone->sub_object->next, cone));
 	p.tmp_node_normal1 = v_v_subs(&cone->node, &cone->center);

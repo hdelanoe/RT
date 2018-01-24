@@ -56,11 +56,14 @@ void add_object(t_env *e, int x, int y)
 	copy->center = viewplane_point;
 	add_new_object(&e->object, copy);
 	if (!ft_strcmp(copy->type, "cylinder") && copy->cap)
-		if(copy->cap > 0)
 			create_cap_cylinder(copy);
 	if (!ft_strcmp(copy->type, "cone"))
-		if(copy->cap > 0)
 			create_cap_cone(copy);
+	if (!ft_strcmp(copy->type, "glass"))
+		create_child_glass(copy);
+	if (!ft_strcmp(copy->type, "sphere") && copy->cap)
+		create_cap_sphere(copy);
+
 	ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 	if (e->aa_flag == 1 && e->pixelize == 0)
 		aa_tracer(e, 1);

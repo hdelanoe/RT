@@ -310,7 +310,7 @@ void		create_cylinder(t_env *e, t_json *json)
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
-	if (cylinder->cap > 0)
+	if (cylinder->lenght_max > 0)
 		create_cap_cylinder(cylinder);
 	else
 		cylinder->lenght_max = 100000;
