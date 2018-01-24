@@ -40,9 +40,21 @@ int sort_type(t_env *e, t_object *object)
 	else if (!(ft_strcmp(object->type, "sphere")))
 		intersect = sphere_intersection(e, object);
 	else if (!(ft_strcmp(object->type, "cylinder")))
+	{
 		intersect = cylinder_intersection(e, object);
+		if (!intersect)
+			intersect = disk_intersection(e, object->sub_object->next, object);
+		if (!intersect)
+			intersect = disk_intersection(e, object->sub_object, object);
+	}
 	else if (!(ft_strcmp(object->type, "cone")))
+	{
 		intersect = cone_intersection(e, object);
+		if (!intersect)
+			intersect = disk_intersection(e, object->sub_object, object);
+		if (!intersect)
+			intersect = disk_intersection(e, object->sub_object->next, object);
+	}
 	else if (!(ft_strcmp(object->type, "disk")))
 		intersect = disk_intersection(e, object, NULL);
 	else if (!(ft_strcmp(object->type, "glass")))
