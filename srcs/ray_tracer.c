@@ -101,8 +101,8 @@ void	edit_tracer(t_env *e)
 
 void	ray_tracer(t_env *e)
 {
-	static int			x;
-	static int			y;
+	int			x;
+	int			y;
 	t_vector	viewplane_point;
 	t_vector	tmp_vp_pointx;
 	t_vector	tmp_vp_pointy;

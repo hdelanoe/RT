@@ -17,6 +17,7 @@ MLX			= 	minilibx_macos/libmlx.a
 
 SRCS		= 	srcs/main.c \
 				srcs/ray_tracer.c \
+				srcs/texture.c \
 				srcs/cast_ray.c \
 				srcs/basic_intersection.c \
 				srcs/check_intersection.c \

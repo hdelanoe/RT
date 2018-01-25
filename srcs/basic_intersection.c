@@ -52,11 +52,11 @@ int glass_intersection(t_env *e, t_object *parent)
 {
 	int tmp;
 
-	if((tmp = cylinder_intersection(e, parent->sub_object)))
-		save_node(parent, parent->sub_object);
-	if((tmp += cone_intersection(e, parent->sub_object->next)))
+	if((tmp = cone_intersection(e, parent->sub_object->next)))
 		save_node(parent, parent->sub_object->next);
-	if((tmp += sphere_intersection(e, parent->sub_object->next->next)))
+	else if((tmp += cylinder_intersection(e, parent->sub_object)))
+		save_node(parent, parent->sub_object);
+	else if((tmp += sphere_intersection(e, parent->sub_object->next->next)))
 		save_node(parent, parent->sub_object->next->next);
 	return (tmp);
 }
@@ -120,7 +120,7 @@ int		cone_intersection(t_env *e, t_object *cone)
 	p.tmp3 = dot_product(&p.object_rayon, &cone->axis);
 	p.a = 1 - (p.tmp1 * pow(p.tmp2, 2));
 	p.b = 2 * ((dot_product(&p.object_rayon,&e->current_rayon) -
-		(p.tmp1 * (p.tmp2 * p.tmp3))));
+	(p.tmp1 * (p.tmp2 * p.tmp3))));
 	p.c = dot_product(&p.object_rayon, &p.object_rayon) -
 	(p.tmp1 * (p.tmp3 * p.tmp3));
 	p.discriminant = (p.b * p.b) - (4 * p.a * p.c);

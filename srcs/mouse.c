@@ -29,6 +29,8 @@ void 	init_copy(t_object **copy, t_object *object, t_env *e)
 	(*copy)->node = object->node;
 	(*copy)->node_normal = object->node_normal;
 	(*copy)->color = object->color;
+	// (*copy)->color.g = e->tmp_clr.g;
+	// (*copy)->color.b = e->tmp_clr.b;
 	(*copy)->cap = object->cap;
 	(*copy)->ambient = object->ambient;
 	(*copy)->diffuse = object->diffuse;
@@ -63,21 +65,8 @@ void add_object(t_env *e, int x, int y)
 		create_child_glass(copy);
 	if (!ft_strcmp(copy->type, "sphere") && copy->cap)
 		create_cap_sphere(copy);
-
 	ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
-	if (e->aa_flag == 1 && e->pixelize == 0)
-		aa_tracer(e, 1);
-	else if (e->pixelize == 1)
-	{
-		if (e->edit_flag == 1)
-			pxl_edit_tracer(e, 13);
-		else
-			pxl_tracer(e, 13);
-	}
-	else if (e->edit_flag == 1)
-		edit_tracer(e);
-	else
-		ray_tracer(e);
+	choose_display_mode(e);
 	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
 	0, 0);
 	if (e->hide)
@@ -101,7 +90,7 @@ int set_lookat(t_env *e, int x, int y)
 	{
 	//	if (!((*copy) = (t_object*)ft_memalloc(sizeof(t_object))))
 	//		ft_kill("Error in malloc object");
-//		init_copy(copy, e->copy);
+	//	init_copy(copy, e->copy);
 		e->lookat = e->current_node;
 		return (1);
 	}
@@ -164,6 +153,7 @@ int		mouse(int button, int x, int y, t_env *e)
 		{
 			ft_printf("past %s\n", e->copy->type);
 			e->tmp_rad = e->tmp_rad < 5 ? 5 : e->tmp_rad;
+			// e->tmp_clr = e->copy->color;
 			add_object(e, x, y);
 		//	free(copy->type);
 		//	ft_bzero(copy, sizeof(t_object*));

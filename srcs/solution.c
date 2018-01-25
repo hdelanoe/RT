@@ -29,7 +29,8 @@ int	sphere_solution(t_env *e, t_object *sphere, t_poly p)
 		return (0);
 	p.tmp_node = v_double_mult(&e->current_rayon, e->solution);
 	sphere->node = v_v_add(&e->current_origin, &p.tmp_node);
-	p.tmp1 = (dot_product(&e->current_rayon, &sphere->normal) * e->solution) + dot_product(&p.object_rayon, &sphere->normal);
+	p.tmp1 = (dot_product(&e->current_rayon, &sphere->normal) * e->solution)
+	+ dot_product(&p.object_rayon, &sphere->normal);
 	if (sphere->cap == 1 && p.tmp1 < 0)
 		return (disk_intersection(e, sphere->sub_object, sphere));
 	sphere->node = v_v_add(&e->current_origin, &p.tmp_node);

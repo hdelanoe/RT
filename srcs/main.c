@@ -25,6 +25,7 @@ void		display_window(t_env *e)
 {
 	e->mlx.mlx_ptr = mlx_init();
 	e->mlx.win_ptr = mlx_new_window(e->mlx.mlx_ptr, e->width, e->height, "RT");
+	load_texture(e);
 	e->mlx.img_ptr = mlx_new_image(e->mlx.mlx_ptr, e->width, e->height);
 	if (!((e->mlx.pen = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
 	"./textures/pen.xpm", &(e->mlx.l_size), &e->mlx.endian))))
@@ -71,7 +72,7 @@ int			main(int argc, char **argv)
 	loadPermutation();
 	ret = 0;
 	e = init();
-	
+
 	if (argc != 2)
 		ft_print_err(argc);
 	ret = parsing(e, argv[1]);

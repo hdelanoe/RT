@@ -41,6 +41,7 @@
 # define R_PMMA 1.4917
 # define R_GLASS 1.524
 # define R_DIAM 2.4175
+# define PI 3.1415
 
 typedef struct s_env	t_env;
 typedef struct s_mlx	t_mlx;
@@ -220,6 +221,19 @@ struct 					s_env
 	t_matrix4x1		matrix_rstereo_origin;
 	int 			hide;
 	int 			tmp_rad;
+	t_color 		tmp_clr;
+
+	int				i;
+	int				j;
+	double			u;
+	double			v;
+	int				bpp;
+	int				end;
+	int				naz;
+	void			*text;
+	void			*text_img;
+	void			*text_data;
+	int				sl;
 };
 
 typedef struct 					s_physics
@@ -334,6 +348,7 @@ void							exit_parser(int flag);
 void							ft_pthread(t_env *e, void *(*f)(void *param));
 void							*ray_tracer_void(void *e);
 void							*aa_tracer_void(void *e);
+void							*pxl_tracer_void(void *e);
 /*
 RAYTRACER
 */
@@ -391,6 +406,8 @@ void 							loadPermutation(void);
 void							pxl_edit_tracer(t_env *e, int sample);
 void							edit_tracer(t_env *e);
 void							print_info(t_env *e);
+void							choose_display_mode(t_env *e);
+void							wrap_cylinder(t_env *e, t_object *object);
 
 void create_cap_cylinder(t_object *cylinder);
 void create_cap_cone(t_object *cone);

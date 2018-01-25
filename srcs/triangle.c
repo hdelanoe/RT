@@ -32,8 +32,8 @@ int		triangle_intersection(t_env *e, t_object *triangle)
 	p.cp_2 = v_v_mult(&p.v2_3, &p.v2_node);
 	p.cp_3 = v_v_mult(&p.v3_1, &p.v3_node);
 	if (dot_product(&triangle->normal, &p.cp_1) < 0 ||
-		dot_product(&triangle->normal, &p.cp_2) < 0 ||
-		dot_product(&triangle->normal, &p.cp_3) < 0)
+	dot_product(&triangle->normal, &p.cp_2) < 0 ||
+	dot_product(&triangle->normal, &p.cp_3) < 0)
 		return (0);
 	return (1);
 }

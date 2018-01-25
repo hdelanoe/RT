@@ -40,9 +40,27 @@ void    inputs2(int keycode, t_env *e)
     else if (keycode == 88) 
     	e->filter_flag = 6;
     else if (keycode == 36)
-    	e->edit_flag = e->edit_flag == 1 ? 0 : 1; 
+    	e->edit_flag = e->edit_flag == 1 ? 0 : 1;
+}
 
-} 
+void		choose_display_mode(t_env *e)
+{
+	if (e->aa_flag == 1 && e->pixelize == 0)
+		aa_tracer(e, 1);
+	else if (e->pixelize == 1)
+	{
+		if (e->edit_flag == 1)
+			pxl_edit_tracer(e, 13);
+		else
+			pxl_tracer(e, 13);
+	}
+	else if (e->edit_flag == 1)
+		edit_tracer(e);
+	else if (e->stereo_flag == 1)
+		stereo_tracer(e);
+	else
+		ray_tracer(e);
+}
 
 void		inputs(int keycode, t_env *e)
 {
@@ -124,13 +142,25 @@ int			key_functions(int keycode, t_env *e)
 		inputs(keycode, e);
 		if (keycode == 69)
 			e->tmp_rad += 1;
-		if (keycode == 78)
+		else if (keycode == 78)
 			e->tmp_rad -= 1;
-		if (keycode == 49)
+		else if (keycode == 49)
 			e->pixelize = e->pixelize == 1 ? 0 : 1;
-		if (keycode == 15)
+		else if (keycode == 15)
 			e->aa_flag = e->aa_flag == 1 ? 0 : 1;
-		if (keycode == 4)
+		else if (keycode == 83)
+			e->tmp_clr.r += 0.05;
+		else if (keycode == 84)
+			e->tmp_clr.g += 0.05;
+		else if (keycode == 85)
+			e->tmp_clr.b += 0.05;
+		else if (keycode == 86)
+			e->tmp_clr.r -= 0.05;
+		else if (keycode == 87)
+			e->tmp_clr.g -= 0.05;
+		else if (keycode == 88)
+			e->tmp_clr.b -= 0.05;
+		else if (keycode == 4)
 			e->hide = e->hide == 0 ? 1 : 0;
 		ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 		camera_transformation(e);
@@ -145,21 +175,7 @@ int			key_functions(int keycode, t_env *e)
 	//	e->lviewplane = viewplane_transformation(e->lstereo);
 	//	camera_transformation(e, &e->rstereo);
 	//	e->rviewplane = viewplane_transformation(e->rstereo);
-		if (e->aa_flag == 1 && e->pixelize == 0)
-			aa_tracer(e, 1);
-		else if (e->pixelize == 1)
-		{
-			if (e->edit_flag)
-				pxl_edit_tracer(e, 13);
-			else
-				pxl_tracer(e, 13);
-		}
-		else if (e->edit_flag == 1)
-			edit_tracer(e);
-	//	else if (e->stereo_flag == 1)
-	//		stereo_tracer(e);
-		else
-			ray_tracer(e);
+		choose_display_mode(e);
 		mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr, 0, 0);
 		if (e->hide)
 			print_info(e);
