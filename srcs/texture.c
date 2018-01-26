@@ -32,7 +32,7 @@ t_color		normalize_color(t_color *color)
 void		load_texture(t_env *e)
 {
 	if (!((e->text_img = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/wall.xpm", &(e->sl), &e->bpp))))
+	"./textures/skyboxe.xpm", &(e->sl), &e->bpp))))
 		ft_kill("Texture error");
 	e->text_data = mlx_get_data_addr(e->text_img, &e->bpp, &e->naz, &e->end);
 }

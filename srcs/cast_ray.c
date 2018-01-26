@@ -36,6 +36,7 @@ int	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 {
 	t_object 	*tmp_object;
 
+	e->skybox = 0;
 	init_rayon_values(e, rayon, origin);
 //	printf("r %f g %f b %f\n", e->color_finale.r, e->color_finale.g, e->color_finale.b);
 	tmp_object = e->object;

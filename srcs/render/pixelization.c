@@ -43,7 +43,12 @@ void		pxl_tracer(t_env *e, int sample)
 			e->camera.rayon = v_v_subs(&pxl.viewplane_point, &e->camera.origin);
 			e->camera.rayon = normalize(&e->camera.rayon);
 			if (cast_ray(e, e->camera.rayon, e->camera.origin))
-				color = e->am_flag == 1 ? ambient_occlusion(e) : get_color(e);
+			{
+				if (e->skybox == 1)
+					color = e->current_color;
+				else
+					color = e->am_flag == 1 ? ambient_occlusion(e) : get_color(e);
+			}
 			while (pxl.y++ < pxl.tmpy + sample)
 			{
 				pxl.x = pxl.x != pxl.tmpx ? pxl.x - sample : pxl.x;

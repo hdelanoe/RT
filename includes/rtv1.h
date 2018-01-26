@@ -234,6 +234,7 @@ struct 					s_env
 	void			*text_img;
 	void			*text_data;
 	int				sl;
+	int				skybox;
 };
 
 typedef struct 					s_physics

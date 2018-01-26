@@ -73,13 +73,14 @@ void check_intersection(t_env *e, t_object *object)
 			if (!(ft_strcmp("plane", object->type)))
 				e->bump = 1;
 			/*COMMENTEZ CETTE SECTION POUR ACTIVER/DESACTIVER LES TEXTURES*/
-			// if (!(ft_strcmp("sphere", object->type)))
-			// {
-			// 	wrap_sphere(e, object);
-			// 	e->i = (int)(e->v * 600);
-			// 	e->j = (int)(e->u * e->sl);
-			// 	e->current_color = get_texture_info(e->text_data, e);
-			// }
+			if (!(ft_strcmp("sphere", object->type)) && object->radius == 4000)
+			{
+				wrap_sphere(e, object);
+				e->i = (int)(e->v * 2000);
+				e->j = (int)(e->u * e->sl);
+				e->current_color = get_texture_info(e->text_data, e);
+				e->skybox = 1;
+			}
 			// if (!(ft_strcmp("cylinder", object->type)))
 			// {
 			// 	wrap_cylinder(e, object);
