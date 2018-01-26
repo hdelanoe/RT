@@ -23,7 +23,14 @@ int	sphere_solution(t_env *e, t_object *sphere, t_poly p)
 		p.discriminant = sqrt(p.discriminant);
 		p.s1 = (- p.b + p.discriminant);
 		p.s2 = (- p.b - p.discriminant);
-		e->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
+		if (p.s1 > 0 && p.s2 > 0)
+			e->solution = (p.s1 < p.s2) ? p.s1 : p.s2;
+		else if (p.s1 < 0 && p.s2 > 0)
+			e->solution = p.s2;
+		else if (p.s1 > 0 && p.s2 < 0)
+			e->solution = p.s1;
+		else if (p.s1 < 0 && p.s2 < 0)
+			return (0);
 	}
 	if (e->solution < 0)
 		return (0);
