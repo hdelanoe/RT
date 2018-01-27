@@ -25,6 +25,8 @@ void		get_object(t_env *e, t_json *json)
 			create_plane(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "triangle")) && tmp->member)
 			create_triangle(e, tmp);
+		else if (!(ft_strcmp(tmp->name, "quad")) && tmp->member)
+			create_quad(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "cylinder")) && tmp->member)
 			create_cylinder(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "cone")) && tmp->member)

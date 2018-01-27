@@ -47,6 +47,7 @@ SRCS		= 	srcs/main.c \
 				srcs/vector/vectors_op3.c \
 				srcs/render/multithread.c \
 				srcs/triangle.c \
+				srcs/quad.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 
