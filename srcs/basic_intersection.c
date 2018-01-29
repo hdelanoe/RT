@@ -42,22 +42,24 @@ int		plane_intersection(t_env *e, t_object *plane)
 	else
 		return (0);
 }*/
-void save_node(t_object *buff, t_object *source)
+void save_node(t_object *buff, t_object *source, int *tmp)
 {
 	buff->node = source->node;
 	buff->node_normal = source->node_normal;
+	*tmp = 1;
 }
 
 int glass_intersection(t_env *e, t_object *parent)
 {
 	int tmp;
 
-	if((tmp = cone_intersection(e, parent->sub_object->next)))
-		save_node(parent, parent->sub_object->next);
-	else if((tmp += cylinder_intersection(e, parent->sub_object)))
-		save_node(parent, parent->sub_object);
-	else if((tmp += sphere_intersection(e, parent->sub_object->next->next)))
-		save_node(parent, parent->sub_object->next->next);
+	tmp = 0;
+	if((cylinder_intersection(e, parent->sub_object)))
+		save_node(parent, parent->sub_object, &tmp);
+	else if((cone_intersection(e, parent->sub_object->next)))
+		save_node(parent, parent->sub_object->next, &tmp);
+	else if(sphere_intersection(e, parent->sub_object->next->next))
+		save_node(parent, parent->sub_object->next->next, &tmp);
 	return (tmp);
 }
 
