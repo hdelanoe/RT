@@ -40,6 +40,7 @@ SRCS		= 	srcs/main.c \
 				srcs/parsing/create_object.c \
 				srcs/parsing/create_light.c \
 				srcs/color/colors.c \
+				srcs/color/cel_shading.c \
 				srcs/color/colors_op1.c \
 				srcs/color/colors_op2.c \
 				srcs/vector/vectors_op1.c \

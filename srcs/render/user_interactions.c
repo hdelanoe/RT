@@ -137,7 +137,7 @@ int			key_functions(int keycode, t_env *e)
 	keycode == 49 || keycode == 15 || keycode == 17 || keycode == 35 ||
 	keycode == 82 || keycode == 83 || keycode == 84 || keycode == 85 ||
 	keycode == 86 || keycode == 87 || keycode == 88 || keycode == 36 ||
-	keycode == 4 || keycode == 69 || keycode == 78)
+	keycode == 4 || keycode == 69 || keycode == 78 || keycode == 8)
 	{
 		inputs(keycode, e);
 		if (keycode == 69)
@@ -162,6 +162,8 @@ int			key_functions(int keycode, t_env *e)
 			e->tmp_clr.b -= 0.05;
 		else if (keycode == 4)
 			e->hide = e->hide == 0 ? 1 : 0;
+		else if (keycode == 8)
+			e->cel_shade = e->cel_shade == 1 ? 0 : 1;
 		ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 		camera_transformation(e);
 		// if (!((e->mlx.img_ptr = mlx_xpm_file_to_image(e->mlx.mlx_ptr,

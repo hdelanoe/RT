@@ -47,7 +47,7 @@ void		pxl_tracer(t_env *e, int sample)
 				if (e->skybox == 1)
 					color = e->current_color;
 				else
-					color = e->am_flag == 1 ? ambient_occlusion(e) : get_color(e);
+				color = choose_color(e);
 			}
 			while (pxl.y++ < pxl.tmpy + sample)
 			{

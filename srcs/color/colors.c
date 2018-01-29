@@ -12,6 +12,35 @@
 
 #include "rtv1.h"
 
+t_color		choose_color(t_env *e)
+{
+	t_color new;
+
+	if (e->aa_flag == 1 && e->pixelize == 0)
+	{
+		if (e->cel_shade == 1)
+			new = e->current_color;
+		else
+			new = get_color(e);
+	}
+	else if (e->pixelize == 1)
+	{
+		if (e->edit_flag == 1)
+			new = e->current_color;
+		else if (e->cel_shade == 1)
+			new = cel_shade_color(e);
+		else
+			new = get_color(e);
+	}
+	else if (e->edit_flag == 1)
+		new = e->current_color;
+	else if (e->cel_shade == 1)
+		new = cel_shade_color(e);
+	else
+		new = get_color(e);
+	return (new);
+}
+
 double get_specular(t_light *light, t_vector *view, t_vector *node)
 {
 	t_vector	tmp;
@@ -109,7 +138,7 @@ t_color	ambient_occlusion(t_env *e)
 	return (c);
 }
 
-t_color	get_color(t_env *e)
+t_color			get_color(t_env *e)
 {
 	t_color		c;
 	t_color 	c_light;
@@ -124,7 +153,6 @@ t_color	get_color(t_env *e)
 	c = c_double_mult(&e->current_color, e->ambient);
 	if (c.r == 0 && c.g == 0 && c.b == 0 && e->intersect == 0)
 		return (c);
-//	printf("%f %f %f\n", c.r, c.g, c.b);
 	tmp_light = e->light;
 	while (tmp_light)
 	{

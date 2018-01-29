@@ -28,7 +28,7 @@ void	parse_scene(t_env *e, t_json *json)
 		ft_printf("{R}WARNING:{E} %s is not valid\n", json->name);
 }
 
-t_object	*init_material()
+t_object	*init_material(void)
 {
 	t_object *object;
 

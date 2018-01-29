@@ -29,7 +29,7 @@
 # include <pthread.h>
 # define A printf("File = [%s]\nLine = [%d]\nFunction = [%s]\n", __FILE__, __LINE__, __FUNCTION__);
 
-# define WIN_X 1000
+# define WIN_X 1500
 # define WIN_Y 1000
 # define RANDOM (double)rand()/RAND_MAX
 
@@ -236,6 +236,7 @@ struct 					s_env
 	void			*text_data;
 	int				sl;
 	int				skybox;
+	int				cel_shade;
 };
 
 typedef struct 					s_physics
@@ -297,126 +298,308 @@ struct							s_poly
 
 int p[512];
 
-
 /*
-**TEXTURE.C
+**main.c
 */
-void							load_texture(t_env *e);
-void							wrap_sphere(t_env *e, t_object *object);
-t_color							get_texture_info(char *tex_data, t_env *e);
-t_color							normalize_color(t_color *color);
+void							exit_rt(int flag);
+void							display_window(t_env *e);
+t_env							*init(void);
 /*
-CAMERA/MATRIX
+**basic_interaction.c
 */
-void							init_camera(t_env *e);
-void							camera_transformation(t_env *e);
-void							viewplane_transformation(t_env *e);
-void							init_stereo(t_env *e);
-void 							reset_stereo(t_env *e);
-void							matrix_4x4_to_vectors(t_vector *a, t_vector *b, t_vector *c, t_matrix4x4 *matrix);
-void							rotation_matrix(t_matrix4x4 *rotation, t_poly *p);
-t_matrix4x4						matrix_camera_system(t_vector *a, t_vector *b, t_vector *c);
-void							matrix_4x1_to_vectors(t_vector *a, t_matrix4x1 *matrix);
-void							update_system_translation(t_env *e, t_matrix4x4 *rot);
-t_matrix4x4						translation(t_env *e, t_matrix4x4 *rot);
-t_matrix4x1						matrix_camera_origin(t_vector *a);
-/*PARSING
-*/
-int								parsing(t_env *e, char *str);
-void							create_tree(t_env *e, char **str);
-void							get_light(t_env *e);
-void							get_object(t_env *e, t_json *json);
-t_object						*init_material(void);
-void							parse_scene(t_env *e, t_json *json);
-void							parse_material(t_json *material, t_object *object);
-void							create_sphere(t_env *e, t_json *json);
-void							create_cone(t_env *e, t_json *json);
-void							create_cylinder(t_env *e, t_json *json);
-void							create_plane(t_env *e, t_json *json);
-void							create_triangle(t_env *e, t_json *json);
-void							create_quad(t_env *e, t_json *json);
-void							create_torus(t_env *e, t_json *json);
-void							create_light(t_env *e, t_json *json);
-void 							create_paraboloid(t_object *object, t_json *json);
-void 							create_disk(t_env *e, t_json *json);
-t_vector 						parse_point(t_json *membre);
-t_color 						parse_color(t_json *membre);
-t_vector 						parse_normal(t_json *membre);
-void							add_new_object(t_object **list, t_object *object);
-void							add_new_light(t_light **list, t_light *new_light);
-void							exit_parser(int flag);
-/*
-**MULTITHREAD
-*/
-void							ft_pthread(t_env *e, void *(*f)(void *param));
-void							*ray_tracer_void(void *e);
-void							*aa_tracer_void(void *e);
-void							*pxl_tracer_void(void *e);
-/*
-RAYTRACER
-*/
-void							ray_tracer(t_env *e);
-int								cast_ray(t_env *e, t_vector rayon, t_vector origin);
-void							check_intersection(t_env *e, t_object *object);
-t_color							light_intersection(t_env *e, t_light *light);
-int 							glass_intersection(t_env *e, t_object *parent);
+void							save_node(t_object *buff, t_object *source, int *tmp);
 int								plane_intersection(t_env *e, t_object *plane);
-int								triangle_intersection(t_env *e, t_object *triangle, t_object *t);
-int								quad_intersection(t_env *e, t_object *quad);
-int								cone_intersection(t_env *e, t_object *cone);
+int								glass_intersection(t_env *e, t_object *parent);
 int								sphere_intersection(t_env *e, t_object *sphere);
 int								cylinder_intersection(t_env *e, t_object *cylinder);
-int 							disk_intersection(t_env *e, t_object *disk, t_object *parent);
-int								torus_intersection(t_env *e, t_object *torus);
-int								sphere_solution(t_env *e, t_object *sphere, t_poly p);
-int								cylinder_solution(t_env *e, t_object *cylinder, t_poly p);
-int								cone_solution(t_env *e, t_object *cone, t_poly p);
-t_color							get_color(t_env *e);
-int 							cast_reflect_ray(t_env *e, t_rayon origin);
-int 							cast_refract_ray(t_env *e, t_rayon origin);
-void							print_color(t_color *color, t_env *e, int x, int y);
+int								disk_intersection(t_env *e, t_object *disk, t_object *parent);
+int								cone_intersection(t_env *e, t_object *cone);
+
 /*
-RENDER
+**cast_ray.c
 */
-void							display_window(t_env *e);
-int								key_functions(int keycode, t_env *e);
-void							anti_aliasing_clr_merge(t_color *anti, t_color *clr);
-t_anti_a						antialias_loop_init(t_anti_a *anti, t_env *e, int sample);
-void							aa_tracer(t_env *e, int sample);
-t_color							c_double_div(t_color *a, double b);
-t_pixel							pixel_vp_init(t_pixel *pxl, t_env *e);
-void							pxl_tracer(t_env *e, int sample);
-t_color							ambient_occlusion(t_env *e);
-int								mouse(int button, int x, int y, t_env *e);
-void							stereo_tracer(t_env *e);
-t_color							set_filter(t_env *e, t_color c);
+void							init_rayon_values(t_env *e, t_vector rayon, t_vector origin);
+t_vector						bump_normal(t_vector normal);
+int								cast_ray(t_env *e, t_vector rayon, t_vector origin);
+int								cast_reflect_ray(t_env *e, t_rayon incident);
+int								cast_refract_ray(t_env *e, t_rayon origin);
+
 /*
-ERROR
+**check_interaction.c
+*/
+void							get_object_values(t_env *e, t_object *object);
+int								sort_type(t_env *e, t_object *object);
+void							check_intersection(t_env *e, t_object *object);
+t_color							light_intersection(t_env *e, t_light *light);
+/*
+** errors.c
 */
 void							ft_print_err(int argc);
 void							ft_help(void);
 void							ft_kill(char *text);
-void							exit_rt(int flag);
-int								proper_exit(t_env *e);
 /*
-PERLIN_NOIZE
+**mouse.c
 */
-double 							fade(double t);
-double 							lerp(double t, double a, double b);
-double 							grad(int hash, double x, double y, double z);
-double 							noise(double x, double y, double z);
-void 							loadPermutation(void);
+void							init_copy(t_object **copy, t_object *object);
+void							add_object(t_env *e, int x, int y);
+int								set_lookat(t_env *e, int x, int y);
+int								copy_object(t_env *e, int x, int y);
+int								mouse(int button, int x, int y, t_env *e);
+/*
+**paraboloid.c
+*/
+// t_paraboloid					*add_new_paraboloid(t_object *object, t_paraboloid *new_paraboloid);
+// void							debug_paraboloid(t_paraboloid *tmp);
+// void							create_paraboloid(t_object *object, t_json *json);
+/*
+**perlin_noise.c
+*/
+double							fade(double t);
+double							lerp(double t, double a, double b);
+double							grad(int hash, double x, double y, double z);
+double							noise(double x, double y, double z);
+void							loadPermutation(void);
+/*
+**quad.c
+*/
+int								quad_intersection(t_env *e, t_object *quad);
 
-void							pxl_edit_tracer(t_env *e, int sample);
+/*
+**ray_tracer.c
+*/
+void							stereo_tracer(t_env *e);
 void							edit_tracer(t_env *e);
-void							print_info(t_env *e);
-void							choose_display_mode(t_env *e);
+void							ray_tracer(t_env *e);
+/*
+**solution.c
+*/
+int								sphere_solution(t_env *e, t_object *sphere, t_poly p);
+int								solve_solution(t_env *e, t_poly *p);
+int								cylinder_solution(t_env *e, t_object *cylinder, t_poly p);
+int								cone_solution(t_env *e, t_object *cone, t_poly p);
+/*
+**texture.c
+*/
+t_color							normalize_color(t_color *color);
+void							load_texture(t_env *e);
+void							wrap_sphere(t_env *e, t_object *object);
 void							wrap_cylinder(t_env *e, t_object *object);
+t_color							get_texture_info(char *text_data, t_env *e);
 
-void create_cap_cylinder(t_object *cylinder);
-void create_cap_cone(t_object *cone);
-void create_glass(t_env *e, t_json *json);
-void	get_object_values(t_env *e, t_object *object);
-void create_child_glass(t_object *glass);
-void create_cap_sphere(t_object *sphere);
+/*
+**torus.c
+*/
+// t_torus							*add_new_torus(t_object *object, t_torus *new_torus);
+// void							create_torus(t_object *object, char *line);
+// int								torus_intersection(t_datas *data, t_torus *torus);
+
+/*
+**triangle.c
+*/
+int								triangle_intersection(t_env *e, t_object *triangle, t_object *t);
+
+/*
+**COLOR
+*/
+
+/*
+**cel_shading.c
+*/
+t_color							cel_shading(t_vector *light, t_env *e, t_color *clr);
+t_color							cel_shade_color(t_env *e);
+/*
+**colors.c
+*/
+t_color							choose_color(t_env *e);
+double 							get_specular(t_light *light, t_vector *view, t_vector *node);
+void							init_ray_values(t_rayon *ray, t_env *e);
+void							shoot_new_color(t_env *e, t_color *c, double coef);
+void							recurse_color(t_env *e, t_rayon ray, t_color *c);
+t_color							ambient_occlusion(t_env *e);
+t_color							get_color(t_env *e);
+
+/*
+**color_op1.c
+*/
+t_color							set_color(double b, double g, double r);
+t_color							c_c_mult(t_color *a, t_color *b);
+t_color							c_c_add(t_color *a, t_color *b);
+t_color							c_double_pow(t_color *a, double b);
+t_color							c_double_add(t_color *a, double b);
+
+/*
+**color_op2.c
+*/
+t_color							c_double_mult(t_color *a, double b);
+t_color							c_double_div(t_color *a, double b);
+t_color							c_c_subs(t_color *a, t_color *b);
+void							print_color(t_color *color, t_env *e, int x, int y);
+
+/*
+**MATRIX
+*/
+
+/*
+**camera.c
+*/
+void							stereo_viewplane(t_env *e);
+void							init_stereo(t_env *e);
+void							init_camera(t_env *e);
+void							camera_transformation(t_env *e);
+void 							reset_stereo(t_env *e);
+void							viewplane_transformation(t_env *e);
+
+/*
+**matrix_rotation.c
+*/
+double							degree_to_radian(double degree_angle);
+t_matrix4x4						m4x4_m4x4_mult(t_matrix4x4 *camera_matrix, t_matrix4x4 *rotation);
+void							matrix_4x4_to_vectors(t_vector *a, t_vector *b, t_vector *c, t_matrix4x4 *matrix);
+t_matrix4x4						matrix_camera_system(t_vector *a, t_vector *b, t_vector *c);
+void							rotation_matrix(t_matrix4x4 *rotation, t_poly *p);
+t_matrix4x4						rotation(double degree_x, double degree_y, double degree_z);
+
+/*
+**matrix_translation.c
+*/
+t_matrix4x1						m4x4_m4x1_mult_reduced(t_matrix4x4 *translation, t_matrix4x1 *matrix);
+void							matrix_4x1_to_vectors(t_vector *a, t_matrix4x1 *matrix);
+t_matrix4x1						matrix_camera_origin(t_vector *a);
+void							update_system_translation(t_env *e, t_matrix4x4 *rot);
+t_matrix4x4						translation(t_env *e, t_matrix4x4 *rot);
+
+/*
+**PARSING
+*/
+
+/*
+**create_light.c
+*/
+void							add_new_light(t_light **list, t_light *new_light);
+void							debug_light(t_light *tmp);
+void							create_light(t_env *e, t_json *json);
+
+/*
+**create_object.c
+*/
+void							add_new_object(t_object **list, t_object *new_object);
+void							debug_object(t_object *tmp);
+void							create_cap_sphere(t_object *sphere);
+void							create_child_glass(t_object *glass);
+void							create_glass(t_env *e, t_json *json);
+void							create_plane(t_env *e, t_json *json);
+void							create_triangle(t_env *e, t_json *json);
+void							create_quad(t_env *e, t_json *json);
+void							create_sphere(t_env *e, t_json *json);
+void							create_cap_cylinder(t_object *cylinder);
+void							create_cylinder(t_env *e, t_json *json);
+void							create_disk(t_env *e, t_json *json);
+void							create_cap_cone(t_object *cone);
+void							create_cone(t_env *e, t_json *json);
+void							create_torus(t_env *e, t_json *json);
+
+/*
+**get_parsing.c
+*/
+void							free_content(t_json *member);
+double							get_content_from_member(char *name, t_json **membre);
+t_vector						parse_point(t_json *membre);
+t_vector						parse_normal(t_json *membre);
+t_color							parse_color(t_json *membre);
+
+/*
+**parse_material.c
+*/
+void							parse_scene(t_env *e, t_json *json);
+t_object						*init_material(void);
+void							parse_material(t_json *material, t_object *object);
+void							free_json_member(t_json **member);
+
+/*
+**parsing.c
+*/
+void							get_object(t_env *e, t_json *json);
+void							add_new_member(t_json **list, t_json *new_member);
+int								create_object(t_json *object, char *str, int i);
+void							create_tree(t_env *e, char **str);
+int								parsing(t_env *e, char *src_file);
+
+/*
+**parsing_tools.c
+*/
+void							exit_parser(int flag);
+t_json							*new_object(void);
+void							char_is_valid(char a, char b, char *str);
+void							add(t_json **current, t_json *new);
+int								get_content(char **content, char *str, int i);
+
+/*
+**RENDER
+*/
+
+/*
+**anti_aliasing.c
+*/
+void							*aa_tracer_void(void *e);
+void							anti_aliasing_clr_merge(t_color *anti, t_color *clr);
+t_anti_a						antialias_loop_init(t_anti_a *anti, t_env *e, int sample);
+void							aa_tracer(t_env *e, int sample);
+
+/*
+**set_filter.c
+*/
+t_color							set_filter(t_env *e, t_color c);
+
+/*
+**multithread.c
+*/
+void							*ray_tracer_void(void *e);
+void							ft_pthread(t_env *e, void *(*f)(void *param));
+
+/*
+**pixelization.c
+*/
+t_pixel							pixel_vp_init(t_pixel *pxl, t_env *e);
+void							pxl_tracer(t_env *e, int sample);
+void							pxl_edit_tracer(t_env *e, int sample);
+
+/*
+**user_interaction.c
+*/
+int								proper_exit(t_env *e);
+void							inputs2(int keycode, t_env *e);
+void							choose_display_mode(t_env *e);
+void							inputs(int keycode, t_env *e);
+void							print_info(t_env *e);
+void							reset_mov_rotate(t_env *e);
+int								key_functions(int keycode, t_env *e);
+
+/*
+**VECTOR
+*/
+
+/*
+**vector_op1.c
+*/
+t_vector						set_vector(double x, double y, double z);
+double							magnitude(t_vector *a);
+t_vector						normalize(t_vector *a);
+double							dot_product(t_vector *a, t_vector *b);
+t_vector						v_v_add(t_vector *a, t_vector *b);
+
+/*
+**vector_op2.c
+*/
+t_vector						v_v_subs(t_vector *a, t_vector *b);
+t_vector						v_v_mult(t_vector *a, t_vector *b);
+t_vector						v_double_add(t_vector *a, double b);
+t_vector						v_double_subs(t_vector *a, double b);
+t_vector						v_double_mult(t_vector *a, double b);
+
+/*
+**vector_op3.c
+*/
+t_vector						v_double_div(t_vector *a, double b);
+
+
 #endif

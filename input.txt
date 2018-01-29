@@ -9,6 +9,8 @@
 -R -> Toggle Anti-Aliasing
 -T -> Toggle Ambient-Occlusion
 -H -> Toggle info on screen
+-C -> Toggle cel_shading (cartoon effect)
+
 -Return -> Edit mode
 -Mouse click -> copy and paste an object
 
