@@ -52,14 +52,28 @@ void save_node(t_object *buff, t_object *source, int *tmp)
 int glass_intersection(t_env *e, t_object *parent)
 {
 	int tmp;
+	t_vector v_tmp;
 
 	tmp = 0;
-	if((cylinder_intersection(e, parent->sub_object)))
-		save_node(parent, parent->sub_object, &tmp);
-	else if((cone_intersection(e, parent->sub_object->next)))
-		save_node(parent, parent->sub_object->next, &tmp);
-	else if(sphere_intersection(e, parent->sub_object->next->next))
-		save_node(parent, parent->sub_object->next->next, &tmp);
+	v_tmp = v_v_subs(&e->current_origin, &parent->center);
+	if (v_tmp.y < 0)
+	{
+		if((sort_type(e, parent->sub_object->next)))
+			save_node(parent, parent->sub_object->next, &tmp);
+		else if((sort_type(e, parent->sub_object)))
+			save_node(parent, parent->sub_object, &tmp);
+		else if(sort_type(e, parent->sub_object->next->next))
+			save_node(parent, parent->sub_object->next->next, &tmp);
+	}
+	else
+	{
+		if((sort_type(e, parent->sub_object->next->next)))
+			save_node(parent, parent->sub_object->next->next, &tmp);
+		else if((sort_type(e, parent->sub_object)))
+			save_node(parent, parent->sub_object, &tmp);
+		else if(sort_type(e, parent->sub_object->next))
+			save_node(parent, parent->sub_object->next, &tmp);
+	}
 	return (tmp);
 }
 

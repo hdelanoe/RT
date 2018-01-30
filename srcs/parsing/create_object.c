@@ -49,12 +49,14 @@ void debug_object(t_object *tmp)
 			origin = tmp->center;
 		else if (!(ft_strcmp(tmp->type, "plane")))
 			origin = tmp->point;
+		else if (!(ft_strcmp(tmp->type, "disk")))
+			origin = tmp->point;
 		else if (!(ft_strcmp(tmp->type, "triangle")))
 			origin = tmp->point_1;
 		else if (!(ft_strcmp(tmp->type, "cylinder")))
 			origin = tmp->center;
 		else if (!(ft_strcmp(tmp->type, "cone")))
-			origin = tmp->vertex;
+			origin = tmp->center;
 	printf("OBJECT :%s %i\n", tmp->type, tmp->id);
 	printf("origin : x->%f\n", origin.x);
 	printf("         y->%f\n", origin.y);
@@ -105,13 +107,13 @@ void create_child_glass(t_object *glass)
 	tmp = v_double_mult(&glass->axis, (g_cylinder->lenght_max * 0.7)/ 2);
 	g_cone->center = v_v_subs(&glass->center, &tmp);
 	g_cone->lenght_max =  glass->lenght_max;
+	g_cone->radius = g_cylinder->radius;
 	g_cone->cap = 1;
 	g_cone->tangent = 1;
 	g_cone->color = glass->color;
 	create_cap_cone(g_cone);
 	debug_object(g_cone);
 	add_new_object(&glass->sub_object, g_cone);
-
 	g_sphere = init_material();
 	if (!(g_sphere->type = ft_strdup("sphere")))
 		exit_rt(1);	
