@@ -19,12 +19,12 @@ t_color		normalize_color(t_color *color)
 	new.r = color->r / 255;
 	new.g = color->g / 255;
 	new.b = color->b / 255;
-	if (new.b > 1)
-		new.b = 1;
-	if (new.g > 1)
-		new.g = 1;
-	if (new.r > 1)
-		new.r = 1;
+	// if (new.b > 1)
+	// 	new.b = 1;
+	// if (new.g > 1)
+	// 	new.g = 1;
+	// if (new.r > 1)
+	// 	new.r = 1;
 	// printf("%f %f %f\n", new.r, new.g, new.b);
 	return (new);
 }
@@ -32,9 +32,9 @@ t_color		normalize_color(t_color *color)
 void		load_texture(t_env *e)
 {
 	if (!((e->text_img = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/skyboxe.xpm", &(e->sl), &e->bpp))))
+	"./textures/stars.xpm", &(e->sl), &e->bpp))))
 		ft_kill("Texture error");
-	e->text_data = mlx_get_data_addr(e->text_img, &e->bpp, &e->naz, &e->end);
+	e->text_data = (unsigned char*)mlx_get_data_addr(e->text_img, &e->bpp, &e->naz, &e->end);
 }
 
 void		wrap_sphere(t_env *e, t_object *object)
@@ -53,7 +53,7 @@ void		wrap_sphere(t_env *e, t_object *object)
 	vp = normalize(&vp);
 	phi = acos(-dot_product(&vecdiry, &vp));
 	e->v = phi / PI;
-	theta = (acos(dot_product(&vp, &vecdirx) / sin(phi))) / (2.0 * PI);
+	theta = (acos(-dot_product(&vp, &vecdirx) / sin(phi))) / (2.0 * PI);
 	if (dot_product(&cross, &vp) > 0.0)
 		e->u = theta;
 	else
@@ -83,7 +83,7 @@ void		wrap_cylinder(t_env *e, t_object *object)
 		e->u = 1.0 - theta;
 }
 
-t_color		get_texture_info(char *text_data, t_env *e)
+t_color		get_texture_info(unsigned char *text_data, t_env *e)
 {
 	int			nb;
 	t_color		clr;
@@ -92,6 +92,8 @@ t_color		get_texture_info(char *text_data, t_env *e)
 	clr.b = text_data[nb];
 	clr.g = text_data[nb + 1];
 	clr.r = text_data[nb + 2];
+	// if (clr.r || clr.g)
+	// printf("%f %f %f\n", clr.r, clr.g, clr.b);
 	clr = normalize_color(&clr);
 	return (clr);
 }

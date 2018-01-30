@@ -19,6 +19,33 @@ int			proper_exit(t_env *e)
 	return (0);
 }
 
+void	input3(int keycode, t_env *e)
+{
+	if (keycode == 69)
+			e->tmp_rad += 1;
+	else if (keycode == 78)
+		e->tmp_rad -= 1;
+	else if (keycode == 49)
+		e->pixelize = e->pixelize == 1 ? 0 : 1;
+	else if (keycode == 15)
+		e->aa_flag = e->aa_flag == 1 ? 0 : 1;
+	else if (keycode == 83)
+		e->tmp_clr.r += 0.05;
+	else if (keycode == 84)
+		e->tmp_clr.g += 0.05;
+	else if (keycode == 85)
+		e->tmp_clr.b += 0.05;
+	else if (keycode == 86)
+		e->tmp_clr.r -= 0.05;
+	else if (keycode == 87)
+		e->tmp_clr.g -= 0.05;
+	else if (keycode == 88)
+		e->tmp_clr.b -= 0.05;
+	else if (keycode == 4)
+		e->hide = e->hide == 0 ? 1 : 0;
+	else if (keycode == 8)
+		e->cel_shade = e->cel_shade == 1 ? 0 : 1;
+}
 void    inputs2(int keycode, t_env *e) 
 { 
   	if (keycode == 17) 
@@ -41,6 +68,7 @@ void    inputs2(int keycode, t_env *e)
     	e->filter_flag = 6;
     else if (keycode == 36)
     	e->edit_flag = e->edit_flag == 1 ? 0 : 1;
+    input3(keycode, e);
 }
 
 void		choose_display_mode(t_env *e)
@@ -140,30 +168,6 @@ int			key_functions(int keycode, t_env *e)
 	keycode == 4 || keycode == 69 || keycode == 78 || keycode == 8)
 	{
 		inputs(keycode, e);
-		if (keycode == 69)
-			e->tmp_rad += 1;
-		else if (keycode == 78)
-			e->tmp_rad -= 1;
-		else if (keycode == 49)
-			e->pixelize = e->pixelize == 1 ? 0 : 1;
-		else if (keycode == 15)
-			e->aa_flag = e->aa_flag == 1 ? 0 : 1;
-		else if (keycode == 83)
-			e->tmp_clr.r += 0.05;
-		else if (keycode == 84)
-			e->tmp_clr.g += 0.05;
-		else if (keycode == 85)
-			e->tmp_clr.b += 0.05;
-		else if (keycode == 86)
-			e->tmp_clr.r -= 0.05;
-		else if (keycode == 87)
-			e->tmp_clr.g -= 0.05;
-		else if (keycode == 88)
-			e->tmp_clr.b -= 0.05;
-		else if (keycode == 4)
-			e->hide = e->hide == 0 ? 1 : 0;
-		else if (keycode == 8)
-			e->cel_shade = e->cel_shade == 1 ? 0 : 1;
 		ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 		camera_transformation(e);
 		// if (!((e->mlx.img_ptr = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
@@ -171,12 +175,12 @@ int			key_functions(int keycode, t_env *e)
 		// 	ft_kill("Texture error");
 		// e->mlx.data = (unsigned char*)mlx_get_data_addr(e->mlx.img_ptr,
 		// &e->mlx.bpp, &e->mlx.l_size, &e->mlx.endian);
-//		reset_stereo(e);
-	//	e->viewplane_point_up_left = viewplane_transformation(e->camera);
-	//	camera_transformation(e, &e->lstereo);
-	//	e->lviewplane = viewplane_transformation(e->lstereo);
-	//	camera_transformation(e, &e->rstereo);
-	//	e->rviewplane = viewplane_transformation(e->rstereo);
+		// reset_stereo(e);
+		// e->viewplane_point_up_left = viewplane_transformation(e->camera);
+		// camera_transformation(e, &e->lstereo);
+		// e->lviewplane = viewplane_transformation(e->lstereo);
+		// camera_transformation(e, &e->rstereo);
+		// e->rviewplane = viewplane_transformation(e->rstereo);
 		choose_display_mode(e);
 		mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr, 0, 0);
 		if (e->hide)

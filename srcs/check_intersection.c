@@ -75,18 +75,18 @@ void check_intersection(t_env *e, t_object *object)
 			if (!(ft_strcmp("plane", object->type)))
 				e->bump = 1;
 			/*COMMENTEZ CETTE SECTION POUR ACTIVER/DESACTIVER LES TEXTURES*/
-			// if (!(ft_strcmp("sphere", object->type)) && object->radius == 8000)
-			// {
-			// 	wrap_sphere(e, object);
-			// 	e->i = (int)(e->v * 2000);
-			// 	e->j = (int)(e->u * e->sl);
-			// 	e->current_color = get_texture_info(e->text_data, e);
-			// 	e->skybox = 1;
-			// }
+			if (!(ft_strcmp("sphere", object->type)))
+			{
+				wrap_sphere(e, object);
+				e->i = (int)(e->v * 1080);
+				e->j = (int)(e->u * e->sl);
+				e->current_color = get_texture_info(e->text_data, e);
+				e->skybox = 1;
+			}
 			// if (!(ft_strcmp("cylinder", object->type)))
 			// {
 			// 	wrap_cylinder(e, object);
-			// 	e->i = (int)(e->v * 600);
+			// 	e->i = (int)(e->v * 1080);
 			// 	e->j = (int)(e->u * e->sl);
 			// 	e->current_color = get_texture_info(e->text_data, e);
 			// }
@@ -116,8 +116,8 @@ t_color		light_intersection(t_env *e, t_light *light)
 			 	tmp = c_double_mult(&tmp_object->color, 1 - tmp_object->absorbtion);
 			 	c = c_c_mult(&light->color, &tmp);
 			 }
-			 // else if (e->cel_shade == 0)
-			 // 	return (set_color(0, 0, 0));
+			 else if (e->cel_shade == 0)
+				return (set_color(0, 0, 0));
 		}
 		tmp_object = tmp_object->next;
 	}
