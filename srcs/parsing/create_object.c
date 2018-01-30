@@ -49,6 +49,8 @@ void debug_object(t_object *tmp)
 			origin = tmp->center;
 		else if (!(ft_strcmp(tmp->type, "plane")))
 			origin = tmp->point;
+		else if (!(ft_strcmp(tmp->type, "quad")) || !(ft_strcmp(tmp->type, "quad")))
+			origin = tmp->point;
 		else if (!(ft_strcmp(tmp->type, "disk")))
 			origin = tmp->point;
 		else if (!(ft_strcmp(tmp->type, "triangle")))
@@ -187,6 +189,126 @@ void		create_plane(t_env *e, t_json *json)
 	}
 	debug_object(plane);
 	add_new_object(&e->object, plane);
+}
+
+
+void 		create_cap_cube(t_object *cube)
+{
+	t_object *carre_1;
+	t_object *carre_2;
+	t_object *carre_3;
+	t_object *carre_4;
+	t_object *carre_5;
+	t_object *carre_6;
+
+	carre_1 = init_material();
+	if (!(carre_1->type = ft_strdup("quad")))
+		exit_rt(1);
+	carre_1->point = set_vector(cube->point.x , cube->point.y, cube->point.z);
+	carre_1->point_2 = set_vector(cube->point.x, cube->point.y, cube->point.z + cube->tangent);
+	carre_1->point_3 = set_vector(cube->point.x, cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
+	carre_1->point_4 = set_vector(cube->point.x, cube->point.y + cube->lenght_max, cube->point.z);
+	carre_1->color = cube->color;
+	debug_object(carre_1);
+	add_new_object(&cube->sub_object, carre_1);
+	carre_2 = init_material();
+	if (!(carre_2->type = ft_strdup("quad")))
+		exit_rt(1);
+	carre_2->point = cube->point;
+	carre_2->point_2 = set_vector(cube->point.x, cube->point.y + cube->lenght_max, cube->point.z);
+	carre_2->point_3 = set_vector(cube->point.x + cube->radius, cube->point.y + cube->lenght_max, cube->point.z);
+	carre_2->point_4 = set_vector(cube->point.x + cube->radius, cube->point.y, cube->point.z);
+	carre_2->color = cube->color;
+	debug_object(carre_2);
+	add_new_object(&cube->sub_object, carre_2);
+	carre_3 = init_material();
+	if (!(carre_3->type = ft_strdup("quad")))
+		exit_rt(1);
+	carre_3->point = set_vector(cube->point.x + cube->radius, cube->point.y, cube->point.z);
+	carre_3->point_2 = set_vector(cube->point.x + cube->radius, cube->point.y + cube->lenght_max, cube->point.z);
+	carre_3->point_3 = set_vector(cube->point.x + cube->radius, cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
+	carre_3->point_4 = set_vector(cube->point.x + cube->radius, cube->point.y, cube->point.z + cube->tangent);
+	carre_3->color = cube->color;
+	debug_object(carre_3);
+	add_new_object(&cube->sub_object, carre_3);
+	carre_4 = init_material();
+	if (!(carre_4->type = ft_strdup("quad")))
+		exit_rt(1);
+	carre_4->point = set_vector(cube->point.x + cube->radius , cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
+	carre_4->point_2 = set_vector(cube->point.x + cube->radius , cube->point.y, cube->point.z + cube->tangent);
+	carre_4->point_4 = set_vector(cube->point.x , cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
+	carre_4->point_3 = set_vector(cube->point.x, cube->point.y, cube->point.z + cube->tangent);
+	carre_4->color = cube->color;
+	debug_object(carre_4);
+	add_new_object(&cube->sub_object, carre_4);
+	carre_5 = init_material();
+	if (!(carre_5->type = ft_strdup("quad")))
+		exit_rt(1);
+	carre_5->point = set_vector(cube->point.x, cube->point.y + cube->lenght_max, cube->point.z);
+	carre_5->point_2 = set_vector(cube->point.x, cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
+	carre_5->point_3 = set_vector(cube->point.x + cube->radius, cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
+	carre_5->point_4 = set_vector(cube->point.x  + cube->radius, cube->point.y + cube->lenght_max, cube->point.z);
+	carre_5->color = cube->color;
+	debug_object(carre_5);
+	add_new_object(&cube->sub_object, carre_5);
+	carre_6 = init_material();
+	if (!(carre_6->type = ft_strdup("quad")))
+		exit_rt(1);
+	carre_6->point = set_vector(cube->point.x, cube->point.y, cube->point.z);
+	carre_6->point_2 = set_vector(cube->point.x, cube->point.y, cube->point.z + cube->tangent);
+	carre_6->point_3 = set_vector(cube->point.x + cube->radius, cube->point.y, cube->point.z + cube->tangent);
+	carre_6->point_4 = set_vector(cube->point.x  + cube->radius, cube->point.y, cube->point.z);
+	carre_6->color = cube->color;
+	debug_object(carre_6);
+	add_new_object(&cube->sub_object, carre_6);
+
+
+
+}
+
+void 		create_cube(t_env *e, t_json *json)
+{
+	t_object	*cube;
+	t_json		*tmp;
+
+	cube = init_material();
+	if (!(cube->type = ft_strdup("cube")))
+		exit_rt(1);
+	while(json->member)
+	{
+		tmp = json->member;
+		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+			cube->point = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "width")))
+			cube->lenght_max = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "length")))
+			cube->tangent = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "height")))
+			cube->radius = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "axis")))
+		{
+			cube->axis = parse_normal(tmp->member);
+			cube->axis = normalize(&cube->axis);
+		}
+		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+			cube->color = parse_color(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+			parse_material(tmp, cube);
+		else
+		{
+			printf("%s\n",tmp->name );
+			ft_printf("{R}WARNING:{E} cube as a bad attribut\n");
+		}
+		json->member = json->member->next;
+		free_json_member(&tmp);
+	}
+	cube->point = v_v_mult(&cube->point, &cube->axis);
+	//cube->lenght_max *= cube->axis.x;
+	//cube->tangent *= cube->axis.z;
+	//cube->radius *= cube->axis.y;
+	create_cap_cube(cube);
+	debug_object(cube);
+	add_new_object(&e->object, cube);
 }
 
 void		create_triangle(t_env *e, t_json *json)

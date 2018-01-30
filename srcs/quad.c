@@ -28,3 +28,20 @@ int		quad_intersection(t_env *e, t_object *quad)
 		return (1);
 	return (0);
 }
+
+int cube_intersection(t_env *e, t_object *cube)
+{
+	if (sort_type(e, cube->sub_object))
+		return (1);
+	if (sort_type(e, cube->sub_object->next))
+		return (1);
+	if (sort_type(e, cube->sub_object->next->next))
+		return (1);
+	if (sort_type(e, cube->sub_object->next->next->next))
+		return (1);
+	if (sort_type(e, cube->sub_object->next->next->next->next))
+		return (1);
+	if (sort_type(e, cube->sub_object->next->next->next->next->next))
+		return (1);
+	return (0);
+}

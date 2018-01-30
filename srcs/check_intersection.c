@@ -61,6 +61,8 @@ int sort_type(t_env *e, t_object *object)
 		intersect = disk_intersection(e, object, NULL);
 	else if (!(ft_strcmp(object->type, "glass")))
 		intersect = glass_intersection(e, object);
+	else if (!(ft_strcmp(object->type, "cube")))
+		intersect = cube_intersection(e, object);
 	return (intersect);	
 }
 

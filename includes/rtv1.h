@@ -361,6 +361,7 @@ void							loadPermutation(void);
 **quad.c
 */
 int								quad_intersection(t_env *e, t_object *quad);
+int 							cube_intersection(t_env *e, t_object *cube);
 
 /*
 **ray_tracer.c
@@ -495,6 +496,7 @@ void							create_disk(t_env *e, t_json *json);
 void							create_cap_cone(t_object *cone);
 void							create_cone(t_env *e, t_json *json);
 void							create_torus(t_env *e, t_json *json);
+void 							create_cube(t_env *e, t_json *json);
 
 /*
 **get_parsing.c
