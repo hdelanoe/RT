@@ -116,8 +116,8 @@ t_color		light_intersection(t_env *e, t_light *light)
 			 	tmp = c_double_mult(&tmp_object->color, 1 - tmp_object->absorbtion);
 			 	c = c_c_mult(&light->color, &tmp);
 			 }
-			 else
-			 	return (set_color(0, 0, 0));
+			 // else if (e->cel_shade == 0)
+			 // 	return (set_color(0, 0, 0));
 		}
 		tmp_object = tmp_object->next;
 	}

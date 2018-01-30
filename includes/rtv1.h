@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RTV1_H
-# define RTV1_H
+# ifndef __RTV1_H__
+# define __RTV1_H__
 
 # include "../libft/libft.h"
 # include "../ft_printf/printf.h"
@@ -43,213 +43,211 @@
 # define R_DIAM 2.4175
 # define PI 3.1415
 
-typedef struct s_env	t_env;
-typedef struct s_mlx	t_mlx;
-typedef struct s_camera	t_camera;
-typedef struct s_grid	t_grid;
-typedef struct s_object	t_object;
-typedef struct s_light	t_light;
-typedef struct s_rayon	t_rayon;
+typedef struct s_env			t_env;
+typedef struct s_mlx			t_mlx;
+typedef struct s_camera			t_camera;
+typedef struct s_grid			t_grid;
+typedef struct s_object			t_object;
+typedef struct s_light			t_light;
+typedef struct s_rayon			t_rayon;
+typedef struct s_poly			t_poly;
+typedef struct s_mlx			t_mlx;
+typedef struct s_inter			t_inter;
+typedef struct s_pixel			t_pixel;
+typedef struct s_anti_a			t_anti_a;
+typedef struct s_physics		t_physics;
 
-
-
-typedef struct s_poly	t_poly;
-typedef struct s_inter	t_inter;
-
-typedef struct s_pixel	t_pixel;
-typedef struct s_anti_a	t_anti_a;
-
-struct          s_pixel 
+struct							s_pixel
 {
-  int          x; 
-  int          y; 
-  int          tmpx; 
-  int          tmpy; 
-  t_vector      viewplane_point; 
-  t_vector      tmp_vp_pointx; 
-  t_vector      tmp_vp_pointy; 
-}; 
- 
-struct          s_anti_a 
-{ 
-  int          x; 
-  int          y; 
-  int          sample; 
-  double        x1; 
-  double        y1; 
-  t_color        aaclr; 
-  t_vector      viewplane_point; 
-  t_vector      tmp_vp_pointx; 
-  t_vector      tmp_vp_pointy; 
-}; 
-
-struct					s_object
-{
-	char 		*type;
-	int			id;
-	t_vector	point;
-	t_vector	point_1;
-	t_vector	point_2;
-	t_vector	point_3;
-	t_vector	point_4;
-	t_vector 	center;
-	t_vector	vertex;
-	t_vector	normal;
-	double		radius;
-	double		lenght_max;
-	double		tangent;
-	t_vector	axis;
-	t_vector	node;
-	t_vector	node_normal;
-	t_color		color;
-	int 		cap;
-	double 		ambient;
-	double 		diffuse;
-	double 		specular;
-	int 		reflect;
-	int 		refract;
-	double		emit;
-	double 		absorbtion;
-	t_object	*sub_object;
-	t_object	*next;
+	int							x;
+	int							y;
+	int							tmpx;
+	int							tmpy;
+	t_vector					viewplane_point;
+	t_vector					tmp_vp_pointx;
+	t_vector					tmp_vp_pointy;
 };
 
-struct					s_light
+struct							s_anti_a 
 {
-	int 		id;
-	t_vector	origin;
-	t_vector	rayon;
-	double		angle;
-	t_color		color;
-	t_light		*next;
+	int							x;
+	int							y;
+	int							sample;
+	double						x1;
+	double						y1;
+	t_color						aaclr;
+	t_vector					viewplane_point;
+	t_vector					tmp_vp_pointx;
+	t_vector					tmp_vp_pointy;
 };
 
-struct  				s_rayon
+struct							s_object
 {
-	t_vector 	origin;
-	t_vector 	rayon;
-	t_vector 	node;
-	t_vector 	normal;
+	char						*type;
+	int							id;
+	t_vector					point;
+	t_vector					point_1;
+	t_vector					point_2;
+	t_vector					point_3;
+	t_vector					point_4;
+	t_vector					center;
+	t_vector					vertex;
+	t_vector					normal;
+	double						radius;
+	double						lenght_max;
+	double						tangent;
+	t_vector					axis;
+	t_vector					node;
+	t_vector					node_normal;
+	t_color						color;
+	int							cap;
+	double						ambient;
+	double						diffuse;
+	double						specular;
+	int							reflect;
+	int							refract;
+	double						emit;
+	double						absorbtion;
+	t_object					*sub_object;
+	t_object					*next;
 };
 
-struct					s_camera
+struct							s_light
 {
-	t_vector		origin;
-	t_vector		rayon;
-	t_vector		lookat;
-	t_vector		up;
-	t_vector		x_vector;
-	t_vector		y_vector;
-	t_vector		z_vector;
-	double			width;
-	double			height;
-	double			distance;
-	double			*matrix;
+	int							id;
+	t_vector					origin;
+	t_vector					rayon;
+	double						angle;
+	t_color						color;
+	t_light						*next;
 };
 
-typedef struct			s_mlx
+struct							s_rayon
 {
-	void			*win_ptr;
-	void			*mlx_ptr;
-	void			*img_ptr;
-	void			*pen;
-	unsigned char	*data;
-	int				l_size;
-	int				bpp;
-	int				endian;
-}						t_mlx;
-
-struct 					s_env
-{
-	t_mlx			mlx;
-	t_object		*object;
-	t_light			*light;
-	t_camera		camera;
-	t_camera 		lstereo;
-	t_camera 		rstereo;
-	t_vector		current_origin;
-	t_vector		current_rayon;
-	t_vector		current_node;
-	t_vector		current_node_normal;
-	t_color			current_color;
-	double 			width;
-	double 			height;
-	int				id_object;
-	double			distance_light_object;
-	double			distance;
-	double			solution;
-	int 			in_out;
-	int 			bump;
-	double 			ambient;
-	double 			diffuse;
-	double 			specular;
-	int 			reflect;
-	int 			refract;
-	double 			absorbtion;
-	int 			intersect;
-	t_vector		viewplane_point_up_left;
-	t_vector		lviewplane;
-	t_vector		rviewplane;		
-	t_matrix4x4		rotation_matrix;
-	t_matrix4x4		translation_matrix;
-	t_matrix4x4		matrix_camera_system;
-	t_matrix4x1		matrix_camera_origin;
-	double			move_x;
-	double			move_y;
-	double			move_z;
-	double			rotate_x;
-	double			rotate_y;
-	double			rotate_z;
-	double			x1;
-	double			y1;
-	double			z1;
-	int				pixelize;
-	int				aa_flag;
-	int 			recursion;
-	int				begin;
-	int				fin;
-	int				am_flag;
-	t_object		*copy;
-	int 			is_copy;
-	int 			is_past;
-	int 			stereo_flag;
-	int 			filter_flag;
-	int 			edit_flag;
-	t_vector 		lookat;
-	t_matrix4x4		matrix_lstereo_system;
-	t_matrix4x1		matrix_lstereo_origin;
-	t_matrix4x4		matrix_rstereo_system;
-	t_matrix4x1		matrix_rstereo_origin;
-	int 			hide;
-	int 			tmp_rad;
-	t_color 		tmp_clr;
-
-	int				i;
-	int				j;
-	double			u;
-	double			v;
-	int				bpp;
-	int				end;
-	int				naz;
-	void			*text;
-	void			*text_img;
-	void			*text_data;
-	int				sl;
-	int				skybox;
-	int				cel_shade;
+	t_vector					origin;
+	t_vector					rayon;
+	t_vector					node;
+	t_vector					normal;
 };
 
-typedef struct 					s_physics
+struct							s_camera
 {
-		double 		ior;
-		double 		cos1;
-		double 		cos2;
-		double 		teta;
-		t_vector 	tmp1;
-		t_vector 	tmp2;
-		t_vector	r;
-		t_vector	t;
-}								t_physics;
+	t_vector					origin;
+	t_vector					rayon;
+	t_vector					lookat;
+	t_vector					up;
+	t_vector					x_vector;
+	t_vector					y_vector;
+	t_vector					z_vector;
+	double						width;
+	double						height;
+	double						distance;
+	double						*matrix;
+};
+
+struct							s_mlx
+{
+	void						*win_ptr;
+	void						*mlx_ptr;
+	void						*img_ptr;
+	void						*pen;
+	unsigned char				*data;
+	int							l_size;
+	int							bpp;
+	int							endian;
+};
+
+struct							s_env
+{
+	t_mlx						mlx;
+	t_object					*object;
+	t_light						*light;
+	t_camera					camera;
+	t_camera					lstereo;
+	t_camera					rstereo;
+	t_vector					current_origin;
+	t_vector					current_rayon;
+	t_vector					current_node;
+	t_vector					current_node_normal;
+	t_color						current_color;
+	double						width;
+	double						height;
+	int							id_object;
+	double						distance_light_object;
+	double						distance;
+	double						solution;
+	int							in_out;
+	int							bump;
+	double						ambient;
+	double						diffuse;
+	double						specular;
+	int							reflect;
+	int							refract;
+	double						absorbtion;
+	int							intersect;
+	t_vector					viewplane_point_up_left;
+	t_vector					lviewplane;
+	t_vector					rviewplane;		
+	t_matrix4x4					rotation_matrix;
+	t_matrix4x4					translation_matrix;
+	t_matrix4x4					matrix_camera_system;
+	t_matrix4x1					matrix_camera_origin;
+	double						move_x;
+	double						move_y;
+	double						move_z;
+	double						rotate_x;
+	double						rotate_y;
+	double						rotate_z;
+	double						x1;
+	double						y1;
+	double						z1;
+	int							pixelize;
+	int							aa_flag;
+	int							recursion;
+	int							begin;
+	int							fin;
+	int							am_flag;
+	t_object					*copy;
+	int							is_copy;
+	int							is_past;
+	int							stereo_flag;
+	int							filter_flag;
+	int							edit_flag;
+	t_vector					lookat;
+	t_matrix4x4					matrix_lstereo_system;
+	t_matrix4x1					matrix_lstereo_origin;
+	t_matrix4x4					matrix_rstereo_system;
+	t_matrix4x1					matrix_rstereo_origin;
+	int							hide;
+	int							tmp_rad;
+	t_color						tmp_clr;
+
+	int							i;
+	int							j;
+	double						u;
+	double						v;
+	int							bpp;
+	int							end;
+	int							naz;
+	void						*text;
+	void						*text_img;
+	void						*text_data;
+	int							sl;
+	int							skybox;
+	int							cel_shade;
+};
+
+struct 							s_physics
+{
+		double					ior;
+		double					cos1;
+		double					cos2;
+		double					teta;
+		t_vector				tmp1;
+		t_vector				tmp2;
+		t_vector				r;
+		t_vector				t;
+};
 
 struct							s_poly
 {
