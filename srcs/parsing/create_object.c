@@ -151,7 +151,7 @@ void create_glass(t_env *e, t_json *json)
 			glass->color = parse_color(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
 			glass->lenght_max = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+		else if (!(ft_strcmp(tmp->name, "material")))
 			parse_material(tmp, glass);
 		else
 			ft_printf("{R}WARNING:{E} plane as a bad attribut\n");
@@ -180,7 +180,7 @@ void		create_plane(t_env *e, t_json *json)
 			plane->normal = parse_normal(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 			plane->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+		else if (!(ft_strcmp(tmp->name, "material")))
 			parse_material(tmp, plane);
 		else
 			ft_printf("{R}WARNING:{E} plane as a bad attribut\n");
@@ -292,7 +292,7 @@ void 		create_cube(t_env *e, t_json *json)
 		}
 		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 			cube->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+		else if (!(ft_strcmp(tmp->name, "material")))
 			parse_material(tmp, cube);
 		else
 		{
@@ -330,7 +330,7 @@ void		create_triangle(t_env *e, t_json *json)
 			triangle->point_3 = parse_point(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 			triangle->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+		else if (!(ft_strcmp(tmp->name, "material")))
 			parse_material(tmp, triangle);
 		else
 			ft_printf("{R}WARNING:{E} triangle as a bad attribut\n");
@@ -395,7 +395,7 @@ void		create_sphere(t_env *e, t_json *json)
 			sphere->cap = 1;
 			sphere->normal = parse_normal(tmp->member);
 		}
-		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+		else if (!(ft_strcmp(tmp->name, "material")))
 			parse_material(tmp, sphere);
 		else
 			ft_printf("{R}WARNING:{E} sphere as a bad attribut\n");
@@ -457,7 +457,7 @@ void		create_cylinder(t_env *e, t_json *json)
 		}
 		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 			cylinder->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+		else if (!(ft_strcmp(tmp->name, "material")))
 			parse_material(tmp, cylinder);
 		else
 			ft_printf("{R}WARNING:{E} cylinder as a bad attribut\n");
@@ -560,7 +560,7 @@ void		create_cone(t_env *e, t_json *json)
 		}
 		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 			cone->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+		else if (!(ft_strcmp(tmp->name, "material")))
 			parse_material(tmp, cone);
 		else
 			ft_printf("{R}WARNING:{E} cone as a bad attribut\n");
@@ -600,7 +600,7 @@ void		create_torus(t_env *e, t_json *json)
 			torus->axis = parse_point(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 			torus->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+		else if (!(ft_strcmp(tmp->name, "material")))
 			parse_material(tmp, torus);
 		else
 			ft_printf("{R}WARNING:{E} torus as a bad attribut\n");

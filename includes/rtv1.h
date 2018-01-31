@@ -111,6 +111,7 @@ struct							s_object
 	double						emit;
 	double						absorbtion;
 	t_object					*sub_object;
+	double 						indice;
 	t_object					*next;
 };
 

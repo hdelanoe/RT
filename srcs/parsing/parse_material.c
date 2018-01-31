@@ -44,13 +44,37 @@ t_object	*init_material(void)
 	object->absorbtion = 0.125;
 	object->radius = 0;
 	object->sub_object = NULL;
+	object->indice = R_VOID;
 	return (object);
+}
+
+void 	parse_indice(char **material, t_object *object)
+{
+	if (!(ft_strcmp(*material, "void")))
+		object->indice = R_VOID;
+	else if (!(ft_strcmp(*material, "air")))
+		object->indice = R_AIR;
+	else if (!(ft_strcmp(*material, "glass")))
+		object->indice = R_GLASS;
+	else if (!(ft_strcmp(*material, "ice")))
+		object->indice = R_ICE;
+	else if (!(ft_strcmp(*material, "water")))
+		object->indice = R_WATER;
+	else if (!(ft_strcmp(*material, "pmma")))
+		object->indice = R_PMMA;
+	else if (!(ft_strcmp(*material, "diam")))
+		object->indice = R_DIAM;
+	free(material);
 }
 
 void	parse_material(t_json *material, t_object *object)
 {
 	t_json 	*tmp;
 
+	if (material->content)
+		parse_indice(&material->content, object);
+	if (!material->member)
+		return ;
 	while (material->member)
 	{
 		tmp = material->member;

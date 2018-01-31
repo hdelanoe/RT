@@ -64,7 +64,6 @@ void		aa_tracer(t_env *e, int sample)
 {
 	t_anti_a	aa;
 
-	e->in_out = -1;
 	aa.y = 0;
 	while (aa.y < WIN_Y)
 	{

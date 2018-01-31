@@ -16,7 +16,6 @@ PRINTF 		= 	ft_printf/libftprintf.a
 MLX			= 	minilibx_macos/libmlx.a
 
 SRCS		= 	srcs/main.c \
-				srcs/ray_tracer.c \
 				srcs/texture.c \
 				srcs/cast_ray.c \
 				srcs/basic_intersection.c \
@@ -36,6 +35,7 @@ SRCS		= 	srcs/main.c \
 				srcs/render/anti_aliasing.c \
 				srcs/render/pixelization.c \
 				srcs/render/filter.c \
+				srcs/render/ray_tracer.c \
 				srcs/matrix/camera.c \
 				srcs/matrix/matrix_rotation.c \
 				srcs/matrix/matrix_translation.c \
