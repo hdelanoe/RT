@@ -72,7 +72,7 @@ int cast_refract_ray(t_env *e, t_rayon origin)
 	t_rayon		refract;
 	t_physics	pl;
 
-	pl.ior = R_VOID / R_ICE;
+	pl.ior = e->indice / e->object_indice;
  	pl.cos1 = dot_product(&origin.normal, &origin.rayon);
  	
  	if (pl.cos1 < 0)
@@ -80,7 +80,7 @@ int cast_refract_ray(t_env *e, t_rayon origin)
  	else 
  	{
  		origin.normal = v_double_mult(&origin.normal, (-1.00));
- 		pl.ior = R_ICE / R_VOID;
+ 		pl.ior = e->object_indice / e->indice;
  	}
 	pl.cos2 = 1 - (pl.ior * pl.ior) * (1 - (pl.cos1 * pl.cos1)); 
 	if (pl.cos2 < 0)

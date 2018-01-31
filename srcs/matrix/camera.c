@@ -79,6 +79,17 @@ void	init_camera(t_env *e)
     viewplane_transformation(e);
 }
 
+void    reset_camera(t_env *e)
+{
+    e->camera.z_vector = v_v_subs(&e->lookat, &e->camera.origin);
+    e->camera.z_vector = normalize(&e->camera.z_vector);
+    e->camera.x_vector = v_v_mult(&e->camera.y_vector, &e->camera.z_vector);
+    e->camera.y_vector = v_v_mult(&e->camera.z_vector, &e->camera.x_vector);
+    e->matrix_camera_system = matrix_camera_system(&e->camera.x_vector, &e->camera.y_vector, &e->camera.z_vector);
+    e->matrix_camera_origin = matrix_camera_origin(&e->camera.origin);
+    viewplane_transformation(e);
+}
+
 
 void	camera_transformation(t_env *e)
 {
@@ -104,12 +115,12 @@ void 	reset_stereo(t_env *e)
 
     e->lstereo.z_vector = v_v_subs(&e->lookat, &e->lstereo.origin);
     e->lstereo.z_vector = normalize(&e->lstereo.z_vector);
-    e->lstereo.x_vector = v_v_mult(&e->lstereo.y_vector, &e->lstereo.z_vector);
+    e->lstereo.x_vector = v_v_mult(&e->camera.y_vector, &e->lstereo.z_vector);
     e->lstereo.y_vector = v_v_mult(&e->lstereo.z_vector, &e->lstereo.x_vector);
   
    	e->rstereo.z_vector = v_v_subs(&e->lookat, &e->rstereo.origin);
     e->rstereo.z_vector = normalize(&e->rstereo.z_vector);
-    e->rstereo.x_vector = v_v_mult(&e->rstereo.y_vector, &e->rstereo.z_vector);
+    e->rstereo.x_vector = v_v_mult(&e->camera.y_vector, &e->rstereo.z_vector);
     e->rstereo.y_vector = v_v_mult(&e->rstereo.z_vector, &e->rstereo.x_vector);
     stereo_viewplane(e);
 }

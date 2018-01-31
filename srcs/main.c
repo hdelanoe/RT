@@ -61,6 +61,7 @@ t_env		*init(void)
 	e->is_past = 0;
 	e->is_copy = 0;
 	e->lookat = set_vector(0, 0, 0);
+	e->indice = R_VOID;
 	return (e);
 }
 

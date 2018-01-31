@@ -24,6 +24,7 @@ void	stereo_tracer(t_env *e)
 	t_color 	sblue;
 	t_color		red;
 	t_color 	blue;
+	t_color c;
 	
 	y = 0;
 
@@ -43,10 +44,10 @@ void	stereo_tracer(t_env *e)
 			e->lstereo.rayon = v_v_subs(&viewplane_point, &e->lstereo.origin);
 			e->lstereo.rayon = normalize(&e->lstereo.rayon);
 			if (cast_ray(e, e->lstereo.rayon, e->lstereo.origin))
-			{
 				sblue = get_color(e);
+			if (e->render_mode != 4)
 				sblue = c_c_add(&sblue, &blue);
-			}
+			e->recursion = 6;
 			sred = set_color(0, 0, 0);
 			tmp_vp_pointx = v_double_mult(&e->rstereo.x_vector, x);
 			tmp_vp_pointy = v_double_mult(&e->rstereo.y_vector, y);
@@ -55,11 +56,28 @@ void	stereo_tracer(t_env *e)
 			e->rstereo.rayon = v_v_subs(&viewplane_point, &e->rstereo.origin);
 			e->rstereo.rayon = normalize(&e->rstereo.rayon);
 			if (cast_ray(e, e->rstereo.rayon, e->rstereo.origin))
-			{
 				sred = get_color(e);
+			if (e->render_mode != 4)
 				sred = c_c_add(&sred, &red);
+			if (e->render_mode == 2)
+				color = c_c_mult(&sblue, &sred);
+			else
+			{
+				e->recursion = 6;
+				c = set_color(0, 0, 0);
+				tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
+				tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
+				viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);
+				viewplane_point = v_v_subs(&viewplane_point, &tmp_vp_pointy);
+				e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
+				e->camera.rayon = normalize(&e->camera.rayon);
+				if (cast_ray(e, e->camera.rayon, e->camera.origin))
+					c = get_color(e);
+				color.r = sblue.r +  sred.r + c.r;
+				color.g = sblue.g +  sred.g + c.g;
+				color.b = sblue.b +  sred.b + c.b;
+				color = c_double_mult(&color, 0.3);
 			}
-			color = c_c_mult(&sblue, &sred);
 			print_color(&color, e, x, y);
 			x++;
 		}

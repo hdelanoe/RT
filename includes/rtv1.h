@@ -30,7 +30,7 @@
 # include <pthread.h>
 # define A printf("File = [%s]\nLine = [%d]\nFunction = [%s]\n", __FILE__, __LINE__, __FUNCTION__);
 
-# define WIN_X 1500
+# define WIN_X 1000
 # define WIN_Y 1000
 # define RANDOM (double)rand()/RAND_MAX
 
@@ -179,6 +179,7 @@ struct							s_flag
 	int 						delete_id;
 	int							recursion;
 	int 						lookat;
+	int 						deep;
 };
 
 struct							s_env
@@ -262,6 +263,8 @@ struct							s_env
 	int 						help_flag;
 	int 						delete_id;
 	t_flag						flag;
+	double 						indice;
+	double 						object_indice;
 };
 
 struct 							s_physics
@@ -350,7 +353,7 @@ int								cast_reflect_ray(t_env *e, t_rayon incident);
 int								cast_refract_ray(t_env *e, t_rayon origin);
 
 /*
-**check_interaction.c
+**check_intersection.c
 */
 void							get_object_values(t_env *e, t_object *object);
 int								sort_type(t_env *e, t_object *object);
@@ -474,6 +477,7 @@ void							init_camera(t_env *e);
 void							camera_transformation(t_env *e);
 void 							reset_stereo(t_env *e);
 void							viewplane_transformation(t_env *e);
+void   							reset_camera(t_env *e);
 
 /*
 **matrix_rotation.c

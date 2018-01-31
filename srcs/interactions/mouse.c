@@ -44,11 +44,12 @@ int		mouse(int button, int x, int y, t_env *e)
 	{
 		if (!e->edit_flag)
 			return (0);
-		if (e->stereo_flag && (button == 1 || button == 5))
+		if ((e->stereo_flag || e->flag.deep) && (button == 1 || button == 5))
 		{
 			if (set_lookat(e, x, y))
 			{
 				ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
+				reset_camera(e);
 				camera_transformation(e);
 				reset_stereo(e);
 				mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 250,
