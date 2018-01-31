@@ -44,7 +44,7 @@ void	stereo_tracer(t_env *e)
 			e->lstereo.rayon = normalize(&e->lstereo.rayon);
 			if (cast_ray(e, e->lstereo.rayon, e->lstereo.origin))
 			{
-				sblue = e->am_flag == 1 ? ambient_occlusion(e) :get_color(e);
+				sblue = get_color(e);
 				sblue = c_c_add(&sblue, &blue);
 			}
 			sred = set_color(0, 0, 0);
@@ -56,43 +56,11 @@ void	stereo_tracer(t_env *e)
 			e->rstereo.rayon = normalize(&e->rstereo.rayon);
 			if (cast_ray(e, e->rstereo.rayon, e->rstereo.origin))
 			{
-				sred = e->am_flag == 1 ? ambient_occlusion(e) :get_color(e);
+				sred = get_color(e);
 				sred = c_c_add(&sred, &red);
 			}
 			color = c_c_mult(&sblue, &sred);
 			print_color(&color, e, x, y);
-			x++;
-		}
-		y++;
-	}
-}
-
-void	edit_tracer(t_env *e)
-{
-	int			x;
-	int			y;
-	t_vector	viewplane_point;
-	t_vector	tmp_vp_pointx;
-	t_vector	tmp_vp_pointy;
-	t_color 	color;
-	
-	y = 0;
-	while (y < e->height)
-	{
-		x = 0;
-		while (x < e->width)
-		{
-			e->recursion = 6;
-			color = set_color(0, 0, 0);
-			tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
-			tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
-			viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);
-			viewplane_point = v_v_subs(&viewplane_point, &tmp_vp_pointy);
-			e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
-			e->camera.rayon = normalize(&e->camera.rayon);
-			if (cast_ray(e, e->camera.rayon, e->camera.origin))
-				color = choose_color(e);
-				print_color(&color, e, x, y);
 			x++;
 		}
 		y++;
@@ -124,14 +92,15 @@ void	ray_tracer(t_env *e)
 			e->camera.rayon = normalize(&e->camera.rayon);
 			if (cast_ray(e, e->camera.rayon, e->camera.origin))
 			{
-				// if (e->skybox == 1)
-				// 	color = e->current_color;
-				// else
-					// color = e->am_flag == 1 ? ambient_occlusion(e) : cel_shade_color(e);
-				color = choose_color(e);
-					// printf("%f %f %f\n", color.r, color.g, color.b);
+				if (e->render_mode == 1 && !e->edit_flag)
+					color = ambient_occlusion(e);
+				else if (e->render_mode == 3 && !e->edit_flag)
+					color = cel_shade_color(e);
+				else
+					color = get_color(e);
 			}
-			// if (color.r != 0 || color.g != 0 || color.b != 0)
+			color = set_filter(e, color);
+		//	if (color.r != 0 || color.g != 0 || color.b != 0)
 				print_color(&color, e, x, y);
 			e->skybox = 0;
 			x++;

@@ -74,6 +74,7 @@ void check_intersection(t_env *e, t_object *object)
 		{
 			e->distance = e->solution;
 			get_object_values(e, object);
+			e->delete_id = object->id;
 			if (!(ft_strcmp("plane", object->type)))
 				e->bump = 1;
 			/*COMMENTEZ CETTE SECTION POUR ACTIVER/DESACTIVER LES TEXTURES*/
@@ -99,30 +100,19 @@ void check_intersection(t_env *e, t_object *object)
 	}
 }
 
-t_color		light_intersection(t_env *e, t_light *light)
+int		light_intersection(t_env *e)
 {
 	t_object	*tmp_object;
-	t_color 	tmp;
-	t_color 	c;
+	
 
 	tmp_object = e->object;
-	c.r = light->color.r;
-	c.g = light->color.g;
-	c.b = light->color.b;
 	while (tmp_object)
 	{
-		if (tmp_object->id != e->id_object && sort_type(e, tmp_object) && e->solution < e->distance_light_object)
-		{
-			 if (tmp_object->refract == 1)
-			 {
-			 	tmp = c_double_mult(&tmp_object->color, 1 - tmp_object->absorbtion);
-			 	c = c_c_mult(&light->color, &tmp);
-			 }
-			 else if (e->cel_shade == 0)
-				return (set_color(0, 0, 0));
-		}
+		if (tmp_object->id != e->id_object && sort_type(e, tmp_object)
+			&& e->solution < e->distance_light_object)
+			return (1);
 		tmp_object = tmp_object->next;
 	}
-	return (c);
+	return (0);
 }
 

@@ -46,7 +46,14 @@ t_anti_a	antialias_loop_init(t_anti_a *anti, t_env *e, int sample)
 		e->camera.rayon = v_v_subs(&new.viewplane_point, &e->camera.origin);
 		e->camera.rayon = normalize(&e->camera.rayon);
 		if (cast_ray(e, e->camera.rayon, e->camera.origin))
-			color = e->am_flag == 1 ? ambient_occlusion(e) :get_color(e);
+		{
+			if (e->render_mode == 1 && !e->edit_flag)
+				color = ambient_occlusion(e);
+			else if (e->render_mode == 3 && !e->edit_flag)
+				color = cel_shade_color(e);
+			else
+				color = get_color(e);
+		}
 		anti_aliasing_clr_merge(&new.aaclr, &color);
 		new.x1 += 0.25;
 	}

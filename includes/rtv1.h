@@ -20,6 +20,7 @@
 # include "color.h"
 # include "vector.h"
 # include "matrix.h"
+# include "mlx_key_macos.h"
 # include <math.h>
 # include <time.h>
 # include <errno.h>
@@ -50,6 +51,7 @@ typedef struct s_grid			t_grid;
 typedef struct s_object			t_object;
 typedef struct s_light			t_light;
 typedef struct s_rayon			t_rayon;
+typedef struct s_flag 			t_flag;
 typedef struct s_poly			t_poly;
 typedef struct s_mlx			t_mlx;
 typedef struct s_inter			t_inter;
@@ -157,6 +159,27 @@ struct							s_mlx
 	int							endian;
 };
 
+struct							s_flag
+{
+	int							edit;
+	int 						help;
+	int							aa;
+	int							am;
+	int							pixelize;
+	int 						render_mode;
+	int							cel_shade;
+	int							stereo;
+	int							filter;
+	int							begin;
+	int							fin;
+	int							is_copy;
+	int							is_past;
+	int 						is_delete;
+	int 						delete_id;
+	int							recursion;
+	int 						lookat;
+};
+
 struct							s_env
 {
 	t_mlx						mlx;
@@ -176,7 +199,6 @@ struct							s_env
 	double						distance_light_object;
 	double						distance;
 	double						solution;
-	int							in_out;
 	int							bump;
 	double						ambient;
 	double						diffuse;
@@ -212,13 +234,13 @@ struct							s_env
 	int							is_past;
 	int							stereo_flag;
 	int							filter_flag;
+	int 						is_delete;
 	int							edit_flag;
 	t_vector					lookat;
 	t_matrix4x4					matrix_lstereo_system;
 	t_matrix4x1					matrix_lstereo_origin;
 	t_matrix4x4					matrix_rstereo_system;
 	t_matrix4x1					matrix_rstereo_origin;
-	int							hide;
 	int							tmp_rad;
 	t_color						tmp_clr;
 
@@ -235,6 +257,10 @@ struct							s_env
 	int							sl;
 	int							skybox;
 	int							cel_shade;
+	int 						render_mode;
+	int 						help_flag;
+	int 						delete_id;
+	t_flag						flag;
 };
 
 struct 							s_physics
@@ -328,7 +354,7 @@ int								cast_refract_ray(t_env *e, t_rayon origin);
 void							get_object_values(t_env *e, t_object *object);
 int								sort_type(t_env *e, t_object *object);
 void							check_intersection(t_env *e, t_object *object);
-t_color							light_intersection(t_env *e, t_light *light);
+int								light_intersection(t_env *e);
 /*
 ** errors.c
 */
@@ -569,37 +595,17 @@ void							pxl_edit_tracer(t_env *e, int sample);
 int								proper_exit(t_env *e);
 void							inputs2(int keycode, t_env *e);
 void							choose_display_mode(t_env *e);
-void							inputs(int keycode, t_env *e);
 void							print_info(t_env *e);
 void							reset_mov_rotate(t_env *e);
 int								key_functions(int keycode, t_env *e);
-
-/*
-**VECTOR
-*/
-
-/*
-**vector_op1.c
-*/
-t_vector						set_vector(double x, double y, double z);
-double							magnitude(t_vector *a);
-t_vector						normalize(t_vector *a);
-double							dot_product(t_vector *a, t_vector *b);
-t_vector						v_v_add(t_vector *a, t_vector *b);
-
-/*
-**vector_op2.c
-*/
-t_vector						v_v_subs(t_vector *a, t_vector *b);
-t_vector						v_v_mult(t_vector *a, t_vector *b);
-t_vector						v_double_add(t_vector *a, double b);
-t_vector						v_double_subs(t_vector *a, double b);
-t_vector						v_double_mult(t_vector *a, double b);
-
-/*
-**vector_op3.c
-*/
-t_vector						v_double_div(t_vector *a, double b);
-
+int 							check_keycode(int keycode, t_env *e);
+int  							inputs(int keycode, t_env *e); 
+void  							inputs2(int keycode, t_env *e);
+void							print_help(t_env *e);
+void							ft_object_remove_if(t_object **begin_object, int data_ref, int (*cmp)());
+void 							init_copy(t_object **copy, t_object *object);
+void 							add_object(t_env *e, int x, int y);
+int 							copy_object(t_env *e, int x, int y);
+int 							delete_object(t_env *e, int x, int y);
 
 #endif

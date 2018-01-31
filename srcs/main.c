@@ -34,7 +34,7 @@ void		display_window(t_env *e)
 		&e->mlx.bpp, &e->mlx.l_size, &e->mlx.endian);
 	init_camera(e);
 	camera_transformation(e);
-	// init_stereo(e);
+	init_stereo(e);
 	ray_tracer(e);
 	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr, 0, 0);
 	mlx_hook(e->mlx.win_ptr, 2, (1L << 0), key_functions, e);

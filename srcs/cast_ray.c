@@ -43,9 +43,7 @@ int	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 	check_intersection(e, tmp_object);
 	if (e->intersect)
 		return (1);
-	else
-		e->current_color = set_color(0, 0, 0);
-	return (1);
+	return (0);
 }
 	//	if (e->bump)
 	//	{
@@ -57,7 +55,6 @@ int cast_reflect_ray(t_env *e, t_rayon incident)
 {
 	t_rayon		reflect;
 	t_physics	pl;
-	// t_vector	inv;
 
 	pl.cos1 = 2.0 * dot_product(&incident.rayon, &incident.normal);
 	reflect.rayon = v_double_mult(&incident.normal, pl.cos1);
@@ -74,14 +71,9 @@ int cast_refract_ray(t_env *e, t_rayon origin)
 {
 	t_rayon		refract;
 	t_physics	pl;
-	t_vector	inv;
 
-
-	//printf("%d\n", e->in_out);
- 	//if (e->in_out < 0)
 	pl.ior = R_VOID / R_ICE;
- 	inv = v_double_mult(&origin.rayon, 1.0);
- 	pl.cos1 = dot_product(&origin.normal, &inv);
+ 	pl.cos1 = dot_product(&origin.normal, &origin.rayon);
  	
  	if (pl.cos1 < 0)
  		pl.cos1 = -pl.cos1;
@@ -99,8 +91,6 @@ int cast_refract_ray(t_env *e, t_rayon origin)
  	refract.rayon = v_v_add(&pl.tmp1, &pl.tmp2);
 	pl.tmp1 = v_double_mult(&refract.rayon, 0.01);
  	refract.origin = v_v_add(&origin.node, &pl.tmp1);
-	//normalize(&refract.rayon);
-//	e->in_out *= -1;
  	if (cast_ray(e, refract.rayon, refract.origin))
  		return (1);
  	return (0);

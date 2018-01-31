@@ -141,7 +141,6 @@ t_color	ambient_occlusion(t_env *e)
 t_color			get_color(t_env *e)
 {
 	t_color		c;
-	t_color 	c_light;
 	t_rayon		ray;
 	t_color 	diffuse;
 
@@ -151,7 +150,7 @@ t_color			get_color(t_env *e)
 
 	init_ray_values(&ray, e);
 	c = c_double_mult(&e->current_color, e->ambient);
-	if (c.r == 0 && c.g == 0 && c.b == 0 && e->intersect == 0)
+	if (e->edit_flag)
 		return (c);
 	tmp_light = e->light;
 	while (tmp_light)
@@ -162,15 +161,14 @@ t_color			get_color(t_env *e)
 		tmp_light->rayon = normalize(&tmp_light->rayon);
 		e->current_origin = tmp_light->origin;
 		e->current_rayon = tmp_light->rayon;
-		c_light = light_intersection(e, tmp_light);
-		if (c_light.r != 0 && c_light.g != 0 && c_light.b != 0)
+		if (!light_intersection(e))
 		{	
 			tmp_angle = v_double_mult(&tmp_light->rayon, (-1));
 			tmp_light->angle = dot_product(&e->current_node_normal, &tmp_angle);
 			specular = e->specular * get_specular(tmp_light, &ray.rayon, &ray.normal);
 			if (tmp_light->angle > 0)
 			{
-				diffuse = c_c_mult(&e->current_color, &c_light);
+				diffuse = c_c_mult(&e->current_color, &tmp_light->color);
 				diffuse = c_double_add(&diffuse, specular);
 				diffuse = c_double_mult(&diffuse, tmp_light->angle);
 				diffuse = c_double_mult(&diffuse, e->diffuse);

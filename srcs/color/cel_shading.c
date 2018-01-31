@@ -28,8 +28,6 @@ t_color		cel_shading(t_vector *light, t_env *e, t_color *clr)
 		intens = 0.1;
 	else if (intens >= 0.2 && intens < 0.6)
 		intens = 0.3;
-	// else if (intens >= 0.4 && intens < 0.6)
-	// 	intens = 0.5;
 	else if (intens >= 0.6 && intens < 0.99)
 		intens = 0.7;
 	else if (intens >= 0.99)

@@ -36,8 +36,8 @@ t_object	*init_material(void)
 		ft_kill("Error in malloc object");
 	object->id = -1;
 	object->color = set_color(0.5, 0.5, 0.5);
-	object->ambient = 0.125;
-	object->diffuse = 0.875;
+	object->ambient = 0.325;
+	object->diffuse = 0.675;
 	object->specular = 0.9;
 	object->reflect = 0;
 	object->refract = 0;

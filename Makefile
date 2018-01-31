@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= 	rtv1
+NAME		= 	rt
 LIBFT 		= 	libft/libft.a
 PRINTF 		= 	ft_printf/libftprintf.a
 MLX			= 	minilibx_macos/libmlx.a
@@ -23,10 +23,16 @@ SRCS		= 	srcs/main.c \
 				srcs/check_intersection.c \
 				srcs/solution.c \
 				srcs/torus.c \
+				srcs/triangle.c \
+				srcs/quad.c \
 				srcs/errors.c \
-				srcs/mouse.c \
 				srcs/perlin_noise.c \
-				srcs/render/user_interactions.c \
+				srcs/ft_remove_if.c \
+				srcs/interactions/user_interactions.c \
+				srcs/interactions/mouse.c \
+				srcs/interactions/inputs.c \
+				srcs/interactions/interface.c \
+				srcs/interactions/copy_delete.c \
 				srcs/render/anti_aliasing.c \
 				srcs/render/pixelization.c \
 				srcs/render/filter.c \
@@ -47,8 +53,6 @@ SRCS		= 	srcs/main.c \
 				srcs/vector/vectors_op2.c \
 				srcs/vector/vectors_op3.c \
 				srcs/render/multithread.c \
-				srcs/triangle.c \
-				srcs/quad.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 
@@ -78,6 +82,7 @@ objs/%.o: 	srcs/%.c
 			@ mkdir -p objs/vector
 			@ mkdir -p objs/matrix
 			@ mkdir -p objs/render
+			@ mkdir -p objs/interactions
 		 	@ $(CC) $(CFLAGS) $(INC) $(LIBFTINC) $(MLXINC) -c $< -o $@
 
 clean:		
