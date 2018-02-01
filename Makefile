@@ -46,6 +46,7 @@ SRCS		= 	srcs/main.c \
 				srcs/parsing/get_parsing.c \
 				srcs/parsing/create_object.c \
 				srcs/parsing/create_light.c \
+				srcs/parsing/create_area_light.c \
 				srcs/color/colors.c \
 				srcs/color/cel_shading.c \
 				srcs/color/colors_op1.c \
@@ -74,7 +75,7 @@ $(NAME):	$(OBJS)
 			@ make -C ./ft_printf all
 			@ $(CC) $(CFLAGS) $(LIBFT) $(PRINTF) $(MLX) $(LIBFTLINK) $(MLXLINK) -o $@ $^
 			@ echo "\n\033[1;33m---> Libft created\033[0m \033[92m✓\033[0m"
-			@ echo "\n\033[92m---> RTv1 program created ✓\033[0m"
+			@ echo "\n\033[92m---> RT program created ✓\033[0m"
 
 objs/%.o: 	srcs/%.c
 			@ mkdir -p objs

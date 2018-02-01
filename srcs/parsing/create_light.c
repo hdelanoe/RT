@@ -48,6 +48,8 @@ void			create_light(t_env *e, t_json *json)
 
 	if(!(light = ft_memalloc(sizeof(t_light))))
 		exit_rt(1);
+	if (!(light->type = ft_strdup("light")))
+		exit_rt(1);
 	while (json->member)
 	{
 		tmp = json->member;

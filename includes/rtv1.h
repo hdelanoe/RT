@@ -117,8 +117,13 @@ struct							s_object
 
 struct							s_light
 {
+	char						*type;
 	int							id;
 	t_vector					origin;
+	t_vector					point_1;
+	t_vector					point_2;
+	t_vector					point_3;
+	t_vector					point_4;
 	t_vector					rayon;
 	double						angle;
 	t_color						color;

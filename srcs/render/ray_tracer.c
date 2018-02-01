@@ -35,6 +35,15 @@ void	stereo_tracer(t_env *e)
 		x = 0;
 		while (x < e->width)
 		{
+			c = set_color(0, 0, 0);
+			tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
+			tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
+			viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);
+			viewplane_point = v_v_subs(&viewplane_point, &tmp_vp_pointy);
+			e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
+			e->camera.rayon = normalize(&e->camera.rayon);
+			if (cast_ray(e, e->camera.rayon, e->camera.origin))
+				c = get_color(e);
 			e->recursion = 6;
 			sblue = set_color(0, 0, 0);
 			tmp_vp_pointx = v_double_mult(&e->lstereo.x_vector, x);
