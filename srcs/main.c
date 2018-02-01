@@ -12,15 +12,6 @@
 
 #include "rtv1.h"
 
-void	exit_rt(int flag)
-{
-	if (flag == 1)
-	{
-		ft_putendl("Error in malloc");
-		exit(1);
-	}
-}
-
 void		display_window(t_env *e)
 {
 	e->mlx.mlx_ptr = mlx_init();
@@ -76,6 +67,8 @@ int			main(int argc, char **argv)
 
 	if (argc != 2)
 		ft_print_err(argc);
+	if (!(check_args(argv[1])))
+		ft_kill("Bad file, check your scnene name");
 	ret = parsing(e, argv[1]);
 	display_window(e);
 	return (0);

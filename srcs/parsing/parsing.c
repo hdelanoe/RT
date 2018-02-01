@@ -109,12 +109,12 @@ int		parsing(t_env *e, char *src_file)
 {
 	t_parsing p;
 
+	open_close(src_file);
 	p.buff = ft_memalloc(sizeof(p.buff));
 	p.stock = NULL;
 	if ((p.fd = open(src_file, O_RDONLY)) < 0)
 		ft_kill("This file doesn't exist or bad typography.");
 	p.j = 0;
-
 	while (get_next_line(p.fd, &p.buff) == 1)
 	{
 		p.j = 1;

@@ -330,7 +330,6 @@ int p[512];
 /*
 **main.c
 */
-void							exit_rt(int flag);
 void							display_window(t_env *e);
 t_env							*init(void);
 /*
@@ -367,6 +366,12 @@ void							ft_print_err(int argc);
 void							ft_help(void);
 void							ft_kill(char *text);
 /*
+**errors_2.c
+*/
+int								check_args(char *argv);
+void							open_close(char *src_file);
+void							exit_rt(int flag);
+/*
 **mouse.c
 */
 void							init_copy(t_object **copy, t_object *object);
@@ -374,6 +379,7 @@ void							add_object(t_env *e, int x, int y);
 int								set_lookat(t_env *e, int x, int y);
 int								copy_object(t_env *e, int x, int y);
 int								mouse(int button, int x, int y, t_env *e);
+
 /*
 **paraboloid.c
 */
@@ -614,5 +620,6 @@ void 							init_copy(t_object **copy, t_object *object);
 void 							add_object(t_env *e, int x, int y);
 int 							copy_object(t_env *e, int x, int y);
 int 							delete_object(t_env *e, int x, int y);
+
 
 #endif
