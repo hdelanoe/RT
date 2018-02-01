@@ -54,18 +54,18 @@ void debug_object(t_object *tmp)
 		else if (!(ft_strcmp(tmp->type, "disk")))
 			origin = tmp->point;
 		else if (!(ft_strcmp(tmp->type, "triangle")))
-			origin = tmp->point_1;
+			origin = tmp->point;
 		else if (!(ft_strcmp(tmp->type, "cylinder")))
 			origin = tmp->center;
 		else if (!(ft_strcmp(tmp->type, "cone")))
 			origin = tmp->center;
-	printf("OBJECT :%s %i\n", tmp->type, tmp->id);
-	printf("origin : x->%f\n", origin.x);
-	printf("         y->%f\n", origin.y);
-	printf("         z->%f\n", origin.z);
-	printf("colors : r->%f\n", tmp->color.r);
-	printf("         g->%f\n", tmp->color.g);
-	printf("         b->%f\n", tmp->color.b);
+	// printf("OBJECT :%s %i\n", tmp->type, tmp->id);
+	// printf("origin : x->%f\n", origin.x);
+	// printf("         y->%f\n", origin.y);
+	// printf("         z->%f\n", origin.z);
+	// printf("colors : r->%f\n", tmp->color.r);
+	// printf("         g->%f\n", tmp->color.g);
+	// printf("         b->%f\n", tmp->color.b);
 }
 
 void create_cap_sphere(t_object *sphere)

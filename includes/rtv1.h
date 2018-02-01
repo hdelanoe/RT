@@ -88,7 +88,6 @@ struct							s_object
 	char						*type;
 	int							id;
 	t_vector					point;
-	t_vector					point_1;
 	t_vector					point_2;
 	t_vector					point_3;
 	t_vector					point_4;
@@ -120,7 +119,7 @@ struct							s_light
 	char						*type;
 	int							id;
 	t_vector					origin;
-	t_vector					point_1;
+	t_vector					point;
 	t_vector					point_2;
 	t_vector					point_3;
 	t_vector					point_4;
@@ -195,6 +194,7 @@ struct							s_env
 	t_camera					camera;
 	t_camera					lstereo;
 	t_camera					rstereo;
+	int							area_light_on;
 	t_vector					current_origin;
 	t_vector					current_rayon;
 	t_vector					current_node;
@@ -540,6 +540,7 @@ void							create_cap_cone(t_object *cone);
 void							create_cone(t_env *e, t_json *json);
 void							create_torus(t_env *e, t_json *json);
 void 							create_cube(t_env *e, t_json *json);
+void							create_area_light(t_env *e, t_json *json);
 
 /*
 **get_parsing.c

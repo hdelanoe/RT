@@ -14,6 +14,10 @@
 
 void	get_object_values(t_env *e, t_object *object)
 {
+	if (!ft_strcmp(object->type, "area_light"))
+		e->area_light_on = 1;
+	else
+		e->area_light_on = 0;
 	e->current_node = object->node;
 	e->current_node_normal = object->node_normal;
 	e->current_color = object->color;
@@ -64,6 +68,8 @@ int sort_type(t_env *e, t_object *object)
 		intersect = glass_intersection(e, object);
 	else if (!(ft_strcmp(object->type, "cube")))
 		intersect = cube_intersection(e, object);
+	else if (!(ft_strcmp(object->type, "area_light")))
+		intersect = quad_intersection(e, object);
 	return (intersect);	
 }
 

@@ -123,6 +123,8 @@ void	ray_tracer(t_env *e)
 					color = ambient_occlusion(e);
 				else if (e->render_mode == 3 && !e->edit_flag)
 					color = cel_shade_color(e);
+				else if (e->area_light_on == 1)
+					color = set_color(1, 1, 1);
 				else
 					color = get_color(e);
 			}

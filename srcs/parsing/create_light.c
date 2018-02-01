@@ -32,13 +32,13 @@ void		add_new_light(t_light **list, t_light *new_light)
 
 void debug_light(t_light *tmp)
 {
-	printf("LIGHT:\n");
+	// printf("LIGHT:\n");
 	printf("origin : x->%f\n", tmp->origin.x);
-	printf("         y->%f\n", tmp->origin.y);
-	printf("         z->%f\n", tmp->origin.z);
-	printf("colors : r->%f\n", tmp->color.r);
-	printf("         g->%f\n", tmp->color.g);
-	printf("         b->%f\n", tmp->color.b);
+	// printf("         y->%f\n", tmp->origin.y);
+	// printf("         z->%f\n", tmp->origin.z);
+	// printf("colors : r->%f\n", tmp->color.r);
+	// printf("         g->%f\n", tmp->color.g);
+	// printf("         b->%f\n", tmp->color.b);
 }
 
 void			create_light(t_env *e, t_json *json)
