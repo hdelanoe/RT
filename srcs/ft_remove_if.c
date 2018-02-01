@@ -12,6 +12,13 @@
 
 #include "../includes/rtv1.h"
 
+int			cmp(int a, int b)
+{
+	if (a == b)
+		return (0);
+	return (1);
+}
+
 t_object	*ft_remove_begin(t_object **prev, t_object **ptr)
 {
 	t_object *begin_object;

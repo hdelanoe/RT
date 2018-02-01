@@ -30,8 +30,8 @@
 # include <pthread.h>
 # define A printf("File = [%s]\nLine = [%d]\nFunction = [%s]\n", __FILE__, __LINE__, __FUNCTION__);
 
-# define WIN_X 1000
-# define WIN_Y 1000
+# define WIN_X 1500
+# define WIN_Y 1200
 # define RANDOM (double)rand()/RAND_MAX
 
 # define R_VOID 1.0
@@ -265,6 +265,7 @@ struct							s_env
 	t_flag						flag;
 	double 						indice;
 	double 						object_indice;
+	int							hit;
 };
 
 struct 							s_physics
@@ -607,6 +608,7 @@ int 							check_keycode(int keycode, t_env *e);
 int  							inputs(int keycode, t_env *e); 
 void  							inputs2(int keycode, t_env *e);
 void							print_help(t_env *e);
+int								cmp(int a, int b);
 void							ft_object_remove_if(t_object **begin_object, int data_ref, int (*cmp)());
 void 							init_copy(t_object **copy, t_object *object);
 void 							add_object(t_env *e, int x, int y);

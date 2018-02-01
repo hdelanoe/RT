@@ -41,24 +41,22 @@ t_color		choose_color(t_env *e)
 	return (new);
 }
 
-double get_specular(t_light *light, t_vector *view, t_vector *node)
+double		get_specular(t_light *light, t_vector *view, t_vector *node)
 {
 	t_vector	tmp;
 	t_vector	r;
-	double 		reflect;
-	double 		phong_color;
+	double		reflect;
+	double		phong_color;
 
-	reflect =  dot_product(&light->rayon, node);
+	reflect = dot_product(&light->rayon, node);
 	tmp = v_double_mult(node, 2);
 	r = v_double_mult(&tmp, reflect);
 	r = v_v_subs(&r, &light->rayon);
-
 	phong_color = 0.2 * powf(dot_product(view, &r), 50) * 3;
-
 	return (phong_color);
 }
 
-void init_ray_values(t_rayon *ray, t_env *e)
+void		init_ray_values(t_rayon *ray, t_env *e)
 {
 	ray->origin = e->current_origin;
 	ray->rayon = e->current_rayon;
@@ -66,7 +64,7 @@ void init_ray_values(t_rayon *ray, t_env *e)
 	ray->normal = e->current_node_normal;
 }
 
-void	shoot_new_color(t_env *e, t_color *c, double coef)
+void		shoot_new_color(t_env *e, t_color *c, double coef)
 {
 	t_color shade;
 	t_color shade_sub;
@@ -77,49 +75,38 @@ void	shoot_new_color(t_env *e, t_color *c, double coef)
 	if (shade.r < 0.1 && shade.g < 0.1 && shade.b < 0.1)
 		*c = c_c_subs(c, &shade_sub);
 	else
-		*c = c_c_add(c, &shade);		
-	// e->recursion--;
+		*c = c_c_add(c, &shade);
 }
 
-void	recurse_color(t_env *e, t_rayon ray, t_color *c)
+void		recurse_color(t_env *e, t_rayon ray, t_color *c)
 {
 	while (--(e->recursion) > 0)
 	{
-
 		if (e->reflect)
 		{
 			if (cast_reflect_ray(e, ray))
-			{
 				shoot_new_color(e, c, e->diffuse);
-				// continue ;
-			}
 		}
 		else if (e->refract)
 		{
 			if (cast_refract_ray(e, ray))
-			{
 				shoot_new_color(e, c, 1 - e->absorbtion);
-			//	continue ;
-			}
-
 		}
 	}
 }
 
-t_color	ambient_occlusion(t_env *e)
+t_color		ambient_occlusion(t_env *e)
 {
-	t_color c;
-	t_rayon origin;
-	t_rayon ray;
-	t_vector tmp;
-	int sample;
-	int hit;
-
+	t_color		c;
+	t_rayon		origin;
+	t_rayon		ray;
+	t_vector	tmp;
+	int			sample;
 
 	c = set_color(1, 1, 1);
 	init_ray_values(&origin, e);
 	sample = 16;
-	hit = 0;
+	e->hit = 0;
 	while (sample > 0)
 	{
 		ray.rayon.x = RANDOM;
@@ -129,16 +116,13 @@ t_color	ambient_occlusion(t_env *e)
 		ray.rayon = normalize(&ray.rayon);
 		tmp = v_double_mult(&ray.rayon, 0.01);
 		ray.origin = v_v_add(&origin.node, &tmp);
-		if (cast_ray(e, ray.rayon, ray.origin))
-			hit++;
+		e->hit = cast_ray(e, ray.rayon, ray.origin) ? e->hit + 1 : e->hit;
 		sample--;
 	}
-	if (hit)
-		c = c_double_mult(&c, (double)1/hit);
-	return (c);
+	return (e->hit ? c_double_mult(&c, (double)1 / e->hit) : c);
 }
 
-t_color			get_color(t_env *e)
+t_color		get_color(t_env *e)
 {
 	t_color		c;
 	t_rayon		ray;

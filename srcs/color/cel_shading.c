@@ -14,7 +14,7 @@
 
 t_color		cel_shading(t_vector *light, t_env *e, t_color *clr)
 {
-	t_color 	new;
+	t_color		new;
 	double		intens;
 	t_vector	nrm;
 
@@ -33,7 +33,7 @@ t_color		cel_shading(t_vector *light, t_env *e, t_color *clr)
 	else if (intens >= 0.99)
 		intens = 0.85;
 	else
-		return set_color(0, 0, 0);
+		return (set_color(0, 0, 0));
 	new = set_color(intens, intens, intens);
 	return (c_c_add(&new, clr));
 }
@@ -42,7 +42,7 @@ t_color		cel_shade_color(t_env *e)
 {
 	t_color		c;
 	t_rayon		ray;
-	t_color 	diffuse;
+	t_color		diffuse;
 	t_light		*tmp_light;
 
 	init_ray_values(&ray, e);
@@ -60,7 +60,7 @@ t_color		cel_shade_color(t_env *e)
 			diffuse = c_c_mult(&e->current_color, &tmp_light->color);
 			c = cel_shading(&tmp_light->rayon, e, &c);
 		}
-			tmp_light = tmp_light->next;
+		tmp_light = tmp_light->next;
 	}
 	return (c_c_add(&c, &diffuse));
 }

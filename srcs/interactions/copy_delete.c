@@ -12,14 +12,7 @@
 
 #include "../includes/rtv1.h"
 
-int cmp(int a, int b)
-{
-	if (a == b)
-		return (0);
-	return (1);
-}
-
-void 	init_copy(t_object **copy, t_object *object)
+void		init_copy(t_object **copy, t_object *object)
 {
 	if (!((*copy) = (t_object*)ft_memalloc(sizeof(t_object))))
 		ft_kill("Error in malloc object");
@@ -46,7 +39,19 @@ void 	init_copy(t_object **copy, t_object *object)
 	(*copy)->next = NULL;
 }
 
-void add_object(t_env *e, int x, int y)
+void		create_obj_to_add(t_object **copy)
+{
+	if (!ft_strcmp((*copy)->type, "cylinder") && (*copy)->cap)
+		create_cap_cylinder((*copy));
+	if (!ft_strcmp((*copy)->type, "cone"))
+		create_cap_cone((*copy));
+	if (!ft_strcmp((*copy)->type, "glass"))
+		create_child_glass((*copy));
+	if (!ft_strcmp((*copy)->type, "sphere") && (*copy)->cap)
+		create_cap_sphere((*copy));
+}
+
+void		add_object(t_env *e, int x, int y)
 {
 	t_vector	viewplane_point;
 	t_vector	tmp_vp_pointx;
@@ -62,14 +67,7 @@ void add_object(t_env *e, int x, int y)
 	e->camera.rayon = normalize(&e->camera.rayon);
 	copy->center = viewplane_point;
 	add_new_object(&e->object, copy);
-	if (!ft_strcmp(copy->type, "cylinder") && copy->cap)
-			create_cap_cylinder(copy);
-	if (!ft_strcmp(copy->type, "cone"))
-			create_cap_cone(copy);
-	if (!ft_strcmp(copy->type, "glass"))
-		create_child_glass(copy);
-	if (!ft_strcmp(copy->type, "sphere") && copy->cap)
-		create_cap_sphere(copy);
+	create_obj_to_add(&copy);
 	ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 	choose_display_mode(e);
 	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
@@ -78,7 +76,7 @@ void add_object(t_env *e, int x, int y)
 		print_info(e);
 }
 
-int copy_object(t_env *e, int x, int y)
+int			copy_object(t_env *e, int x, int y)
 {
 	t_vector	viewplane_point;
 	t_vector	tmp_vp_pointx;
@@ -93,16 +91,13 @@ int copy_object(t_env *e, int x, int y)
 	e->camera.rayon = normalize(&e->camera.rayon);
 	if (cast_ray(e, e->camera.rayon, e->camera.origin))
 	{
-	//	if (!((*copy) = (t_object*)ft_memalloc(sizeof(t_object))))
-	//		ft_kill("Error in malloc object");
-//		init_copy(copy, e->copy);
 		e->is_copy = 0;
 		return (1);
 	}
 	return (0);
 }
 
-int delete_object(t_env *e, int x, int y)
+int			delete_object(t_env *e, int x, int y)
 {
 	t_vector	viewplane_point;
 	t_vector	tmp_vp_pointx;

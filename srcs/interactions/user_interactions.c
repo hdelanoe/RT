@@ -14,9 +14,9 @@
 
 void		choose_display_mode(t_env *e)
 {
-	if (e->aa_flag == 1 && e->pixelize == 0 && !e->edit_flag)
+	if (e->aa_flag == 1 && e->pixelize == 0 && e->edit_flag == 0)
 		aa_tracer(e, 1);
-	if (e->pixelize == 1)
+	else if (e->pixelize == 1)
 		pxl_tracer(e, 13);
 	else if ((e->render_mode == 2 || e->render_mode == 4) && !e->edit_flag)
 		stereo_tracer(e);
@@ -39,6 +39,7 @@ void	set_mode(int keycode, t_env *e)
     	e->pixelize = 0;
     	e->render_mode = e->edit_flag == 1 ? 0 : e->render_mode;
     	e->am_flag = e->edit_flag == 1 ? 0 : e->am_flag;
+    	e->aa_flag = e->edit_flag == 1 ? 0 : e->aa_flag;
 		e->cel_shade = e->edit_flag == 1 ? 0 : e->cel_shade;
 		e->stereo_flag = e->edit_flag == 1 ? 0 : e->stereo_flag;
 		e->flag.deep = e->edit_flag == 1 ? 0 : e->flag.deep;
