@@ -83,14 +83,12 @@ void check_intersection(t_env *e, t_object *object)
 			get_object_values(e, object);
 			e->delete_id = object->id;
 			/*COMMENTEZ CETTE SECTION POUR ACTIVER/DESACTIVER LES TEXTURES*/
-			 if (!(ft_strcmp("sphere", object->type)))
-			 {
+			// if (!(ft_strcmp("plane", object->type)))
+			// 	wrap_plane(e);
+				// e->bump = 1;
+			if (!(ft_strcmp("sphere", object->type)))
 				wrap_sphere(e, object);
-				e->i = (int)(e->v * 1080);
-				e->j = (int)(e->u * e->sl);
-				e->current_color = get_texture_info(e->text_data, e);
-				e->skybox = 1;
-			 }
+			// 	// e->skybox = 1;
 			// if (!(ft_strcmp("cylinder", object->type)))
 			// 	wrap_sphere(e, object);
 			// if (!(ft_strcmp("cone", object->type)))
@@ -120,13 +118,8 @@ t_color    light_intersection(t_env *e, t_light *light)
 			else
 			{	
 				if (!(ft_strcmp("sphere", tmp_object->type)))
-				{
 					wrap_sphere(e, tmp_object);
-					e->i = (int)(e->v * 1080);
-					e->j = (int)(e->u * e->sl);
-					e->current_color = get_texture_info(e->text_data, e);
-					e->skybox = 1;
-				}
+					// e->skybox = 1;
 			tmp = c_double_mult(&e->current_color, 1 - tmp_object->absorbtion);
 			c = c_c_mult(&light->color, &tmp);
 			 // printf("+%f %f %f+\n", c.r, c.g, c.b);  

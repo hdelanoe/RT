@@ -633,6 +633,6 @@ void 							init_copy(t_object **copy, t_object *object);
 void 							add_object(t_env *e, int x, int y);
 int 							copy_object(t_env *e, int x, int y);
 int 							delete_object(t_env *e, int x, int y);
-
+void							wrap_plane(t_env *e);
 
 #endif

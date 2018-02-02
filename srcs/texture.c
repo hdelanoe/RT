@@ -19,22 +19,16 @@ t_color		normalize_color(t_color *color)
 	new.r = color->r / 255;
 	new.g = color->g / 255;
 	new.b = color->b / 255;
-	// if (new.b > 1)
-	// 	new.b = 1;
-	// if (new.g > 1)
-	// 	new.g = 1;
-	// if (new.r > 1)
-	// 	new.r = 1;
-	// printf("%f %f %f\n", new.r, new.g, new.b);
 	return (new);
 }
 
 void		load_texture(t_env *e)
 {
 	if (!((e->text_img = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/space.xpm", &(e->sl), &e->bpp))))
+	"./textures/metal.xpm", &(e->sl), &e->bpp))))
 		ft_kill("Texture error");
-	e->text_data = (unsigned char*)mlx_get_data_addr(e->text_img, &e->bpp, &e->naz, &e->end);
+	e->text_data = (unsigned char*)mlx_get_data_addr(e->text_img, &e->bpp,
+	&e->naz, &e->end);
 }
 
 void		wrap_sphere(t_env *e, t_object *object)
@@ -58,9 +52,25 @@ void		wrap_sphere(t_env *e, t_object *object)
 		e->u = theta;
 	else
 		e->u = 1.0 - theta;
-	e->i = (int)(e->v * 2160);
+	e->i = (int)(e->v * (2592));
 	e->j = (int)(e->u * e->sl);
 	e->current_color = get_texture_info(e->text_data, e);
+}
+
+void		wrap_plane(t_env *e)//, t_object *object)
+{
+	int carre;
+
+	// if (!ft_strcmp(object->tex_type, "square"))
+	// 	carre = floor(e->current_node.x) + floor(e->current_node.z);
+	// else if (!ft_strcmp(object->tex_type, "columns"))
+		carre = floor(e->current_node.x);
+	// else if (!ft_strcmp(object->tex_type, "lines"))
+		// carre = floor(e->current_node.z);
+	if (carre % 2 == 0)
+		e->current_color = set_color(0, 0, 0);
+	else
+		e->current_color = set_color(0.6184, 0.54561, 0.3481);
 }
 
 void		wrap_cone(t_env *e, t_object *object)
@@ -84,11 +94,10 @@ void		wrap_cone(t_env *e, t_object *object)
 		e->u = theta;
 	else
 		e->u = 1.0 - theta;
-	e->i = (int)(e->v * 2160);
+	e->i = (int)(e->v * 2096);
 	e->j = (int)(e->u * e->sl);
 	e->current_color = get_texture_info(e->text_data, e);
 }
-
 
 t_vector	v_v_mlt(t_vector *a, t_vector *b)
 {
@@ -115,27 +124,10 @@ void		wrap_cylinder(t_env *e, t_object *object)
 	e->u = 0.5 + atan2(d.z, d.x) / PI * 0.5;
 	e->v = d.y / (0 - object->lenght_max);
 	e->v = e->v - floor(e->v);
-	e->i = max((e->u * 2160), 0);
+	e->i = max((e->u * 2592), 0);
 	e->j = max((e->v * e->sl), 0);
 	e->current_color = get_texture_info(e->text_data, e);
 }
-
-// void		wrap_cylinder(t_env *e, t_object *object)
-// {
-// 	t_vec3	d;
-
-// 	d = vec3_sub(hit, vec3_mul(obj->pos, obj->dir));
-// 	e->u = 0.5 + atan2(d.z, d.x) / M_PI * 0.5;
-// 	e->v = d.y / (obj->max - obj->min);
-// 	e->v = e->v - floor(e->v);
-// 	else
-// 	{
-// 		i = ft_clamp(e->u * obj->mat.texture.w, 0, obj->mat.texture.w - 1);
-// 		j = ft_clamp(e->v * obj->mat.texture.h, 0, obj->mat.texture.h - 1);
-// 		return (rgb_to_vec3(img[j][i]));
-// 	}
-// }
-
 
 t_color		get_texture_info(unsigned char *text_data, t_env *e)
 {
@@ -146,8 +138,6 @@ t_color		get_texture_info(unsigned char *text_data, t_env *e)
 	clr.b = text_data[nb];
 	clr.g = text_data[nb + 1];
 	clr.r = text_data[nb + 2];
-	// if (clr.r || clr.g)
-	// printf("%f %f %f\n", clr.r, clr.g, clr.b);
 	clr = normalize_color(&clr);
 	return (clr);
 }
