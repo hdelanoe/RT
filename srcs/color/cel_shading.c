@@ -55,8 +55,8 @@ t_color		cel_shade_color(t_env *e)
 		tmp_light->rayon = normalize(&tmp_light->rayon);
 		e->current_origin = tmp_light->origin;
 		e->current_rayon = tmp_light->rayon;
-		if (!light_intersection(e))
-		{
+	//	if (!light_intersection(e, &tmp_light))
+	//	{
 			diffuse = c_c_mult(&e->current_color, &tmp_light->color);
 			c = cel_shading(&tmp_light->rayon, e, &c);
 		}

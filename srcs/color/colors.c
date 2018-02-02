@@ -122,45 +122,49 @@ t_color		ambient_occlusion(t_env *e)
 	return (e->hit ? c_double_mult(&c, (double)1 / e->hit) : c);
 }
 
-t_color		get_color(t_env *e)
+t_color  get_color(t_env *e)
 {
-	t_color		c;
-	t_rayon		ray;
-	t_color 	diffuse;
+  t_color    c;
+  t_color   c_light;
+  t_rayon    ray;
+  t_color   diffuse;
+ 
+  double     specular;
+  t_light    *tmp_light;
+  t_vector   tmp_angle;
+ 
+  init_ray_values(&ray, e);
+  c = c_double_mult(&e->current_color, e->ambient);
+  if (c.r == 0 && c.g == 0 && c.b == 0 && e->intersect == 0)
+    return (c);
 
-	double 		specular;
-	t_light		*tmp_light;
-	t_vector 	tmp_angle;
-
-	init_ray_values(&ray, e);
-	c = c_double_mult(&e->current_color, e->ambient);
-	if (e->edit_flag)
-		return (c);
-	tmp_light = e->light;
-	while (tmp_light)
-	{
-		diffuse = set_color(0, 0, 0);
-		tmp_light->rayon = v_v_subs(&e->current_node, &tmp_light->origin);
-		e->distance_light_object = magnitude(&tmp_light->rayon);
-		tmp_light->rayon = normalize(&tmp_light->rayon);
-		e->current_origin = tmp_light->origin;
-		e->current_rayon = tmp_light->rayon;
-		if (!light_intersection(e))
-		{	
-			tmp_angle = v_double_mult(&tmp_light->rayon, (-1));
-			tmp_light->angle = dot_product(&e->current_node_normal, &tmp_angle);
-			specular = e->specular * get_specular(tmp_light, &ray.rayon, &ray.normal);
-			if (tmp_light->angle > 0)
-			{
-				diffuse = c_c_mult(&e->current_color, &tmp_light->color);
-				diffuse = c_double_add(&diffuse, specular);
-				diffuse = c_double_mult(&diffuse, tmp_light->angle);
-				diffuse = c_double_mult(&diffuse, e->diffuse);
-			}
-			c = c_c_add(&c, &diffuse);
-		}
-		tmp_light = tmp_light->next;
-	}
-	recurse_color(e, ray, &c);
-	return (c);
+  tmp_light = e->light;
+  while (tmp_light)
+  {
+    diffuse = set_color(0, 0, 0);
+    tmp_light->rayon = v_v_subs(&e->current_node, &tmp_light->origin);
+    e->distance_light_object = magnitude(&tmp_light->rayon);
+    tmp_light->rayon = normalize(&tmp_light->rayon);
+    e->current_origin = tmp_light->origin;
+    e->current_rayon = tmp_light->rayon;
+    c_light = light_intersection(e, tmp_light);
+   	// printf("*%f %f %f*\n", c_light.r, c_light.g, c_light.b);  
+    if (!(c_light.r == 0 && c_light.g == 0 && c_light.b == 0))
+    {
+      tmp_angle = v_double_mult(&tmp_light->rayon, (-1));
+      tmp_light->angle = dot_product(&e->current_node_normal, &tmp_angle);
+      specular = e->specular * get_specular(tmp_light, &ray.rayon, &ray.normal);
+      if (tmp_light->angle > 0)
+      {
+        diffuse = c_c_mult(&e->current_color, &c_light);
+        diffuse = c_double_add(&diffuse, specular);
+        diffuse = c_double_mult(&diffuse, tmp_light->angle);
+        diffuse = c_double_mult(&diffuse, e->diffuse);
+      }
+      c = c_c_add(&c, &diffuse);
+    }
+    tmp_light = tmp_light->next;
+  }
+  recurse_color(e, ray, &c);
+  return (c);
 }

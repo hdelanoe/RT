@@ -363,7 +363,7 @@ int								cast_refract_ray(t_env *e, t_rayon origin);
 void							get_object_values(t_env *e, t_object *object);
 int								sort_type(t_env *e, t_object *object);
 void							check_intersection(t_env *e, t_object *object);
-int								light_intersection(t_env *e);
+t_color							light_intersection(t_env *e, t_light *light);
 /*
 ** errors.c
 */

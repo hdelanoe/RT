@@ -48,9 +48,9 @@ int		mouse(int button, int x, int y, t_env *e)
 		{
 			if (set_lookat(e, x, y))
 			{
-				ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
+		//		ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 				reset_camera(e);
-				camera_transformation(e);
+			//	camera_transformation(e);
 				reset_stereo(e);
 				mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 250,
 					0xFFFFFF, "POV set!");

@@ -104,11 +104,11 @@ void	camera_transformation(t_env *e)
 
 void 	reset_stereo(t_env *e)
 { 	
-    e->move_x = -50;
+    e->move_x = -33;
     e->translation_matrix = translation(e, &e->matrix_camera_system);
     e->matrix_lstereo_origin = m4x4_m4x1_mult_reduced(&e->translation_matrix, &e->matrix_camera_origin);
     matrix_4x1_to_vectors(&e->lstereo.origin, &e->matrix_lstereo_origin);
-    e->move_x = 50;
+    e->move_x = 33;
     e->translation_matrix = translation(e, &e->matrix_camera_system);
     e->matrix_rstereo_origin = m4x4_m4x1_mult_reduced(&e->translation_matrix, &e->matrix_camera_origin);
     matrix_4x1_to_vectors(&e->rstereo.origin, &e->matrix_rstereo_origin);
