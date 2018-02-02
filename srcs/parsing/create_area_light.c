@@ -33,8 +33,7 @@ void			create_area_light(t_env *e, t_json *json)
 		if (!(ft_strcmp(tmp->name, "coord_1")) && tmp->member)
 		{
 			al_object->point = parse_point(tmp->member);
-			al_light->origin = al_object->point;
-			al_light->origin.y += -0.5;
+			al_light->point = al_object->point;
 		}
 		else if (!(ft_strcmp(tmp->name, "coord_2")) && tmp->member)
 		{
@@ -59,7 +58,7 @@ void			create_area_light(t_env *e, t_json *json)
 		else
 			ft_printf("{R}WARNING:{E} area_light as a bad attribut\n");
 		json->member = json->member->next;
-		free_json_member(&tmp);
+		// free_json_member(&tmp);
 	}
 	debug_light(al_light);
 	add_new_light(&e->light, al_light);

@@ -30,8 +30,8 @@
 # include <pthread.h>
 # define A printf("File = [%s]\nLine = [%d]\nFunction = [%s]\n", __FILE__, __LINE__, __FUNCTION__);
 
-# define WIN_X 1500
-# define WIN_Y 1200
+# define WIN_X 800
+# define WIN_Y 750
 # define RANDOM (double)rand()/RAND_MAX
 
 # define R_VOID 1.0
@@ -271,6 +271,10 @@ struct							s_env
 	double 						indice;
 	double 						object_indice;
 	int							hit;
+	t_vector					rayon_length;
+	t_vector					rayon_length_div;
+	t_vector					rayon_width;
+	t_vector					rayon_width_div;
 };
 
 struct 							s_physics
@@ -458,6 +462,9 @@ void							shoot_new_color(t_env *e, t_color *c, double coef);
 void							recurse_color(t_env *e, t_rayon ray, t_color *c);
 t_color							ambient_occlusion(t_env *e);
 t_color							get_color(t_env *e);
+t_color							get_area_light_intensity(t_env *e, t_light *area_light, t_rayon *ray, t_color *c);
+void							get_area_light_origin(t_env *e, t_light *area_light, int nb);
+
 
 /*
 **color_op1.c

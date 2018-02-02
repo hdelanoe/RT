@@ -132,6 +132,7 @@ t_color    light_intersection(t_env *e, t_light *light)
          c = c_c_mult(&light->color, &tmp);
     	 // printf("+%f %f %f+\n", c.r, c.g, c.b);  
 
+		if (tmp_object->id != e->id_object && ft_strcmp(tmp_object->type, "area_light") && sort_type(e, tmp_object)
        }
     }
     tmp_object = tmp_object->next;
