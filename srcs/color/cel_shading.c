@@ -6,7 +6,7 @@
 /*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 20:12:37 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/06/16 19:50:51 by dguy-caz         ###   ########.fr       */
+/*   Updated: 2018/02/05 15:25:38 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ t_color		cel_shading(t_vector *light, t_env *e, t_color *clr)
 		intens = 0.3;
 	else if (intens >= 0.6)
 		intens = 0.7;
-	// else if (intens >= 0.99)
-	// 	intens = 0.85;
 	else
 		return (set_color(0, 0, 0));
 	new = set_color(intens, intens, intens);
@@ -41,6 +39,7 @@ t_color		cel_shading(t_vector *light, t_env *e, t_color *clr)
 t_color		cel_shade_color(t_env *e)
 {
 	t_color		c;
+	t_color		c_light;
 	t_rayon		ray;
 	t_color		diffuse;
 	t_light		*tmp_light;
@@ -55,11 +54,8 @@ t_color		cel_shade_color(t_env *e)
 		tmp_light->rayon = normalize(&tmp_light->rayon);
 		e->current_origin = tmp_light->origin;
 		e->current_rayon = tmp_light->rayon;
-	//	if (!light_intersection(e, &tmp_light))
-	//	{
-		// 	diffuse = c_c_mult(&e->current_color, &tmp_light->color);
-		// 	c = cel_shading(&tmp_light->rayon, e, &c);
-		// }
+		c_light = light_intersection(e, &tmp_light);
+		c = add_diffuse(e, &c, tmp_light, &ray);
 		tmp_light = tmp_light->next;
 	}
 	return (c_c_add(&c, &diffuse));

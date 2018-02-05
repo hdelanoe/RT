@@ -6,22 +6,14 @@
 /*   By: nobila <nobila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 20:12:37 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/12/23 16:59:22 by nobila           ###   ########.fr       */
+/*   Updated: 2018/02/05 15:53:15 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-double		degree_to_radian(double degree_angle)
-{
-	double		radian_angle;
-
-	radian_angle = degree_angle * (2.0 * M_PI / 360.0);
-	return (radian_angle);
-}
-
-
-t_matrix4x4		m4x4_m4x4_mult(t_matrix4x4 *camera_matrix, t_matrix4x4 *rotation)
+t_matrix4x4	m4x4_m4x4_mult(t_matrix4x4 *camera_matrix,
+								t_matrix4x4 *rotation)
 {
 	t_matrix4x4	final_matrix;
 	int			i;
@@ -45,7 +37,8 @@ t_matrix4x4		m4x4_m4x4_mult(t_matrix4x4 *camera_matrix, t_matrix4x4 *rotation)
 	return (final_matrix);
 }
 
-void		matrix_4x4_to_vectors(t_vector *a, t_vector *b, t_vector *c, t_matrix4x4 *matrix)
+void		matrix_4x4_to_vectors(t_vector *a, t_vector *b,
+								t_vector *c, t_matrix4x4 *matrix)
 {
 	a->x = matrix->m[0][0];
 	a->y = matrix->m[0][1];
@@ -81,17 +74,17 @@ t_matrix4x4	matrix_camera_system(t_vector *a, t_vector *b, t_vector *c)
 	return (camera_matrix);
 }
 
-void	rotation_matrix(t_matrix4x4 *rotation, t_poly *p)
+void		rotation_matrix(t_matrix4x4 *rotation, t_poly *p)
 {
 	rotation->m[0][0] = p->c * p->e;
-	rotation->m[0][1] = - p->c * p->f;
+	rotation->m[0][1] = -p->c * p->f;
 	rotation->m[0][2] = p->d;
 	rotation->m[0][3] = 0.0;
 	rotation->m[1][0] = p->bd * p->e + p->a * p->f;
-	rotation->m[1][1] = - p->bd * p->f + p->a * p->e;
-	rotation->m[1][2] = - p->b * p->c;	
+	rotation->m[1][1] = -p->bd * p->f + p->a * p->e;
+	rotation->m[1][2] = -p->b * p->c;
 	rotation->m[1][3] = 0.0;
-	rotation->m[2][0] = - p->ad * p->e + p->b * p->f;
+	rotation->m[2][0] = -p->ad * p->e + p->b * p->f;
 	rotation->m[2][1] = p->ad * p->f + p->b * p->e;
 	rotation->m[2][2] = p->a * p->c;
 	rotation->m[2][3] = 0.0;

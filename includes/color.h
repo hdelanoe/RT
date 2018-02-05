@@ -15,7 +15,8 @@
 # include "../libft/libft.h"
 # include "rtv1.h"
 
-typedef struct s_color	t_color;
+typedef struct s_color		t_color;
+typedef struct s_getcolor	t_getcolor;
 
 struct					s_color
 {

@@ -6,7 +6,7 @@
 /*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 20:12:37 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/06/16 19:50:51 by dguy-caz         ###   ########.fr       */
+/*   Updated: 2018/02/05 14:33:14 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ double		magnitude(t_vector *a)
 
 t_vector	normalize(t_vector *a)
 {
-	t_vector na;
-	double magn;
+	t_vector	na;
+	double		magn;
 
 	magn = magnitude(a);
 	na.x = a->x / magn;
@@ -39,7 +39,7 @@ t_vector	normalize(t_vector *a)
 	return (na);
 }
 
-double	dot_product(t_vector *a, t_vector *b)
+double		dot_product(t_vector *a, t_vector *b)
 {
 	return (a->x * b->x + a->y * b->y + a->z * b->z);
 }

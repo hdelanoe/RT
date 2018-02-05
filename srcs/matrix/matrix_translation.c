@@ -6,13 +6,14 @@
 /*   By: dguy-caz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 20:12:37 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/06/16 19:50:51 by dguy-caz         ###   ########.fr       */
+/*   Updated: 2018/02/05 15:52:30 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-t_matrix4x1		m4x4_m4x1_mult_reduced(t_matrix4x4 *translation, t_matrix4x1 *matrix)
+t_matrix4x1		m4x4_m4x1_mult_reduced(t_matrix4x4 *translation,
+									t_matrix4x1 *matrix)
 {
 	t_matrix4x1	matrix_ret;
 
@@ -28,7 +29,6 @@ void			matrix_4x1_to_vectors(t_vector *a, t_matrix4x1 *matrix)
 	a->y = matrix->m[1][0];
 	a->z = matrix->m[2][0];
 }
-
 
 t_matrix4x1		matrix_camera_origin(t_vector *a)
 {
