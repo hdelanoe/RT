@@ -50,7 +50,8 @@ t_color	ambient_occlusion(t_env *e)
 	int			sample;
 
 	c = set_color(1, 1, 1);
-	init_ray_values(&origin, e);
+	origin.node = e->current_node;
+	origin.normal = e->current_node_normal;
 	sample = 16;
 	e->hit = 0;
 	while (sample > 0)
@@ -116,10 +117,10 @@ t_color	get_color(t_env *e)
 	t_rayon	ray;
 	t_light	*tmp_light;
 
-	ray->origin = e->current_origin;
-	ray->rayon = e->current_rayon;
-	ray->node = e->current_node;
-	ray->normal = e->current_node_normal;
+	ray.origin = e->current_origin;
+	ray.rayon = e->current_rayon;
+	ray.node = e->current_node;
+	ray.normal = e->current_node_normal;
 	c = c_double_mult(&e->current_color, e->ambient);
 	if (c.r == 0 && c.g == 0 && c.b == 0
 		&& e->intersect == 0)

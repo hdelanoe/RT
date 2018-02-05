@@ -40,17 +40,22 @@ SRCS		= 	srcs/main.c \
 				srcs/matrix/camera.c \
 				srcs/matrix/matrix_rotation.c \
 				srcs/matrix/matrix_translation.c \
+				srcs/matrix/matrix_tools.c \
 				srcs/parsing/parsing.c \
 				srcs/parsing/parse_material.c \
 				srcs/parsing/parsing_tools.c \
 				srcs/parsing/get_parsing.c \
 				srcs/parsing/create_object.c \
+				srcs/parsing/create_cap.c \
+				srcs/parsing/create_cube.c \
 				srcs/parsing/create_light.c \
 				srcs/parsing/create_area_light.c \
 				srcs/color/colors.c \
 				srcs/color/cel_shading.c \
 				srcs/color/colors_op1.c \
 				srcs/color/colors_op2.c \
+				srcs/color/recurse_color.c \
+				srcs/color/area_light.c \
 				srcs/vector/vectors_op1.c \
 				srcs/vector/vectors_op2.c \
 				srcs/vector/vectors_op3.c \

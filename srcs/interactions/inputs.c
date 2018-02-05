@@ -6,7 +6,7 @@
 /*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 12:35:14 by hdelanoe          #+#    #+#             */
-/*   Updated: 2018/01/31 12:35:15 by hdelanoe         ###   ########.fr       */
+/*   Updated: 2018/02/05 15:59:07 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ int		inputs(int keycode, t_env *e)
 	if ((keycode == KEY_D || keycode == KEY_A || keycode == KEY_Q ||
 	keycode == KEY_E || keycode == KEY_W || keycode == KEY_S ||
 	keycode == KEY_UP || keycode == KEY_DOWN || keycode == KEY_LEFT ||
-	keycode == KEY_RIGHT || keycode == KEY_Z || keycode == KEY_X) && 
+	keycode == KEY_RIGHT || keycode == KEY_Z || keycode == KEY_X) &&
 	!(e->pixelize || e->edit_flag))
 	{
 		mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 50,
 		0xFF0000, "Mouvement disable in render mode");
-		return (0);		
+		return (0);
 	}
 	return (1);
 }

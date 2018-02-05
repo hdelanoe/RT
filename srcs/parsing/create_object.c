@@ -68,20 +68,7 @@ void debug_object(t_object *tmp)
 	// printf("         b->%f\n", tmp->color.b);
 }
 
-void create_cap_sphere(t_object *sphere)
-{
-	t_object *disk;
 
-	disk = init_material();
-	if (!(disk->type = ft_strdup("disk")))
-		exit_rt(1);
-	disk->point = sphere->center;
-	disk->normal = sphere->normal;
-	disk->radius = sphere->radius;
-	disk->color = sphere->color;
-	debug_object(disk);
-	add_new_object(&sphere->sub_object, disk);
-}
 
 void create_child_glass(t_object *glass)
 {
@@ -191,126 +178,6 @@ void		create_plane(t_env *e, t_json *json)
 	add_new_object(&e->object, plane);
 }
 
-
-void 		create_cap_cube(t_object *cube)
-{
-	t_object *carre_1;
-	t_object *carre_2;
-	t_object *carre_3;
-	t_object *carre_4;
-	t_object *carre_5;
-	t_object *carre_6;
-
-	carre_1 = init_material();
-	if (!(carre_1->type = ft_strdup("quad")))
-		exit_rt(1);
-	carre_1->point = set_vector(cube->point.x , cube->point.y, cube->point.z);
-	carre_1->point_2 = set_vector(cube->point.x, cube->point.y, cube->point.z + cube->tangent);
-	carre_1->point_3 = set_vector(cube->point.x, cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
-	carre_1->point_4 = set_vector(cube->point.x, cube->point.y + cube->lenght_max, cube->point.z);
-	carre_1->color = cube->color;
-	debug_object(carre_1);
-	add_new_object(&cube->sub_object, carre_1);
-	carre_2 = init_material();
-	if (!(carre_2->type = ft_strdup("quad")))
-		exit_rt(1);
-	carre_2->point = cube->point;
-	carre_2->point_2 = set_vector(cube->point.x, cube->point.y + cube->lenght_max, cube->point.z);
-	carre_2->point_3 = set_vector(cube->point.x + cube->radius, cube->point.y + cube->lenght_max, cube->point.z);
-	carre_2->point_4 = set_vector(cube->point.x + cube->radius, cube->point.y, cube->point.z);
-	carre_2->color = cube->color;
-	debug_object(carre_2);
-	add_new_object(&cube->sub_object, carre_2);
-	carre_3 = init_material();
-	if (!(carre_3->type = ft_strdup("quad")))
-		exit_rt(1);
-	carre_3->point = set_vector(cube->point.x + cube->radius, cube->point.y, cube->point.z);
-	carre_3->point_2 = set_vector(cube->point.x + cube->radius, cube->point.y + cube->lenght_max, cube->point.z);
-	carre_3->point_3 = set_vector(cube->point.x + cube->radius, cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
-	carre_3->point_4 = set_vector(cube->point.x + cube->radius, cube->point.y, cube->point.z + cube->tangent);
-	carre_3->color = cube->color;
-	debug_object(carre_3);
-	add_new_object(&cube->sub_object, carre_3);
-	carre_4 = init_material();
-	if (!(carre_4->type = ft_strdup("quad")))
-		exit_rt(1);
-	carre_4->point = set_vector(cube->point.x + cube->radius , cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
-	carre_4->point_2 = set_vector(cube->point.x + cube->radius , cube->point.y, cube->point.z + cube->tangent);
-	carre_4->point_4 = set_vector(cube->point.x , cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
-	carre_4->point_3 = set_vector(cube->point.x, cube->point.y, cube->point.z + cube->tangent);
-	carre_4->color = cube->color;
-	debug_object(carre_4);
-	add_new_object(&cube->sub_object, carre_4);
-	carre_5 = init_material();
-	if (!(carre_5->type = ft_strdup("quad")))
-		exit_rt(1);
-	carre_5->point = set_vector(cube->point.x, cube->point.y + cube->lenght_max, cube->point.z);
-	carre_5->point_2 = set_vector(cube->point.x, cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
-	carre_5->point_3 = set_vector(cube->point.x + cube->radius, cube->point.y + cube->lenght_max, cube->point.z + cube->tangent);
-	carre_5->point_4 = set_vector(cube->point.x  + cube->radius, cube->point.y + cube->lenght_max, cube->point.z);
-	carre_5->color = cube->color;
-	debug_object(carre_5);
-	add_new_object(&cube->sub_object, carre_5);
-	carre_6 = init_material();
-	if (!(carre_6->type = ft_strdup("quad")))
-		exit_rt(1);
-	carre_6->point = set_vector(cube->point.x, cube->point.y, cube->point.z);
-	carre_6->point_2 = set_vector(cube->point.x, cube->point.y, cube->point.z + cube->tangent);
-	carre_6->point_3 = set_vector(cube->point.x + cube->radius, cube->point.y, cube->point.z + cube->tangent);
-	carre_6->point_4 = set_vector(cube->point.x  + cube->radius, cube->point.y, cube->point.z);
-	carre_6->color = cube->color;
-	debug_object(carre_6);
-	add_new_object(&cube->sub_object, carre_6);
-
-
-
-}
-
-void 		create_cube(t_env *e, t_json *json)
-{
-	t_object	*cube;
-	t_json		*tmp;
-
-	cube = init_material();
-	if (!(cube->type = ft_strdup("cube")))
-		exit_rt(1);
-	while(json->member)
-	{
-		tmp = json->member;
-		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
-			cube->point = parse_point(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "width")))
-			cube->lenght_max = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "length")))
-			cube->tangent = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "height")))
-			cube->radius = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "axis")))
-		{
-			cube->axis = parse_normal(tmp->member);
-			cube->axis = normalize(&cube->axis);
-		}
-		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
-			cube->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "material")))
-			parse_material(tmp, cube);
-		else
-		{
-			printf("%s\n",tmp->name );
-			ft_printf("{R}WARNING:{E} cube as a bad attribut\n");
-		}
-		json->member = json->member->next;
-		free_json_member(&tmp);
-	}
-	cube->point = v_v_mult(&cube->point, &cube->axis);
-	//cube->lenght_max *= cube->axis.x;
-	//cube->tangent *= cube->axis.z;
-	//cube->radius *= cube->axis.y;
-	create_cap_cube(cube);
-	debug_object(cube);
-	add_new_object(&e->object, cube);
-}
-
 void		create_triangle(t_env *e, t_json *json)
 {
 	t_object	*triangle;
@@ -408,31 +275,6 @@ void		create_sphere(t_env *e, t_json *json)
 	add_new_object(&e->object, sphere);
 }
 
-void create_cap_cylinder(t_object *cylinder)
-{
-	t_object *disk;
-
-	disk = init_material();
-		if (!(disk->type = ft_strdup("disk")))
-			exit_rt(1);
-	t_vector tmp = v_double_mult(&cylinder->axis, cylinder->lenght_max / 2);
-	disk->point = v_v_subs(&cylinder->center, &tmp);
-	disk->normal = cylinder->axis;
-	disk->radius = cylinder->radius;
-	disk->color = cylinder->color;
-	debug_object(disk);
-	add_new_object(&cylinder->sub_object, disk);
-	disk = init_material();
-		if (!(disk->type = ft_strdup("disk")))
-			exit_rt(1);
-	disk->normal = cylinder->axis;
-	disk->radius = cylinder->radius;
-	disk->color = cylinder->color;
-	disk->point = v_v_add(&cylinder->center, &tmp);
-	debug_object(disk);
-	add_new_object(&cylinder->sub_object, disk);
-}
-
 void		create_cylinder(t_env *e, t_json *json)
 {
 	t_object	*cylinder;
@@ -470,65 +312,6 @@ void		create_cylinder(t_env *e, t_json *json)
 		cylinder->lenght_max = 100000;
 	debug_object(cylinder);
 	add_new_object(&e->object, cylinder);
-}
-
-void create_disk(t_env *e, t_json *json)
-{
-	t_object	*disk;
-	t_json		*tmp;
-
-	disk = init_material();
-	if (!(disk->type = ft_strdup("disk")))
-		exit_rt(1);
-	while(json->member)
-	{
-		if (ft_strcmp(json->member->name, "coord") == 0)
-			disk->point = parse_point(json->member->member);
-		else if (ft_strcmp(json->member->name, "normal") == 0)
-			disk->normal = parse_normal(json->member->member);
-		else if (ft_strcmp(json->member->name, "radius") == 0)
-			disk->radius = ft_atod(json->member->content);
-		else if (ft_strcmp(json->member->name, "material") == 0)
-			parse_material(json->member, disk);
-		else if (ft_strcmp(json->member->name, "color") == 0)
-			disk->color = parse_color(json->member->member);
-		tmp = json->member;
-		json->member = json->member->next;
-		free_json_member(&tmp);
-	}
-	debug_object(disk);
-	add_new_object(&e->object, disk);
-}
-
-void create_cap_cone(t_object *cone)
-{
-	t_object *disk;
-	t_vector tmp;
-
-	disk = init_material();
-	if (!(disk->type = ft_strdup("disk")))
-		exit_rt(1);
-	tmp = v_double_mult(&cone->axis, cone->lenght_max);
-	disk->point = v_v_add(&tmp, &cone->center);
-	disk->normal = cone->axis;
-	disk->radius = cone->tangent * cone->lenght_max;
-	disk->color = cone->color;
-	debug_object(disk);
-	add_new_object(&cone->sub_object, disk);
-	if (cone->radius < cone->lenght_max)
-	{
-		disk = init_material();
-		if (!(disk->type = ft_strdup("disk")))
-			exit_rt(1);
-		tmp = v_double_mult(&cone->axis, cone->radius);
-		disk->point = v_v_add(&tmp, &cone->center);
-		disk->normal = cone->axis;
-		disk->radius = cone->tangent * cone->radius;
-		disk->color = cone->color;
-		debug_object(disk);
-		add_new_object(&cone->sub_object, disk);
-	}
-
 }
 
 void		create_cone(t_env *e, t_json *json)

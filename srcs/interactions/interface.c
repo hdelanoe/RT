@@ -6,13 +6,31 @@
 /*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 12:30:19 by hdelanoe          #+#    #+#             */
-/*   Updated: 2018/01/31 12:30:20 by hdelanoe         ###   ########.fr       */
+/*   Updated: 2018/02/05 16:03:46 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
-void 		print_help(t_env *e)
+void	print_help_mouvement(t_env *e)
+{
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 450,
+		0xFFFFFF, "MOUVEMENT :");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 500,
+		0xFFFFFF, "Translate : W, A, S, D");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 550,
+		0xFFFFFF, "Rotate : UP, LEFT, DOWN, RIGHT");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 600,
+		0xFFFFFF, "Lift : Q, E");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 650,
+		0xFFFFFF, "Pivot : Z, X");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 700,
+		0xFFFFFF, "COPY / PASTE OBJECT : LMB");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 750,
+		0xFFFFFF, "DELETE OBJECT: RMB");
+}
+
+void	print_help(t_env *e)
 {
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 50,
 		0xAAFFFF, "-- RT HELP MODE --");
@@ -30,25 +48,10 @@ void 		print_help(t_env *e)
 		0xFFFFFF, "CEL-SHADING : C");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 400,
 		0xFFFFFF, "FILTER : 0, 1, 2, 3, 4...");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 450,
-		0xFFFFFF, "MOUVEMENT :");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 500,
-		0xFFFFFF, "Translate : W, A, S, D");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 550,
-		0xFFFFFF, "Rotate : UP, LEFT, DOWN, RIGHT");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 600,
-		0xFFFFFF, "Lift : Q, E");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 650,
-		0xFFFFFF, "Pivot : Z, X");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 700,
-		0xFFFFFF, "COPY / PASTE OBJECT : LMB");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 750,
-		0xFFFFFF, "DELETE OBJECT: RMB");
-
-
+	print_help_mouvement(e);
 }
 
-void		print_info(t_env *e)
+void	print_info(t_env *e)
 {
 	char *mode;
 

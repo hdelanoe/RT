@@ -49,6 +49,7 @@ typedef struct s_mlx			t_mlx;
 typedef struct s_camera			t_camera;
 typedef struct s_grid			t_grid;
 typedef struct s_object			t_object;
+typedef struct s_cube			t_cube;
 typedef struct s_light			t_light;
 typedef struct s_rayon			t_rayon;
 typedef struct s_flag 			t_flag;
@@ -112,6 +113,16 @@ struct							s_object
 	t_object					*sub_object;
 	double 						indice;
 	t_object					*next;
+};
+
+struct 							s_cube
+{
+	t_object *carre_1;
+	t_object *carre_2;
+	t_object *carre_3;
+	t_object *carre_4;
+	t_object *carre_5;
+	t_object *carre_6;
 };
 
 struct							s_light
@@ -458,6 +469,7 @@ t_color							cel_shade_color(t_env *e);
 t_color							choose_color(t_env *e);
 double 							get_specular(t_light *light, t_vector *view, t_vector *node);
 void							init_ray_values(t_rayon *ray, t_env *e);
+t_color							add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray);
 void							shoot_new_color(t_env *e, t_color *c, double coef);
 void							recurse_color(t_env *e, t_rayon ray, t_color *c);
 t_color							ambient_occlusion(t_env *e);
