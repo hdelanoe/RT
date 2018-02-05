@@ -91,12 +91,15 @@ t_color	add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
 	t_vector	angle;
 	double		specular;
 
+	diffuse = set_color(0, 0, 0);
 	light->rayon = v_v_subs(&e->current_node, &light->origin);
 	e->distance_light_object = magnitude(&light->rayon);
 	light->rayon = normalize(&light->rayon);
 	e->current_origin = light->origin;
 	e->current_rayon = light->rayon;
 	c_light = light_intersection(e, light);
+	if (c_light.r == 0 && c_light.g == 0 && c_light.b == 0)
+		return (*c);
 	angle = v_double_mult(&light->rayon, (-1));
 	light->angle = dot_product(&e->current_node_normal, &angle);
 	specular = e->specular * get_specular(light, &ray->rayon, &ray->normal);
@@ -107,8 +110,7 @@ t_color	add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
 		diffuse = c_double_mult(&diffuse, light->angle);
 		diffuse = c_double_mult(&diffuse, e->diffuse);
 	}
-	*c = c_c_add(c, &diffuse);
-	return (*c);
+	return (c_c_add(c, &diffuse));
 }
 
 t_color	get_color(t_env *e)

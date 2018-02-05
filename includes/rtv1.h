@@ -138,6 +138,10 @@ struct							s_light
 	double						angle;
 	t_color						color;
 	t_light						*next;
+	t_vector					length;
+	t_vector					length_div;
+	t_vector					width;
+	t_vector					width_div;
 };
 
 struct							s_rayon
@@ -343,6 +347,8 @@ struct							s_poly
 	double						radian_x;
 	double						radian_y;
 	double						radian_z;
+	int							i;
+	int							nb;
 };
 
 int p[512];
@@ -474,9 +480,12 @@ void							shoot_new_color(t_env *e, t_color *c, double coef);
 void							recurse_color(t_env *e, t_rayon ray, t_color *c);
 t_color							ambient_occlusion(t_env *e);
 t_color							get_color(t_env *e);
+/*
+**area_light.c
+*/
 t_color							get_area_light_intensity(t_env *e, t_light *area_light, t_rayon *ray, t_color *c);
-void							get_area_light_origin(t_env *e, t_light *area_light, int nb);
-
+void							get_area_light_origin(t_light *area_light, int nb);
+void							init_area_size(t_light *area_light);
 
 /*
 **color_op1.c
