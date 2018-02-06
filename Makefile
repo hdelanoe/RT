@@ -43,11 +43,15 @@ SRCS		= 	srcs/main.c \
 				srcs/matrix/matrix_tools.c \
 				srcs/parsing/parsing.c \
 				srcs/parsing/parse_material.c \
+				srcs/parsing/choose_material.c \
 				srcs/parsing/parsing_tools.c \
 				srcs/parsing/get_parsing.c \
 				srcs/parsing/create_object.c \
+				srcs/parsing/create_object2.c \
+				srcs/parsing/object_attribut.c \
 				srcs/parsing/create_cap.c \
 				srcs/parsing/create_cube.c \
+				srcs/parsing/create_glass.c \
 				srcs/parsing/create_light.c \
 				srcs/parsing/create_area_light.c \
 				srcs/color/colors.c \

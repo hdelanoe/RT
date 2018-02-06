@@ -214,6 +214,8 @@ struct							s_env
 	t_vector					current_rayon;
 	t_vector					current_node;
 	t_vector					current_node_normal;
+	t_vector					object_node;
+	t_vector 					object_normal;
 	t_color						current_color;
 	double						width;
 	double						height;
@@ -554,6 +556,10 @@ void							create_light(t_env *e, t_json *json);
 */
 void							add_new_object(t_object **list, t_object *new_object);
 void							debug_object(t_object *tmp);
+void 							plane_attribut(t_object *object, t_json *json);
+t_object 						*sphere_attribut(t_object *object, t_json *json);
+void 							cylinder_attribut(t_object *object, t_json *json);
+void 							cone_attribut(t_object *object, t_json *json);
 void							create_cap_sphere(t_object *sphere);
 void							create_child_glass(t_object *glass);
 void							create_glass(t_env *e, t_json *json);
@@ -586,6 +592,11 @@ void							parse_scene(t_env *e, t_json *json);
 t_object						*init_material(void);
 void							parse_material(t_json *material, t_object *object);
 void							free_json_member(t_json **member);
+void 							choose_ice(t_object *object);
+void 							choose_water(t_object *object);
+void 							choose_glass(t_object *object);
+void 							choose_pmma(t_object *object);
+void 							choose_diam(t_object *object);
 
 /*
 **parsing.c

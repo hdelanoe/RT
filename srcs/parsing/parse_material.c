@@ -54,16 +54,16 @@ void 	parse_indice(char **material, t_object *object)
 		object->indice = R_VOID;
 	else if (!(ft_strcmp(*material, "air")))
 		object->indice = R_AIR;
-	else if (!(ft_strcmp(*material, "glass")))
-		object->indice = R_GLASS;
 	else if (!(ft_strcmp(*material, "ice")))
-		object->indice = R_ICE;
+		choose_ice(object);
 	else if (!(ft_strcmp(*material, "water")))
-		object->indice = R_WATER;
+		choose_water(object);
 	else if (!(ft_strcmp(*material, "pmma")))
-		object->indice = R_PMMA;
+		choose_pmma(object);
+	else if (!(ft_strcmp(*material, "glass")))
+		choose_glass(object);
 	else if (!(ft_strcmp(*material, "diam")))
-		object->indice = R_DIAM;
+		choose_diam(object);
 	free(material);
 }
 
@@ -78,27 +78,22 @@ void	parse_material(t_json *material, t_object *object)
 	while (material->member)
 	{
 		tmp = material->member;
-		if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
-			object->color = parse_color(tmp->member);
-		else 
-		{
-			if (!(ft_strcmp(tmp->name, "ambient")) && tmp->content)
-				object->ambient = ft_atod(tmp->content);
-			else if (!(ft_strcmp(tmp->name, "diffuse")) && tmp->content)
-				object->diffuse = ft_atod(tmp->content);
-			else if (!(ft_strcmp(tmp->name, "specular")) && tmp->content)
-				object->specular = ft_atod(tmp->content);
-			else if (!(ft_strcmp(tmp->name, "reflect")) && tmp->content)
-				object->reflect = ft_atod(tmp->content);
-			else if (!(ft_strcmp(tmp->name, "refract")) && tmp->content)
-				object->refract = ft_atod(tmp->content);
-			else if (!(ft_strcmp(tmp->name, "absorbtion")) && tmp->content)
-				object->absorbtion = ft_atod(tmp->content);
-			else
-				ft_printf("{R}WARNING:{E} material %s is not valid\n", tmp->name);
-			free(tmp->content);
-		}
+		if (!(ft_strcmp(tmp->name, "ambient")) && tmp->content)
+			object->ambient = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "diffuse")) && tmp->content)
+			object->diffuse = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "specular")) && tmp->content)
+			object->specular = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "reflect")) && tmp->content)
+			object->reflect = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "refract")) && tmp->content)
+			object->refract = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "absorbtion")) && tmp->content)
+			object->absorbtion = ft_atod(tmp->content);
+		else
+		ft_printf("{R}WARNING:{E} material %s is not valid\n", tmp->name);
 		material->member = material->member->next;
+		free(tmp->content);
 		free(tmp->name);
 		free(tmp);
 	}

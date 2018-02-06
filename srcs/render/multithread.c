@@ -15,29 +15,29 @@
 void	*ray_tracer_void(void *e) 
 {
 	ray_tracer(e);
-	return ((void *)(1));
+	return (NULL);
 }
 
 void	ft_pthread(t_env *e, void *(*f)(void *param))
 {
-	t_env		tab[10];
-	pthread_t	t[10];
+	t_env		tab[4];
+	pthread_t	t[4];
 	int			i;
 
 	i = 0;
-	while (i < 10)
+	while (i < 4)
 	{
-		// ft_memcpy((void*)&tab[i], (void*)e, sizeof(t_env));
-		printf("i = %d\n", i);
+		 ft_memcpy((void*)&tab[i], (void*)e, sizeof(t_env));
+	//	printf("i = %d\n", i);
 		// init_camera(tab[i]);
-		tab[i].begin = 100 * i;
-		tab[i].fin = 100 * (i + 1);
-		printf("tab[%d] = %d\n", i, tab[i].begin);
+		tab[i].begin = 200 * i;
+		tab[i].fin = 200 * (i + 1);
+	//	printf("tab[%d] = %d\n", i, tab[i].begin);
 		pthread_create(&t[i], NULL, f, &tab[i]);
 		i++;
 	}
 	i = 0;
-	while (i < 10)
+	while (i < 4)
 	{
 		pthread_join(t[i], NULL);
 		i++;

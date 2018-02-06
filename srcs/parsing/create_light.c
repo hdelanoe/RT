@@ -16,9 +16,8 @@ void		add_new_light(t_light **list, t_light *new_light)
 {
 	t_light	*tmp;
 
-	if (!(*list)->color.r)
+	if (!(*list))
 	{
-		free((*list));
 		(*list) = new_light;
 		return ;
 	}

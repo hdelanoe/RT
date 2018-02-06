@@ -41,10 +41,6 @@ t_env		*init(void)
 
 	if (!(e = (t_env*)ft_memalloc(sizeof(t_env))))
 		exit_rt(1);
-	if (!(e->object = (t_object*)ft_memalloc(sizeof(t_object))))
-		exit_rt(1);
-	if (!(e->light = (t_light*)ft_memalloc(sizeof(t_light))))
-		exit_rt(1);
 	e->width = WIN_X;
 	e->height = WIN_Y;
 	e->distance = WIN_X;

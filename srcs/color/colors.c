@@ -98,6 +98,7 @@ t_color	add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
 	e->current_origin = light->origin;
 	e->current_rayon = light->rayon;
 	c_light = light_intersection(e, light);
+	c_light = c_double_mult(&c_light, 1 - (e->distance_light_object / 100000));
 	if (c_light.r == 0 && c_light.g == 0 && c_light.b == 0)
 		return (*c);
 	angle = v_double_mult(&light->rayon, (-1));
@@ -124,8 +125,9 @@ t_color	get_color(t_env *e)
 	ray.node = e->current_node;
 	ray.normal = e->current_node_normal;
 	c = c_double_mult(&e->current_color, e->ambient);
-	if (c.r == 0 && c.g == 0 && c.b == 0
-		&& e->intersect == 0)
+	c = c_double_mult(&c, 1 - (e->distance / 100000));
+	if ((c.r == 0 && c.g == 0 && c.b == 0)
+		|| e->edit_flag == 1)
 		return (c);
 	tmp_light = e->light;
 	while (tmp_light)
