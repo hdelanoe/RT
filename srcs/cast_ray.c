@@ -20,16 +20,8 @@ void 	init_rayon_values(t_env *e, t_vector rayon, t_vector origin)
 	e->intersect = 0;
 	e->reflect = 0;
 	e->refract = 0;
-	e->bump = 0;
-	e->distance = 100000;
-}
-
-t_vector bump_normal(t_vector normal)
-{
-	double n;
-
-	n = noise(normal.x, normal.y, normal.z);
-	return (v_double_mult(&normal, n));
+//	e->bump = 0;
+	e->distance = 50000;
 }
 
 int	cast_ray(t_env *e, t_vector rayon, t_vector origin)
@@ -38,18 +30,20 @@ int	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 
 	e->skybox = 0;
 	init_rayon_values(e, rayon, origin);
-//	printf("r %f g %f b %f\n", e->color_finale.r, e->color_finale.g, e->color_finale.b);
 	tmp_object = e->object;
 	check_intersection(e, tmp_object);
 	if (e->intersect)
+	{
+		// if (e->bump)
+		// {
+		// 	e->current_node = bump_normal(e, e->current_node);
+		// 	e->current_node_normal = bump_normal(e, e->current_node_normal);
+		// }
 		return (1);
+	}
 	return (0);
 }
-	//	if (e->bump)
-	//	{
-	//		node.node = bump_normal(e->current_node);
-	//		node.normal = bump_normal(e->current_node_normal);
-	//	}
+	
 
 int cast_reflect_ray(t_env *e, t_rayon incident)
 {

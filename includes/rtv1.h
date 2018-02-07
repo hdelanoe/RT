@@ -20,6 +20,7 @@
 # include "color.h"
 # include "vector.h"
 # include "matrix.h"
+# include "permtab.h"
 # include "mlx_key_macos.h"
 # include <math.h>
 # include <time.h>
@@ -112,6 +113,7 @@ struct							s_object
 	double						absorbtion;
 	t_object					*sub_object;
 	double 						indice;
+	int 						bump;
 	t_object					*next;
 };
 
@@ -292,6 +294,7 @@ struct							s_env
 	t_vector					rayon_length_div;
 	t_vector					rayon_width;
 	t_vector					rayon_width_div;
+	int 						p[512];
 };
 
 struct 							s_physics
@@ -353,8 +356,6 @@ struct							s_poly
 	int							nb;
 };
 
-int p[512];
-
 /*
 **main.c
 */
@@ -375,7 +376,6 @@ int								cone_intersection(t_env *e, t_object *cone);
 **cast_ray.c
 */
 void							init_rayon_values(t_env *e, t_vector rayon, t_vector origin);
-t_vector						bump_normal(t_vector normal);
 int								cast_ray(t_env *e, t_vector rayon, t_vector origin);
 int								cast_reflect_ray(t_env *e, t_rayon incident);
 int								cast_refract_ray(t_env *e, t_rayon origin);
@@ -417,11 +417,7 @@ int								mouse(int button, int x, int y, t_env *e);
 /*
 **perlin_noise.c
 */
-double							fade(double t);
-double							lerp(double t, double a, double b);
-double							grad(int hash, double x, double y, double z);
-double							noise(double x, double y, double z);
-void							loadPermutation(void);
+double							noise(t_env *e, double x, double y, double z);
 /*
 **quad.c
 */

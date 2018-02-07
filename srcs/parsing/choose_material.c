@@ -32,6 +32,7 @@ void 	choose_water(t_object *object)
 	object->reflect = 1;
 	object->refract = 1;
 	object->absorbtion = 0.425;
+	object->bump = 1;
 	object->indice = R_WATER;
 }
 

@@ -12,35 +12,6 @@
 
 #include "rtv1.h"
 
-t_color	choose_color(t_env *e)
-{
-	t_color new;
-
-	if (e->aa_flag == 1 && e->pixelize == 0)
-	{
-		if (e->cel_shade == 1)
-			new = e->current_color;
-		else
-			new = get_color(e);
-	}
-	else if (e->pixelize == 1)
-	{
-		if (e->edit_flag == 1)
-			new = e->current_color;
-		else if (e->cel_shade == 1)
-			new = cel_shade_color(e);
-		else
-			new = get_color(e);
-	}
-	else if (e->edit_flag == 1)
-		new = e->current_color;
-	else if (e->cel_shade == 1)
-		new = cel_shade_color(e);
-	else
-		new = get_color(e);
-	return (new);
-}
-
 t_color	ambient_occlusion(t_env *e)
 {
 	t_color		c;
@@ -84,6 +55,25 @@ double	get_specular(t_light *light, t_vector *view, t_vector *node)
 	return (phong_color);
 }
 
+void init_ray_values(t_rayon *ray, t_env *e)
+{
+	// double n;
+
+  	ray->origin = e->current_origin;
+  	ray->rayon = e->current_rayon;
+  	ray->node = e->current_node;
+ 	ray->normal = e->current_node_normal;
+	// if (e->bump)
+	// {
+	// 	n = noise(e, ray->node.x,ray->node.y, ray->node.z);
+	// 	ray->node = v_double_mult(&ray->node, n);
+	// 	if (ray->node.x != e->current_node.x)
+	// 		printf("%f %f\n", ray->node.x, e->current_node.x);
+	// 	n = noise(e, ray->normal.x,ray->normal.y, ray->normal.z);
+	// 	ray->normal = v_double_mult(&ray->normal, n);
+	// }
+}
+
 t_color	add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
 {
 	t_color		diffuse;
@@ -92,17 +82,17 @@ t_color	add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
 	double		specular;
 
 	diffuse = set_color(0, 0, 0);
-	light->rayon = v_v_subs(&e->current_node, &light->origin);
+	light->rayon = v_v_subs(&ray->node, &light->origin);
 	e->distance_light_object = magnitude(&light->rayon);
 	light->rayon = normalize(&light->rayon);
 	e->current_origin = light->origin;
 	e->current_rayon = light->rayon;
 	c_light = light_intersection(e, light);
-	c_light = c_double_mult(&c_light, 1 - (e->distance_light_object / 100000));
+	c_light = c_double_mult(&c_light, 1 - (e->distance / 50000));
 	if (c_light.r == 0 && c_light.g == 0 && c_light.b == 0)
 		return (*c);
 	angle = v_double_mult(&light->rayon, (-1));
-	light->angle = dot_product(&e->current_node_normal, &angle);
+	light->angle = dot_product(&ray->normal, &angle);
 	specular = e->specular * get_specular(light, &ray->rayon, &ray->normal);
 	if (light->angle > 0)
 	{
@@ -120,12 +110,9 @@ t_color	get_color(t_env *e)
 	t_rayon	ray;
 	t_light	*tmp_light;
 
-	ray.origin = e->current_origin;
-	ray.rayon = e->current_rayon;
-	ray.node = e->current_node;
-	ray.normal = e->current_node_normal;
+	init_ray_values(&ray, e);
 	c = c_double_mult(&e->current_color, e->ambient);
-	c = c_double_mult(&c, 1 - (e->distance / 100000));
+	c = c_double_mult(&c, 1 - (e->distance / 50000));
 	if ((c.r == 0 && c.g == 0 && c.b == 0)
 		|| e->edit_flag == 1)
 		return (c);

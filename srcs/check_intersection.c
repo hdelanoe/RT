@@ -28,6 +28,7 @@ void	get_object_values(t_env *e, t_object *object)
 	e->refract = object->refract;
 	e->specular = object->specular;
 	e->id_object = object->id;
+	e->bump = object->bump;
 	e->object_indice = object->indice;
 	if (e->is_copy)
 		e->copy = object;
@@ -117,8 +118,8 @@ t_color    light_intersection(t_env *e, t_light *light)
 		   		return (set_color(0, 0, 0));
 			else
 			{	
-				if (!(ft_strcmp("sphere", tmp_object->type)))
-					wrap_sphere(e, tmp_object);
+		//		if (!(ft_strcmp("sphere", tmp_object->type)))
+		//			wrap_sphere(e, tmp_object);
 					// e->skybox = 1;
 			tmp = c_double_mult(&e->current_color, 1 - tmp_object->absorbtion);
 			c = c_c_mult(&light->color, &tmp);

@@ -44,6 +44,7 @@ t_object	*init_material(void)
 	object->absorbtion = 0.125;
 	object->radius = 0;
 	object->sub_object = NULL;
+	object->bump = 0;
 	object->indice = R_VOID;
 	return (object);
 }
@@ -64,7 +65,6 @@ void 	parse_indice(char **material, t_object *object)
 		choose_glass(object);
 	else if (!(ft_strcmp(*material, "diam")))
 		choose_diam(object);
-	free(material);
 }
 
 void	parse_material(t_json *material, t_object *object)
