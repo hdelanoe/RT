@@ -12,7 +12,6 @@
 
 #include "rtv1.h"
 
-pthread_mutex_t mutex0 = PTHREAD_MUTEX_INITIALIZER;
 
 void		*aa_tracer_void(void *e)
 {

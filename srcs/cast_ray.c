@@ -26,12 +26,18 @@ void 	init_rayon_values(t_env *e, t_vector rayon, t_vector origin)
 
 int	cast_ray(t_env *e, t_vector rayon, t_vector origin)
 {
-	t_object 	*tmp_object;
+	t_object 	tmp_object;
 
 	e->skybox = 0;
 	init_rayon_values(e, rayon, origin);
-	tmp_object = e->object;
-	check_intersection(e, tmp_object);
+	tmp_object = *e->object;
+	while(1)
+	{
+		check_intersection(e, &tmp_object);
+		if (tmp_object.next == NULL)
+			break ;
+		tmp_object = *tmp_object.next;
+	}
 	if (e->intersect)
 	{
 		// if (e->bump)

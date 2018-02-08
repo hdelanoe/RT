@@ -95,7 +95,7 @@ void		create_sphere(t_env *e, t_json *json)
 {
 	t_object	*sphere;
 	t_json		*tmp;
-
+	
 	sphere = init_material();
 	if (!(sphere->type = ft_strdup("sphere")))
 		exit_rt(1);

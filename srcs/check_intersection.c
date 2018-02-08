@@ -14,12 +14,14 @@
 
 void	get_object_values(t_env *e, t_object *object)
 {
+
 	if (!ft_strcmp(object->type, "area_light"))
 		e->area_light_on = 1;
 	else
 		e->area_light_on = 0;
 	e->current_node = object->node;
 	e->current_node_normal = object->node_normal;
+	e->bump = object->bump;
 	e->current_color = object->color;
 	e->ambient = object->ambient;
 	e->diffuse = object->diffuse;
@@ -28,7 +30,6 @@ void	get_object_values(t_env *e, t_object *object)
 	e->refract = object->refract;
 	e->specular = object->specular;
 	e->id_object = object->id;
-	e->bump = object->bump;
 	e->object_indice = object->indice;
 	if (e->is_copy)
 		e->copy = object;
@@ -76,7 +77,7 @@ int sort_type(t_env *e, t_object *object)
 
 void check_intersection(t_env *e, t_object *object)
 {
-	while (object)
+	if (sort_type(e, object) && e->solution < e->distance && e->solution >= 0)
 	{
 		if (sort_type(e, object) && e->solution < e->distance && e->solution >= 0)
 		{

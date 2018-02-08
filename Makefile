@@ -27,6 +27,7 @@ SRCS		= 	srcs/main.c \
 				srcs/quad.c \
 				srcs/errors.c \
 				srcs/perlin_noise.c \
+				srcs/bump.c \
 				srcs/ft_remove_if.c \
 				srcs/interactions/user_interactions.c \
 				srcs/interactions/mouse.c \

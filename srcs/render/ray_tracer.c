@@ -133,10 +133,13 @@ void	ray_tracer(t_env *e)
 	t_color 	color;
 	
 	y = 0;
+	// printf("%d %d\n", e->begin, e->fin);
+	// printf("%p \n", &e->mlx);
+
 	while (y < e->height)
 	{
-		x = 0;
-		while (x < e->width)
+		x = e->begin;
+		while (x < e->fin)
 		{
 			e->recursion = 6;
 			color = set_color(0, 0, 0);
@@ -158,7 +161,8 @@ void	ray_tracer(t_env *e)
 					color = get_color(e);
 			}
 			color = set_filter(e, color);
-		//	if (color.r != 0 || color.g != 0 || color.b != 0)
+			// if (e->begin == 700)
+				// printf(" r %f, g  %f b %f\n", color.r , color.g , color.b);
 				print_color(&color, e, x, y);
 			e->skybox = 0;
 			x++;

@@ -219,6 +219,8 @@ struct							s_env
 	t_vector					current_node_normal;
 	t_vector					object_node;
 	t_vector 					object_normal;
+	t_vector 					light_rayon;
+	double 						light_angle;
 	t_color						current_color;
 	double						width;
 	double						height;
@@ -421,6 +423,7 @@ int								mouse(int button, int x, int y, t_env *e);
 **perlin_noise.c
 */
 double							noise(t_env *e, double x, double y, double z);
+double 							turbulence(t_env *e, double x, double y, double z);
 /*
 **quad.c
 */
@@ -448,6 +451,7 @@ void							load_texture(t_env *e);
 void							wrap_sphere(t_env *e, t_object *object);
 void							wrap_cylinder(t_env *e, t_object *object);
 t_color							get_texture_info(unsigned char *text_data, t_env *e, int sl);
+
 
 /*
 **torus.c
@@ -592,6 +596,7 @@ void							parse_scene(t_env *e, t_json *json);
 t_object						*init_material(void);
 void							parse_material(t_json *material, t_object *object);
 void							free_json_member(t_json **member);
+void 							choose_mirror(t_object *object);
 void 							choose_ice(t_object *object);
 void 							choose_water(t_object *object);
 void 							choose_glass(t_object *object);
@@ -666,5 +671,7 @@ void 							add_object(t_env *e, int x, int y);
 int 							copy_object(t_env *e, int x, int y);
 int 							delete_object(t_env *e, int x, int y);
 void							wrap_plane(t_env *e);
+void							*pxl_tracer_void(void *e); 
+
 
 #endif
