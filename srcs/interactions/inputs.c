@@ -28,6 +28,10 @@ void	inputs2(int keycode, t_env *e)
 		e->filter_flag = 5;
 	else if (keycode == KEY_PAD_6)
 		e->filter_flag = 6;
+	else if (keycode == KEY_PAD_ADD)
+		e->ti += 1;
+	else if (keycode == KEY_Y)
+		e->text_flag = e->text_flag == 1 ? 0 : 1;
 }
 
 void	inputs_conditions(int keycode, t_env *e)

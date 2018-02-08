@@ -275,13 +275,14 @@ struct							s_env
 	int							j;
 	double						u;
 	double						v;
-	int							bpp;
+	unsigned int				ti;
+	int							text_flag;
+	int							bpp[10];
 	int							end;
 	int							naz;
-	void						*text;
-	void						*text_img;
-	unsigned char				*text_data;
-	int							sl;
+	void						*text_img[10];
+	unsigned char				*text_data[10];
+	int							sl[10];
 	int							skybox;
 	int							cel_shade;
 	int 						render_mode;
@@ -446,7 +447,7 @@ t_color							normalize_color(t_color *color);
 void							load_texture(t_env *e);
 void							wrap_sphere(t_env *e, t_object *object);
 void							wrap_cylinder(t_env *e, t_object *object);
-t_color							get_texture_info(unsigned char *text_data, t_env *e);
+t_color							get_texture_info(unsigned char *text_data, t_env *e, int sl);
 
 /*
 **torus.c

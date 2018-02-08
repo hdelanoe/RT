@@ -83,18 +83,16 @@ void check_intersection(t_env *e, t_object *object)
 			e->distance = e->solution;
 			get_object_values(e, object);
 			e->delete_id = object->id;
-			// // /*COMMENTEZ CETTE SECTION POUR ACTIVER/DESACTIVER LES TEXTURES*/
-			// // if (!(ft_strcmp("plane", object->type)))
-			// // 	wrap_plane(e);
-			// 	// e->bump = 1;
-			// if (!(ft_strcmp("sphere", object->type)))
-			// 	wrap_sphere(e, object);
-			// // 	// e->skybox = 1;
-			// // if (!(ft_strcmp("cylinder", object->type)))
-			// // 	wrap_sphere(e, object);
-			// // if (!(ft_strcmp("cone", object->type)))
-			// 	wrap_sphere(e, object);
-			// /***************************************************************/
+			// /*COMMENTEZ CETTE SECTION POUR ACTIVER/DESACTIVER LES TEXTURES*/
+			if (e->text_flag == 1)
+			{
+				if (!(ft_strcmp("plane", object->type)))
+					wrap_plane(e);
+				if (!(ft_strcmp("sphere", object->type)))
+					wrap_sphere(e, object);
+				if (!(ft_strcmp("cylinder", object->type)))
+					wrap_cylinder(e, object);
+			}
 			e->intersect = 1;
 		}
 		object = object->next;
