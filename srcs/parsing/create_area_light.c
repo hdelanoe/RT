@@ -64,5 +64,5 @@ void			create_area_light(t_env *e, t_json *json)
 	add_new_light(&e->light, al_light);
 	debug_object(al_object);
 	add_new_object(&e->object, al_object);
-	init_area_size(al_light);
+	init_area_size(al_object, al_light);
 }

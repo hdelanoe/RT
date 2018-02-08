@@ -98,6 +98,7 @@ struct							s_object
 	t_vector					normal;
 	double						radius;
 	double						lenght_max;
+	double						range_max;
 	double						tangent;
 	t_vector					axis;
 	t_vector					node;
@@ -353,6 +354,7 @@ struct							s_poly
 	double						radian_y;
 	double						radian_z;
 	int							i;
+	int							j;
 	int							nb;
 };
 
@@ -483,7 +485,8 @@ t_color							get_color(t_env *e);
 */
 t_color							get_area_light_intensity(t_env *e, t_light *area_light, t_rayon *ray, t_color *c);
 void							get_area_light_origin(t_light *area_light, int nb);
-void							init_area_size(t_light *area_light);
+void							init_area_size(t_object	*al_object, t_light *area_light);
+t_color							get_area_color(t_env *e);
 
 /*
 **color_op1.c
