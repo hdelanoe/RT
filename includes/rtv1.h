@@ -554,16 +554,17 @@ t_matrix4x4						translation(t_env *e, t_matrix4x4 *rot);
 void							add_new_light(t_light **list, t_light *new_light);
 void							debug_light(t_light *tmp);
 void							create_light(t_env *e, t_json *json);
+/*
+**create_object.c
+*/
+void							fill_area_light_infos(t_json *tmp, t_object *al_object, t_light *al_light);
+void							create_area_light(t_env *e, t_json *json);
 
 /*
 **create_object.c
 */
 void							add_new_object(t_object **list, t_object *new_object);
 void							debug_object(t_object *tmp);
-void 							plane_attribut(t_object *object, t_json *json);
-t_object 						*sphere_attribut(t_object *object, t_json *json);
-void 							cylinder_attribut(t_object *object, t_json *json);
-void 							cone_attribut(t_object *object, t_json *json);
 void							create_cap_sphere(t_object *sphere);
 void							create_child_glass(t_object *glass);
 void							create_glass(t_env *e, t_json *json);
@@ -578,7 +579,15 @@ void							create_cap_cone(t_object *cone);
 void							create_cone(t_env *e, t_json *json);
 void							create_torus(t_env *e, t_json *json);
 void 							create_cube(t_env *e, t_json *json);
-void							create_area_light(t_env *e, t_json *json);
+
+/*
+**object_attribut.c
+*/
+void 							plane_attribut(t_object *object, t_json *json);
+void							sphere_attribut(t_json *json, t_object *sphere);
+void 							cylinder_attribut(t_object *cylinder, t_json *json);
+void 							cone_attribut(t_object *object, t_json *json);
+void 							cone_attribut_2(t_object *object);
 
 /*
 **get_parsing.c

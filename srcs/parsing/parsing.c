@@ -65,7 +65,6 @@ void		add_new_member(t_json **list, t_json *new_member)
 		(*list) = (*list)->next;
 	(*list)->next = new_member;
 	(*list) = tmp;
-
 }
 
 int			create_object(t_json *object, char *str, int i)

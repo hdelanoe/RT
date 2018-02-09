@@ -12,38 +12,35 @@
 
 #include "rtv1.h"
 
-void 	plane_attribut(t_object *object, t_json *json)
+void 	plane_attribut(t_object *plane, t_json *json)
 {
 	if (!(ft_strcmp(json->name, "coord")) && json->member)
-		object->point = parse_point(json->member);
+		plane->point = parse_point(json->member);
 	else if (!(ft_strcmp(json->name, "color")) && json->member)
-		object->color = parse_color(json->member);
+		plane->color = parse_color(json->member);
 	else if (!(ft_strcmp(json->name, "normal")) && json->member)
-		object->normal = parse_normal(json->member);
+		plane->normal = parse_normal(json->member);
 	else if (!(ft_strcmp(json->name, "material")))
-		parse_material(json, object);
+		parse_material(json, plane);
 	else
 		ft_printf("{R}WARNING:{E} plane as a bad attribut\n");
 }
 
-t_object 	*sphere_attribut(t_object *object, t_json *json)
+void	sphere_attribut(t_json *tmp, t_object *sphere)
 {
-	if (!(ft_strcmp(json->name, "coord")) && json->member)
-		object->point = parse_point(json->member);
-	else if (!(ft_strcmp(json->name, "color")) && json->member)
-		object->color = parse_color(json->member);
-	else if (!(ft_strcmp(json->name, "radius")) && json->content)
-		object->radius = ft_atod(json->content);
-	else if (!(ft_strcmp(json->name, "material")))
-		parse_material(json, object);
-	else if (!(ft_strcmp(json->name, "plan_cut")) && json->member)
+	if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+		sphere->center = parse_point(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "radius")) && tmp->content)
+		sphere->radius = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+		sphere->color = parse_color(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "plan_cut")) && tmp->member)
 	{
-		object->normal = parse_normal(json->member);
-		create_cap_sphere(object);
+		sphere->cap = 1;
+		sphere->normal = parse_normal(tmp->member);
 	}
-	else
-		ft_printf("{R}WARNING:{E} sphere as a bad attribut\n");
-	return (object);
+	else if (!(ft_strcmp(tmp->name, "material")))
+		parse_material(tmp, sphere);
 }
 
 void 	cylinder_attribut(t_object *object, t_json *json)
