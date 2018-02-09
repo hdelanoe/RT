@@ -110,7 +110,9 @@ t_color    light_intersection(t_env *e, t_light *light)
 	c.b = light->color.b;
 	while (tmp_object)
 	{
-		if (tmp_object->id != e->id_object && ft_strcmp(tmp_object->type, "area_light") && sort_type(e, tmp_object) && e->solution < e->distance_light_object)
+		if (tmp_object->id != e->id_object
+			&& ft_strcmp(tmp_object->type, "area_light")
+			&& sort_type(e, tmp_object) && e->solution < e->distance_light_object)
 		{
 			if (tmp_object->refract == 0) 
 		   		return (set_color(0, 0, 0));
@@ -119,7 +121,7 @@ t_color    light_intersection(t_env *e, t_light *light)
 		//		if (!(ft_strcmp("sphere", tmp_object->type)))
 		//			wrap_sphere(e, tmp_object);
 					// e->skybox = 1;
-			tmp = c_double_mult(&e->current_color, 1 - tmp_object->absorbtion);
+			tmp = c_double_mult(&tmp_object->color, 1 - tmp_object->absorbtion);
 			c = c_c_mult(&light->color, &tmp);
 			 // printf("+%f %f %f+\n", c.r, c.g, c.b);  
 			}

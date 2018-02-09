@@ -20,7 +20,7 @@
 # include "color.h"
 # include "vector.h"
 # include "matrix.h"
-# include "permtab.h"
+# include "perlin.h"
 # include "mlx_key_macos.h"
 # include <math.h>
 # include <time.h>
@@ -297,6 +297,7 @@ struct							s_env
 	t_vector					rayon_width;
 	t_vector					rayon_width_div;
 	int 						p[512];
+	t_perlin					perlin;
 };
 
 struct 							s_physics

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   permtab.h                                          :+:      :+:    :+:   */
+/*   perlin.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PERMTAB_H
-# define PERMTAB_H
+#ifndef PERLIN_H
+# define PERLIN_H
 # include "rtv1.h"
 
 typedef struct s_noise t_noise;
+typedef struct s_perlin t_perlin;
 
 struct s_noise
 {
@@ -33,6 +34,15 @@ struct s_noise
 	int 	n;
 	int		nm;
 	int		nn;
+};
+
+struct s_perlin
+{
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+	double  e;
 };
 
 #endif

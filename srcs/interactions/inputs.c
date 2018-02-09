@@ -12,6 +12,16 @@
 
 #include "../includes/rtv1.h"
 
+void	water_noise(t_env *e)
+{
+	A
+	e->perlin.a = RANDOM;
+	e->perlin.b = RANDOM;
+	// e->perlin.c = RANDOM;
+	// e->perlin.d = RANDOM;
+	// e->perlin.e = RANDOM;
+}
+
 void	inputs2(int keycode, t_env *e)
 {
 	if (keycode == KEY_PAD_0)
@@ -65,6 +75,8 @@ void	inputs_conditions(int keycode, t_env *e)
 int		inputs(int keycode, t_env *e)
 {
 	inputs_conditions(keycode, e);
+	if (keycode == KEY_M)
+		water_noise(e);
 	if ((keycode == KEY_D || keycode == KEY_A || keycode == KEY_Q ||
 	keycode == KEY_E || keycode == KEY_W || keycode == KEY_S ||
 	keycode == KEY_UP || keycode == KEY_DOWN || keycode == KEY_LEFT ||
