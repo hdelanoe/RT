@@ -39,7 +39,7 @@
 # include "color.h"
 # include "vector.h"
 # include "matrix.h"
-# include "permtab.h"
+# include "perlin.h"
 # include "mlx_key_macos.h"
 
 typedef struct s_env			t_env;
@@ -294,7 +294,8 @@ struct							s_env
 	t_vector					rayon_length_div;
 	t_vector					rayon_width;
 	t_vector					rayon_width_div;
-	int							p[512];
+	int 						p[512];
+	t_perlin					perlin;
 };
 
 struct							s_physics

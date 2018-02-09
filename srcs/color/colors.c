@@ -57,52 +57,45 @@ double	get_specular(t_light *light, t_vector *view, t_vector *node)
 
 double invsqrt(double number)
 {
-	long i;
-	double x2, y;
-	const double threehalfs = 1.5;
-
-	x2 = number * 0.5;
-	y = number;
-	i = * ( long * ) &y; // evil doubleing point bit level hacking
-	i = 0x5f3759df - ( i >> 1 ); // what the fuck?
-	y = * ( double * ) &i;
-	y = y * ( threehalfs - ( x2 * y * y ) ); // 1st iteration
-//	y = y * ( threehalfs - ( x2 * y * y ) ); // 2nd iteration, this can be removed
-
-	return y;
+  long i;
+  double x2, y;
+  const double threehalfs = 1.5;
+ 
+  x2 = number * 0.5;
+  y = number;
+  i = * ( long * ) &y; // evil doubleing point bit level hacking
+  i = 0x5f3759df - ( i >> 1 ); // what the fuck?
+  y = * ( double * ) &i;
+  y = y * ( threehalfs - ( x2 * y * y ) ); // 1st iteration
+//  y = y * ( threehalfs - ( x2 * y * y ) ); // 2nd iteration, this can be removed
+ 
+  return y;
 }
 
 void init_ray_values(t_rayon *ray, t_env *e)
 {
-	// double n;
-	// t_vector tmp;
+  double n;
+ 
+    ray->origin = e->current_origin;
+    ray->rayon = e->current_rayon;
+    ray->node = e->current_node;
+   ray->normal = e->current_node_normal;
+   if (e->bump)
+   {
+     n = noise(e, e->perlin.a * ray->node.x, e->perlin.c  * ray->node.y, e->perlin.b * ray->node.z);
+      n = e->perlin.d * sin((ray->node.y) * e->perlin.c + n);
+    ray->node = v_double_mult(&ray->node, n);
+ 	ray->node = v_double_mult(&ray->node, e->perlin.e);
 
-  	ray->origin = e->current_origin;
-  	ray->rayon = e->current_rayon;
-  	ray->node = e->current_node;
- 	ray->normal = e->current_node_normal;
-	//  if (e->bump)
-	//  {
-	//  	n = noise(e, 0.05  * ray->node.x, 0.05  * ray->node.y, 0.05  * ray->node.z);
-	//  	// n = 0.5 * sin((ray->node.x + ray->node.y) * 0.05 + n) + 0.5;
-	// 	ray->node = v_double_mult(&ray->node, n);
-	// 	// tmp = v_v_mult(&ray->node, &ray->node);
-	//  // 	tmp.x = invsqrt(tmp.x);
-	//  // 	tmp.y = invsqrt(tmp.y);
-	//  // 	tmp.z = invsqrt(tmp.z);
-	//  // 	ray->node = v_v_mult(&ray->node, &tmp);
 
-	// // //	if (ray->node.x != e->current_node.x)
-	// // //		printf("%f %f\n", ray->node.x, e->current_node.x);
-	// 	n = noise(e, 0.05  * ray->node.x, 0.05  * ray->node.y, 0.05  * ray->node.z);
-	// 	// n = 0.5 * sin((ray->node.x + ray->node.y) * 0.05 + n) + 0.5;
-	//  	ray->normal = v_double_mult(&ray->normal, n);
-	//  	// tmp = v_v_mult(&ray->normal, &ray->normal);
-	//  	// tmp.x = invsqrt(tmp.x);
-	//  	// tmp.y = invsqrt(tmp.y);
-	//  	// tmp.z = invsqrt(tmp.z);
-	//  	//ray->normal = v_v_mult(&ray->normal, &tmp);
-	//  }
+ 
+  // //  if (ray->node.x != e->current_node.x)
+  // //    printf("%f %f\n", ray->node.x, e->current_node.x);
+    n = noise(e, e->perlin.a * ray->node.x, e->perlin.c  * ray->node.y, e->perlin.b * ray->node.z);
+ n = e->perlin.d * sin((ray->node.y) * e->perlin.c + n);
+ 	ray->normal = v_double_mult(&ray->normal, e->perlin.e);
+     ray->normal = normalize(&ray->normal);
+   }
 }
 
 t_color	add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)

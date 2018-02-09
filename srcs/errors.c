@@ -57,14 +57,16 @@ int		check_keycode(int keycode, t_env *e)
 {
 	if (KC == KEY_ESCAPE)
 		proper_exit(e);
-	if (KC == KEY_D || KC == KEY_A || KC == KEY_Q || KC == KEY_E ||
-		KC == KEY_W || KC == KEY_S || KC == KEY_UP || KC == KEY_LEFT ||
-		KC == KEY_DOWN || KC == KEY_RIGHT || KC == KEY_Z || KC == KEY_X ||
-		KC == KEY_SPACEBAR || KC == KEY_R || KC == KEY_T || KC == KEY_P ||
-		KC == KEY_PAD_0 || KC == KEY_PAD_1 || KC == KEY_PAD_2 ||
-		KC == KEY_PAD_3 || KC == KEY_PAD_4 ||
-		KC == KEY_PAD_5 || KC == KEY_PAD_6 || KC == KEY_ENTER || KC == KEY_H
-		|| KC == KEY_PAD_ADD || KC == KEY_C || KC == KEY_F || KC == KEY_Y)
+	if (keycode == KEY_D || keycode == KEY_A || keycode == KEY_Q ||
+		keycode == KEY_E || keycode == KEY_W || keycode == KEY_S ||
+		keycode == KEY_UP || keycode == KEY_LEFT || keycode == KEY_DOWN ||
+		keycode == KEY_RIGHT || keycode == KEY_Z || keycode == KEY_X ||
+		keycode == KEY_SPACEBAR || keycode == KEY_R || keycode == KEY_T ||
+		keycode == KEY_P || keycode == KEY_PAD_0 || keycode == KEY_PAD_1 ||
+		keycode == KEY_PAD_2 || keycode == KEY_PAD_3 || keycode == KEY_PAD_4 ||
+		keycode == KEY_PAD_5 || keycode == KEY_PAD_6 || keycode == KEY_ENTER ||
+		keycode == KEY_H || keycode == KEY_PAD_ADD ||
+		keycode == KEY_C || keycode == KEY_F || keycode == KEY_Y || keycode == KEY_M)
 		return (1);
 	return (0);
 }

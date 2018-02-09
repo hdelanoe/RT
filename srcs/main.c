@@ -77,6 +77,12 @@ t_env		*init(void)
 	e->is_copy = 0;
 	e->lookat = set_vector(0, 0, 0);
 	e->indice = R_VOID;
+	e->perlin.a = 0.01;
+	e->perlin.b = 0.02;
+	e->perlin.c = 0.05;
+	e->perlin.d = 0.5;
+	e->perlin.e = 1.0;
+
 	return (e);
 }
 
