@@ -13,6 +13,7 @@
 #ifndef MLX_KEYS_MACOS_H
 # define MLX_KEYS_MACOS_H
 
+# define KC			keycode
 # define KEY_ESCAPE			53
 # define KEY_F1 			122
 # define KEY_F2				120

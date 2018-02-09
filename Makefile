@@ -29,6 +29,7 @@ SRCS		= 	srcs/main.c \
 				srcs/perlin_noise.c \
 				srcs/bump.c \
 				srcs/ft_remove_if.c \
+				srcs/wrap_obj.c \
 				srcs/interactions/user_interactions.c \
 				srcs/interactions/mouse.c \
 				srcs/interactions/inputs.c \

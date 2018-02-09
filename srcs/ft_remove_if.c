@@ -30,19 +30,19 @@ t_object	*ft_remove_begin(t_object **prev, t_object **ptr)
 	return (begin_object);
 }
 
-void	ft_object_remove_if(t_object **begin_object, int data_ref, int (*cmp)())
+void		ft_object_remove_if(t_object **beg_obj, int data_ref, int (*cmp)())
 {
 	t_object *ptr;
 	t_object *prev;
 
-	ptr = *begin_object;
+	ptr = *beg_obj;
 	prev = NULL;
 	while (ptr)
 	{
 		if (cmp(ptr->id, data_ref) == 0)
 		{
-			if (ptr == *begin_object)
-				*begin_object = ft_remove_begin(&prev, &ptr);
+			if (ptr == *beg_obj)
+				*beg_obj = ft_remove_begin(&prev, &ptr);
 			else
 			{
 				prev->next = ptr->next;

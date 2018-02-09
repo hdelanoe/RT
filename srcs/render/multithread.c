@@ -26,13 +26,13 @@ void	*pxl_tracer_void(void *e)
 
 void	ft_pthread(t_env *e, void *(*f)(void *param))
 {
-	t_env		tab[8];
-	pthread_t	t[8];
+	t_env		tab[10];
+	pthread_t	t[10];
 	int			i;
 	// t_object	*tmp;
 
 	i = 0;
-	while (i < 8)
+	while (i < 10)
 	{
 		// printf("e = %p\n", e->mlx.img_ptr);
 		 ft_memcpy((void*)&tab[i], (void*)e, sizeof(t_env));
@@ -55,7 +55,7 @@ void	ft_pthread(t_env *e, void *(*f)(void *param))
 		i++;
 	}
 	i = 0;
-	while (i < 8)
+	while (i < 10)
 	{
 		pthread_join(t[i], NULL);
 		i++;

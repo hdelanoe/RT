@@ -12,9 +12,8 @@
 
 #include "rtv1.h"
 
-void	get_object_values(t_env *e, t_object *object)
+void		get_object_values(t_env *e, t_object *object)
 {
-
 	if (!ft_strcmp(object->type, "area_light"))
 		e->area_light_on = 1;
 	else
@@ -35,7 +34,27 @@ void	get_object_values(t_env *e, t_object *object)
 		e->copy = object;
 }
 
-int sort_type(t_env *e, t_object *object)
+void		sort_type2(t_env *e, t_object *object, int *intersect)
+{
+	if (!(ft_strcmp(object->type, "cone")))
+	{
+		*intersect = cone_intersection(e, object);
+		if (!*intersect)
+			*intersect = disk_intersection(e, object->sub_object, object);
+		if (!*intersect)
+			*intersect = disk_intersection(e, object->sub_object->next, object);
+	}
+	else if (!(ft_strcmp(object->type, "disk")))
+		*intersect = disk_intersection(e, object, NULL);
+	else if (!(ft_strcmp(object->type, "glass")))
+		*intersect = glass_intersection(e, object);
+	else if (!(ft_strcmp(object->type, "cube")))
+		*intersect = cube_intersection(e, object);
+	else if (!(ft_strcmp(object->type, "area_light")))
+		*intersect = quad_intersection(e, object);
+}
+
+int			sort_type(t_env *e, t_object *object)
 {
 	int intersect;
 
@@ -56,35 +75,20 @@ int sort_type(t_env *e, t_object *object)
 		if (!intersect)
 			intersect = disk_intersection(e, object->sub_object, object);
 	}
-	else if (!(ft_strcmp(object->type, "cone")))
-	{
-		intersect = cone_intersection(e, object);
-		if (!intersect)
-			intersect = disk_intersection(e, object->sub_object, object);
-		if (!intersect)
-			intersect = disk_intersection(e, object->sub_object->next, object);
-	}
-	else if (!(ft_strcmp(object->type, "disk")))
-		intersect = disk_intersection(e, object, NULL);
-	else if (!(ft_strcmp(object->type, "glass")))
-		intersect = glass_intersection(e, object);
-	else if (!(ft_strcmp(object->type, "cube")))
-		intersect = cube_intersection(e, object);
-	else if (!(ft_strcmp(object->type, "area_light")))
-		intersect = quad_intersection(e, object);
-	return (intersect);	
+	sort_type2(e, object, &intersect);
+	return (intersect);
 }
 
-void check_intersection(t_env *e, t_object *object)
+void		check_intersection(t_env *e, t_object *object)
 {
 	if (sort_type(e, object) && e->solution < e->distance && e->solution >= 0)
 	{
-		if (sort_type(e, object) && e->solution < e->distance && e->solution >= 0)
+		if (sort_type(e, object) && e->solution < e->distance &&
+		e->solution >= 0)
 		{
 			e->distance = e->solution;
 			get_object_values(e, object);
 			e->delete_id = object->id;
-			// /*COMMENTEZ CETTE SECTION POUR ACTIVER/DESACTIVER LES TEXTURES*/
 			if (e->text_flag == 1)
 			{
 				if (!(ft_strcmp("plane", object->type)))
@@ -100,33 +104,33 @@ void check_intersection(t_env *e, t_object *object)
 	}
 }
 
-t_color    light_intersection(t_env *e, t_light *light)
+t_color		light_intersection(t_env *e, t_light *light)
 {
-	t_object  *tmp_object;
-	t_color   tmp;
-	t_color   c;
+	t_object		*tmp_object;
+	t_color			tmp;
+	t_color			c;
+
 	tmp_object = e->object;
-	c.r = light->color.r;
-	c.g = light->color.g;
-	c.b = light->color.b;
+	c = set_color(light->color.b, light->color.g, light->color.r);
 	while (tmp_object)
 	{
-		if (tmp_object->id != e->id_object && ft_strcmp(tmp_object->type, "area_light") && sort_type(e, tmp_object) && e->solution < e->distance_light_object)
+		if (tmp_object->id != e->id_object && ft_strcmp(tmp_object->type,
+		"area_light")
+		&& sort_type(e, tmp_object) && e->solution < e->distance_light_object)
 		{
-			if (tmp_object->refract == 0) 
-		   		return (set_color(0, 0, 0));
+			if (tmp_object->refract == 0)
+				return (set_color(0, 0, 0));
 			else
-			{	
+			{
 		//		if (!(ft_strcmp("sphere", tmp_object->type)))
 		//			wrap_sphere(e, tmp_object);
 					// e->skybox = 1;
-			tmp = c_double_mult(&e->current_color, 1 - tmp_object->absorbtion);
-			c = c_c_mult(&light->color, &tmp);
-			 // printf("+%f %f %f+\n", c.r, c.g, c.b);  
+				tmp = c_double_mult(&e->current_color, 1 -
+				tmp_object->absorbtion);
+				c = c_c_mult(&light->color, &tmp);
 			}
 		}
 		tmp_object = tmp_object->next;
 	}
 	return (c);
 }
-

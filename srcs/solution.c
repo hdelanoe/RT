@@ -59,12 +59,12 @@ int	solve_solution(t_env *e, t_poly *p)
 		(*p).s2 = (- (*p).b - (*p).discriminant) / (2 * (*p).a);
 		e->solution = ((*p).s1 < (*p).s2) ? (*p).s1 : (*p).s2;
 		if ((*p).s1 < (*p).s2)
-        {
-            (*p).tmp4 = (*p).s1;
-            (*p).s1 = (*p).s2;
-            (*p).s2 = (*p).tmp4;
-            e->solution = (*p).s1;
-        }
+		{
+			(*p).tmp4 = (*p).s1;
+			(*p).s1 = (*p).s2;
+			(*p).s2 = (*p).tmp4;
+			e->solution = (*p).s1;
+		}
 	}
 	if (e->solution < 0)
 		return (0);
