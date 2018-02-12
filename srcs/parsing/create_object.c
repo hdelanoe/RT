@@ -179,17 +179,11 @@ void		create_cone(t_env *e, t_json *json)
 		else if (!(ft_strcmp(tmp->name, "tangent")) &&tmp->content)
 			cone->tangent = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "maxlength")) && tmp->content)
-		{
-			cone->cap = 1;
 			cone->lenght_max = ft_atod(tmp->content);
-		}
 		else if (!(ft_strcmp(tmp->name, "minlength")) && tmp->content)
 			cone->radius = ft_atod(tmp->content);
 		else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
-		{
-			cone->axis = parse_point(tmp->member);
-			cone->axis = normalize(&cone->axis);
-		}
+			cone->axis = parse_normal(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 			cone->color = parse_color(tmp->member);
 		else if (!(ft_strcmp(tmp->name, "material")))
@@ -199,14 +193,9 @@ void		create_cone(t_env *e, t_json *json)
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
-	// CHECK IF MAX_LENGHT < MIN_LENGHT  FT_SWAP
-	if (cone->lenght_max > 0 || cone->radius)
-		create_cap_cone(cone);
-	else
-	{
-		cone->lenght_max = 10000;
-		cone->radius = 10000;
-	}
+	if (cone->radius < 0)
+		cone->radius *= -1;
+	create_cap_cone(cone);
 	debug_object(cone);
 	add_new_object(&e->object, cone);
 }

@@ -58,13 +58,14 @@ int	solve_solution(t_env *e, t_poly *p)
 		(*p).s1 = (- (*p).b + (*p).discriminant) / (2 * (*p).a);
 		(*p).s2 = (- (*p).b - (*p).discriminant) / (2 * (*p).a);
 		e->solution = ((*p).s1 < (*p).s2) ? (*p).s1 : (*p).s2;
-		if ((*p).s1 < (*p).s2)
-		{
-			(*p).tmp4 = (*p).s1;
-			(*p).s1 = (*p).s2;
-			(*p).s2 = (*p).tmp4;
-			e->solution = (*p).s1;
-		}
+		if (p->s1 > 0 && p->s2 > 0)
+			e->solution = (p->s1 < p->s2) ? p->s1 : p->s2;
+		else if (p->s1 < 0 && p->s2 > 0)
+			e->solution = p->s2;
+		else if (p->s1 > 0 && p->s2 < 0)
+			e->solution = p->s1;
+		else if (p->s1 < 0 && p->s2 < 0)
+			return (0);
 	}
 	if (e->solution < 0)
 		return (0);
@@ -79,9 +80,9 @@ int	cylinder_solution(t_env *e, t_object *cylinder, t_poly p)
 	cylinder->node = v_v_add(&e->current_origin, &p.tmp_node);
 	p.tmp1 = (dot_product(&e->current_rayon, &cylinder->axis) * e->solution) + dot_product(&p.object_rayon, &cylinder->axis);
 	p.tmp2 = (dot_product(&e->current_rayon, &cylinder->axis) * p.s2) + dot_product(&p.object_rayon, &cylinder->axis);
-	if (p.tmp1 > (cylinder->lenght_max / 2) && (p.tmp2 > 0))
+	if (p.tmp1 > (cylinder->lenght_max / 2))
 		return (0);
-	if( p.tmp1 < -(cylinder->lenght_max / 2) && (p.tmp2 < 0))
+	if( p.tmp1 < -(cylinder->lenght_max / 2))
 		return (0);
 	p.tmp_node_normal1 = v_v_subs(&cylinder->node, &cylinder->center);
 	p.tmp_node_normal2 = v_double_mult(&cylinder->axis, p.tmp1);
@@ -96,12 +97,22 @@ int	cone_solution(t_env *e, t_object *cone, t_poly p)
 		return (0);
 	p.tmp_node = v_double_mult(&e->current_rayon, e->solution);
 	cone->node = v_v_add(&e->current_origin, &p.tmp_node);
-
 	p.len = (p.tmp2 * e->solution) + p.tmp3;
-	if (p.len > cone->lenght_max)
-		return (0);
-	if (cone->cap && p.len < cone->radius)
-		return (0);
+    p.tmp2 = (p.tmp2 * p.s2) + p.tmp3;
+    if (p.len > cone->lenght_max)
+            return (0);
+    if (p.len < cone->radius)
+    {
+        if (p.tmp2 > cone->radius && p.tmp2 < cone->lenght_max)
+        {
+            p.len = p.tmp2;
+            e->solution = p.s2;
+            p.tmp_node = v_double_mult(&e->current_rayon, p.s2);
+            cone->node = v_v_add(&e->current_origin, &p.tmp_node);
+        }
+        else
+            return (0);
+    }
 	p.tmp_node_normal1 = v_v_subs(&cone->node, &cone->center);
 	p.tmp_node_normal2 = v_double_mult(&cone->axis, p.len);
 	p.tmp_node_normal2 = v_double_mult(&p.tmp_node_normal2, p.tmp1);

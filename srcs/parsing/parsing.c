@@ -43,6 +43,8 @@ void		get_object(t_env *e, t_json *json)
 			create_cube(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "area_light")) && tmp->member)
 			create_area_light(e, tmp);
+		else if (!(ft_strcmp(tmp->name, "pyramide")) && tmp->member)
+			create_pyramide(e, tmp);
 		else if (tmp->member)
 			parse_scene(e, tmp);
 		json->member = json->member->next;

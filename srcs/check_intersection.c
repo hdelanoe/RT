@@ -37,13 +37,7 @@ void		get_object_values(t_env *e, t_object *object)
 void		sort_type2(t_env *e, t_object *object, int *intersect)
 {
 	if (!(ft_strcmp(object->type, "cone")))
-	{
 		*intersect = cone_intersection(e, object);
-		if (!*intersect)
-			*intersect = disk_intersection(e, object->sub_object, object);
-		if (!*intersect)
-			*intersect = disk_intersection(e, object->sub_object->next, object);
-	}
 	else if (!(ft_strcmp(object->type, "disk")))
 		*intersect = disk_intersection(e, object, NULL);
 	else if (!(ft_strcmp(object->type, "glass")))
@@ -68,20 +62,15 @@ int			sort_type(t_env *e, t_object *object)
 	else if (!(ft_strcmp(object->type, "sphere")))
 		intersect = sphere_intersection(e, object);
 	else if (!(ft_strcmp(object->type, "cylinder")))
-	{
 		intersect = cylinder_intersection(e, object);
-		if (!intersect)
-			intersect = disk_intersection(e, object->sub_object->next, object);
-		if (!intersect)
-			intersect = disk_intersection(e, object->sub_object, object);
-	}
 	sort_type2(e, object, &intersect);
 	return (intersect);
 }
 
 void		check_intersection(t_env *e, t_object *object)
 {
-	if (sort_type(e, object) && e->solution < e->distance && e->solution >= 0)
+
+	while(object)
 	{
 		if (sort_type(e, object) && e->solution < e->distance &&
 		e->solution >= 0)
@@ -100,6 +89,8 @@ void		check_intersection(t_env *e, t_object *object)
 			}
 			e->intersect = 1;
 		}
+		if (object->sub_object)
+			check_intersection(e, object->sub_object);
 		object = object->next;
 	}
 }

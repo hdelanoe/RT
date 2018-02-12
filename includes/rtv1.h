@@ -579,6 +579,7 @@ void							create_cap_cone(t_object *cone);
 void							create_cone(t_env *e, t_json *json);
 void							create_torus(t_env *e, t_json *json);
 void 							create_cube(t_env *e, t_json *json);
+void							create_pyramide(t_env *e, t_json *json);
 
 /*
 **object_attribut.c
