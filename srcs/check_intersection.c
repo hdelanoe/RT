@@ -69,8 +69,7 @@ int			sort_type(t_env *e, t_object *object)
 
 void		check_intersection(t_env *e, t_object *object)
 {
-
-	while(object)
+	while (object)
 	{
 		if (sort_type(e, object) && e->solution < e->distance &&
 		e->solution >= 0)

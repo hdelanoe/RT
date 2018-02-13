@@ -36,12 +36,15 @@ struct						s_parsing
 	char					*buff;
 	char					*stock;
 	char					*tmp;
-}; 
+};
+
 t_json						*new_object(void);
 void						add(t_json **current, t_json *new);
 void						char_is_valid(char a, char b, char *str);
 int							create_object(t_json *object, char *str, int i);
-double 						get_content_from_member(char *name, t_json **membre);
+double						get_content_from_member
+(char *name, t_json **membre);
 int							get_content(char **content, char *str, int i);
 void						free_json_member(t_json **member);
+
 #endif

@@ -41,7 +41,6 @@ t_color		cel_shade_color(t_env *e)
 	t_color		c;
 	t_color		c_light;
 	t_rayon		ray;
-	t_color		diffuse;
 	t_light		*tmp_light;
 
 	ray.origin = e->current_origin;
@@ -49,17 +48,16 @@ t_color		cel_shade_color(t_env *e)
 	ray.node = e->current_node;
 	ray.normal = e->current_node_normal;
 	tmp_light = e->light;
-	c = c_double_mult(&e->current_color, e->ambient);
+	c = e->current_color;
 	while (tmp_light)
 	{
-		diffuse = set_color(0, 0, 0);
 		tmp_light->rayon = v_v_subs(&e->current_node, &tmp_light->origin);
 		tmp_light->rayon = normalize(&tmp_light->rayon);
 		e->current_origin = tmp_light->origin;
 		e->current_rayon = tmp_light->rayon;
 		c_light = light_intersection(e, tmp_light);
-		c = add_diffuse(e, &c, tmp_light, &ray);
+		c = cel_shading(&tmp_light->rayon, e, &c);
 		tmp_light = tmp_light->next;
 	}
-	return (c_c_add(&c, &diffuse));
+	return (c);
 }

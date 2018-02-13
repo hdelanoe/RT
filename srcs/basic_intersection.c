@@ -32,46 +32,49 @@ int		plane_intersection(t_env *e, t_object *plane)
 	return (1);
 }
 
-/*int 	check_demisphere(t_object *sphere, t_inter *i)
-{
-	t_vector distance;
+/*
+**int 	check_demisphere(t_object *sphere, t_inter *i)
+**{
+**	t_vector distance;
+**
+**	distance = v_v_subs(&i->tmp_node, &sphere->center);
+**	if (distance.y < 0)
+**		return (1);
+**	else
+**		return (0);
+**}
+*/
 
-	distance = v_v_subs(&i->tmp_node, &sphere->center);
-	if (distance.y < 0)
-		return (1);
-	else
-		return (0);
-}*/
-void save_node(t_object *buff, t_object *source, int *tmp)
+void	save_node(t_object *buff, t_object *source, int *tmp)
 {
 	buff->node = source->node;
 	buff->node_normal = source->node_normal;
 	*tmp = 1;
 }
 
-int glass_intersection(t_env *e, t_object *parent)
+int		glass_intersection(t_env *e, t_object *parent)
 {
-	int tmp;
-	t_vector v_tmp;
+	int			tmp;
+	t_vector	v_tmp;
 
 	tmp = 0;
 	v_tmp = v_v_subs(&e->current_origin, &parent->center);
 	if (v_tmp.y < 0)
 	{
-		if((sort_type(e, parent->sub_object->next)))
+		if ((sort_type(e, parent->sub_object->next)))
 			save_node(parent, parent->sub_object->next, &tmp);
-		else if((sort_type(e, parent->sub_object)))
+		else if ((sort_type(e, parent->sub_object)))
 			save_node(parent, parent->sub_object, &tmp);
-		else if(sort_type(e, parent->sub_object->next->next))
+		else if (sort_type(e, parent->sub_object->next->next))
 			save_node(parent, parent->sub_object->next->next, &tmp);
 	}
 	else
 	{
-		if((sort_type(e, parent->sub_object->next->next)))
+		if ((sort_type(e, parent->sub_object->next->next)))
 			save_node(parent, parent->sub_object->next->next, &tmp);
-		else if((sort_type(e, parent->sub_object)))
+		else if ((sort_type(e, parent->sub_object)))
 			save_node(parent, parent->sub_object, &tmp);
-		else if(sort_type(e, parent->sub_object->next))
+		else if (sort_type(e, parent->sub_object->next))
 			save_node(parent, parent->sub_object->next, &tmp);
 	}
 	return (tmp);
@@ -79,7 +82,7 @@ int glass_intersection(t_env *e, t_object *parent)
 
 int		sphere_intersection(t_env *e, t_object *sphere)
 {
-	t_poly 	p;
+	t_poly		p;
 
 	p.object_rayon = v_v_subs(&e->current_origin, &sphere->center);
 	p.b = dot_product(&p.object_rayon, &e->current_rayon);
@@ -107,35 +110,38 @@ int		cylinder_intersection(t_env *e, t_object *cylinder)
 	return (cylinder_solution(e, cylinder, p));
 }
 
-int disk_intersection(t_env *e, t_object *disk, t_object *parent)
+int		disk_intersection(t_env *e, t_object *disk, t_object *parent)
 {
-    if(plane_intersection(e, disk))
-    {
-        t_vector distance = v_v_subs(&disk->node, &disk->point);
-        double d = dot_product(&distance, &distance);
-        if (d <= (disk->radius * disk->radius))
-        {
-        	if (parent)
-        	{
-        		parent->node = disk->node;
-        		parent->node_normal = disk->node_normal;
-        	}
-            return (1);
-        }
-    }
-    return (0);
+	t_vector	distance;
+	double		d;
+
+	if (plane_intersection(e, disk))
+	{
+		distance = v_v_subs(&disk->node, &disk->point);
+		d = dot_product(&distance, &distance);
+		if (d <= (disk->radius * disk->radius))
+		{
+			if (parent)
+			{
+				parent->node = disk->node;
+				parent->node_normal = disk->node_normal;
+			}
+			return (1);
+		}
+	}
+	return (0);
 }
 
 int		cone_intersection(t_env *e, t_object *cone)
 {
-	t_poly 	p;
+	t_poly		p;
 
 	p.object_rayon = v_v_subs(&e->current_origin, &cone->center);
 	p.tmp1 = (1 + pow(cone->tangent, 2));
 	p.tmp2 = dot_product(&e->current_rayon, &cone->axis);
 	p.tmp3 = dot_product(&p.object_rayon, &cone->axis);
 	p.a = 1 - (p.tmp1 * pow(p.tmp2, 2));
-	p.b = 2 * ((dot_product(&p.object_rayon,&e->current_rayon) -
+	p.b = 2 * ((dot_product(&p.object_rayon, &e->current_rayon) -
 	(p.tmp1 * (p.tmp2 * p.tmp3))));
 	p.c = dot_product(&p.object_rayon, &p.object_rayon) -
 	(p.tmp1 * (p.tmp3 * p.tmp3));

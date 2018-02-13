@@ -12,7 +12,6 @@
 
 #include "rtv1.h"
 
-
 void		*aa_tracer_void(void *e)
 {
 	aa_tracer(e, 1);
@@ -26,10 +25,25 @@ void		anti_aliasing_clr_merge(t_color *anti, t_color *clr)
 	anti->b += clr->b;
 }
 
+t_color		get_render_mode(t_env *e)
+{
+	t_color new;
+
+	if (e->render_mode == 1 && !e->edit_flag)
+		new = ambient_occlusion(e);
+	else if (e->render_mode == 3 && !e->edit_flag)
+		new = cel_shade_color(e);
+	else if (e->area_light_on == 1)
+		new = get_area_color(e);
+	else
+		new = get_color(e);
+	return (new);
+}
+
 t_anti_a	antialias_loop_init(t_anti_a *anti, t_env *e, int sample)
 {
-	t_anti_a new;
-	t_color 	color;
+	t_anti_a		new;
+	t_color			color;
 
 	new = *anti;
 	new.x1 = 0;
@@ -45,14 +59,7 @@ t_anti_a	antialias_loop_init(t_anti_a *anti, t_env *e, int sample)
 		e->camera.rayon = v_v_subs(&new.viewplane_point, &e->camera.origin);
 		e->camera.rayon = normalize(&e->camera.rayon);
 		if (cast_ray(e, e->camera.rayon, e->camera.origin))
-		{
-			// if (e->render_mode == 1 && !e->edit_flag)
-			// 	color = ambient_occlusion(e);
-			// else if (e->render_mode == 3 && !e->edit_flag)
-			// 	color = cel_shade_color(e);
-			// else
-				color = get_color(e);
-		}
+			color = get_render_mode(e);
 		anti_aliasing_clr_merge(&new.aaclr, &color);
 		new.x1 += 0.25;
 	}
@@ -66,8 +73,8 @@ void		aa_tracer(t_env *e, int sample)
 	aa.y = 0;
 	while (aa.y < WIN_Y)
 	{
-		aa.x = e->begin;
-		while (aa.x < e->fin)
+		aa.x = 0;
+		while (aa.x < WIN_X)
 		{
 			aa.y1 = 0;
 			aa.aaclr = set_color(0, 0, 0);

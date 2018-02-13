@@ -51,7 +51,10 @@ void		display_window(t_env *e)
 	init_camera(e);
 	camera_transformation(e);
 	init_stereo(e);
-	ft_pthread(e, ray_tracer_void);
+	// ft_pthread(e, ray_tracer_void);
+	ray_tracer(e);
+	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
+	0, 0);
 	mlx_hook(e->mlx.win_ptr, 2, (1L << 0), key_functions, e);
 	mlx_hook(e->mlx.win_ptr, 17, (1L << 17), proper_exit, e);
 	mlx_mouse_hook(e->mlx.win_ptr, mouse, e);

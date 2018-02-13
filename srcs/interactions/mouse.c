@@ -40,7 +40,7 @@ int set_lookat(t_env *e, int x, int y)
 int		mouse(int button, int x, int y, t_env *e)
 {
 //	static t_object *copy;
-	if (!(x > 0 && x < WIN_X && y > 0 && y < WIN_Y) || !e->edit_flag) // Sans cette protection, si on clique sur la le mot "RT" au dessus, ca segfault
+	if (!(x > 0 && x < WIN_X && y > 0 && y < WIN_Y) || !e->edit_flag)
 		return (0);
 	if ((e->stereo_flag || e->flag.deep) && (button == 1 || button == 5))
 	{
