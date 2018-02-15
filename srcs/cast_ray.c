@@ -33,7 +33,8 @@ int		cast_ray(t_env *e, t_vector rayon, t_vector origin)
 	tmp_object = *e->object;
 	while (1)
 	{
-		check_intersection(e, &tmp_object);
+		
+		check_intersection(e, &tmp_object, NULL);
 		if (tmp_object.next == NULL)
 			break ;
 		tmp_object = *tmp_object.next;

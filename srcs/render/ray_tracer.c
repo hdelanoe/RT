@@ -138,8 +138,8 @@ void	ray_tracer(t_env *e)
 
 	while (y < e->height)
 	{
-		x = 0;
-		while (x < e->width)
+		x = e->begin;
+		while (x < e->fin)
 		{
 			e->recursion = 6;
 			color = set_color(0, 0, 0);

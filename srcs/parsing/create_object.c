@@ -15,9 +15,8 @@
 void		add_new_object(t_object **list, t_object *new_object)
 {
 	t_object	*tmp;
-	int 		id;
+	static int 		id = 1;
 
-	id = 1;
 	if (!(*list))
 	{
 		new_object->id = id;

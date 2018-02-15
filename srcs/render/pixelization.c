@@ -33,8 +33,8 @@ void		pxl_tracer(t_env *e, int sample)
 	pxl.y = 0;
 	while (pxl.y < WIN_Y)
 	{
-		pxl.x = 0;
-		while (pxl.x < WIN_X)
+		pxl.x = e->begin;
+		while (pxl.x < e->fin)
 		{
 			e->recursion = 6;
 			color = set_color(0, 0, 0);

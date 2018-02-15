@@ -32,54 +32,6 @@ int		plane_intersection(t_env *e, t_object *plane)
 	return (1);
 }
 
-/*
-**int 	check_demisphere(t_object *sphere, t_inter *i)
-**{
-**	t_vector distance;
-**
-**	distance = v_v_subs(&i->tmp_node, &sphere->center);
-**	if (distance.y < 0)
-**		return (1);
-**	else
-**		return (0);
-**}
-*/
-
-void	save_node(t_object *buff, t_object *source, int *tmp)
-{
-	buff->node = source->node;
-	buff->node_normal = source->node_normal;
-	*tmp = 1;
-}
-
-int		glass_intersection(t_env *e, t_object *parent)
-{
-	int			tmp;
-	t_vector	v_tmp;
-
-	tmp = 0;
-	v_tmp = v_v_subs(&e->current_origin, &parent->center);
-	if (v_tmp.y < 0)
-	{
-		if ((sort_type(e, parent->sub_object->next)))
-			save_node(parent, parent->sub_object->next, &tmp);
-		else if ((sort_type(e, parent->sub_object)))
-			save_node(parent, parent->sub_object, &tmp);
-		else if (sort_type(e, parent->sub_object->next->next))
-			save_node(parent, parent->sub_object->next->next, &tmp);
-	}
-	else
-	{
-		if ((sort_type(e, parent->sub_object->next->next)))
-			save_node(parent, parent->sub_object->next->next, &tmp);
-		else if ((sort_type(e, parent->sub_object)))
-			save_node(parent, parent->sub_object, &tmp);
-		else if (sort_type(e, parent->sub_object->next))
-			save_node(parent, parent->sub_object->next, &tmp);
-	}
-	return (tmp);
-}
-
 int		sphere_intersection(t_env *e, t_object *sphere)
 {
 	t_poly		p;
@@ -110,24 +62,19 @@ int		cylinder_intersection(t_env *e, t_object *cylinder)
 	return (cylinder_solution(e, cylinder, p));
 }
 
-int		disk_intersection(t_env *e, t_object *disk, t_object *parent)
+int		disk_intersection(t_env *e, t_object *disk)
 {
 	t_vector	distance;
 	double		d;
+	t_object    tmp;
 
-	if (plane_intersection(e, disk))
+	tmp = *disk;
+	if (plane_intersection(e, &tmp))
 	{
-		distance = v_v_subs(&disk->node, &disk->point);
+		distance = v_v_subs(&tmp.node, &tmp.point);
 		d = dot_product(&distance, &distance);
-		if (d <= (disk->radius * disk->radius))
-		{
-			if (parent)
-			{
-				parent->node = disk->node;
-				parent->node_normal = disk->node_normal;
-			}
+		if (d <= (tmp.radius * tmp.radius))
 			return (1);
-		}
 	}
 	return (0);
 }

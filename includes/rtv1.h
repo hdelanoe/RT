@@ -376,7 +376,7 @@ int								sphere_intersection
 int								cylinder_intersection
 (t_env *e, t_object *cylinder);
 int								disk_intersection
-(t_env *e, t_object *disk, t_object *parent);
+(t_env *e, t_object *disk);
 int								cone_intersection
 (t_env *e, t_object *cone);
 
@@ -395,7 +395,7 @@ int								cast_refract_ray(t_env *e, t_rayon origin);
 */
 void							get_object_values(t_env *e, t_object *object);
 int								sort_type(t_env *e, t_object *object);
-void							check_intersection(t_env *e, t_object *object);
+void							check_intersection(t_env *e, t_object *object, char *p_type);
 t_color							light_intersection(t_env *e, t_light *light);
 /*
 ** errors.c
