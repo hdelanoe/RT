@@ -67,8 +67,8 @@ void		aa_tracer(t_env *e, int sample)
 	aa.y = 0;
 	while (aa.y < WIN_Y)
 	{
-		aa.x = 0;
-		while (aa.x < WIN_X)
+		aa.x = e->begin;
+		while (aa.x < e->fin)
 		{
 			aa.xx = 0;
 			aa.color = set_color(0, 0, 0);

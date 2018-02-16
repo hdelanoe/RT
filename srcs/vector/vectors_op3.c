@@ -21,3 +21,8 @@ t_vector	v_double_div(t_vector *a, double b)
 	r.z = a->z / b;
 	return (r);
 }
+
+int			max(int a, int b)
+{
+	return (a > b ? a : b);
+}

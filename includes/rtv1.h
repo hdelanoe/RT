@@ -435,6 +435,7 @@ double					get_content_from_member(char *name, t_json **membre);
 
 void					free_content(t_json *member);
 
+int						max(int a, int b);
 
 void					init_rayon_values(t_env *e,
 						t_vector rayon, t_vector origin);
@@ -484,6 +485,7 @@ void					load_texture(t_env *e);
 void					wrap_sphere(t_env *e, t_object *object);
 void					wrap_cylinder(t_env *e, t_object *object);
 void					wrap_plane(t_env *e);
+void					wrap_obj(t_env *e, t_object *object, char *p_type);
 t_color					get_texture_info(unsigned char *text_data, t_env *e, int sl);
 t_color					set_filter(t_env *e, t_color c);
 void					print_color(t_color *color, t_env *e, int x, int y);

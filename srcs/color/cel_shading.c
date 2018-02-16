@@ -39,25 +39,10 @@ t_color		cel_shading(t_vector *light, t_env *e, t_color *clr)
 t_color		cel_shade_color(t_env *e)
 {
 	t_color		c;
-	t_color		c_light;
-	t_rayon		ray;
-	t_light		*tmp_light;
 
-	ray.origin = e->current_origin;
-	ray.rayon = e->current_rayon;
-	ray.node = e->current_node;
-	ray.normal = e->current_node_normal;
-	tmp_light = e->light;
 	c = e->current_color;
-	while (tmp_light)
-	{
-		tmp_light->rayon = v_v_subs(&e->current_node, &tmp_light->origin);
-		tmp_light->rayon = normalize(&tmp_light->rayon);
-		e->current_origin = tmp_light->origin;
-		e->current_rayon = tmp_light->rayon;
-		c_light = light_intersection(e, tmp_light);
-		c = cel_shading(&tmp_light->rayon, e, &c);
-		tmp_light = tmp_light->next;
-	}
+	e->light->rayon = v_v_subs(&e->current_node, &e->light->origin);
+	e->light->rayon = normalize(&e->light->rayon);
+	c = cel_shading(&e->light->rayon, e, &c);
 	return (c);
 }

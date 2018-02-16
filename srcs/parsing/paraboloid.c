@@ -12,7 +12,8 @@
 
 #include "rtv1.h"
 
-t_paraboloid *add_new_paraboloid(t_object *object, t_paraboloid *new_paraboloid)
+t_paraboloid	*add_new_paraboloid(t_object *object,
+									t_paraboloid *new_paraboloid)
 {
 	t_paraboloid *tmp;
 
@@ -29,7 +30,7 @@ t_paraboloid *add_new_paraboloid(t_object *object, t_paraboloid *new_paraboloid)
 	return (tmp);
 }
 
-void debug_paraboloid(t_paraboloid *tmp)
+void			debug_paraboloid(t_paraboloid *tmp)
 {
 	printf("PARABOLOID:\n");
 	printf("coord :  x->%f\n", tmp->origin.x);
@@ -44,15 +45,15 @@ void debug_paraboloid(t_paraboloid *tmp)
 	printf("         b->%f\n", tmp->color.b);
 }
 
-void create_paraboloid(t_object *object, t_json *json)
+void			create_paraboloid(t_object *object, t_json *json)
 {
 	t_paraboloid *paraboloid;
 
-	while(json->member)
+	while (json->member)
 	{
 		paraboloid = (t_paraboloid *)ft_memalloc(sizeof(t_paraboloid));
 		paraboloid->id = ft_atoi(json->member->name);
-		while(json->member->member)
+		while (json->member->member)
 		{
 			if (ft_strcmp(json->member->member->name, "coord"))
 				paraboloid->origin = parse_point(json->member->member->member);
@@ -68,5 +69,4 @@ void create_paraboloid(t_object *object, t_json *json)
 		paraboloid = add_new_paraboloid(object, paraboloid);
 		json->member = json->member->next;
 	}
-
 }

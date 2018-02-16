@@ -20,7 +20,7 @@ void	*ray_tracer_void(void *e)
 
 void	*pxl_tracer_void(void *e) 
 {
-	pxl_tracer(e, 8);
+	pxl_tracer(e, 6);
 	return (NULL);
 }
 
