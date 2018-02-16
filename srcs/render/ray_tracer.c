@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-t_color	choose_color(t_env *e)
+t_color		choose_color(t_env *e)
 {
 	t_color new;
 
@@ -41,7 +41,7 @@ t_color	choose_color(t_env *e)
 	return (new);
 }
 
-t_color stereo_init(t_env *e, t_camera cam, t_vector vp, t_grid g)
+t_color		stereo_init(t_env *e, t_camera cam, t_vector vp, t_grid g)
 {
 	e->recursion = 6;
 	g.ctmp = set_color(0, 0, 0);
@@ -56,7 +56,7 @@ t_color stereo_init(t_env *e, t_camera cam, t_vector vp, t_grid g)
 	return(c_c_add(&g.ctmp, &g.filter));
 }
 
-void	stereo_tracer(t_env *e)
+void		stereo_tracer(t_env *e)
 {
 	t_grid		g;
 	
@@ -80,7 +80,7 @@ void	stereo_tracer(t_env *e)
 	}
 }
 
-void	ray_tracer(t_env *e)
+void		ray_tracer(t_env *e)
 {
 	int			x;
 	int			y;

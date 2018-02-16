@@ -34,9 +34,9 @@ t_color		get_render_mode(t_env *e)
 	return (new);
 }
 
-t_grid	antialias_loop_init(t_grid *anti, t_env *e, int sample)
+t_grid		antialias_loop_init(t_grid *anti, t_env *e, int sample)
 {
-	t_grid		new;
+	t_grid			new;
 	t_color			color;
 
 	new = *anti;
