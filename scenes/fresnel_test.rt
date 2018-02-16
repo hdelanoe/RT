@@ -8,14 +8,13 @@
     	"coord": {"x": "300", "y": "100", "z": "0"}, 
     	"color": {"r": "0.8", "g": "0.3", "b": "0.9"} 
     	"radius": "180"
-    	"material": "glass"
- 
+    	"material":"diam"
 	}
 	"plane": {
 		"coord": {"x": "0", "y": "-100", "z": "0"}, 
 		"normal": {"x": "0", "y": "1", "z": "0"}
 		"color": {"r": "0.5", "g": "0.4", "b": "0.9"}
-		   	"material":"water"
+		"material":"glass"
 
 	}
 		"triangle": {
@@ -38,7 +37,6 @@
     "maxlength": "150"
     "minlength": "20"
     "axis": {"x": "1", "y": "1", "z": "0.458"}
-
   }
 	"light": {
 		"coord": {"x": "200", "y": "500", "z": "-600"}, 
