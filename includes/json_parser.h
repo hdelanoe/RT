@@ -42,9 +42,16 @@ t_json						*new_object(void);
 void						add(t_json **current, t_json *new);
 void						char_is_valid(char a, char b, char *str);
 int							create_object(t_json *object, char *str, int i);
-double						get_content_from_member
-(char *name, t_json **membre);
+double						get_content_from_member(char *name,
+							t_json **membre);
 int							get_content(char **content, char *str, int i);
 void						free_json_member(t_json **member);
+void						exit_parser(int flag);
+void						ft_print_err(int argc);
+void						ft_help(void);
+void						ft_kill(char *text);
+int							check_args(char *argv);
+void						open_close(char *src_file);
+void						exit_rt(int flag);
 
 #endif

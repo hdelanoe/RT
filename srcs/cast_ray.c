@@ -58,7 +58,7 @@ int		cast_ray(t_env *e, t_vector rayon, t_vector origin)
 int		cast_reflect_ray(t_env *e, t_rayon incident)
 {
 	t_rayon		reflect;
-	t_physics	pl;
+	t_physic	pl;
 
 	pl.cos1 = dot_product(&incident.normal, &incident.rayon);
 	reflect.rayon = v_double_mult(&incident.normal, 2.0 * pl.cos1);
@@ -74,7 +74,7 @@ int		cast_reflect_ray(t_env *e, t_rayon incident)
 int		cast_refract_ray(t_env *e, t_rayon origin)
 {
 	t_rayon		refract;
-	t_physics	pl;
+	t_physic	pl;
 
 
 	pl.ior = e->indice / e->object_indice;

@@ -39,41 +39,9 @@ t_color	ambient_occlusion(t_env *e)
 	return (e->hit ? c_double_mult(&c, (double)1 / e->hit) : c);
 }
 
-double	get_specular(t_light *light, t_vector *view, t_vector *node)
-{
-	t_vector	tmp;
-	t_vector	r;
-	double		reflect;
-	double		phong_color;
-
-	reflect = dot_product(&light->rayon, node);
-	tmp = v_double_mult(node, 2);
-	r = v_double_mult(&tmp, reflect);
-	r = v_v_subs(&r, &light->rayon);
-	phong_color = 0.2 * powf(dot_product(view, &r), 50) * 3;
-	return (phong_color);
-}
-
-double invsqrt(double number)
-{
-  long i;
-  double x2, y;
-  const double threehalfs = 1.5;
- 
-  x2 = number * 0.5;
-  y = number;
-  i = * ( long * ) &y; // evil doubleing point bit level hacking
-  i = 0x5f3759df - ( i >> 1 ); // what the fuck?
-  y = * ( double * ) &i;
-  y = y * ( threehalfs - ( x2 * y * y ) ); // 1st iteration
-//  y = y * ( threehalfs - ( x2 * y * y ) ); // 2nd iteration, this can be removed
- 
-  return y;
-}
-
 void init_ray_values(t_rayon *ray, t_env *e)
 {
-  double n;
+ 	double n;
  
     ray->origin = e->current_origin;
     ray->rayon = e->current_rayon;
@@ -99,35 +67,43 @@ void init_ray_values(t_rayon *ray, t_env *e)
    }
 }
 
+t_color	calc_diffuse(t_env *e, t_light *light, t_rayon *ray, t_color c)
+{
+	t_color		diffuse;
+	t_vector	angle;
+	double		specular;
+
+	diffuse = set_color(0, 0, 0);
+	angle = v_double_mult(&light->rayon, (-1));
+	light->angle = dot_product(&ray->normal, &angle);
+	specular = e->specular *
+				get_specular(light, &ray->rayon, &ray->normal);
+	if (light->angle > 0)
+	{
+		diffuse = c_c_mult(&e->current_color, &c);
+		diffuse = c_double_add(&diffuse, specular);
+		diffuse = c_double_mult(&diffuse, light->angle);
+		diffuse = c_double_mult(&diffuse, e->diffuse);
+	}
+	return(diffuse);
+}
+
 t_color	add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
 {
 	t_color		diffuse;
 	t_color		c_light;
-	t_vector	angle;
-	double		specular;
-	// double n;
-
-	// n = turbulence(e, ray->node.x, ray->node.y, ray->node.z);;
-	diffuse = set_color(0, 0, 0);
+	
 	light->rayon = v_v_subs(&ray->node, &light->origin);
 	e->distance_light_object = magnitude(&light->rayon);
 	light->rayon = normalize(&light->rayon);
 	e->current_origin = light->origin;
 	e->current_rayon = light->rayon;
 	c_light = light_intersection(e, light);
-	c_light = c_double_mult(&c_light, 1 - (e->distance / 50000));
+	c_light = c_double_mult(&c_light,
+				1 - (e->distance_light_object / 50000));
 	if (c_light.r == 0 && c_light.g == 0 && c_light.b == 0)
 		return (*c);
-	angle = v_double_mult(&light->rayon, (-1));
-	light->angle = dot_product(&ray->normal, &angle);
-	specular = e->specular * get_specular(light, &ray->rayon, &ray->normal);
-	if (light->angle > 0)
-	{
-		diffuse = c_c_mult(&e->current_color, &c_light);
-		diffuse = c_double_add(&diffuse, specular);
-		diffuse = c_double_mult(&diffuse, light->angle);
-		diffuse = c_double_mult(&diffuse, e->diffuse);
-	}
+	diffuse = calc_diffuse(e, light, ray, c_light);
 	return (c_c_add(c, &diffuse));
 }
 

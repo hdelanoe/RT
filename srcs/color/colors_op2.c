@@ -60,3 +60,18 @@ void		print_color(t_color *color, t_env *e, int x, int y)
 		e->mlx.data[(x + y * WIN_X) * 4 + 2] = color->r * 255;
 	}
 }
+
+double	get_specular(t_light *light, t_vector *view, t_vector *node)
+{
+	t_vector	tmp;
+	t_vector	r;
+	double		reflect;
+	double		phong_color;
+
+	reflect = dot_product(&light->rayon, node);
+	tmp = v_double_mult(node, 2);
+	r = v_double_mult(&tmp, reflect);
+	r = v_v_subs(&r, &light->rayon);
+	phong_color = 0.2 * powf(dot_product(view, &r), 50) * 3;
+	return (phong_color);
+}

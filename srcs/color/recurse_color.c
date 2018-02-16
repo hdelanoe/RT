@@ -14,7 +14,7 @@
 
 void fresnel(t_env *e, t_rayon ray, double *kr)
 {
-	t_physics pl;
+	t_physic pl;
 
  	pl.cos1 = dot_product(&ray.rayon, &ray.normal);
 	pl.etai = e->indice;
