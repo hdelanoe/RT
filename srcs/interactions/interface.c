@@ -12,7 +12,7 @@
 
 #include "../includes/rtv1.h"
 
-void 	print_create_menu(t_env *e)
+void	print_create_menu(t_env *e)
 {
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 50,
 		0xAAFFFF, "-- RT CREATE MODE --");
@@ -28,7 +28,7 @@ void 	print_create_menu(t_env *e)
 		0xFFFFFF, "CONE = 4");
 }
 
-void 	print_create_menu2(t_env *e)
+void	print_create_menu2(t_env *e)
 {
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 50,
 		0xAAFFFF, "-- RT CREATE MODE --");
@@ -41,7 +41,6 @@ void 	print_create_menu2(t_env *e)
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 250,
 		0x00FF00, "GREEN = 3");
 }
-
 
 void	print_help_mouvement(t_env *e)
 {

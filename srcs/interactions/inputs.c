@@ -17,7 +17,7 @@ void	water_noise(t_env *e)
 	e->perlin.a = RANDOM / 10;
 	e->perlin.b = RANDOM / 10;
 	e->perlin.c = RANDOM / 10;
-	 e->perlin.d = RANDOM;
+	e->perlin.d = RANDOM;
 }
 
 void	inputs2(int keycode, t_env *e)
