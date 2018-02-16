@@ -12,16 +12,6 @@
 
 #include "rtv1.h"
 
-t_color		normalize_color(t_color *color)
-{
-	t_color new;
-
-	new.r = color->r / 255;
-	new.g = color->g / 255;
-	new.b = color->b / 255;
-	return (new);
-}
-
 void		load_texture3(t_env *e)
 {
 	if (!((e->text_img[4] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,

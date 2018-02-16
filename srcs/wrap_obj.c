@@ -12,11 +12,6 @@
 
 #include "rtv1.h"
 
-int			max(int a, int b)
-{
-	return (a > b ? a : b);
-}
-
 void		wrap_sphere(t_env *e, t_object *object)
 {
 	t_vector			vp;

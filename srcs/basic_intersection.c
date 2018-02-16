@@ -66,7 +66,7 @@ int		disk_intersection(t_env *e, t_object *disk)
 {
 	t_vector	distance;
 	double		d;
-	t_object    tmp;
+	t_object	tmp;
 
 	tmp = *disk;
 	if (plane_intersection(e, &tmp))

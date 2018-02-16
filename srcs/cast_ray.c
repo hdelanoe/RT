@@ -37,7 +37,6 @@ int		cast_ray(t_env *e, t_vector rayon, t_vector origin)
 	tmp_object = *e->object;
 	while (1)
 	{
-		
 		check_intersection(e, &tmp_object, NULL);
 		if (tmp_object.next == NULL)
 			break ;
@@ -59,16 +58,15 @@ int		cast_reflect_ray(t_env *e, t_rayon incident)
 	pl.tmp1 = v_double_mult(&reflect.rayon, 0.01);
 	reflect.origin = v_v_add(&incident.node, &pl.tmp1);
 	normalize(&reflect.rayon);
-	if(cast_ray(e, reflect.rayon, reflect.origin))
+	if (cast_ray(e, reflect.rayon, reflect.origin))
 		return (1);
-	return(0);
+	return (0);
 }
 
 int		cast_refract_ray(t_env *e, t_rayon origin)
 {
 	t_rayon		refract;
 	t_physic	pl;
-
 
 	pl.ior = e->indice / e->object_indice;
 	pl.cos1 = dot_product(&origin.normal, &origin.rayon);
