@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-t_color	ambient_occlusion(t_env *e)
+t_color		ambient_occlusion(t_env *e)
 {
 	t_color		c;
 	t_rayon		origin;
@@ -39,7 +39,7 @@ t_color	ambient_occlusion(t_env *e)
 	return (e->hit ? c_double_mult(&c, (double)1 / e->hit) : c);
 }
 
-void init_ray_values(t_rayon *ray, t_env *e)
+void	init_ray_values(t_rayon *ray, t_env *e)
 {
  	double n;
  
@@ -67,7 +67,7 @@ void init_ray_values(t_rayon *ray, t_env *e)
    }
 }
 
-t_color	calc_diffuse(t_env *e, t_light *light, t_rayon *ray, t_color c)
+t_color		calc_diffuse(t_env *e, t_light *light, t_rayon *ray, t_color c)
 {
 	t_color		diffuse;
 	t_vector	angle;
@@ -88,7 +88,7 @@ t_color	calc_diffuse(t_env *e, t_light *light, t_rayon *ray, t_color c)
 	return(diffuse);
 }
 
-t_color	add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
+t_color		add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
 {
 	t_color		diffuse;
 	t_color		c_light;
@@ -107,7 +107,7 @@ t_color	add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
 	return (c_c_add(c, &diffuse));
 }
 
-t_color	get_color(t_env *e)
+t_color		get_color(t_env *e)
 {
 	t_color	c;
 	t_rayon	ray;
