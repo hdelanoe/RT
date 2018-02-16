@@ -80,7 +80,7 @@ t_env		*init(void)
 	e->perlin.a = 0.01;
 	e->perlin.b = 0.02;
 	e->perlin.c = 0.05;
-	e->perlin.d = 0.5;
+	e->perlin.d = 1.0;
 	e->perlin.e = 1.0;
 
 	return (e);

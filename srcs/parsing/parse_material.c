@@ -45,7 +45,7 @@ t_object	*init_material(void)
 	object->radius = 0;
 	object->sub_object = NULL;
 	object->bump = 0;
-	object->indice = R_VOID;
+	object->indice = R_TEST;
 	return (object);
 }
 

@@ -300,14 +300,19 @@ struct							s_env
 
 struct							s_physics
 {
-	double						ior;
-	double						cos1;
-	double						cos2;
-	double						teta;
-	t_vector					tmp1;
-	t_vector					tmp2;
-	t_vector					r;
-	t_vector					t;
+		double					ior;
+		double					cos1;
+		double					cos2;
+		double 					sin2;
+		double 					etat;
+		double 					etai;
+		double					teta;
+		double 					rs;
+		double 					rp;
+		t_vector				tmp1;
+		t_vector				tmp2;
+		t_vector				r;
+		t_vector				t;
 };
 
 struct							s_poly
