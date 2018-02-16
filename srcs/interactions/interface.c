@@ -12,6 +12,37 @@
 
 #include "../includes/rtv1.h"
 
+void 	print_create_menu(t_env *e)
+{
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 50,
+		0xAAFFFF, "-- RT CREATE MODE --");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 100,
+		0xFFFFFF, "-- CHOOSE YOUR OBJECT --");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 150,
+		0xFFFFFF, "PLANE = 1");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 200,
+		0xFFFFFF, "SPHERE = 2");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 250,
+		0xFFFFFF, "CYLINDER = 3");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 300,
+		0xFFFFFF, "CONE = 4");
+}
+
+void 	print_create_menu2(t_env *e)
+{
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 50,
+		0xAAFFFF, "-- RT CREATE MODE --");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 100,
+		0xFFFFFF, "-- CHOOSE YOUR COLOR --");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 150,
+		0x00FFFF, "BLUE = 1");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 200,
+		0xFF0000, "RED = 2");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 250,
+		0x00FF00, "GREEN = 3");
+}
+
+
 void	print_help_mouvement(t_env *e)
 {
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 450,

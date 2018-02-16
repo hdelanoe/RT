@@ -84,7 +84,6 @@ int			key_functions(int keycode, t_env *e)
 	if (!check_keycode(keycode, e))
 		return (0);
 	set_mode(keycode, e);
-	printf("key %d\n", keycode);
 	if (!inputs(keycode, e))
 		return (0);
 	inputs2(keycode, e);

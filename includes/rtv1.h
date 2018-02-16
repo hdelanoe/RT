@@ -384,7 +384,6 @@ t_matrix4x4				translation(t_env *e, t_matrix4x4 *rot);
 
 void					get_object(t_env *e, t_json *json);
 void					add_new_member(t_json **list, t_json *new_member);
-int						create_object(t_json *object, char *str, int i);
 void					create_tree(t_env *e, char **str);
 int						parsing(t_env *e, char *src_file);
 void					add_new_object(t_object **list, t_object *new_object);

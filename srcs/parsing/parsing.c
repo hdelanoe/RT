@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
@@ -80,7 +80,7 @@ int			create_object(t_json *object, char *str, int i)
 		{
 			member = new_object();
 			 i += get_content(&member->name, str, i) + 1;
-			char_is_valid(str[i], ':', &str[i]);
+			char_is_valid(str[i], ':');
 			while (str[i] && !(str[i] == '"' || str[i] == '{'))
 				i++;
 			if (str[i] == '{')
@@ -90,7 +90,7 @@ int			create_object(t_json *object, char *str, int i)
 			add_new_member(&object->member, member);
 		}	
 	}
-	char_is_valid(str[i], '}', &str[i]);
+	char_is_valid(str[i], '}');
 	return (i);
 }
 
@@ -102,6 +102,8 @@ void	create_tree(t_env *e, char **str)
 	{
 		json = new_object();
 		create_object(json, (*str), 0);
+		if (!json->member->name)
+			ft_kill("Bad file");
 		get_object(e, json);
 	}
 	else

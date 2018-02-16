@@ -22,11 +22,7 @@ SRCS		= 	srcs/main.c \
 				srcs/check_intersection.c \
 				srcs/solution.c \
 				srcs/errors_2.c \
-				srcs/triangle.c \
-				srcs/quad.c \
 				srcs/errors.c \
-				srcs/perlin_noise.c \
-				srcs/bump.c \
 				srcs/ft_remove_if.c \
 				srcs/wrap_obj.c \
 				srcs/interactions/user_interactions.c \
@@ -57,12 +53,15 @@ SRCS		= 	srcs/main.c \
 				srcs/parsing/create_glass.c \
 				srcs/parsing/create_light.c \
 				srcs/parsing/create_area_light.c \
+				srcs/parsing/triangle.c \
+				srcs/parsing/quad.c \
 				srcs/color/colors.c \
 				srcs/color/cel_shading.c \
 				srcs/color/colors_op1.c \
 				srcs/color/colors_op2.c \
 				srcs/color/recurse_color.c \
 				srcs/color/area_light.c \
+				srcs/color/perlin_noise.c \
 				srcs/vector/vectors_op1.c \
 				srcs/vector/vectors_op2.c \
 				srcs/vector/vectors_op3.c \

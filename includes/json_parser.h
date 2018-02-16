@@ -40,7 +40,7 @@ struct						s_parsing
 
 t_json						*new_object(void);
 void						add(t_json **current, t_json *new);
-void						char_is_valid(char a, char b, char *str);
+void						char_is_valid(char a, char b);
 int							create_object(t_json *object, char *str, int i);
 double						get_content_from_member(char *name,
 							t_json **membre);
