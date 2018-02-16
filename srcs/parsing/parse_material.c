@@ -25,7 +25,10 @@ void	parse_scene(t_env *e, t_json *json)
 	else if (!(ft_strcmp(json->name, "recursion")) && json->content)
 		e->recursion = ft_atoi(json->content); 
 	else
+	{
 		ft_printf("{R}WARNING:{E} %s is not valid\n", json->name);
+		exit_parser(1);
+	}
 }
 
 t_object	*init_material(void)

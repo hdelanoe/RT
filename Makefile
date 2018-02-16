@@ -44,6 +44,7 @@ SRCS		= 	srcs/main.c \
 				srcs/parsing/choose_material2.c \
 				srcs/parsing/parsing_tools.c \
 				srcs/parsing/get_parsing.c \
+				srcs/parsing/get_object.c \
 				srcs/parsing/create_object.c \
 				srcs/parsing/create_object2.c \
 				srcs/parsing/object_attribut.c \
