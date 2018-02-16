@@ -14,7 +14,6 @@
 
 void	water_noise(t_env *e)
 {
-	A
 	e->perlin.a = RANDOM;
 	e->perlin.b = RANDOM;
 	// e->perlin.c = RANDOM;

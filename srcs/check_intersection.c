@@ -139,9 +139,9 @@ t_color		light_intersection(t_env *e, t_light *light)
 	c = set_color(light->color.b, light->color.g, light->color.r);
 	while (1)
 	{
-		if (tmp_object->id != e->id_object
-			&& ft_strcmp(tmp_object->type, "area_light")
-			&& sort_type(e, tmp_object) && e->solution < e->distance_light_object)
+		if (tmp_object.id != e->id_object
+			&& ft_strcmp(tmp_object.type, "area_light")
+			&& sort_type(e, &tmp_object) && e->solution < e->distance_light_object)
 		{
 			if (tmp_object.refract == 0)
 				return (set_color(0, 0, 0));
