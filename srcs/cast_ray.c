@@ -44,14 +44,7 @@ int		cast_ray(t_env *e, t_vector rayon, t_vector origin)
 		tmp_object = *tmp_object.next;
 	}
 	if (e->intersect)
-	{
-		// if (e->bump)
-		// {
-		//	e->current_node = bump_normal(e, e->current_node);
-		//	e->current_node_normal = bump_normal(e, e->current_node_normal);
-		// }
 		return (1);
-	}
 	return (0);
 }
 

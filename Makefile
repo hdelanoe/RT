@@ -22,7 +22,6 @@ SRCS		= 	srcs/main.c \
 				srcs/check_intersection.c \
 				srcs/solution.c \
 				srcs/errors_2.c \
-				srcs/torus.c \
 				srcs/triangle.c \
 				srcs/quad.c \
 				srcs/errors.c \
