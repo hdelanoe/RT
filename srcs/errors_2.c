@@ -45,7 +45,7 @@ void		open_close(char *src_file)
 		ft_kill("Bad file. Please enter a valid scene to read.");
 }
 
-void	exit_rt(int flag)
+void		exit_rt(int flag)
 {
 	if (flag == 1)
 	{

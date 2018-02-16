@@ -27,7 +27,9 @@ SRCS		= 	srcs/main.c \
 				srcs/quad.c \
 				srcs/errors.c \
 				srcs/perlin_noise.c \
+				srcs/bump.c \
 				srcs/ft_remove_if.c \
+				srcs/wrap_obj.c \
 				srcs/interactions/user_interactions.c \
 				srcs/interactions/mouse.c \
 				srcs/interactions/inputs.c \
@@ -51,6 +53,7 @@ SRCS		= 	srcs/main.c \
 				srcs/parsing/object_attribut.c \
 				srcs/parsing/create_cap.c \
 				srcs/parsing/create_cube.c \
+				srcs/parsing/create_pyramide.c \
 				srcs/parsing/create_glass.c \
 				srcs/parsing/create_light.c \
 				srcs/parsing/create_area_light.c \

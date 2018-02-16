@@ -46,16 +46,16 @@ void	ft_kill(char *text)
 	exit(EXIT_FAILURE);
 }
 
-int      proper_exit(t_env *e)
+int		proper_exit(t_env *e)
 {
-  mlx_destroy_window(e->mlx.mlx_ptr, e->mlx.win_ptr);
-  exit(EXIT_SUCCESS);
-  return (0);
+	mlx_destroy_window(e->mlx.mlx_ptr, e->mlx.win_ptr);
+	exit(EXIT_SUCCESS);
+	return (0);
 }
 
-int 	check_keycode(int keycode, t_env *e)
+int		check_keycode(int keycode, t_env *e)
 {
-	if (keycode == KEY_ESCAPE)
+	if (KC == KEY_ESCAPE)
 		proper_exit(e);
 	if (keycode == KEY_D || keycode == KEY_A || keycode == KEY_Q ||
 		keycode == KEY_E || keycode == KEY_W || keycode == KEY_S ||
@@ -66,7 +66,7 @@ int 	check_keycode(int keycode, t_env *e)
 		keycode == KEY_PAD_2 || keycode == KEY_PAD_3 || keycode == KEY_PAD_4 ||
 		keycode == KEY_PAD_5 || keycode == KEY_PAD_6 || keycode == KEY_ENTER ||
 		keycode == KEY_H || keycode == KEY_PAD_ADD ||
-		keycode == KEY_C || keycode == KEY_F || keycode == KEY_Y)
+		keycode == KEY_C || keycode == KEY_F || keycode == KEY_Y || keycode == KEY_M)
 		return (1);
 	return (0);
 }

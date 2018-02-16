@@ -12,46 +12,35 @@
 
 #include "rtv1.h"
 
-t_pixel		pixel_vp_init(t_pixel *pxl, t_env *e)
+void		pixel_vp_init(t_pixel *pxl, t_env *e)
 {
-	t_pixel new;
-
-	new = *pxl;
-	new.tmpx = new.x;
-	new.tmpy = new.y;
-	new.tmp_vp_pointx = v_double_mult(&e->camera.x_vector, new.x);
-	new.tmp_vp_pointy = v_double_mult(&e->camera.y_vector, new.y);
-	new.viewplane_point = v_v_add(&e->viewplane_point_up_left,
-		&new.tmp_vp_pointx);
-	new.viewplane_point = v_v_subs(&new.viewplane_point, &new.tmp_vp_pointy);
-	return (new);
+	pxl->tmpx = pxl->x;
+	pxl->tmpy = pxl->y;
+	pxl->tmp_vp_pointx = v_double_mult(&e->camera.x_vector, pxl->x);
+	pxl->tmp_vp_pointy = v_double_mult(&e->camera.y_vector, pxl->y);
+	pxl->viewplane_point = v_v_add(&e->viewplane_point_up_left,
+	&pxl->tmp_vp_pointx);
+	pxl->viewplane_point = v_v_subs(&pxl->viewplane_point, &pxl->tmp_vp_pointy);
+	e->camera.rayon = v_v_subs(&pxl->viewplane_point, &e->camera.origin);
+	e->camera.rayon = normalize(&e->camera.rayon);
 }
 
 void		pxl_tracer(t_env *e, int sample)
 {
 	t_pixel		pxl;
-	t_color 	color;
+	t_color		color;
 
 	pxl.y = 0;
 	while (pxl.y < WIN_Y)
 	{
-		pxl.x = 0;
-		while (pxl.x < WIN_X)
+		pxl.x = e->begin;
+		while (pxl.x < e->fin)
 		{
 			e->recursion = 6;
 			color = set_color(0, 0, 0);
-			pxl = pixel_vp_init(&pxl, e);
-			e->camera.rayon = v_v_subs(&pxl.viewplane_point, &e->camera.origin);
-			e->camera.rayon = normalize(&e->camera.rayon);
+			pixel_vp_init(&pxl, e);
 			if (cast_ray(e, e->camera.rayon, e->camera.origin))
-			{
-				if (e->render_mode == 1 && !e->edit_flag)
-					color = ambient_occlusion(e);
-				else if (e->render_mode == 3 && !e->edit_flag)
-					color = cel_shade_color(e);
-				else
-					color = get_color(e);
-			}
+				color = get_render_mode(e);
 			while (pxl.y++ < pxl.tmpy + sample)
 			{
 				pxl.x = pxl.x != pxl.tmpx ? pxl.x - sample : pxl.x;

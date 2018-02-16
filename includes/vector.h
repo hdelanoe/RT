@@ -19,9 +19,9 @@ typedef struct s_vector	t_vector;
 
 struct					s_vector
 {
-	double	x;
-	double	y;
-	double	z;
+	double				x;
+	double				y;
+	double				z;
 };
 
 double					magnitude(t_vector *a);

@@ -133,10 +133,13 @@ void	ray_tracer(t_env *e)
 	t_color 	color;
 	
 	y = 0;
+	// printf("%d %d\n", e->begin, e->fin);
+	// printf("%p \n", &e->mlx);
+
 	while (y < e->height)
 	{
-		x = 0;
-		while (x < e->width)
+		x = e->begin;
+		while (x < e->fin)
 		{
 			e->recursion = 6;
 			color = set_color(0, 0, 0);
@@ -147,18 +150,10 @@ void	ray_tracer(t_env *e)
 			e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
 			e->camera.rayon = normalize(&e->camera.rayon);
 			if (cast_ray(e, e->camera.rayon, e->camera.origin))
-			{
-				if (e->render_mode == 1 && !e->edit_flag)
-					color = ambient_occlusion(e);
-				else if (e->render_mode == 3 && !e->edit_flag)
-					color = cel_shade_color(e);
-				else if (e->area_light_on == 1)
-					color = get_area_color(e);
-				else
-					color = get_color(e);
-			}
+				color = get_render_mode(e);
 			color = set_filter(e, color);
-		//	if (color.r != 0 || color.g != 0 || color.b != 0)
+			// if (e->begin == 700)
+				// printf(" r %f, g  %f b %f\n", color.r , color.g , color.b);
 				print_color(&color, e, x, y);
 			e->skybox = 0;
 			x++;

@@ -55,23 +55,47 @@ double	get_specular(t_light *light, t_vector *view, t_vector *node)
 	return (phong_color);
 }
 
+double invsqrt(double number)
+{
+  long i;
+  double x2, y;
+  const double threehalfs = 1.5;
+ 
+  x2 = number * 0.5;
+  y = number;
+  i = * ( long * ) &y; // evil doubleing point bit level hacking
+  i = 0x5f3759df - ( i >> 1 ); // what the fuck?
+  y = * ( double * ) &i;
+  y = y * ( threehalfs - ( x2 * y * y ) ); // 1st iteration
+//  y = y * ( threehalfs - ( x2 * y * y ) ); // 2nd iteration, this can be removed
+ 
+  return y;
+}
+
 void init_ray_values(t_rayon *ray, t_env *e)
 {
-	// double n;
+  double n;
+ 
+    ray->origin = e->current_origin;
+    ray->rayon = e->current_rayon;
+    ray->node = e->current_node;
+   ray->normal = e->current_node_normal;
+   if (e->bump)
+   {
+     n = noise(e, e->perlin.a * ray->node.x, e->perlin.c  * ray->node.y, e->perlin.b * ray->node.z);
+      n = e->perlin.d * sin((ray->node.y) * e->perlin.c + n);
+    ray->node = v_double_mult(&ray->node, n);
+ 	ray->node = v_double_mult(&ray->node, e->perlin.e);
 
-  	ray->origin = e->current_origin;
-  	ray->rayon = e->current_rayon;
-  	ray->node = e->current_node;
- 	ray->normal = e->current_node_normal;
-	// if (e->bump)
-	// {
-	// 	n = noise(e, ray->node.x,ray->node.y, ray->node.z);
-	// 	ray->node = v_double_mult(&ray->node, n);
-	// 	if (ray->node.x != e->current_node.x)
-	// 		printf("%f %f\n", ray->node.x, e->current_node.x);
-	// 	n = noise(e, ray->normal.x,ray->normal.y, ray->normal.z);
-	// 	ray->normal = v_double_mult(&ray->normal, n);
-	// }
+
+ 
+  // //  if (ray->node.x != e->current_node.x)
+  // //    printf("%f %f\n", ray->node.x, e->current_node.x);
+    n = noise(e, e->perlin.a * ray->node.x, e->perlin.c  * ray->node.y, e->perlin.b * ray->node.z);
+ n = e->perlin.d * sin((ray->node.y) * e->perlin.c + n);
+ 	ray->normal = v_double_mult(&ray->normal, e->perlin.e);
+     ray->normal = normalize(&ray->normal);
+   }
 }
 
 t_color	add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
@@ -80,7 +104,9 @@ t_color	add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
 	t_color		c_light;
 	t_vector	angle;
 	double		specular;
+	// double n;
 
+	// n = turbulence(e, ray->node.x, ray->node.y, ray->node.z);;
 	diffuse = set_color(0, 0, 0);
 	light->rayon = v_v_subs(&ray->node, &light->origin);
 	e->distance_light_object = magnitude(&light->rayon);
@@ -108,7 +134,7 @@ t_color	get_color(t_env *e)
 {
 	t_color	c;
 	t_rayon	ray;
-	t_light	*tmp_light;
+	t_light	tmp_light;
 
 	init_ray_values(&ray, e);
 	c = c_double_mult(&e->current_color, e->ambient);
@@ -116,14 +142,16 @@ t_color	get_color(t_env *e)
 	if ((c.r == 0 && c.g == 0 && c.b == 0)
 		|| e->edit_flag == 1)
 		return (c);
-	tmp_light = e->light;
-	while (tmp_light)
+	tmp_light = *e->light;
+	while (1)
 	{
-		if (!ft_strcmp(tmp_light->type, "area_light"))
-			c = get_area_light_intensity(e, tmp_light, &ray, &c);
+		if (!ft_strcmp(tmp_light.type, "area_light"))
+			c = get_area_light_intensity(e, &tmp_light, &ray, &c);
 		else
-			c = add_diffuse(e, &c, tmp_light, &ray);
-		tmp_light = tmp_light->next;
+			c = add_diffuse(e, &c, &tmp_light, &ray);
+		if (tmp_light.next == NULL)
+			break ;
+		tmp_light = *tmp_light.next;
 	}
 	recurse_color(e, ray, &c);
 	return (c);

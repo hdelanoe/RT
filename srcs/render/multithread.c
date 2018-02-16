@@ -18,26 +18,44 @@ void	*ray_tracer_void(void *e)
 	return (NULL);
 }
 
+void	*pxl_tracer_void(void *e) 
+{
+	pxl_tracer(e, 6);
+	return (NULL);
+}
+
 void	ft_pthread(t_env *e, void *(*f)(void *param))
 {
-	t_env		tab[4];
-	pthread_t	t[4];
+	t_env		tab[10];
+	pthread_t	t[10];
 	int			i;
+	// t_object	*tmp;
 
 	i = 0;
-	while (i < 4)
+	while (i < 10)
 	{
+		// printf("e = %p\n", e->mlx.img_ptr);
 		 ft_memcpy((void*)&tab[i], (void*)e, sizeof(t_env));
+		// printf("tab[%d] = %p\n", i, tab[i].mlx.img_ptr);
+		 // tmp = tab[i].object;
+		 // while (tab[i].object)
+		 // {
+		 // 	tab[i].object->node = e->object->node;
+		 // 	tab[i].object->node_normal = e->object->node_normal;
+		 // 	e->object = e->object->next;
+		 // 	tab[i].object = tab[i].object->next;
+		 // }
+		 // tab[i].object = tmp;
 	//	printf("i = %d\n", i);
 		// init_camera(tab[i]);
-		tab[i].begin = 200 * i;
-		tab[i].fin = 200 * (i + 1);
-	//	printf("tab[%d] = %d\n", i, tab[i].begin);
+		tab[i].begin = 100 * i;
+		tab[i].fin = 100 * (i + 1);
+	//	tab[i].object = test;
 		pthread_create(&t[i], NULL, f, &tab[i]);
 		i++;
 	}
 	i = 0;
-	while (i < 4)
+	while (i < 10)
 	{
 		pthread_join(t[i], NULL);
 		i++;
