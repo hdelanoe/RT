@@ -55,7 +55,7 @@ void 	choose_glass(t_object *object)
 	object->specular = 0.8;
 	object->reflect = 1;
 	object->refract = 1;
-	object->absorbtion = 0.125;
+	object->absorbtion = 0.425;
 	object->indice = R_GLASS;
 }
 

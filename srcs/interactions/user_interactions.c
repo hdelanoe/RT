@@ -15,14 +15,13 @@
 void		choose_display_mode(t_env *e)
 {
 	if (e->aa_flag == 1 && e->pixelize == 0 && e->edit_flag == 0)
-		aa_tracer(e, 1);
+		ft_pthread(e, aa_tracer_void);
 	else if (e->pixelize == 1)
 		ft_pthread(e, pxl_tracer_void);
 	else if ((e->render_mode == 2 || e->render_mode == 4) && !e->edit_flag)
-		stereo_tracer(e);
+		ft_pthread(e, stereo_tracer_void);
 	else
 		ft_pthread(e, ray_tracer_void);
-	//	ray_tracer(e);
 	e->move_x = 0;
 	e->move_y = 0;
 	e->move_z = 0;

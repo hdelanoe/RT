@@ -56,6 +56,7 @@ typedef struct s_inter			t_inter;
 typedef struct s_pixel			t_pixel;
 typedef struct s_anti_a			t_anti_a;
 typedef struct s_physics		t_physics;
+typedef struct s_grid			t_grid;
 
 struct							s_pixel
 {
@@ -122,6 +123,24 @@ struct							s_cube
 	t_object *carre_4;
 	t_object *carre_5;
 	t_object *carre_6;
+};
+
+struct 							s_grid
+{
+	double 		x;
+	double 		y;
+	double 		xx;
+	double 		yy;
+	t_color 	ctmp;
+	t_color		color;
+	t_color 	fblue;
+	t_color 	fred;
+	t_color		blue;
+	t_color		red;
+	t_color 	filter;
+	t_vector	viewplane_point;
+	t_vector	tmp_vp_pointx;
+	t_vector	tmp_vp_pointy;
 };
 
 struct							s_light
@@ -648,7 +667,8 @@ void							choose_water(t_object *object);
 void							choose_glass(t_object *object);
 void							choose_pmma(t_object *object);
 void							choose_diam(t_object *object);
-
+void 							choose_mirror(t_object *object);
+void 							choose_marbre(t_object *object);
 /*
 **parsing.c
 */
@@ -693,6 +713,9 @@ t_color							set_filter(t_env *e, t_color c);
 */
 void							*ray_tracer_void(void *e);
 void							ft_pthread(t_env *e, void *(*f)(void *param));
+void 							*stereo_tracer_void(void *e);
+void							*pxl_tracer_void(void *e);
+void 							*aa_tracer_void(void *e);
 
 /*
 **pixelization.c
@@ -722,6 +745,5 @@ void							add_object(t_env *e, int x, int y);
 int								copy_object(t_env *e, int x, int y);
 int								delete_object(t_env *e, int x, int y);
 void							wrap_plane(t_env *e);
-void							*pxl_tracer_void(void *e);
 
 #endif

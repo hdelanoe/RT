@@ -12,12 +12,6 @@
 
 #include "rtv1.h"
 
-void		*aa_tracer_void(void *e)
-{
-	aa_tracer(e, 1);
-	return ((void *)(1));
-}
-
 void		anti_aliasing_clr_merge(t_color *anti, t_color *clr)
 {
 	anti->r += clr->r;

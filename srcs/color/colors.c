@@ -21,8 +21,7 @@ t_color	ambient_occlusion(t_env *e)
 	int			sample;
 
 	c = set_color(1, 1, 1);
-	origin.node = e->current_node;
-	origin.normal = e->current_node_normal;
+	void init_ray_values(t_rayon *origin, t_env *e);
 	sample = 16;
 	e->hit = 0;
 	while (sample > 0)
@@ -79,22 +78,24 @@ void init_ray_values(t_rayon *ray, t_env *e)
     ray->origin = e->current_origin;
     ray->rayon = e->current_rayon;
     ray->node = e->current_node;
-   ray->normal = e->current_node_normal;
-   if (e->bump)
+   	ray->normal = e->current_node_normal;
+   if (e->bump == 1)
    {
-     n = noise(e, e->perlin.a * ray->node.x, e->perlin.c  * ray->node.y, e->perlin.b * ray->node.z);
-      n = e->perlin.d * sin((ray->node.y) * e->perlin.c + n);
-    ray->node = v_double_mult(&ray->node, n);
- 	ray->node = v_double_mult(&ray->node, e->perlin.e);
-
-
- 
-  // //  if (ray->node.x != e->current_node.x)
-  // //    printf("%f %f\n", ray->node.x, e->current_node.x);
-    n = noise(e, e->perlin.a * ray->node.x, e->perlin.c  * ray->node.y, e->perlin.b * ray->node.z);
- n = e->perlin.d * sin((ray->node.y) * e->perlin.c + n);
- 	ray->normal = v_double_mult(&ray->normal, e->perlin.e);
-     ray->normal = normalize(&ray->normal);
+    	n = noise(e, e->perlin.a * ray->node.x,
+    		e->perlin.c  * ray->node.y, e->perlin.b * ray->node.z);
+    	ray->node.y *= n;
+ 		ray->normal = v_double_add(&ray->normal, n);
+    	ray->normal = normalize(&ray->normal);
+   }
+   else if (e->bump == 2)
+   {
+    	n = noise(e, e->perlin.a * ray->node.x,
+    		e->perlin.c  * ray->node.y, e->perlin.b * ray->node.z);
+      	n = e->perlin.d * sin((ray->node.y + ray->node.x)
+      		* e->perlin.c + n) + e->perlin.d;
+ 		ray->node = v_double_mult(&ray->node, n);
+ 		ray->normal = v_double_add(&ray->normal, n);
+    	ray->normal = normalize(&ray->normal);
    }
 }
 

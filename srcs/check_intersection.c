@@ -28,10 +28,11 @@ void		get_object_values(t_env *e, t_object *object)
 	e->reflect = object->reflect;
 	e->refract = object->refract;
 	e->specular = object->specular;
+	e->absorbtion = object->absorbtion;
 	e->id_object = object->id;
 	e->object_indice = object->indice;
 	if (e->is_copy)
-		e->copy = object;
+		init_copy(&e->copy, object); 
 }
 
 void		sort_type2(t_env *e, t_object *object, int *intersect)

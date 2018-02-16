@@ -20,3 +20,14 @@ void 	choose_mirror(t_object *object)
 	object->reflect = 1;
 	object->refract = 0;
 }
+
+void 	choose_marbre(t_object *object)
+{
+	object->ambient = 0.3;
+	object->diffuse = 0.725;
+	object->specular = 0.7;
+	object->reflect = 1;
+	object->refract = 0;
+	object->absorbtion = 0.8;
+	object->bump = 2;
+}
