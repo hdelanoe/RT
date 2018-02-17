@@ -355,6 +355,29 @@ struct					s_poly
 	int					nb;
 };
 
+typedef struct			s_header
+{
+	char	type[2];
+	int		reserved;
+	int		file_size;
+	int		offset;
+}						t_header;
+
+typedef struct			s_infos
+{
+	int		header_size;
+	int		image_size;
+	int		nb_color;
+	int		important_color;
+	int		compression;
+	int		width;
+	int		height;
+	int		x_res;
+	int		y_res;
+	int	panes;
+	short	bpp;
+}						t_infos;
+
 
 t_env					*init(void);
 void					display_window(t_env *e);
@@ -534,5 +557,6 @@ int                		cmp(int a, int b);
 void					add_object(t_env *e, int x, int y);
 int						copy_object(t_env *e, int x, int y);
 int						delete_object(t_env *e, int x, int y);
+void 					save_image(t_env *e);
 
 #endif

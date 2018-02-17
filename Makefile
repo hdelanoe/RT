@@ -26,6 +26,7 @@ SRCS		= 	srcs/main.c \
 				srcs/errors.c \
 				srcs/ft_remove_if.c \
 				srcs/wrap_obj.c \
+				srcs/save_image.c \
 				srcs/interactions/user_interactions.c \
 				srcs/interactions/mouse.c \
 				srcs/interactions/inputs.c \
