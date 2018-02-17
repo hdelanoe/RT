@@ -46,10 +46,10 @@ void	ft_pthread(t_env *e, void *(*f)(void *param))
 	while (i < 4)
 	{
 		ft_memcpy((void*)&tab[i], (void*)e, sizeof(t_env));
-		tab[i].begin = e->width / 4 * i;
-		tab[i].fin = e->width / 4 * (i + 1);
+		tab[i].begin = e->height / 4 * i;
+		tab[i].fin = e->height / 4 * (i + 1);
 		if (i == 3)
-			tab[i].fin = e->width;
+			tab[i].fin = e->height;
 		pthread_create(&t[i], NULL, f, &tab[i]);
 		i++;
 	}

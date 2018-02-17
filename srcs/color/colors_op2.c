@@ -61,7 +61,7 @@ void		print_color(t_color *color, t_env *e, int x, int y)
 	}
 }
 
-double	get_specular(t_light *light, t_vector *view, t_vector *node)
+double		get_specular(t_light *light, t_vector *view, t_vector *node)
 {
 	t_vector	tmp;
 	t_vector	r;

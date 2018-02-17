@@ -37,7 +37,7 @@ void		set_mode2(int keycode, t_env *e)
 	else if (keycode == KEY_T)
 	{
 		e->am_flag = e->am_flag == 1 ? 0 : 1;
-		e->render_mode = e->am_flag == 1 ? 1 : 0;
+	//	e->render_mode = e->am_flag == 1 ? 1 : 0;
 	}
 	else if (keycode == KEY_P)
 	{

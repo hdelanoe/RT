@@ -30,11 +30,11 @@ void		pxl_tracer(t_env *e, int sample)
 	t_grid		g;
 	t_color		color;
 
-	g.y = 0;
-	while (g.y < WIN_Y)
+	g.y = e->begin;
+	while (g.y < e->fin)
 	{
-		g.x = e->begin;
-		while (g.x < e->fin)
+		g.x = 0;
+		while (g.x < e->width)
 		{
 			e->recursion = 6;
 			color = set_color(0, 0, 0);

@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: nobila <nobila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 20:12:37 by dguy-caz          #+#    #+#             */
-/*   Updated: 2017/12/23 16:52:29 by nobila           ###   ########.fr       */
+/*   Updated: 2018/02/17 17:19:35 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			create_object(t_json *object, char *str, int i)
 		if (str[i] == '"')
 		{
 			member = new_object();
-			 i += get_content(&member->name, str, i) + 1;
+			i += get_content(&member->name, str, i) + 1;
 			char_is_valid(str[i], ':');
 			while (str[i] && !(str[i] == '"' || str[i] == '{'))
 				i++;
@@ -48,7 +48,7 @@ int			create_object(t_json *object, char *str, int i)
 			else
 				i += get_content(&member->content, str, i);
 			add_new_member(&object->member, member);
-		}	
+		}
 	}
 	char_is_valid(str[i], '}');
 	return (i);

@@ -19,21 +19,6 @@ void		anti_aliasing_clr_merge(t_color *anti, t_color *clr)
 	anti->b += clr->b;
 }
 
-t_color		get_render_mode(t_env *e)
-{
-	t_color new;
-
-	if (e->render_mode == 1 && !e->edit_flag)
-		new = ambient_occlusion(e);
-	else if (e->render_mode == 3 && !e->edit_flag)
-		new = cel_shade_color(e);
-	else if (e->area_light_on == 1)
-		new = get_area_color(e);
-	else
-		new = get_color(e);
-	return (new);
-}
-
 t_grid		antialias_loop_init(t_grid *anti, t_env *e, int sample)
 {
 	t_grid			new;
@@ -64,11 +49,11 @@ void		aa_tracer(t_env *e, int sample)
 {
 	t_grid	aa;
 
-	aa.y = 0;
-	while (aa.y < WIN_Y)
+	aa.y = e->begin;
+	while (aa.y < e->fin)
 	{
-		aa.x = e->begin;
-		while (aa.x < e->fin)
+		aa.x = 0;
+		while (aa.x < e->width)
 		{
 			aa.xx = 0;
 			aa.color = set_color(0, 0, 0);

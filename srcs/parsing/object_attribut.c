@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-void 	plane_attribut(t_object *plane, t_json *json)
+void	plane_attribut(t_object *plane, t_json *json)
 {
 	if (!(ft_strcmp(json->name, "coord")) && json->member)
 		plane->point = parse_point(json->member);
@@ -43,7 +43,7 @@ void	sphere_attribut(t_json *tmp, t_object *sphere)
 		parse_material(tmp, sphere);
 }
 
-void 	cylinder_attribut(t_object *object, t_json *json)
+void	cylinder_attribut(t_object *object, t_json *json)
 {
 	if (!(ft_strcmp(json->name, "coord")) && json->member)
 		object->point = parse_point(json->member);
@@ -64,13 +64,13 @@ void 	cylinder_attribut(t_object *object, t_json *json)
 		ft_printf("{R}WARNING:{E} cylinder as a bad attribut\n");
 }
 
-void 	cone_attribut(t_object *object, t_json *json)
+void	cone_attribut(t_object *object, t_json *json)
 {
 	if (!(ft_strcmp(json->name, "coord")) && json->member)
 		object->point = parse_point(json->member);
 	else if (!(ft_strcmp(json->name, "color")) && json->member)
 		object->color = parse_color(json->member);
-	else if (!(ft_strcmp(json->name, "tangent")) &&json->content)
+	else if (!(ft_strcmp(json->name, "tangent")) && json->content)
 		object->tangent = ft_atod(json->content);
 	else if (!(ft_strcmp(json->name, "maxlength")) && json->content)
 	{

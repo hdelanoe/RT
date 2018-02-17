@@ -6,13 +6,13 @@
 /*   By: hdelanoe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 12:44:14 by hdelanoe          #+#    #+#             */
-/*   Updated: 2017/12/21 12:44:16 by hdelanoe         ###   ########.fr       */
+/*   Updated: 2018/02/17 17:20:11 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-void	parse_scene(t_env *e, t_json *json)
+void		parse_scene(t_env *e, t_json *json)
 {
 	if (!(ft_strcmp(json->name, "camera")) && json->member)
 		e->camera.origin = parse_point(json->member);
@@ -23,7 +23,7 @@ void	parse_scene(t_env *e, t_json *json)
 	else if (!(ft_strcmp(json->name, "distance")) && json->content)
 		e->camera.distance = ft_atod(json->content);
 	else if (!(ft_strcmp(json->name, "recursion")) && json->content)
-		e->recursion = ft_atoi(json->content); 
+		e->recursion = ft_atoi(json->content);
 	else
 	{
 		ft_printf("{R}WARNING:{E} %s is not valid\n", json->name);
@@ -52,7 +52,7 @@ t_object	*init_material(void)
 	return (object);
 }
 
-void 	parse_indice(char **material, t_object *object)
+void		parse_indice(char **material, t_object *object)
 {
 	if (!(ft_strcmp(*material, "void")))
 		object->indice = R_VOID;
@@ -74,7 +74,7 @@ void 	parse_indice(char **material, t_object *object)
 		choose_marbre(object);
 }
 
-void	parse_material(t_json *material, t_object *object)
+void		parse_material(t_json *material, t_object *object)
 {
 	t_json 	*tmp;
 
@@ -85,28 +85,13 @@ void	parse_material(t_json *material, t_object *object)
 	while (material->member)
 	{
 		tmp = material->member;
-		if (!(ft_strcmp(tmp->name, "ambient")) && tmp->content)
-			object->ambient = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "diffuse")) && tmp->content)
-			object->diffuse = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "specular")) && tmp->content)
-			object->specular = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "reflect")) && tmp->content)
-			object->reflect = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "refract")) && tmp->content)
-			object->refract = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "absorbtion")) && tmp->content)
-			object->absorbtion = ft_atod(tmp->content);
-		else
-		ft_printf("{R}WARNING:{E} material %s is not valid\n", tmp->name);
+		check_material(object, tmp);
 		material->member = material->member->next;
-		free(tmp->content);
-		free(tmp->name);
-		free(tmp);
+		free_json_member(&tmp);
 	}
 }
 
-void	free_json_member(t_json **member)
+void		free_json_member(t_json **member)
 {
 	free((*member)->name);
 	free((*member)->content);

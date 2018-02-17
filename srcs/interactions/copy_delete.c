@@ -35,6 +35,8 @@ void		init_copy(t_object **copy, t_object *object)
 	(*copy)->specular = object->specular;
 	(*copy)->reflect = object->reflect;
 	(*copy)->refract = object->refract;
+	(*copy)->bump = object->bump;
+	(*copy)->indice = object->indice;
 	(*copy)->absorbtion = object->absorbtion;
 	(*copy)->next = NULL;
 }

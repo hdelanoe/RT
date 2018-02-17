@@ -41,6 +41,7 @@ SRCS		= 	srcs/main.c \
 				srcs/matrix/matrix_tools.c \
 				srcs/parsing/parsing.c \
 				srcs/parsing/parse_material.c \
+				srcs/parsing/parse_material2.c \
 				srcs/parsing/choose_material.c \
 				srcs/parsing/choose_material2.c \
 				srcs/parsing/parsing_tools.c \
