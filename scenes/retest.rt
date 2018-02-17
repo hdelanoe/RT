@@ -3,10 +3,7 @@
     "coord": {"x": "-100", "y": "250", "z": "-150"}, 
     "color": {"r": "0", "g": "0", "b": "0.8"} 
     "radius": "130"
-    "material": {
-      "refract": "1"
-      "reflect":"1"
-      }
+    "material":"glass"
     }
    "cylinder": {
     "coord": {"x": "200", "y": "50", "z": "250"}, 

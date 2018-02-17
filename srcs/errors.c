@@ -65,7 +65,7 @@ int		check_keycode(int keycode, t_env *e)
 		keycode == KEY_P || keycode == KEY_PAD_0 || keycode == KEY_PAD_1 ||
 		keycode == KEY_PAD_2 || keycode == KEY_PAD_3 || keycode == KEY_PAD_4 ||
 		keycode == KEY_PAD_5 || keycode == KEY_PAD_6 || keycode == KEY_ENTER ||
-		keycode == KEY_H || keycode == KEY_PAD_ADD ||
+		keycode == KEY_H || keycode == KEY_PAD_ADD || keycode == KEY_I ||
 		keycode == KEY_C || keycode == KEY_F || keycode == KEY_Y ||
 		keycode == KEY_M)
 		return (1);

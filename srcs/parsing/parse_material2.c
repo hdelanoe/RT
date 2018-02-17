@@ -14,7 +14,6 @@
 
 void	check_material(t_object *object, t_json *tmp)
 {
-
 	if (!(ft_strcmp(tmp->name, "ambient")) && tmp->content)
 		object->ambient = ft_atod(tmp->content);
 	else if (!(ft_strcmp(tmp->name, "diffuse")) && tmp->content)

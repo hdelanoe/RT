@@ -58,7 +58,7 @@ void	recurse_color(t_env *e, t_rayon ray, t_color *c)
 		if (e->reflect && !e->refract)
 		{
 			if (cast_reflect_ray(e, ray))
-				shoot_new_color(e, c, e->diffuse);
+				shoot_new_color(e, c, 1 - e->absorbtion);
 		}
 		else if (e->refract && !e->reflect)
 		{
@@ -71,7 +71,7 @@ void	recurse_color(t_env *e, t_rayon ray, t_color *c)
 			if (kr < 1 && cast_refract_ray(e, ray))
 				shoot_new_color(e, c, (1 - e->absorbtion) * (1 - kr));
 			if (cast_reflect_ray(e, ray))
-				shoot_new_color(e, c, e->diffuse * kr);
+				shoot_new_color(e, c, (1 - e->absorbtion) * kr);
 		}
 	}
 }

@@ -101,21 +101,7 @@ void		create_sphere(t_env *e, t_json *json)
 	while (json->member)
 	{
 		tmp = json->member;
-		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
-			sphere->center = parse_point(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "radius")) && tmp->content)
-			sphere->radius = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
-			sphere->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "plan_cut")) && tmp->member)
-		{
-			sphere->cap = 1;
-			sphere->normal = parse_normal(tmp->member);
-		}
-		else if (!(ft_strcmp(tmp->name, "material")))
-			parse_material(tmp, sphere);
-		else
-			ft_printf("{R}WARNING:{E} sphere as a bad attribut\n");
+		sphere_attribut(tmp, sphere);
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
@@ -134,30 +120,11 @@ void		create_cylinder(t_env *e, t_json *json)
 	while (json->member)
 	{
 		tmp = json->member;
-		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
-			cylinder->center = parse_point(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
-			cylinder->axis = parse_normal(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "radius")) && tmp->content)
-			cylinder->radius = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
-		{
-			cylinder->cap = 1;
-			cylinder->lenght_max = ft_atod(tmp->content);
-		}
-		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
-			cylinder->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "material")))
-			parse_material(tmp, cylinder);
-		else
-			ft_printf("{R}WARNING:{E} cylinder as a bad attribut\n");
+		cylinder_attribut(cylinder, tmp);
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
-	if (cylinder->lenght_max > 0)
 		create_cap_cylinder(cylinder);
-	else
-		cylinder->lenght_max = 100000;
 	debug_object(cylinder);
 	add_new_object(&e->object, cylinder);
 }

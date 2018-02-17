@@ -41,51 +41,45 @@ void	sphere_attribut(t_json *tmp, t_object *sphere)
 	}
 	else if (!(ft_strcmp(tmp->name, "material")))
 		parse_material(tmp, sphere);
+	else
+		ft_printf("{R}WARNING:{E} sphere as a bad attribut\n");
+
 }
 
-void	cylinder_attribut(t_object *object, t_json *json)
+void	cylinder_attribut(t_object *object, t_json *tmp)
 {
-	if (!(ft_strcmp(json->name, "coord")) && json->member)
-		object->point = parse_point(json->member);
-	else if (!(ft_strcmp(json->name, "color")) && json->member)
-		object->color = parse_color(json->member);
-	else if (!(ft_strcmp(json->name, "axis")) && json->member)
-		object->axis = parse_normal(json->member);
-	else if (!(ft_strcmp(json->name, "radius")) && json->content)
-		object->radius = ft_atod(json->content);
-	else if (!(ft_strcmp(json->name, "length")) && json->content)
-	{
-		object->cap = 1;
-		object->lenght_max = ft_atod(json->content);
-	}
-	else if (!(ft_strcmp(json->name, "material")))
-		parse_material(json, object);
-	else
-		ft_printf("{R}WARNING:{E} cylinder as a bad attribut\n");
+	if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+     object->center = parse_point(tmp->member);
+    else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
+     object->axis = parse_normal(tmp->member);
+    else if (!(ft_strcmp(tmp->name, "radius")) && tmp->content)
+     object->radius = ft_atod(tmp->content);
+    else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
+     object->lenght_max = ft_atod(tmp->content);
+    else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+     object->color = parse_color(tmp->member);
+    else if (!(ft_strcmp(tmp->name, "material")))
+      parse_material(tmp,object);
+    else
+      ft_printf("{R}WARNING:{E} cylinder as a bad attribut\n");
 }
 
-void	cone_attribut(t_object *object, t_json *json)
+void	cone_attribut(t_object *object, t_json *tmp)
 {
-	if (!(ft_strcmp(json->name, "coord")) && json->member)
-		object->point = parse_point(json->member);
-	else if (!(ft_strcmp(json->name, "color")) && json->member)
-		object->color = parse_color(json->member);
-	else if (!(ft_strcmp(json->name, "tangent")) && json->content)
-		object->tangent = ft_atod(json->content);
-	else if (!(ft_strcmp(json->name, "maxlength")) && json->content)
-	{
-		object->cap = 1;
-		object->lenght_max = ft_atod(json->content);
-	}
-	else if (!(ft_strcmp(json->name, "minlength")) && json->content)
-		object->radius = ft_atod(json->content);
-	else if (!(ft_strcmp(json->name, "axis")) && json->member)
-	{
-		object->axis = parse_point(json->member);
-		object->axis = normalize(&object->axis);
-	}
-	else if (!(ft_strcmp(json->name, "material")))
-		parse_material(json, object);
-	else
-		ft_printf("{R}WARNING:{E} cone as a bad attribut\n");
+	if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+			object->center = parse_point(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "tangent")) &&tmp->content)
+			object->tangent = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "maxlength")) && tmp->content)
+			object->lenght_max = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "minlength")) && tmp->content)
+			object->radius = ft_atod(tmp->content);
+		else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
+			object->axis = parse_normal(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+			object->color = parse_color(tmp->member);
+		else if (!(ft_strcmp(tmp->name, "material")))
+			parse_material(tmp, object);
+		else
+			ft_printf("{R}WARNING:{E} cone as a bad attribut\n");
 }

@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-void		add_new_member(t_json **list, t_json *new_member)
+void	add_new_member(t_json **list, t_json *new_member)
 {
 	t_json	*tmp;
 
@@ -29,7 +29,7 @@ void		add_new_member(t_json **list, t_json *new_member)
 	(*list) = tmp;
 }
 
-int			create_object(t_json *object, char *str, int i)
+int		create_object(t_json *object, char *str, int i)
 {
 	t_json *member;
 

@@ -158,6 +158,8 @@ struct					s_rayon
 	t_vector			rayon;
 	t_vector			node;
 	t_vector			normal;
+	int					refract;
+	double				absorbtion;
 };
 
 
@@ -291,6 +293,7 @@ struct					s_env
 	t_vector			rayon_width_div;
 	int 				p[512];
 	t_perlin			perlin;
+	int 				ambient_flag;
 };
 
 struct					s_physic

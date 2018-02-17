@@ -117,6 +117,7 @@ t_color			light_intersection(t_env *e, t_light *light)
 	t_color			tmp;
 	t_color			c;
 
+
 	tmp_object = *e->object;
 	c = set_color(light->color.b, light->color.g, light->color.r);
 	while (1)
@@ -127,7 +128,7 @@ t_color			light_intersection(t_env *e, t_light *light)
 		{
 			if (tmp_object.refract == 0)
 				return (set_color(0, 0, 0));
-			tmp = c_double_mult(&e->current_color, 1 - tmp_object.absorbtion);
+			tmp = c_double_mult(&tmp_object.color, 1 - tmp_object.absorbtion);
 			c = c_c_mult(&light->color, &tmp);
 		}
 		if (tmp_object.sub_object != NULL && light_sub_intersection(e,
