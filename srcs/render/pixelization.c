@@ -16,12 +16,12 @@ void		pixel_vp_init(t_grid *g, t_env *e)
 {
 	g->xx = g->x;
 	g->yy = g->y;
-	g->tmp_vp_pointx = v_double_mult(&e->camera.x_vector, g->x);
-	g->tmp_vp_pointy = v_double_mult(&e->camera.y_vector, g->y);
-	g->viewplane_point = v_v_add(&e->viewplane_point_up_left,
-	&g->tmp_vp_pointx);
-	g->viewplane_point = v_v_subs(&g->viewplane_point, &g->tmp_vp_pointy);
-	e->camera.rayon = v_v_subs(&g->viewplane_point, &e->camera.origin);
+	g->vpx = v_double_mult(&e->camera.x_vector, g->x);
+	g->vpy = v_double_mult(&e->camera.y_vector, g->y);
+	g->vp_point = v_v_add(&e->viewplane_point_up_left,
+	&g->vpx);
+	g->vp_point = v_v_subs(&g->vp_point, &g->vpy);
+	e->camera.rayon = v_v_subs(&g->vp_point, &e->camera.origin);
 	e->camera.rayon = normalize(&e->camera.rayon);
 }
 

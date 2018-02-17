@@ -41,18 +41,19 @@ t_color		choose_color(t_env *e)
 	return (new);
 }
 
-t_color		stereo_init(t_env *e, t_camera cam, t_vector vp, t_grid g)
+t_color		vp_init(t_env *e, t_camera cam, t_vector vp, t_grid g)
 {
 	e->recursion = 6;
 	g.ctmp = set_color(0, 0, 0);
-	g.tmp_vp_pointx = v_double_mult(&cam.x_vector, g.x);
-	g.tmp_vp_pointy = v_double_mult(&cam.y_vector, g.y);
-	g.viewplane_point = v_v_add(&vp, &g.tmp_vp_pointx);
-	g.viewplane_point = v_v_subs(&g.viewplane_point, &g.tmp_vp_pointy);
-	cam.rayon = v_v_subs(&g.viewplane_point, &cam.origin);
+	g.vpx = v_double_mult(&cam.x_vector, g.x);
+	g.vpy = v_double_mult(&cam.y_vector, g.y);
+	g.vp_point = v_v_add(&vp, &g.vpx);
+	g.vp_point = v_v_subs(&g.vp_point, &g.vpy);
+	cam.rayon = v_v_subs(&g.vp_point, &cam.origin);
 	cam.rayon = normalize(&cam.rayon);
 	if (cast_ray(e, cam.rayon, cam.origin))
 		g.ctmp = get_color(e);
+	e->skybox = 0;
 	return(c_c_add(&g.ctmp, &g.filter));
 }
 
@@ -69,9 +70,9 @@ void		stereo_tracer(t_env *e)
 		while (g.x < e->width)
 		{
 			g.filter = g.blue;
-			g.fblue = stereo_init(e, e->lstereo, e->lviewplane, g);
+			g.fblue = vp_init(e, e->lstereo, e->lviewplane, g);
 			g.filter = g.red;;
-			g.fred = stereo_init(e, e->rstereo, e->rviewplane, g);
+			g.fred = vp_init(e, e->rstereo, e->rviewplane, g);
 			g.color = c_c_mult(&g.fblue, &g.fred);
 			print_color(&g.color, e, g.x, g.y);
 			g.x++;
@@ -82,34 +83,18 @@ void		stereo_tracer(t_env *e)
 
 void		ray_tracer(t_env *e)
 {
-	int			x;
-	int			y;
-	t_vector	viewplane_point;
-	t_vector	tmp_vp_pointx;
-	t_vector	tmp_vp_pointy;
-	t_color 	color;
+	t_grid	g;
 	
-	y = 0;
-	while (y < e->height)
+	g.y = 0;
+	while (g.y < e->height)
 	{
-		x = e->begin;
-		while (x < e->fin)
+		g.x = e->begin;
+		while (g.x < e->fin)
 		{
-			e->recursion = 6;
-			color = set_color(0, 0, 0);
-			tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
-			tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
-			viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);
-			viewplane_point = v_v_subs(&viewplane_point, &tmp_vp_pointy);
-			e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
-			e->camera.rayon = normalize(&e->camera.rayon);
-			if (cast_ray(e, e->camera.rayon, e->camera.origin))
-				color = get_render_mode(e);
-			color = set_filter(e, color);
-			print_color(&color, e, x, y);
-			e->skybox = 0;
-			x++;
+			g.color = vp_init(e, e->camera,
+					e->viewplane_point_up_left, g);
+			g.x++;
 		}
-		y++;
+		g.y++;
 	}
 }

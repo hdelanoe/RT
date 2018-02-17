@@ -12,8 +12,8 @@
 
 #ifndef RTV1_H
 # define RTV1_H
-# define WIN_X 1000
-# define WIN_Y 1000
+# define WIN_X 640
+# define WIN_Y 480
 # define RANDOM (double)rand()/RAND_MAX
 # define R_VOID 1.0
 # define R_AIR 1.000272
@@ -147,9 +147,9 @@ struct 					s_grid
 	t_color				blue;
 	t_color				red;
 	t_color 			filter;
-	t_vector			viewplane_point;
-	t_vector			tmp_vp_pointx;
-	t_vector			tmp_vp_pointy;
+	t_vector			vp_point;
+	t_vector			vpx;
+	t_vector			vpy;
 };
 
 struct					s_rayon

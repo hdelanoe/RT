@@ -44,13 +44,13 @@ t_grid		antialias_loop_init(t_grid *anti, t_env *e, int sample)
 	while (new.xx < sample)
 	{
 		color = set_color(0, 0, 0);
-		new.tmp_vp_pointx = v_double_mult(&e->camera.x_vector, new.x + new.xx);
-		new.tmp_vp_pointy = v_double_mult(&e->camera.y_vector, new.y + new.xx);
-		new.viewplane_point = v_v_add(&e->viewplane_point_up_left,
-		&new.tmp_vp_pointx);
-		new.viewplane_point = v_v_subs(&new.viewplane_point,
-		&new.tmp_vp_pointy);
-		e->camera.rayon = v_v_subs(&new.viewplane_point, &e->camera.origin);
+		new.vpx = v_double_mult(&e->camera.x_vector, new.x + new.xx);
+		new.vpy = v_double_mult(&e->camera.y_vector, new.y + new.xx);
+		new.vp_point = v_v_add(&e->viewplane_point_up_left,
+		&new.vpx);
+		new.vp_point = v_v_subs(&new.vp_point,
+		&new.vpy);
+		e->camera.rayon = v_v_subs(&new.vp_point, &e->camera.origin);
 		e->camera.rayon = normalize(&e->camera.rayon);
 		if (cast_ray(e, e->camera.rayon, e->camera.origin))
 			color = get_render_mode(e);
