@@ -12,8 +12,8 @@
 
 #ifndef RTV1_H
 # define RTV1_H
-# define WIN_X 640
-# define WIN_Y 480
+# define WIN_X 1000
+# define WIN_Y 1000
 # define RANDOM (double)rand()/RAND_MAX
 # define R_VOID 1.0
 # define R_AIR 1.000272
@@ -41,6 +41,9 @@
 # include "matrix.h"
 # include "perlin.h"
 # include "mlx_key_macos.h"
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <dirent.h>
 
 typedef struct s_env	t_env;
 typedef struct s_mlx	t_mlx;
@@ -55,7 +58,6 @@ typedef struct s_poly	t_poly;
 typedef struct s_inter	t_inter;
 typedef struct s_anti_a	t_anti_a;
 typedef struct s_physic	t_physic;
-typedef struct s_grid	t_grid;
 
 struct					s_object
 {
@@ -102,21 +104,21 @@ struct					s_light
 	t_vector			rayon;
 	double				angle;
 	t_color				color;
-	t_light				*next;
 	t_vector			length;
 	t_vector			length_div;
 	t_vector			width;
 	t_vector			width_div;
+	t_light				*next;
 };
 
 struct					s_cube
 {
 	t_object			*carre_1;
 	t_object			*carre_2;
-	t_object 			*carre_3;
-	t_object 			*carre_4;
-	t_object 			*carre_5;
-	t_object 			*carre_6;
+	t_object			*carre_3;
+	t_object			*carre_4;
+	t_object			*carre_5;
+	t_object			*carre_6;
 };
 
 struct					s_camera
@@ -134,19 +136,19 @@ struct					s_camera
 	double				*matrix;
 };
 
-struct 					s_grid
+struct					s_grid
 {
-	double 				x;
-	double 				y;
-	double 				xx;
-	double 				yy;
-	t_color 			ctmp;
+	double				x;
+	double				y;
+	double				xx;
+	double				yy;
+	t_color				ctmp;
 	t_color				color;
-	t_color 			fblue;
-	t_color 			fred;
+	t_color				fblue;
+	t_color				fred;
 	t_color				blue;
 	t_color				red;
-	t_color 			filter;
+	t_color				filter;
 	t_vector			vp_point;
 	t_vector			vpx;
 	t_vector			vpy;
@@ -161,7 +163,6 @@ struct					s_rayon
 	int					refract;
 	double				absorbtion;
 };
-
 
 struct					s_mlx
 {
@@ -291,26 +292,28 @@ struct					s_env
 	t_vector			rayon_length_div;
 	t_vector			rayon_width;
 	t_vector			rayon_width_div;
-	int 				p[512];
+	int					p[512];
 	t_perlin			perlin;
-	int 				ambient_flag;
+	int					ambient_flag;
+	char				*argv_cpy;
+	char				*s_name;
 };
 
 struct					s_physic
 {
-		double			ior;
-		double			cos1;
-		double			cos2;
-		double 			sin2;
-		double 			etat;
-		double 			etai;
-		double			teta;
-		double 			rs;
-		double 			rp;
-		t_vector		tmp1;
-		t_vector		tmp2;
-		t_vector		r;
-		t_vector		t;
+	double				ior;
+	double				cos1;
+	double				cos2;
+	double				sin2;
+	double				etat;
+	double				etai;
+	double				teta;
+	double				rs;
+	double				rp;
+	t_vector			tmp1;
+	t_vector			tmp2;
+	t_vector			r;
+	t_vector			t;
 };
 
 struct					s_poly
@@ -357,27 +360,26 @@ struct					s_poly
 
 typedef struct			s_header
 {
-	char	type[2];
-	int		reserved;
-	int		file_size;
-	int		offset;
+	char				type[2];
+	int					reserved;
+	int					file_size;
+	int					offset;
 }						t_header;
 
 typedef struct			s_infos
 {
-	int		header_size;
-	int		image_size;
-	int		nb_color;
-	int		important_color;
-	int		compression;
-	int		width;
-	int		height;
-	int		x_res;
-	int		y_res;
-	int	panes;
-	short	bpp;
+	int					header_size;
+	int					image_size;
+	int					nb_color;
+	int					important_color;
+	int					compression;
+	int					width;
+	int					height;
+	int					x_res;
+	int					y_res;
+	int					panes;
+	short				bpp;
 }						t_infos;
-
 
 t_env					*init(void);
 void					display_window(t_env *e);
@@ -448,8 +450,8 @@ void					choose_water(t_object *object);
 void					choose_glass(t_object *object);
 void					choose_pmma(t_object *object);
 void					choose_diam(t_object *object);
-void 					choose_mirror(t_object *object);
-void 					choose_marbre(t_object *object);
+void					choose_mirror(t_object *object);
+void					choose_marbre(t_object *object);
 
 void					add_new_light(t_light **list, t_light *new_light);
 void					debug_light(t_light *tmp);
@@ -506,14 +508,16 @@ t_color					get_color(t_env *e);
 t_color					get_area_light_intensity(t_env *e,
 						t_light *area_light, t_rayon *ray, t_color *c);
 void					get_area_light_origin(t_light *area_light, int nb);
-void					init_area_size(t_object	*al_object, t_light *area_light);
+void					init_area_size(t_object	*al_object,
+						t_light *area_light);
 t_color					get_area_color(t_env *e);
 void					load_texture(t_env *e);
 void					wrap_sphere(t_env *e, t_object *object);
 void					wrap_cylinder(t_env *e, t_object *object);
 void					wrap_plane(t_env *e);
 void					wrap_obj(t_env *e, t_object *object, char *p_type);
-t_color					get_texture_info(unsigned char *text_data, t_env *e, int sl);
+t_color					get_texture_info(unsigned char *text_data,
+						t_env *e, int sl);
 t_color					set_filter(t_env *e, t_color c);
 void					print_color(t_color *color, t_env *e, int x, int y);
 
@@ -530,13 +534,12 @@ t_color					cel_shading(t_vector *light, t_env *e, t_color *clr);
 t_color					cel_shade_color(t_env *e);
 void					*ray_tracer_void(void *e);
 void					ft_pthread(t_env *e, void *(*f)(void *param));
-void 					*stereo_tracer_void(void *e);
+void					*stereo_tracer_void(void *e);
 void					*pxl_tracer_void(void *e);
-void 					*aa_tracer_void(void *e);
+void					*aa_tracer_void(void *e);
 void					pixel_vp_init(t_grid *g, t_env *e);
 void					pxl_tracer(t_env *e, int sample);
 void					pxl_edit_tracer(t_env *e, int sample);
-
 
 int						proper_exit(t_env *e);
 void					inputs2(int keycode, t_env *e);
@@ -553,10 +556,14 @@ int						set_lookat(t_env *e, int x, int y);
 int						copy_object(t_env *e, int x, int y);
 int						mouse(int button, int x, int y, t_env *e);
 void					init_copy(t_object **copy, t_object *object);
-int                		cmp(int a, int b);
+int						cmp(int a, int b);
 void					add_object(t_env *e, int x, int y);
 int						copy_object(t_env *e, int x, int y);
 int						delete_object(t_env *e, int x, int y);
-void 					save_image(t_env *e);
+void					save_image(t_env *e);
+void					read_scene_files(t_env *e);
+void					check_existance(char *text, t_env *e);
+t_object				*ft_remove_begin(t_object **prev, t_object **ptr);
+void					ft_delete_obj_lst(t_object **beg_obj);
 
 #endif

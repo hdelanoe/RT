@@ -10,6 +10,8 @@
 -T -> Toggle Ambient-Occlusion
 -H -> Toggle info on screen
 -C -> Toggle cel_shading (cartoon effect)
+-L -> Change scene by typing the name on terminal
+
 
 -Return -> Edit mode
 -Mouse click -> copy and paste an object

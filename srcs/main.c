@@ -87,9 +87,10 @@ int			main(int argc, char **argv)
 	e = init();
 	if (argc != 2)
 		ft_print_err(argc);
-	if (!(check_args(argv[1])))
+	e->argv_cpy = argv[1];
+	if (!(check_args(e->argv_cpy)))
 		ft_kill("Bad file, check your scnene name");
-	parsing(e, argv[1]);
+	parsing(e, e->argv_cpy);
 	display_window(e);
 	return (0);
 }

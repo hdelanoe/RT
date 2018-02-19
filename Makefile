@@ -23,6 +23,7 @@ SRCS		= 	srcs/main.c \
 				srcs/check_intersection.c \
 				srcs/solution.c \
 				srcs/errors_2.c \
+				srcs/load_scenes.c \
 				srcs/errors.c \
 				srcs/ft_remove_if.c \
 				srcs/wrap_obj.c \

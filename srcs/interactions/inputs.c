@@ -40,6 +40,8 @@ void	inputs2(int keycode, t_env *e)
 		e->ti += 1;
 	else if (keycode == KEY_Y)
 		e->text_flag = e->text_flag == 1 ? 0 : 1;
+	else if (keycode == KEY_L)
+		read_scene_files(e);
 }
 
 void	inputs_conditions(int keycode, t_env *e)

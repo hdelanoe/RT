@@ -56,13 +56,13 @@ void debug_object(t_object *tmp)
 			origin = tmp->center;
 		else if (!(ft_strcmp(tmp->type, "cone")))
 			origin = tmp->center;
-	printf("OBJECT :%s %i\n", tmp->type, tmp->id);
-	printf("origin : x->%f\n", origin.x);
-	printf("         y->%f\n", origin.y);
-	printf("         z->%f\n", origin.z);
-	printf("colors : r->%f\n", tmp->color.r);
-	printf("         g->%f\n", tmp->color.g);
-	printf("         b->%f\n", tmp->color.b);
+	// ft_printf("OBJECT :%s %i\n", tmp->type, tmp->id);
+	// ft_printf("origin : x->%f\n", origin.x);
+	// ft_printf("         y->%f\n", origin.y);
+	// ft_printf("         z->%f\n", origin.z);
+	// ft_printf("colors : r->%f\n", tmp->color.r);
+	// ft_printf("         g->%f\n", tmp->color.g);
+	// ft_printf("         b->%f\n", tmp->color.b);
 }
 
 

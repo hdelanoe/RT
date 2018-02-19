@@ -117,7 +117,6 @@ t_color			light_intersection(t_env *e, t_light *light)
 	t_color			tmp;
 	t_color			c;
 
-
 	tmp_object = *e->object;
 	c = set_color(light->color.b, light->color.g, light->color.r);
 	while (1)

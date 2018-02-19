@@ -14,35 +14,35 @@
 # define PERLIN_H
 # include "rtv1.h"
 
-typedef struct s_noise t_noise;
-typedef struct s_perlin t_perlin;
+typedef struct s_noise	t_noise;
+typedef struct s_perlin	t_perlin;
 
-struct s_noise
+struct	s_noise
 {
-	int 	i;
-	int 	j;
-	int 	k;
-	double	x;
-	double	y;
-	double	z;
-	double	u;
-	double 	v;
-	double 	w;
-	int 	m;
-	int		mm;
-	int		mn;
-	int 	n;
-	int		nm;
-	int		nn;
+	int					i;
+	int					j;
+	int					k;
+	double				x;
+	double				y;
+	double				z;
+	double				u;
+	double				v;
+	double				w;
+	int					m;
+	int					mm;
+	int					mn;
+	int					n;
+	int					nm;
+	int					nn;
 };
 
-struct s_perlin
+struct	s_perlin
 {
-	double	a;
-	double	b;
-	double	c;
-	double	d;
-	double  e;
+	double				a;
+	double				b;
+	double				c;
+	double				d;
+	double				e;
 };
 
 #endif
