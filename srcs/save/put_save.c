@@ -36,7 +36,7 @@ void		put_cone_file(t_object *cone, int fd)
 	put_type_object(cone->type, fd);
 	write(fd, "{\n", 2);
 	put_coord("coord", &cone->center, fd);
-	put_int("tangent", cone->tangent, fd);
+	put_double("tangent", cone->tangent, fd);
 	put_int("maxlength", cone->lenght_max, fd);
 	put_int("minlength", cone->radius, fd);
 	put_axis("axis", &cone->axis, fd);
@@ -60,9 +60,10 @@ void		put_sphere_file(t_object *sphere, int fd)
 {
 	put_type_object(sphere->type, fd);
 	write(fd, "{\n", 2);
-	put_coord("coord", &sphere->point, fd);
+	put_coord("coord", &sphere->center, fd);
 	put_int("radius", sphere->radius, fd);
-	put_axis("plan_cut", &sphere->normal, fd);
+	if (sphere->cap == 1)
+		put_axis("plan_cut", &sphere->normal, fd);
 	put_color(&sphere->color, fd);
 	write(fd, "}\n", 2);
 }

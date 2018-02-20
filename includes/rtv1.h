@@ -592,4 +592,5 @@ void					put_obj_loop(int fd, t_object *tmp);
 void					put_glass_file(t_object *glass, int fd);
 void					put_triangle_file(t_object *triangle, int fd);
 void					put_pyramide_file(t_object *pyramide, int fd);
+void					put_double(char *name, double color, int fd);
 #endif

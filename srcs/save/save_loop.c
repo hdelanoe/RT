@@ -33,3 +33,19 @@ void		put_obj_loop(int fd, t_object *tmp)
 	if (!ft_strcmp("pyramide", tmp->type))
 		put_pyramide_file(tmp, fd);
 }
+
+void		put_double(char *name, double color, int fd)
+{
+	char *tmp;
+	char *str;
+
+	put_type_object(name, fd);
+	if (color < 1 && color > 0)
+		str = ft_strjoin("0.", ft_itoa(color * 10));
+	else
+		str = ft_itoa(color);
+	tmp = ft_strjoin("\"", str);
+	tmp = ft_strjoin(tmp, "\"\n");
+	write(fd, tmp, ft_strlen(tmp));
+	free(tmp);
+}
