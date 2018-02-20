@@ -26,7 +26,7 @@ void		parse_scene(t_env *e, t_json *json)
 		e->recursion = ft_atoi(json->content);
 	else
 	{
-		ft_printf("{R}WARNING:{E} %s is not valid\n", json->name);
+		ft_printf("{R}WARNING:{E} %s is not v000alid\n", json->name);
 		exit_parser(1);
 	}
 }

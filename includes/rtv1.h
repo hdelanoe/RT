@@ -563,7 +563,7 @@ void					add_object(t_env *e, int x, int y);
 int						copy_object(t_env *e, int x, int y);
 int						delete_object(t_env *e, int x, int y);
 void					save_image(t_env *e);
-void            		save_scene(t_env *e);
+void					save_scene(t_env *e);
 char					*get_time_to_str(int bl);
 void					read_scene_files(t_env *e);
 void					check_existance(char *text, t_env *e);
@@ -572,26 +572,24 @@ void					ft_delete_obj_lst(t_object **beg_obj);
 t_rayon					init_ray(t_env *e);
 t_color					color_calculation(t_env *e, t_rayon ray);
 void					reset_diffuse_ambiant(t_env *e);
-
-/*
-**   SAVE
-*/
-void put_axis(char *name, t_vector *point, int fd);
-void put_int(char *name, int i, int fd);
-void put_coord(char *name, t_vector *point, int fd);
-void put_cylinder_file(t_object *cylinder, int fd);
-void put_cube_file(t_object *cube, int fd);
-void put_axis(char *name, t_vector *point, int fd);
-void put_plane_file(t_object *plane, int fd);
-void put_light_file(t_light *light, int fd);
-void put_cone_file(t_object *cone, int fd);
-void put_quad_file(t_object *quad, int fd);
-void put_sphere_file(t_object *sphere, int fd);
-void put_type_object(char *type, int fd);
-char *check_color_value(double color);
-void put_color(t_color *color, int fd);
-void put_xyz(t_vector *point, int fd);
-void check_value_point(t_vector *point);
-
-
+void					put_axis(char *name, t_vector *point, int fd);
+void					put_int(char *name, int i, int fd);
+void					put_coord(char *name, t_vector *point, int fd);
+void					put_cylinder_file(t_object *cylinder, int fd);
+void					put_cube_file(t_object *cube, int fd);
+void					put_axis(char *name, t_vector *point, int fd);
+void					put_plane_file(t_object *plane, int fd);
+void					put_light_file(t_light *light, int fd);
+void					put_cone_file(t_object *cone, int fd);
+void					put_quad_file(t_object *quad, int fd);
+void					put_sphere_file(t_object *sphere, int fd);
+void					put_type_object(char *type, int fd);
+char					*check_color_value(double color);
+void					put_color(t_color *color, int fd);
+void					put_xyz(t_vector *point, int fd);
+void					check_value_point(t_vector *point);
+void					put_obj_loop(int fd, t_object *tmp);
+void					put_glass_file(t_object *glass, int fd);
+void					put_triangle_file(t_object *triangle, int fd);
+void					put_pyramide_file(t_object *pyramide, int fd);
 #endif

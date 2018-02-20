@@ -40,8 +40,6 @@ void	get_object_condition(t_env *e, t_json *tmp)
 		create_disk(e, tmp);
 	else if (tmp->member)
 		get_complex(e, tmp);
-	else if (tmp)
-		parse_scene(e, tmp);
 }
 
 void	get_object(t_env *e, t_json *json)

@@ -32,6 +32,7 @@ SRCS		= 	srcs/main.c \
 				srcs/save/create_save.c \
 				srcs/save/put_save.c \
 				srcs/save/utils_save.c \
+				srcs/save/save_loop.c \
 				srcs/interactions/user_interactions.c \
 				srcs/interactions/mouse.c \
 				srcs/interactions/inputs.c \
