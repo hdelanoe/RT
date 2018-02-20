@@ -565,5 +565,8 @@ void					read_scene_files(t_env *e);
 void					check_existance(char *text, t_env *e);
 t_object				*ft_remove_begin(t_object **prev, t_object **ptr);
 void					ft_delete_obj_lst(t_object **beg_obj);
+t_rayon					init_ray(t_env *e);
+t_color					color_calculation(t_env *e, t_rayon ray);
+void					reset_diffuse_ambiant(t_env *e);
 
 #endif

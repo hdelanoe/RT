@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-void create_cap_sphere(t_object *sphere)
+void		create_cap_sphere(t_object *sphere)
 {
 	t_object *disk;
 
@@ -27,14 +27,15 @@ void create_cap_sphere(t_object *sphere)
 	add_new_object(&sphere->sub_object, disk);
 }
 
-void create_cap_cylinder(t_object *cylinder)
+void		create_cap_cylinder(t_object *cylinder)
 {
-	t_object *disk;
+	t_object		*disk;
+	t_vector		tmp;
 
 	disk = init_material();
-		if (!(disk->type = ft_strdup("disk")))
-			exit_rt(1);
-	t_vector tmp = v_double_mult(&cylinder->axis, cylinder->lenght_max / 2);
+	if (!(disk->type = ft_strdup("disk")))
+		exit_rt(1);
+	tmp = v_double_mult(&cylinder->axis, cylinder->lenght_max / 2);
 	disk->point = v_v_subs(&cylinder->center, &tmp);
 	disk->normal = cylinder->axis;
 	disk->radius = cylinder->radius;
@@ -42,8 +43,8 @@ void create_cap_cylinder(t_object *cylinder)
 	debug_object(disk);
 	add_new_object(&cylinder->sub_object, disk);
 	disk = init_material();
-		if (!(disk->type = ft_strdup("disk")))
-			exit_rt(1);
+	if (!(disk->type = ft_strdup("disk")))
+		exit_rt(1);
 	disk->normal = cylinder->axis;
 	disk->radius = cylinder->radius;
 	disk->color = cylinder->color;
@@ -52,7 +53,7 @@ void create_cap_cylinder(t_object *cylinder)
 	add_new_object(&cylinder->sub_object, disk);
 }
 
-void create_disk(t_env *e, t_json *json)
+void		create_disk(t_env *e, t_json *json)
 {
 	t_object	*disk;
 	t_json		*tmp;
@@ -60,7 +61,7 @@ void create_disk(t_env *e, t_json *json)
 	disk = init_material();
 	if (!(disk->type = ft_strdup("disk")))
 		exit_rt(1);
-	while(json->member)
+	while (json->member)
 	{
 		if (ft_strcmp(json->member->name, "coord") == 0)
 			disk->point = parse_point(json->member->member);
@@ -80,10 +81,10 @@ void create_disk(t_env *e, t_json *json)
 	add_new_object(&e->object, disk);
 }
 
-void create_cap_cone(t_object *cone)
+void		create_cap_cone(t_object *cone)
 {
-	t_object *disk;
-	t_vector tmp;
+	t_object		*disk;
+	t_vector		tmp;
 
 	disk = init_material();
 	if (!(disk->type = ft_strdup("disk")))
@@ -108,5 +109,4 @@ void create_cap_cone(t_object *cone)
 		debug_object(disk);
 		add_new_object(&cone->sub_object, disk);
 	}
-
 }

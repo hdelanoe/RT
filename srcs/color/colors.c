@@ -43,12 +43,7 @@ void		init_ray_values(t_rayon *ray, t_env *e)
 {
 	double n;
 
-	ray->origin = e->current_origin;
-	ray->rayon = e->current_rayon;
-	ray->node = e->current_node;
-	ray->normal = e->current_node_normal;
-	ray->refract = e->refract;
-	ray->absorbtion = e->absorbtion;
+	*ray = init_ray(e);
 	if (e->bump == 1)
 	{
 		n = noise(e, e->perlin.a * ray->node.x,
@@ -117,16 +112,10 @@ t_color		get_color(t_env *e)
 
 	init_ray_values(&ray, e);
 	if (e->ambient_flag)
-	{
-		e->ambient = 0;
-		e->diffuse = 1;
-	}
-	c = c_double_mult(&e->current_color, e->ambient);
-	c = c_double_mult(&c, 1 - (e->distance / 50000));
-	if (ray.refract)
-		c = c_double_mult(&c, ray.absorbtion);
+		reset_diffuse_ambiant(e);
+	c = color_calculation(e, ray);
 	if ((c.r == 0 && c.g == 0 && c.b == 0 && !e->ambient_flag)
-			|| e->edit_flag == 1)
+	|| e->edit_flag == 1)
 		return (c);
 	tmp_light = *e->light;
 	while (1)

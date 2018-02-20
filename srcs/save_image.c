@@ -59,7 +59,7 @@ char			*get_time_to_str(void)
 
 	t = time(NULL);
 	tm = localtime(&t);
-	name = ft_strjoin("screenshot_", ft_itoa(tm->tm_mon + 1));
+	name = ft_strjoin("./screenshot/screenshot_", ft_itoa(tm->tm_mon + 1));
 	name = ft_strjoin(name, ft_itoa(tm->tm_mday));
 	name = ft_strjoin(name, ft_itoa(tm->tm_year + 1900));
 	name = ft_strjoin(name, "_");
@@ -89,6 +89,7 @@ void			save_image(t_env *e)
 
 	y = WIN_Y;
 	e->s_name = get_time_to_str();
+	mkdir("./screenshot/", 0777);
 	if (!(fd = open(e->s_name, O_CREAT | O_TRUNC | O_WRONLY, 0666)))
 		ft_kill("something is went with screenshot");
 	create_header(e, &header, &h_infos);

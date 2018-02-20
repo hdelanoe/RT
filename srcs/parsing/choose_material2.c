@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-void 	choose_mirror(t_object *object)
+void	choose_mirror(t_object *object)
 {
 	object->ambient = 0.3;
 	object->diffuse = 0.7;
@@ -21,7 +21,7 @@ void 	choose_mirror(t_object *object)
 	object->refract = 0;
 }
 
-void 	choose_marbre(t_object *object)
+void	choose_marbre(t_object *object)
 {
 	object->ambient = 0.3;
 	object->diffuse = 0.725;

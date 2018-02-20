@@ -35,10 +35,7 @@ void		set_mode2(int keycode, t_env *e)
 	if (keycode == KEY_R)
 		e->aa_flag = e->aa_flag == 1 ? 0 : 1;
 	else if (keycode == KEY_T)
-	{
 		e->am_flag = e->am_flag == 1 ? 0 : 1;
-	//	e->render_mode = e->am_flag == 1 ? 1 : 0;
-	}
 	else if (keycode == KEY_P)
 	{
 		e->stereo_flag = e->stereo_flag == 1 ? 0 : 1;

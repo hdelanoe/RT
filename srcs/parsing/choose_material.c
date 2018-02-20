@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-void 	choose_ice(t_object *object)
+void	choose_ice(t_object *object)
 {
 	object->ambient = 0.5;
 	object->diffuse = 0.5;
@@ -21,10 +21,9 @@ void 	choose_ice(t_object *object)
 	object->refract = 1;
 	object->absorbtion = 0.7;
 	object->indice = R_ICE;
-
 }
 
-void 	choose_water(t_object *object)
+void	choose_water(t_object *object)
 {
 	object->ambient = 0.3;
 	object->diffuse = 0.725;
@@ -36,8 +35,7 @@ void 	choose_water(t_object *object)
 	object->indice = R_VOID;
 }
 
-
-void 	choose_pmma(t_object *object)
+void	choose_pmma(t_object *object)
 {
 	object->ambient = 0.5;
 	object->diffuse = 0.625;
@@ -48,7 +46,7 @@ void 	choose_pmma(t_object *object)
 	object->indice = R_PMMA;
 }
 
-void 	choose_glass(t_object *object)
+void	choose_glass(t_object *object)
 {
 	object->ambient = 0.3;
 	object->diffuse = 0.875;
@@ -59,7 +57,7 @@ void 	choose_glass(t_object *object)
 	object->indice = R_GLASS;
 }
 
-void 	choose_diam(t_object *object)
+void	choose_diam(t_object *object)
 {
 	object->ambient = 0.3;
 	object->diffuse = 0.9;

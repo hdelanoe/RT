@@ -59,6 +59,22 @@ void create_child_glass(t_object *glass)
 	add_new_object(&glass->sub_object, g_sphere);
 }
 
+void		create_glass_conditions(t_object *glass, t_json *tmp)
+{
+	if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+		glass->center = parse_point(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
+		glass->axis = parse_normal(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+		glass->color = parse_color(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
+		glass->lenght_max = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "material")))
+		parse_material(tmp, glass);
+	else
+		ft_printf("{R}WARNING:{E} plane as a bad attribut\n");
+}
+
 void create_glass(t_env *e, t_json *json)
 {
 	t_object	*glass;
@@ -70,20 +86,7 @@ void create_glass(t_env *e, t_json *json)
 	while(json->member)
 	{
 		tmp = json->member;
-		if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
-		{
-			glass->center = parse_point(tmp->member);
-		}
-		else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
-			glass->axis = parse_normal(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
-			glass->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
-			glass->lenght_max = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "material")))
-			parse_material(tmp, glass);
-		else
-			ft_printf("{R}WARNING:{E} plane as a bad attribut\n");
+		create_glass_conditions(glass, tmp);
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
