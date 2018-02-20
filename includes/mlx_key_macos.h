@@ -59,6 +59,7 @@
 # define KEY_I				34
 # define KEY_O				31
 # define KEY_P				35
+# define KEY_J				38
 # define KEY_OPEN_BRACKET	33
 # define KEY_OPEN_BRACE		33
 # define KEY_CLOSE_BRACKET	30

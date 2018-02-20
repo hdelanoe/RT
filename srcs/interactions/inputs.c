@@ -81,6 +81,8 @@ int		inputs(int keycode, t_env *e)
 		e->ambient_flag = e->ambient_flag == 1 ? 0 : 1;
 	if (keycode == KEY_O)
 		save_image(e);
+	if (keycode == KEY_J)
+		save_scene(e);
 	if ((keycode == KEY_D || keycode == KEY_A || keycode == KEY_Q ||
 	keycode == KEY_E || keycode == KEY_W || keycode == KEY_S ||
 	keycode == KEY_UP || keycode == KEY_DOWN || keycode == KEY_LEFT ||

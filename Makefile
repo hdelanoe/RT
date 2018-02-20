@@ -27,7 +27,11 @@ SRCS		= 	srcs/main.c \
 				srcs/errors.c \
 				srcs/ft_remove_if.c \
 				srcs/wrap_obj.c \
-				srcs/save_image.c \
+				srcs/save/save_image.c \
+				srcs/save/save_scene.c \
+				srcs/save/create_save.c \
+				srcs/save/put_save.c \
+				srcs/save/utils_save.c \
 				srcs/interactions/user_interactions.c \
 				srcs/interactions/mouse.c \
 				srcs/interactions/inputs.c \
@@ -102,6 +106,7 @@ objs/%.o: 	srcs/%.c
 			@ mkdir -p objs/matrix
 			@ mkdir -p objs/render
 			@ mkdir -p objs/interactions
+			@ mkdir -p objs/save
 		 	@ $(CC) $(CFLAGS) $(INC) $(LIBFTINC) $(MLXINC) -c $< -o $@
 
 clean:		
