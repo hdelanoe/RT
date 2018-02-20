@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-double		decimal(const char *str, double	res, int i, int negative)
+double		decimal(const char *str, double res, int i, int negative)
 {
 	double	rest;
 	double	puis;

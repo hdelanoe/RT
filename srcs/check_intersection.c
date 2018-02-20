@@ -59,7 +59,8 @@ int				sort_type(t_env *e, t_object *object)
 	return (intersect);
 }
 
-void			check_intersection(t_env *e, t_object *object, char *p_type)
+void			check_intersection(t_env *e, t_object *object,
+				t_object *parent)
 {
 	t_object sub;
 
@@ -70,7 +71,7 @@ void			check_intersection(t_env *e, t_object *object, char *p_type)
 		get_object_values(e, object);
 		e->delete_id = object->id;
 		if (e->text_flag == 1)
-			wrap_obj(e, object, p_type);
+			wrap_obj(e, object, parent);
 		e->intersect = 1;
 	}
 	if (object && object->sub_object)
@@ -78,7 +79,7 @@ void			check_intersection(t_env *e, t_object *object, char *p_type)
 		sub = *object->sub_object;
 		while (1)
 		{
-			check_intersection(e, &sub, object->type);
+			check_intersection(e, &sub, object);
 			if (sub.next == NULL)
 				break ;
 			sub = *sub.next;

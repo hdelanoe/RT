@@ -23,7 +23,6 @@ void		create_cap_sphere(t_object *sphere)
 	disk->normal = sphere->normal;
 	disk->radius = sphere->radius;
 	disk->color = sphere->color;
-	debug_object(disk);
 	add_new_object(&sphere->sub_object, disk);
 }
 
@@ -40,7 +39,6 @@ void		create_cap_cylinder(t_object *cylinder)
 	disk->normal = cylinder->axis;
 	disk->radius = cylinder->radius;
 	disk->color = cylinder->color;
-	debug_object(disk);
 	add_new_object(&cylinder->sub_object, disk);
 	disk = init_material();
 	if (!(disk->type = ft_strdup("disk")))
@@ -49,7 +47,6 @@ void		create_cap_cylinder(t_object *cylinder)
 	disk->radius = cylinder->radius;
 	disk->color = cylinder->color;
 	disk->point = v_v_add(&cylinder->center, &tmp);
-	debug_object(disk);
 	add_new_object(&cylinder->sub_object, disk);
 }
 
@@ -77,7 +74,6 @@ void		create_disk(t_env *e, t_json *json)
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
-	debug_object(disk);
 	add_new_object(&e->object, disk);
 }
 
@@ -94,7 +90,6 @@ void		create_cap_cone(t_object *cone)
 	disk->normal = cone->axis;
 	disk->radius = cone->tangent * cone->lenght_max;
 	disk->color = cone->color;
-	debug_object(disk);
 	add_new_object(&cone->sub_object, disk);
 	if (cone->radius < cone->lenght_max)
 	{
@@ -106,7 +101,6 @@ void		create_cap_cone(t_object *cone)
 		disk->normal = cone->axis;
 		disk->radius = cone->tangent * cone->radius;
 		disk->color = cone->color;
-		debug_object(disk);
 		add_new_object(&cone->sub_object, disk);
 	}
 }

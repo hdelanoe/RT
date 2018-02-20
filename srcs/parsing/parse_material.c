@@ -76,7 +76,7 @@ void		parse_indice(char **material, t_object *object)
 
 void		parse_material(t_json *material, t_object *object)
 {
-	t_json 	*tmp;
+	t_json	*tmp;
 
 	if (material->content)
 		parse_indice(&material->content, object);

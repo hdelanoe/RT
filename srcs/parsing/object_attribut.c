@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-void	plane_attribut(t_object *plane, t_json *json)
+void		plane_attribut(t_object *plane, t_json *json)
 {
 	if (!(ft_strcmp(json->name, "coord")) && json->member)
 		plane->point = parse_point(json->member);
@@ -26,7 +26,7 @@ void	plane_attribut(t_object *plane, t_json *json)
 		ft_printf("{R}WARNING:{E} plane as a bad attribut\n");
 }
 
-void	sphere_attribut(t_json *tmp, t_object *sphere)
+void		sphere_attribut(t_json *tmp, t_object *sphere)
 {
 	if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
 		sphere->center = parse_point(tmp->member);
@@ -43,43 +43,68 @@ void	sphere_attribut(t_json *tmp, t_object *sphere)
 		parse_material(tmp, sphere);
 	else
 		ft_printf("{R}WARNING:{E} sphere as a bad attribut\n");
-
 }
 
-void	cylinder_attribut(t_object *object, t_json *tmp)
+void		cylinder_attribut(t_object *object, t_json *tmp)
 {
 	if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
-     object->center = parse_point(tmp->member);
-    else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
-     object->axis = parse_normal(tmp->member);
-    else if (!(ft_strcmp(tmp->name, "radius")) && tmp->content)
-     object->radius = ft_atod(tmp->content);
-    else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
-     object->lenght_max = ft_atod(tmp->content);
-    else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
-     object->color = parse_color(tmp->member);
-    else if (!(ft_strcmp(tmp->name, "material")))
-      parse_material(tmp,object);
-    else
-      ft_printf("{R}WARNING:{E} cylinder as a bad attribut\n");
+		object->center = parse_point(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
+		object->axis = parse_normal(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "radius")) && tmp->content)
+		object->radius = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
+		object->lenght_max = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+		object->color = parse_color(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "material")))
+		parse_material(tmp, object);
+	else
+		ft_printf("{R}WARNING:{E} cylinder as a bad attribut\n");
 }
 
-void	cone_attribut(t_object *object, t_json *tmp)
+void		cone_attribut(t_object *object, t_json *tmp)
 {
 	if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
-			object->center = parse_point(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "tangent")) &&tmp->content)
-			object->tangent = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "maxlength")) && tmp->content)
-			object->lenght_max = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "minlength")) && tmp->content)
-			object->radius = ft_atod(tmp->content);
-		else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
-			object->axis = parse_normal(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
-			object->color = parse_color(tmp->member);
-		else if (!(ft_strcmp(tmp->name, "material")))
-			parse_material(tmp, object);
-		else
-			ft_printf("{R}WARNING:{E} cone as a bad attribut\n");
+		object->center = parse_point(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "tangent")) && tmp->content)
+		object->tangent = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "maxlength")) && tmp->content)
+		object->lenght_max = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "minlength")) && tmp->content)
+		object->radius = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
+		object->axis = parse_normal(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+		object->color = parse_color(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "material")))
+		parse_material(tmp, object);
+	else
+		ft_printf("{R}WARNING:{E} cone as a bad attribut\n");
+}
+
+void		cube_attribut(t_object *cb, t_json *tmp)
+{
+	if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+		cb->point = parse_point(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "width")))
+		cb->lenght_max = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "length")))
+		cb->tangent = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "height")))
+		cb->radius = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "axis")))
+	{
+		cb->axis = parse_normal(tmp->member);
+		cb->axis = normalize(&cb->axis);
+	}
+	else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+		cb->color = parse_color(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "material")))
+		parse_material(tmp, cb);
+	else
+	{
+		ft_printf("%s\n", tmp->name);
+		ft_printf("{R}WARNING:{E} cb as a bad attribut\n");
+	}
 }

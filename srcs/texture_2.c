@@ -22,13 +22,15 @@ t_color			normalize_color(t_color *color)
 	return (new);
 }
 
-void			wrap_obj(t_env *e, t_object *object, char *p_type)
+void			wrap_obj(t_env *e, t_object *object, t_object *parent)
 {
 	if (!(ft_strcmp("plane", object->type)))
 		wrap_plane(e);
 	if (!(ft_strcmp("sphere", object->type)))
 		wrap_sphere(e, object);
-	if (!(ft_strcmp("cylinder", object->type)) ||
-	!(ft_strcmp("cylinder", p_type)))
+	if (!(ft_strcmp("cylinder", object->type)))
 		wrap_cylinder(e, object);
+	if (!ft_strcmp("disk", object->type))
+		if (!(ft_strcmp("cylinder", parent->type)))
+			wrap_cylinder(e, parent);
 }

@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-void	free_content(t_json *member)
+void			free_content(t_json *member)
 {
 	t_json *tmp;
 
@@ -26,23 +26,23 @@ void	free_content(t_json *member)
 	}
 }
 
-double get_content_from_member(char *name, t_json **membre)
+double			get_content_from_member(char *name, t_json **membre)
 {
-	double res;
-	t_json	*tmp;
+	double		res;
+	t_json		*tmp;
 
 	res = 0;
 	tmp = (*membre);
 	while (tmp)
 	{
-		if(ft_strcmp(tmp->name, name) == 0)
+		if (ft_strcmp(tmp->name, name) == 0)
 			res = ft_atod(tmp->content);
 		tmp = tmp->next;
 	}
 	return (res);
 }
 
-t_vector parse_point(t_json *membre)
+t_vector		parse_point(t_json *membre)
 {
 	double x;
 	double y;
@@ -55,7 +55,7 @@ t_vector parse_point(t_json *membre)
 	return (set_vector(x, y, z));
 }
 
-t_vector parse_normal(t_json *membre)
+t_vector		parse_normal(t_json *membre)
 {
 	t_vector to_norm;
 
@@ -64,7 +64,7 @@ t_vector parse_normal(t_json *membre)
 	return (to_norm);
 }
 
-t_color  parse_color(t_json *membre)
+t_color			parse_color(t_json *membre)
 {
 	double r;
 	double g;

@@ -439,6 +439,7 @@ void					sphere_attribut(t_json *json, t_object *sphere);
 void					cylinder_attribut(t_object *cylinder, t_json *json);
 void					cone_attribut(t_object *object, t_json *json);
 void					cone_attribut_2(t_object *object);
+void					cube_attribut(t_object *cb, t_json *tmp);
 void					parse_scene(t_env *e, t_json *json);
 t_object				*init_material(void);
 void					parse_material(t_json *material, t_object *object);
@@ -473,8 +474,8 @@ int						cast_reflect_ray(t_env *e, t_rayon incident);
 int						cast_refract_ray(t_env *e, t_rayon origin);
 void					get_object_values(t_env *e, t_object *object);
 int						sort_type(t_env *e, t_object *object);
-void					check_intersection(t_env *e,
-						t_object *object, char *p_type);
+void					check_intersection(t_env *e, t_object *object,
+						t_object *parent);
 t_color					light_intersection(t_env *e, t_light *light);
 
 void					save_node(t_object *buff, t_object *source, int *tmp);
@@ -515,7 +516,7 @@ void					load_texture(t_env *e);
 void					wrap_sphere(t_env *e, t_object *object);
 void					wrap_cylinder(t_env *e, t_object *object);
 void					wrap_plane(t_env *e);
-void					wrap_obj(t_env *e, t_object *object, char *p_type);
+void					wrap_obj(t_env *e, t_object *object, t_object *parent);
 t_color					get_texture_info(unsigned char *text_data,
 						t_env *e, int sl);
 t_color					set_filter(t_env *e, t_color c);
