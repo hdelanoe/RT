@@ -65,18 +65,44 @@ void	create_tree(t_env *e, char **str)
 		if (!json->member->name)
 			ft_kill("Bad file");
 		get_object(e, json);
+		free(json);
 	}
 	else
 		exit_parser(1);
 }
 
+char	*ft_strjoin_free(char **s1, char **s2)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	str = ft_strnew(ft_strlen(*s1) + ft_strlen(*s2));
+	i = 0;
+	j = 0;
+	while ((*s1) && (*s1)[i])
+	{
+		str[i] = (*s1)[i];
+		i++;
+	}
+	if ((*s1))
+		ft_memdel((void **)s1);
+	while ((*s2) && (*s2)[j])
+	{
+		str[i] = (*s2)[j];
+		j++;
+		i++;
+	}
+	if ((*s2))
+		ft_memdel((void **)s2);
+	return (str);
+}
+
 int		parsing(t_env *e, char *src_file)
 {
-	t_parsing p;
+	t_parsing	p;
 
 	open_close(src_file);
-	p.buff = ft_memalloc(sizeof(p.buff));
-	p.stock = NULL;
 	if ((p.fd = open(src_file, O_RDONLY)) < 0)
 		ft_kill("This file doesn't exist or bad typography.");
 	p.j = 0;
@@ -84,11 +110,12 @@ int		parsing(t_env *e, char *src_file)
 	{
 		p.j = 1;
 		p.tmp = p.stock;
-		p.stock = ft_strjoin(p.tmp, p.buff);
+		p.stock = ft_strjoin_free(&p.tmp, &p.buff);
 		ft_strdel(&p.tmp);
 	}
 	close(p.fd);
 	if (p.i >= 0)
 		create_tree(e, &p.stock);
+	free(p.stock);
 	return (p.j);
 }
