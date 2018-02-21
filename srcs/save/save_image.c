@@ -117,7 +117,6 @@ char			*get_time_to_str(int bl)
 	else
 		tmp = ft_strdup(".rt");
 	name = ft_strjoin_fre(&name, &tmp, 1, 1);
-	free(tm);
 	return (name);
 }
 
@@ -155,5 +154,6 @@ void			save_image(t_env *e)
 	}
 	close(fd);
 	ft_printf("Screenshot has been saved on path : %s\n", e->s_name);
+	free(e->s_name);
 	return ;
 }

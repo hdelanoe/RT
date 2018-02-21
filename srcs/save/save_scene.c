@@ -84,5 +84,6 @@ void		save_scene(t_env *e)
 	write(fd, "}\n", 2);
 	close(fd);
 	ft_printf("Savescene has been saved on path : %s\n", e->s_name);
+	free(e->s_name);
 	return ;
 }

@@ -21,6 +21,8 @@ void		ft_delete_obj_lst(t_object **beg_obj)
 	prev = NULL;
 	while (ptr)
 	{
+		if (ptr->sub_object)
+			ft_delete_obj_lst(&ptr->sub_object);
 		if (ptr == *beg_obj)
 			*beg_obj = ft_remove_begin(&prev, &ptr);
 		else
@@ -38,6 +40,7 @@ t_light		*ft_remove_light_begin(t_light **prev, t_light **ptr)
 
 	*prev = NULL;
 	begin_object = (*ptr)->next;
+	free((*ptr)->type);
 	free(*ptr);
 	*ptr = begin_object;
 	return (begin_object);
@@ -65,16 +68,21 @@ void		ft_delete_light_lst(t_light **beg_obj)
 
 void		check_existance(char *text, t_env *e)
 {
-	if (access(ft_strtrim(text), F_OK) != -1)
+	if (access(text, F_OK) != -1)
 	{
 		ft_delete_obj_lst(&e->object);
 		ft_delete_light_lst(&e->light);
 		ft_printf("Chargement de la scene...\n");
-		parsing(e, ft_strtrim(text));
+		parsing(e, text);
 		ft_pthread(e, ray_tracer_void);
+		ft_printf("Scene chargée.\n");
 	}
 	else
+	{
 		ft_printf("This file doesn't exist. Loading scene aborted.\n");
+	}
+	free(e->argv_cpy);
+
 }
 
 void		read_scene_files(t_env *e)
@@ -82,6 +90,7 @@ void		read_scene_files(t_env *e)
 	DIR				*p;
 	struct dirent	*pp;
 	int				len;
+	char			*tmp;
 
 	p = opendir("./scenes/");
 	ft_printf("\nListe des scenes :\n\n");
@@ -95,8 +104,13 @@ void		read_scene_files(t_env *e)
 		}
 	}
 	ft_printf("\nEntrez une scene a changer :\n");
-	fgets(e->argv_cpy, 300, stdin);
-	e->argv_cpy = ft_strjoin("./scenes/", e->argv_cpy);
-	check_existance(e->argv_cpy, e);
+	if (get_next_line(fileno(stdin), &e->argv_cpy) == 1)
+	{
+		tmp = ft_strdup("./scenes/");
+		e->argv_cpy = ft_strjoin_fre(&tmp, &e->argv_cpy, 1, 1);
+		check_existance(e->argv_cpy, e);
+	}
+	else
+		ft_printf("Error input scene");
 	closedir(p);
 }
