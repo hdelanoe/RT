@@ -98,4 +98,5 @@ void		read_scene_files(t_env *e)
 	fgets(e->argv_cpy, 300, stdin);
 	e->argv_cpy = ft_strjoin("./scenes/", e->argv_cpy);
 	check_existance(e->argv_cpy, e);
+	closedir(p);
 }

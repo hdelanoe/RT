@@ -37,15 +37,21 @@ void		put_obj_loop(int fd, t_object *tmp)
 void		put_double(char *name, double color, int fd)
 {
 	char *tmp;
-	char *str;
+	char *tmp_2;
 
 	put_type_object(name, fd);
 	if (color < 1 && color > 0)
-		str = ft_strjoin("0.", ft_itoa(color * 10));
+	{
+		tmp = ft_strdup("0.");
+		tmp_2 = ft_itoa(color * 10);
+		tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
+	}
 	else
-		str = ft_itoa(color);
-	tmp = ft_strjoin("\"", str);
-	tmp = ft_strjoin(tmp, "\"\n");
+		tmp = ft_itoa(color);
+	tmp_2 = ft_strdup("\"");
+	tmp = ft_strjoin_fre(&tmp_2, &tmp, 1, 1);
+	tmp_2 = ft_strdup("\"\n");
+	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
 	write(fd, tmp, ft_strlen(tmp));
 	free(tmp);
 }

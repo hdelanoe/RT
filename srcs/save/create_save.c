@@ -15,15 +15,23 @@
 void		put_axis(char *name, t_vector *point, int fd)
 {
 	char *tmp;
+	char *tmp_2;
 
 	put_type_object(name, fd);
 	check_value_point(point);
-	tmp = ft_strjoin("{\"x\": \"", ft_itoa(point->x));
-	tmp = ft_strjoin(tmp, "\", \"y\": \"");
-	tmp = ft_strjoin(tmp, ft_itoa(point->y));
-	tmp = ft_strjoin(tmp, "\", \"z\": \"");
-	tmp = ft_strjoin(tmp, ft_itoa(point->z));
-	tmp = ft_strjoin(tmp, "\"},\n");
+	tmp = ft_strdup("{\"x\": \"");
+	tmp_2 = ft_itoa(point->x);
+	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
+	tmp_2 = ft_strdup("\", \"y\": \"");
+	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1 ,1);
+	tmp_2 = ft_itoa(point->y);
+	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
+	tmp_2 = ft_strdup("\", \"z\": \"");
+	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
+	tmp_2 = ft_itoa(point->z);
+	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
+	tmp_2 = ft_strdup("\"},\n");
+	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
 	write(fd, tmp, ft_strlen(tmp));
 	free(tmp);
 }
@@ -31,10 +39,14 @@ void		put_axis(char *name, t_vector *point, int fd)
 void		put_int(char *name, int i, int fd)
 {
 	char *tmp;
+	char *tmp_2;
 
 	put_type_object(name, fd);
-	tmp = ft_strjoin("\"", ft_itoa(i));
-	tmp = ft_strjoin(tmp, "\"\n");
+	tmp = ft_strdup("\"");
+	tmp_2 = ft_itoa(i);
+	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
+	tmp_2 = ft_strdup("\"\n");
+	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
 	write(fd, tmp, ft_strlen(tmp));
 	free(tmp);
 }
