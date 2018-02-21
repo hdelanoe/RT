@@ -102,6 +102,7 @@ int		parsing(t_env *e, char *src_file)
 {
 	t_parsing	p;
 
+	p.stock = NULL;
 	open_close(src_file);
 	if ((p.fd = open(src_file, O_RDONLY)) < 0)
 		ft_kill("This file doesn't exist or bad typography.");

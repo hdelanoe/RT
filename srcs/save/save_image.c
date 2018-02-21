@@ -51,30 +51,73 @@ static void		write_header(const int fd, t_header header, t_infos h_infos)
 	write(fd, &h_infos.important_color, 4);
 }
 
+char	*ft_strjoin_fre(char **s1, char **s2, int b1, int b2)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	str = ft_strnew(ft_strlen(*s1) + ft_strlen(*s2));
+	i = 0;
+	j = 0;
+	while ((*s1) && (*s1)[i])
+	{
+		str[i] = (*s1)[i];
+		i++;
+	}
+	if ((*s1) && b1)
+		free(*s1);
+	while ((*s2) && (*s2)[j])
+	{
+		str[i] = (*s2)[j];
+		j++;
+		i++;
+	}
+	if ((*s2) && b2)
+		free(*s2);
+	return (str);
+}
+
+void get_time_extend(char **name, struct tm *tm)
+{
+	char *tmp;
+
+	tmp = ft_itoa(tm->tm_mon + 1);
+	*name = ft_strjoin_fre(name , &tmp, 1, 1);
+	tmp = ft_itoa(tm->tm_mday);
+	*name = ft_strjoin_fre(name, &tmp, 1, 1);
+	tmp = ft_itoa(tm->tm_year + 1900);
+	*name = ft_strjoin_fre(name, &tmp, 1, 1);
+	tmp = ft_strdup("_");
+	*name = ft_strjoin_fre(name, &tmp, 1, 1);
+	tmp = ft_itoa(tm->tm_hour);
+	*name = ft_strjoin_fre(name, &tmp, 1, 1);
+	tmp = ft_itoa(tm->tm_min);
+	*name = ft_strjoin_fre(name, &tmp, 1, 1);
+	tmp = ft_itoa(tm->tm_sec);
+	*name = ft_strjoin_fre(name, &tmp, 1, 1);
+}
+
 char			*get_time_to_str(int bl)
 {
 	char				*name;
 	time_t				t;
 	struct tm			*tm;
+	char 				*tmp;
 
 	t = time(NULL);
 	tm = localtime(&t);
 	if (bl == 1)
-		name = ft_strjoin("./save/screenshot/screenshot_",
-			ft_itoa(tm->tm_mon + 1));
+		name = ft_strdup("./save/screenshot/screenshot_");
 	else
-		name = ft_strjoin("./save/sceneshot/sceneshot_",
-			ft_itoa(tm->tm_mon + 1));
-	name = ft_strjoin(name, ft_itoa(tm->tm_mday));
-	name = ft_strjoin(name, ft_itoa(tm->tm_year + 1900));
-	name = ft_strjoin(name, "_");
-	name = ft_strjoin(name, ft_itoa(tm->tm_hour));
-	name = ft_strjoin(name, ft_itoa(tm->tm_min));
-	name = ft_strjoin(name, ft_itoa(tm->tm_sec));
+		name = ft_strdup("./save/sceneshot/sceneshot_");
+	get_time_extend(&name, tm);
 	if (bl == 1)
-		name = ft_strjoin(name, ".bmp");
+		tmp = ft_strdup(".bmp");
 	else
-		name = ft_strjoin(name, ".rt");
+		tmp = ft_strdup(".rt");
+	name = ft_strjoin_fre(&name, &tmp, 1, 1);
+	free(tm);
 	return (name);
 }
 
