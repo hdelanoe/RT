@@ -18,8 +18,6 @@ t_color	get_render_mode(t_env *e)
 
 	if (e->am_flag == 1 && !e->edit_flag)
 		new = ambient_occlusion(e);
-	else if (e->render_mode == 3 && !e->edit_flag)
-		new = cel_shade_color(e);
 	else if (e->area_light_on == 1)
 		new = get_area_color(e);
 	else

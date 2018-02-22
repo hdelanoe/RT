@@ -12,6 +12,18 @@
 
 #include "../includes/rtv1.h"
 
+void	create_obj_to_add(t_object **copy)
+{
+	if (!ft_strcmp((*copy)->type, "cylinder"))
+		create_cap_cylinder((*copy));
+	else if (!ft_strcmp((*copy)->type, "cone"))
+		create_cap_cone((*copy));
+	else if (!ft_strcmp((*copy)->type, "glass"))
+		create_child_glass((*copy));
+	else if (!ft_strcmp((*copy)->type, "sphere") && (*copy)->cap)
+		create_cap_sphere((*copy));
+}
+
 int		set_lookat(t_env *e, int x, int y)
 {
 	t_vector	viewplane_point;

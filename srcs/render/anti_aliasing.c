@@ -30,11 +30,9 @@ void		antialias_loop_init(t_grid *aa, t_env *e, int sample)
 			aa->ctmp = vp_init(e, e->camera, e->viewplane_point_up_left, *aa);
 			anti_aliasing_clr_merge(&aa->color, &aa->ctmp);
 			aa->x += 0.25;
-
 		}
 		aa->y += 0.25;
 	}
-	
 }
 
 void		aa_tracer(t_env *e, int sample)

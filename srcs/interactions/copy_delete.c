@@ -12,6 +12,21 @@
 
 #include "../includes/rtv1.h"
 
+void		init_copy2(t_object **copy, t_object *object)
+{
+	(*copy)->ambient = object->ambient;
+	(*copy)->diffuse = object->diffuse;
+	(*copy)->specular = object->specular;
+	(*copy)->reflect = object->reflect;
+	(*copy)->refract = object->refract;
+	(*copy)->bump = object->bump;
+	(*copy)->indice = object->indice;
+	(*copy)->absorbtion = object->absorbtion;
+	if (object->sub_object)
+		init_copy(&(*copy)->sub_object, object->sub_object);
+	(*copy)->next = NULL;
+}
+
 void		init_copy(t_object **copy, t_object *object)
 {
 	if (!((*copy) = (t_object*)ft_memalloc(sizeof(t_object))))
@@ -30,29 +45,7 @@ void		init_copy(t_object **copy, t_object *object)
 	(*copy)->node_normal = object->node_normal;
 	(*copy)->color = object->color;
 	(*copy)->cap = object->cap;
-	(*copy)->ambient = object->ambient;
-	(*copy)->diffuse = object->diffuse;
-	(*copy)->specular = object->specular;
-	(*copy)->reflect = object->reflect;
-	(*copy)->refract = object->refract;
-	(*copy)->bump = object->bump;
-	(*copy)->indice = object->indice;
-	(*copy)->absorbtion = object->absorbtion;
-	if (object->sub_object)
-		init_copy(&(*copy)->sub_object, object->sub_object);
-	(*copy)->next = NULL;
-}
-
-void		create_obj_to_add(t_object **copy)
-{
-	if (!ft_strcmp((*copy)->type, "cylinder"))
-		create_cap_cylinder((*copy));
-	else if (!ft_strcmp((*copy)->type, "cone"))
-		create_cap_cone((*copy));
-	else if (!ft_strcmp((*copy)->type, "glass"))
-		create_child_glass((*copy));
-	else if (!ft_strcmp((*copy)->type, "sphere") && (*copy)->cap)
-		create_cap_sphere((*copy));
+	init_copy2(copy, object);
 }
 
 void		add_object(t_env *e, int x, int y)

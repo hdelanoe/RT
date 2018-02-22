@@ -12,7 +12,7 @@
 
 #include "../includes/rtv1.h"
 
-static void		create_header(t_env *e, t_header *header, t_infos *h_infos)
+static void	create_header(t_env *e, t_header *header, t_infos *h_infos)
 {
 	header->type[0] = 0x42;
 	header->type[1] = 0x4D;
@@ -32,7 +32,7 @@ static void		create_header(t_env *e, t_header *header, t_infos *h_infos)
 	h_infos->important_color = 0;
 }
 
-static void		write_header(const int fd, t_header header, t_infos h_infos)
+static void	write_header(const int fd, t_header header, t_infos h_infos)
 {
 	write(fd, &header.type, 2);
 	write(fd, &header.file_size, 4);
@@ -51,39 +51,12 @@ static void		write_header(const int fd, t_header header, t_infos h_infos)
 	write(fd, &h_infos.important_color, 4);
 }
 
-char	*ft_strjoin_fre(char **s1, char **s2, int b1, int b2)
-{
-	char	*str;
-	int		i;
-	int		j;
-
-	str = ft_strnew(ft_strlen(*s1) + ft_strlen(*s2));
-	i = 0;
-	j = 0;
-	while ((*s1) && (*s1)[i])
-	{
-		str[i] = (*s1)[i];
-		i++;
-	}
-	if ((*s1) && b1)
-		free(*s1);
-	while ((*s2) && (*s2)[j])
-	{
-		str[i] = (*s2)[j];
-		j++;
-		i++;
-	}
-	if ((*s2) && b2)
-		free(*s2);
-	return (str);
-}
-
-void get_time_extend(char **name, struct tm *tm)
+void		get_time_extend(char **name, struct tm *tm)
 {
 	char *tmp;
 
 	tmp = ft_itoa(tm->tm_mon + 1);
-	*name = ft_strjoin_fre(name , &tmp, 1, 1);
+	*name = ft_strjoin_fre(name, &tmp, 1, 1);
 	tmp = ft_itoa(tm->tm_mday);
 	*name = ft_strjoin_fre(name, &tmp, 1, 1);
 	tmp = ft_itoa(tm->tm_year + 1900);
@@ -98,12 +71,12 @@ void get_time_extend(char **name, struct tm *tm)
 	*name = ft_strjoin_fre(name, &tmp, 1, 1);
 }
 
-char			*get_time_to_str(int bl)
+char		*get_time_to_str(int bl)
 {
 	char				*name;
 	time_t				t;
 	struct tm			*tm;
-	char 				*tmp;
+	char				*tmp;
 
 	t = time(NULL);
 	tm = localtime(&t);
@@ -120,16 +93,7 @@ char			*get_time_to_str(int bl)
 	return (name);
 }
 
-void			ft_swap(unsigned char *a, unsigned char *b)
-{
-	unsigned char tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-
-void			save_image(t_env *e)
+void		save_image(t_env *e)
 {
 	int				fd;
 	int				y;

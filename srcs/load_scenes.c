@@ -86,14 +86,12 @@ void		check_existance(char *text, t_env *e)
 		ft_printf("This file doesn't exist. Loading scene aborted.\n");
 	}
 	free(e->argv_cpy);
-
 }
 
 void		read_scene_files(t_env *e)
 {
 	DIR				*p;
 	struct dirent	*pp;
-	int				len;
 	char			*tmp;
 
 	p = opendir("./scenes/");
@@ -101,11 +99,7 @@ void		read_scene_files(t_env *e)
 	if (p != NULL)
 	{
 		while ((pp = readdir(p)) != NULL)
-		{
-			len = ft_strlen(pp->d_name);
-			if (ft_strncmp(pp->d_name + len - 3, ".rt", 3) == 0)
-				ft_printf("%s\n", pp->d_name);
-		}
+			ft_printf("%s\n", pp->d_name);
 	}
 	ft_printf("\nEntrez une scene a changer :\n");
 	if (get_next_line(fileno(stdin), &e->argv_cpy) == 1)

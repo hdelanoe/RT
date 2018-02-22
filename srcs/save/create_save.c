@@ -23,7 +23,7 @@ void		put_axis(char *name, t_vector *point, int fd)
 	tmp_2 = ft_itoa(point->x);
 	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
 	tmp_2 = ft_strdup("\", \"y\": \"");
-	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1 ,1);
+	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
 	tmp_2 = ft_itoa(point->y);
 	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
 	tmp_2 = ft_strdup("\", \"z\": \"");

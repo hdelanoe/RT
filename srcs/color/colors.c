@@ -73,10 +73,18 @@ t_color		calc_diffuse(t_env *e, t_light *light, t_rayon *ray, t_color c)
 	diffuse = set_color(0, 0, 0);
 	angle = v_double_mult(&light->rayon, (-1));
 	light->angle = dot_product(&ray->normal, &angle);
-	specular = e->specular *
-		get_specular(light, &ray->rayon, &ray->normal);
+	specular = e->specular * get_specular(light, &ray->rayon, &ray->normal);
 	if (light->angle > 0)
 	{
+		if (e->render_mode == 3 && !e->edit_flag)
+		{
+			if (light->angle < 0.2)
+				light->angle = 0.1;
+			else if (light->angle >= 0.2 && light->angle < 0.6)
+				light->angle = 0.3;
+			else if (light->angle >= 0.6)
+				light->angle = 0.7;
+		}
 		diffuse = c_c_mult(&e->current_color, &c);
 		diffuse = c_double_add(&diffuse, specular);
 		diffuse = c_double_mult(&diffuse, light->angle);
@@ -124,7 +132,7 @@ t_color		get_color(t_env *e)
 			c = get_area_light_intensity(e, &tmp_light, &ray, &c);
 		else
 			c = add_diffuse(e, &c, &tmp_light, &ray);
-		if (tmp_light.next == NULL)
+		if (tmp_light.next == NULL || (e->render_mode == 3 && !e->edit_flag))
 			break ;
 		tmp_light = *tmp_light.next;
 	}

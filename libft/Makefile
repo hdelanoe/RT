@@ -31,6 +31,7 @@ SRC =	ft_memccpy.c \
 		ft_strnstr.c \
 		ft_strsub.c \
 		ft_strjoin.c \
+		ft_strjoin_fre.c \
 		ft_strrchr.c \
 		ft_strcat.c	\
 		ft_strlcat.c \
@@ -63,6 +64,7 @@ SRC =	ft_memccpy.c \
 		ft_ltoa_base.c \
 		ft_ftoa.c \
 		ft_lftoa.c \
+		ft_swap.c \
 		ft_isalnum.c \
 		ft_isalpha.c \
 		ft_isascii.c \

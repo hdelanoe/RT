@@ -556,6 +556,7 @@ void					print_help(t_env *e);
 void					ft_object_remove_if(t_object **beg_obj,
 						int data_ref, int (*cmp)());
 int						set_lookat(t_env *e, int x, int y);
+void					create_obj_to_add(t_object **copy);
 int						copy_object(t_env *e, int x, int y);
 int						mouse(int button, int x, int y, t_env *e);
 void					init_copy(t_object **copy, t_object *object);

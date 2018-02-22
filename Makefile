@@ -66,7 +66,6 @@ SRCS		= 	srcs/main.c \
 				srcs/parsing/triangle.c \
 				srcs/parsing/quad.c \
 				srcs/color/colors.c \
-				srcs/color/cel_shading.c \
 				srcs/color/get_color_func.c \
 				srcs/color/colors_op1.c \
 				srcs/color/colors_op2.c \
