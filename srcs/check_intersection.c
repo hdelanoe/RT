@@ -100,8 +100,8 @@ int				light_sub_intersection(t_env *e, t_light *light,
 	while (1)
 	{
 		if (sub.id != e->id_object && ft_strcmp(sub.type, "area_light")
-		&& fabs(e->solution - e->distance_light_object) > 0.001
-		&& sort_type(e, &sub) && e->solution < e->distance_light_object)
+		&& sort_type(e, &sub) && e->solution < e->distance_light_object
+		&& fabs(e->solution - e->distance_light_object) > 0.001)
 		{
 			if (sub.refract == 0)
 				return (1);
