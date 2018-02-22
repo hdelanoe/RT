@@ -22,7 +22,7 @@ static void		create_header(t_env *e, t_header *header, t_infos *h_infos)
 	h_infos->header_size = 40;
 	h_infos->height = (int)e->height;
 	h_infos->width = (int)e->width;
-	h_infos->panes = 1;
+	h_infos->plane = 1;
 	h_infos->bpp = 24;
 	h_infos->compression = 0;
 	h_infos->image_size = (int)(e->width * e->height) * 3;
@@ -41,7 +41,7 @@ static void		write_header(const int fd, t_header header, t_infos h_infos)
 	write(fd, &h_infos.header_size, 4);
 	write(fd, &h_infos.width, 4);
 	write(fd, &h_infos.height, 4);
-	write(fd, &h_infos.panes, 2);
+	write(fd, &h_infos.plane, 2);
 	write(fd, &h_infos.bpp, 2);
 	write(fd, &h_infos.compression, 4);
 	write(fd, &h_infos.image_size, 4);

@@ -73,6 +73,10 @@ void		check_existance(char *text, t_env *e)
 		ft_delete_obj_lst(&e->object);
 		ft_delete_light_lst(&e->light);
 		ft_printf("Chargement de la scene...\n");
+		default_env(e);
+		init_camera(e);
+		camera_transformation(e);
+		init_stereo(e);
 		parsing(e, text);
 		ft_pthread(e, ray_tracer_void);
 		ft_printf("Scene chargée.\n");

@@ -12,6 +12,22 @@
 
 #include "rtv1.h"
 
+void		default_env(t_env *e)
+{
+	e->width = WIN_X;
+	e->height = WIN_Y;
+	e->distance = WIN_X;
+	e->pixelize = 0;
+	e->is_past = 0;
+	e->is_copy = 0;
+	e->lookat = set_vector(0, 0, 0);
+	e->indice = R_VOID;
+	e->perlin.a = 0.01;
+	e->perlin.b = 0.02;
+	e->perlin.c = 0.05;
+	e->perlin.d = 0.5;
+}
+
 void		init_permtab(t_env *e)
 {
 	static int	permtab[256] = {151, 160, 137, 91, 90, 15, 131, 13, 201, 95,
@@ -65,18 +81,7 @@ t_env		*init(void)
 	if (!(e = (t_env*)ft_memalloc(sizeof(t_env))))
 		exit_rt(1);
 	init_permtab(e);
-	e->width = WIN_X;
-	e->height = WIN_Y;
-	e->distance = WIN_X;
-	e->pixelize = 0;
-	e->is_past = 0;
-	e->is_copy = 0;
-	e->lookat = set_vector(0, 0, 0);
-	e->indice = R_VOID;
-	e->perlin.a = 0.01;
-	e->perlin.b = 0.02;
-	e->perlin.c = 0.05;
-	e->perlin.d = 0.5;
+	default_env(e);
 	return (e);
 }
 

@@ -25,7 +25,6 @@ t_object	*ft_remove_begin(t_object **prev, t_object **ptr)
 
 	*prev = NULL;
 	begin_object = (*ptr)->next;
-	free((*ptr)->type);
 	free(*ptr);
 	*ptr = begin_object;
 	return (begin_object);

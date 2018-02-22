@@ -38,18 +38,20 @@ void		init_copy(t_object **copy, t_object *object)
 	(*copy)->bump = object->bump;
 	(*copy)->indice = object->indice;
 	(*copy)->absorbtion = object->absorbtion;
+	if (object->sub_object)
+		init_copy(&(*copy)->sub_object, object->sub_object);
 	(*copy)->next = NULL;
 }
 
 void		create_obj_to_add(t_object **copy)
 {
-	if (!ft_strcmp((*copy)->type, "cylinder") && (*copy)->cap)
+	if (!ft_strcmp((*copy)->type, "cylinder"))
 		create_cap_cylinder((*copy));
-	if (!ft_strcmp((*copy)->type, "cone"))
+	else if (!ft_strcmp((*copy)->type, "cone"))
 		create_cap_cone((*copy));
-	if (!ft_strcmp((*copy)->type, "glass"))
+	else if (!ft_strcmp((*copy)->type, "glass"))
 		create_child_glass((*copy));
-	if (!ft_strcmp((*copy)->type, "sphere") && (*copy)->cap)
+	else if (!ft_strcmp((*copy)->type, "sphere") && (*copy)->cap)
 		create_cap_sphere((*copy));
 }
 

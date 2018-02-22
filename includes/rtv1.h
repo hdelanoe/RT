@@ -378,11 +378,12 @@ typedef struct			s_infos
 	int					height;
 	int					x_res;
 	int					y_res;
-	int					panes;
+	int					plane;
 	short				bpp;
 }						t_infos;
 
 t_env					*init(void);
+void					default_env(t_env *e);
 void					display_window(t_env *e);
 
 void					stereo_viewplane(t_env *e);
@@ -523,13 +524,13 @@ t_color					get_texture_info(unsigned char *text_data,
 t_color					set_filter(t_env *e, t_color c);
 void					print_color(t_color *color, t_env *e, int x, int y);
 
+t_color					vp_init(t_env *e, t_camera cam, t_vector vp, t_grid g);
 void					stereo_tracer(t_env *e);
 void					edit_tracer(t_env *e);
 void					ray_tracer(t_env *e);
 void					*aa_tracer_void(void *e);
 void					anti_aliasing_clr_merge(t_color *anti, t_color *clr);
-t_grid					antialias_loop_init(t_grid *anti,
-						t_env *e, int sample);
+void					antialias_loop_init(t_grid *aa, t_env *e, int sample);
 void					aa_tracer(t_env *e, int sample);
 t_color					get_render_mode(t_env *e);
 t_color					cel_shading(t_vector *light, t_env *e, t_color *clr);
