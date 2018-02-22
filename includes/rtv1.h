@@ -295,6 +295,7 @@ struct					s_env
 	t_vector			rayon_width_div;
 	int					p[512];
 	t_perlin			perlin;
+	t_color				near_color;
 	int					ambient_flag;
 	char				*argv_cpy;
 	char				*s_name;
