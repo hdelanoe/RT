@@ -62,10 +62,13 @@ int				sort_type(t_env *e, t_object *object)
 void			check_intersection(t_env *e, t_object *object,
 				t_object *parent)
 {
-	t_object sub;
+	t_object	sub;
+	int			flag;
+	// t_vector	tmp;
 
+	flag = 0;
 	if (sort_type(e, object) && e->solution < e->distance &&
-		e->solution >= 0)
+		e->solution >= 0 && fabs(e->distance - e->solution) > 0.001)
 	{
 		e->distance = e->solution;
 		get_object_values(e, object);
@@ -96,8 +99,9 @@ int				light_sub_intersection(t_env *e, t_light *light,
 	sub = *object->sub_object;
 	while (1)
 	{
-		if (sub.id != e->id_object && ft_strcmp(sub.type, "area_light") &&
-		sort_type(e, &sub) && e->solution < e->distance_light_object)
+		if (sub.id != e->id_object && ft_strcmp(sub.type, "area_light")
+		&& fabs(e->solution - e->distance_light_object) > 0.001
+		&& sort_type(e, &sub) && e->solution < e->distance_light_object)
 		{
 			if (sub.refract == 0)
 				return (1);
@@ -124,7 +128,8 @@ t_color			light_intersection(t_env *e, t_light *light)
 	{
 		if (tmp_object.id != e->id_object
 		&& ft_strcmp(tmp_object.type, "area_light")
-		&& sort_type(e, &tmp_object) && e->solution < e->distance_light_object)
+		&& sort_type(e, &tmp_object) && e->solution < e->distance_light_object
+		&& fabs (e->solution - e->distance_light_object) > 0.001)
 		{
 			if (tmp_object.refract == 0)
 				return (set_color(0, 0, 0));
