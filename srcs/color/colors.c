@@ -123,7 +123,7 @@ t_color		get_color(t_env *e)
 		reset_diffuse_ambiant(e);
 	c = color_calculation(e, ray);
 	if ((c.r == 0 && c.g == 0 && c.b == 0 && !e->ambient_flag)
-	|| e->edit_flag == 1)
+	|| e->edit_flag == 1 || !e->light)
 		return (c);
 	tmp_light = *e->light;
 	while (1)
