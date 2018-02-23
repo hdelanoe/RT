@@ -14,14 +14,14 @@
 
 void		parse_scene(t_env *e, t_json *json)
 {
-	if (!(ft_strcmp(json->name, "camera")) && json->member)
+	if (!(ft_strcmp(json->name, "camera_origin")) && json->member)
 		e->camera.origin = parse_point(json->member);
-	else if (!(ft_strcmp(json->name, "width")) && json->content)
-		e->camera.width = ft_atod(json->content);
-	else if (!(ft_strcmp(json->name, "height")) && json->content)
-		e->camera.height = ft_atod(json->content);
-	else if (!(ft_strcmp(json->name, "distance")) && json->content)
-		e->camera.distance = ft_atod(json->content);
+	else if (!(ft_strcmp(json->name, "camera_lookat")) && json->member)
+		e->lookat = parse_point(json->member);
+	else if (!(ft_strcmp(json->name, "window_width")) && json->content)
+		e->width = ft_atod(json->content);
+	else if (!(ft_strcmp(json->name, "window_height")) && json->content)
+		e->height = ft_atod(json->content);
 	else
 	{
 		ft_printf("{R}WARNING:{E} %s is not valid\n", json->name);

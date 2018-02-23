@@ -1,13 +1,14 @@
 {
-	"camera": {"x": "200", "y": "150", "z": "0"},
-	"width": {"1000"},
-	"heigth": {"1000"},
+	"camera_origin": {"x": "150", "y": "150.0", "z": "-200.0"},
+	"camera_lookat": {"x": "-100", "y": "100.0", "z": "0"},
+	"window_width": "1000.0",
+	"window_height": "1000.0",
 
 	"sphere": {
 		"coord": {"x": "0", "y": "0", "z": "0"}, 
 		"color": {"r": "0.3", "g": "0.3", "b": "0.9"} 
-		"radius": "100"
-		"material":"mirror"
+		"radius": "100",
+		"material":"mirror",
 	}
 	"plane": {
 		"coord": {"x": "0", "y": "-100", "z": "0"}, 

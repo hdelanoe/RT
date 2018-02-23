@@ -14,16 +14,18 @@
 
 void	get_complex(t_env *e, t_json *json)
 {
-	if (!(ft_strcmp(json->name, "quad")))
+	if (!(ft_strcmp(json->name, "quad")) && json->member)
 		create_quad(e, json);
-	else if (!(ft_strcmp(json->name, "glass")))
+	else if (!(ft_strcmp(json->name, "glass")) && json->member)
 		create_glass(e, json);
-	else if (!(ft_strcmp(json->name, "cube")))
+	else if (!(ft_strcmp(json->name, "cube")) && json->member)
 		create_cube(e, json);
-	else if (!(ft_strcmp(json->name, "area_light")))
+	else if (!(ft_strcmp(json->name, "area_light")) && json->member)
 		create_area_light(e, json);
-	else if (!(ft_strcmp(json->name, "pyramide")))
+	else if (!(ft_strcmp(json->name, "pyramide")) && json->member)
 		create_pyramide(e, json);
+	else
+		parse_scene(e, json);
 }
 
 void	get_object_condition(t_env *e, t_json *tmp)

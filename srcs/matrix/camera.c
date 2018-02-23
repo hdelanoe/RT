@@ -35,18 +35,18 @@ void	stereo_viewplane(t_env *e)
 void	init_stereo(t_env *e)
 {
 	e->lstereo.origin = set_vector(-50, 0, -(double)WIN_X);
-	e->lstereo.width = (double)WIN_X;
-	e->lstereo.height = (double)WIN_Y;
-	e->lstereo.distance = (double)WIN_X;
+	e->lstereo.width = e->width;
+	e->lstereo.height = e->height;
+	e->lstereo.distance = WIN_X;
 	e->lstereo.z_vector = v_v_subs(&e->lookat, &e->lstereo.origin);
 	e->lstereo.z_vector = normalize(&e->lstereo.z_vector);
 	e->lstereo.y_vector = set_vector(0, 1, 0);
 	e->lstereo.x_vector = v_v_mult(&e->lstereo.y_vector, &e->lstereo.z_vector);
 	e->lstereo.y_vector = v_v_mult(&e->lstereo.z_vector, &e->lstereo.x_vector);
 	e->rstereo.origin = set_vector(50, 0, -(double)WIN_X);
-	e->rstereo.width = (double)WIN_X;
-	e->rstereo.height = (double)WIN_Y;
-	e->rstereo.distance = (double)WIN_X;
+	e->rstereo.width = e->width;
+	e->rstereo.height = e->height;
+	e->rstereo.distance = WIN_X;
 	e->rstereo.z_vector = v_v_subs(&e->lookat, &e->rstereo.origin);
 	e->rstereo.z_vector = normalize(&e->rstereo.z_vector);
 	e->rstereo.y_vector = set_vector(0, 1, 0);
@@ -64,9 +64,7 @@ void	init_stereo(t_env *e)
 void	init_camera(t_env *e)
 {
 	e->camera.up = set_vector(0, 1, 0);
-	// e->camera.width = (double)WIN_X;
-	// e->camera.height = (double)WIN_Y;
-	e->camera.distance = 1000.0;
+	e->camera.distance = WIN_X;
 	e->camera.z_vector = v_v_subs(&e->lookat, &e->camera.origin);
 	e->camera.z_vector = normalize(&e->camera.z_vector);
 	e->camera.y_vector = e->camera.up;
@@ -96,8 +94,8 @@ void	viewplane_transformation(t_env *e)
 	t_vector	tmp_vpy;
 	t_vector	tmp_vpx;
 
-	tmp_vpx = v_double_mult(&e->camera.x_vector, (e->camera.width * 0.5));
-	tmp_vpy = v_double_mult(&e->camera.y_vector, (e->camera.height * 0.5));
+	tmp_vpx = v_double_mult(&e->camera.x_vector, (e->width * 0.5));
+	tmp_vpy = v_double_mult(&e->camera.y_vector, (e->height * 0.5));
 	tmp_vpz = v_double_mult(&e->camera.z_vector, (e->camera.distance));
 	e->viewplane_point_up_left = v_v_add(&tmp_vpz, &tmp_vpy);
 	e->viewplane_point_up_left = v_v_add(&e->camera.origin,
