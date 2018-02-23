@@ -41,6 +41,7 @@
 # include "vector.h"
 # include "matrix.h"
 # include "perlin.h"
+# include "bitmap.h"
 # include "mlx_key_macos.h"
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -214,9 +215,8 @@ struct					s_env
 	t_vector			current_node_normal;
 	t_vector			object_node;
 	t_vector			object_normal;
-	t_vector			light_rayon;
-	double				light_angle;
 	t_color				current_color;
+	t_vector			light_rayon;
 	double				width;
 	double				height;
 	int					id_object;
@@ -258,7 +258,6 @@ struct					s_env
 	int					is_past;
 	int					stereo_flag;
 	int					filter_flag;
-	int					is_delete;
 	int					edit_flag;
 	t_vector			lookat;
 	t_matrix4x4			matrix_lstereo_system;
@@ -357,29 +356,6 @@ struct					s_poly
 	int					j;
 	int					nb;
 };
-
-typedef struct			s_header
-{
-	char				type[2];
-	int					reserved;
-	int					file_size;
-	int					offset;
-}						t_header;
-
-typedef struct			s_infos
-{
-	int					header_size;
-	int					image_size;
-	int					nb_color;
-	int					important_color;
-	int					compression;
-	int					width;
-	int					height;
-	int					x_res;
-	int					y_res;
-	int					plane;
-	short				bpp;
-}						t_infos;
 
 t_env					*init(void);
 void					default_env(t_env *e);
