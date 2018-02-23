@@ -43,7 +43,18 @@ int		cast_ray(t_env *e, t_vector rayon, t_vector origin)
 		tmp_object = *tmp_object.next;
 	}
 	if (e->intersect)
+	{
+		tmp_object = *e->object;
+		while(1)
+		{
+			if (e->is_copy && tmp_object.id == e->id_object)
+				init_copy(&e->copy, &tmp_object);
+			if (tmp_object.next == NULL)
+				break ;
+			tmp_object = *tmp_object.next;
+		}
 		return (1);
+	}
 	return (0);
 }
 

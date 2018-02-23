@@ -48,11 +48,11 @@ void		ft_object_remove_if(t_object **beg_obj, int data_ref, int (*cmp)())
 			else
 			{
 				prev->next = ptr->next;
-				free(ptr->type);
+				free((*ptr).type);
 				free(ptr);
-				ptr = NULL;
 				ptr = prev->next;
 			}
+			return ;
 		}
 		else
 		{

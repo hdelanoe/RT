@@ -46,8 +46,8 @@ int		set_lookat(t_env *e, int x, int y)
 
 int obj_lst_size(t_object **lst)
 {
-	int i;
-	t_object *tmp;
+	int			i;
+	t_object	*tmp;
 
 	tmp = (*lst);
 	i = 0;
@@ -63,9 +63,8 @@ void	mouse_func(t_env *e, int x, int y, int button)
 {
 	if (!e->is_past && (button == 1 || button == 5))
 	{
-		if (copy_object(e, x, y))
+		if (copy_object(e, x, y) && ft_strcmp(e->copy->type, "plane"))
 		{
-			printf("la\n");
 			if (e->copy && ft_strcmp("plane", e->copy->type))
 			{
 				mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 250,
@@ -103,6 +102,7 @@ int		mouse(int button, int x, int y, t_env *e)
 {
 	if (!(x > 0 && x < WIN_X && y > 0 && y < WIN_Y) || !e->edit_flag)
 		return (0);
+	mouse_func(e, x, y, button);
 	if ((e->stereo_flag || e->flag.deep) && (button == 1 || button == 5))
 	{
 		if (set_lookat(e, x, y))
@@ -114,6 +114,5 @@ int		mouse(int button, int x, int y, t_env *e)
 			e->flag.lookat = 1;
 		}
 	}
-	mouse_func(e, x, y, button);
 	return (0);
 }

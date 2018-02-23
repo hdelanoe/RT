@@ -22,9 +22,6 @@ void		parse_scene(t_env *e, t_json *json)
 		e->camera.height = ft_atod(json->content);
 	else if (!(ft_strcmp(json->name, "distance")) && json->content)
 		e->camera.distance = ft_atod(json->content);
-	else if (!(ft_strcmp(json->name, "recursion")) && json->content)
-		e->recursion = ft_atoi(json->content) > 6 ?
-					e->recursion : ft_atoi(json->content);
 	else
 	{
 		ft_printf("{R}WARNING:{E} %s is not valid\n", json->name);

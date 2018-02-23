@@ -41,7 +41,15 @@ void	inputs2(int keycode, t_env *e)
 	else if (keycode == KEY_Y)
 		e->text_flag = e->text_flag == 1 ? 0 : 1;
 	else if (keycode == KEY_L)
+	{
+		if (e->is_past)
+		{
+			free(e->copy);
+			free(e->copy->type);
+			e->is_past = 0;
+		}
 		read_scene_files(e);
+	}
 }
 
 void	inputs_conditions(int keycode, t_env *e)

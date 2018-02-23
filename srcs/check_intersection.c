@@ -31,8 +31,6 @@ void			get_object_values(t_env *e, t_object *object)
 	e->absorbtion = object->absorbtion;
 	e->id_object = object->id;
 	e->object_indice = object->indice;
-	if (e->is_copy)
-		init_copy(&e->copy, object);
 }
 
 int				sort_type(t_env *e, t_object *object)
@@ -72,7 +70,6 @@ void			check_intersection(t_env *e, t_object *object,
 	{
 		e->distance = e->solution;
 		get_object_values(e, object);
-		e->delete_id = object->id;
 		if (e->text_flag == 1)
 			wrap_obj(e, object, parent);
 		e->intersect = 1;

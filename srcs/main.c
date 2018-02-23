@@ -22,7 +22,6 @@ void		default_env(t_env *e)
 	e->is_copy = 0;
 	e->lookat = set_vector(0, 0, 0);
 	e->indice = R_VOID;
-	e->recursion = 6;
 	e->perlin.a = 0.01;
 	e->perlin.b = 0.02;
 	e->perlin.c = 0.05;
@@ -68,7 +67,10 @@ void		display_window(t_env *e)
 	camera_transformation(e);
 	init_stereo(e);
 	if (!e->object)
+	{
+		ft_printf("Scene can't be empty.\n");
 		return ;
+	}
 	ft_pthread(e, ray_tracer_void);
 	mlx_hook(e->mlx.win_ptr, 2, (1L << 0), key_functions, e);
 	mlx_hook(e->mlx.win_ptr, 17, (1L << 17), proper_exit, e);

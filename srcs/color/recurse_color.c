@@ -51,11 +51,9 @@ void	shoot_new_color(t_env *e, t_color *c, double coef)
 
 void	recurse_color(t_env *e, t_rayon ray, t_color *c)
 {
-	double kr;
-	int	i;
+	double	kr;
 
-	i = 0;
-	while (i++ < e->recursion)
+	while (--(e->recursion) > 0) 
 	{
 		if (e->reflect && !e->refract)
 		{
