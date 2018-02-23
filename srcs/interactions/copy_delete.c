@@ -29,8 +29,6 @@ void		init_copy2(t_object **copy, t_object *object)
 
 void		init_copy(t_object **copy, t_object *object)
 {
-	if (!ft_strcmp("quad", object->type) || !ft_strcmp("plane", object->type) || !ft_strcmp("triangle", object->type))
-		return ;
 	if (!((*copy) = (t_object*)ft_memalloc(sizeof(t_object))))
 		ft_kill("Error in malloc object");
 	(*copy)->type = ft_strdup(object->type);
@@ -62,6 +60,8 @@ void		add_object(t_env *e, int x, int y)
 
 	
 	init_copy(&copy, e->copy);
+	free(e->copy->type);
+	free(e->copy);
 	tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
 	tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
 	viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);
@@ -71,10 +71,6 @@ void		add_object(t_env *e, int x, int y)
 	copy->center = viewplane_point;
 	create_obj_to_add(&copy);
 	add_new_object(&e->object, copy);
-	//free(e->copy->type);
-	free(e->copy->type);
-	free(e->copy);
-	e->copy = NULL;
 	ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 	choose_display_mode(e);
 	//mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
