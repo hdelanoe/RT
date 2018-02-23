@@ -42,7 +42,13 @@ void	inputs2(int keycode, t_env *e)
 		e->text_flag = e->text_flag == 1 ? 0 : 1;
 	else if (keycode == KEY_L)
 	{
-		e->is_past = e->is_past == 1 ? 0 : 0;
+		 if (e->is_past) 
+    { 
+      free(e->copy); 
+      free(e->copy->type); 
+      e->is_past = 0; 
+    } 
+    e->is_past = e->is_past == 1 ? 0 : 0; 
 		read_scene_files(e);
 	}
 }
