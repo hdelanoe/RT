@@ -63,11 +63,10 @@ void	init_stereo(t_env *e)
 
 void	init_camera(t_env *e)
 {
-	e->camera.origin = set_vector(0, 0, -1000.0);
 	e->camera.up = set_vector(0, 1, 0);
-	e->camera.width = (double)WIN_X;
-	e->camera.height = (double)WIN_Y;
-	e->camera.distance = (double)WIN_X;
+	// e->camera.width = (double)WIN_X;
+	// e->camera.height = (double)WIN_Y;
+	e->camera.distance = 1000.0;
 	e->camera.z_vector = v_v_subs(&e->lookat, &e->camera.origin);
 	e->camera.z_vector = normalize(&e->camera.z_vector);
 	e->camera.y_vector = e->camera.up;
