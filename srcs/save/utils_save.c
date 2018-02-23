@@ -86,18 +86,14 @@ void		put_xyz(t_vector *point, int fd)
 	free(tmp);
 }
 
-void		check_value_point(t_vector *point)
+void		check_value_point(double *a)
 {
-	if (point->x > 0)
-		point->x = 1;
-	else if (point->x < 0)
-		point->x = -1;
-	if (point->y > 0)
-		point->y = 1;
-	else if (point->y < 0)
-		point->y = -1;
-	if (point->z > 0)
-		point->z = 1;
-	else if (point->z < 0)
-		point->z = -1;
+	if (*a > 0.5)
+		*a = 1;
+	else if (*a < 0.5 && *a > 0)
+		*a = 1;
+	else if (*a < -0.5)
+		*a = -1;
+	else 
+		*a = 0;
 }

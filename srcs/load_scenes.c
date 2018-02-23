@@ -60,6 +60,7 @@ void		ft_delete_light_lst(t_light **beg_obj)
 		else
 		{
 			prev->next = ptr->next;
+			free(ptr->type);
 			free(ptr);
 			ptr = prev->next;
 		}
@@ -111,4 +112,6 @@ void		read_scene_files(t_env *e)
 	else
 		ft_printf("Error input scene");
 	closedir(p);
+	if (e->copy)
+		e->copy = NULL;
 }

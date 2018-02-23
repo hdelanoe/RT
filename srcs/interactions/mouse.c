@@ -44,28 +44,53 @@ int		set_lookat(t_env *e, int x, int y)
 	return (0);
 }
 
+int obj_lst_size(t_object **lst)
+{
+	int i;
+	t_object *tmp;
+
+	tmp = (*lst);
+	i = 0;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
 void	mouse_func(t_env *e, int x, int y, int button)
 {
 	if (!e->is_past && (button == 1 || button == 5))
 	{
 		if (copy_object(e, x, y))
 		{
-			mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 250,
-				0xFFFFFF, e->copy->type);
-			mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 100, 250,
-				0xFFFFFF, "copied!");
-			e->is_past = 1;
+			if (e->copy && e->copy->type)
+			{
+				mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 250,
+					0xFFFFFF, e->copy->type);
+				mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 100, 250,
+					0xFFFFFF, "copied!");
+				e->is_past = 1;
+			}
+			else
+				e->is_past = 0;
 		}
 	}
-	else if (e->is_past && (button == 1 || button == 5))
+	else if (e->is_past && (button == 1 || button == 5) && e->copy)
 	{
 		add_object(e, x, y);
 		e->is_past = 0;
 	}
-	else if (button == 2 || button == 6)
+	else if ((button == 2 || button == 6) && !e->is_past)
 	{
-		delete_object(e, x, y);
-		e->is_past = 0;
+		if (obj_lst_size(&e->object) > 1)
+		{
+			delete_object(e, x, y);
+			e->is_past = 0;
+		}
+		else 
+			ft_printf("Scene can't be empty.\n");
 	}
 }
 

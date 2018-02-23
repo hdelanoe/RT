@@ -590,7 +590,7 @@ void					put_type_object(char *type, int fd);
 char					*check_color_value(double color);
 void					put_color(t_color *color, int fd);
 void					put_xyz(t_vector *point, int fd);
-void					check_value_point(t_vector *point);
+void					check_value_point(double *a);
 void					put_obj_loop(int fd, t_object *tmp);
 void					put_glass_file(t_object *glass, int fd);
 void					put_triangle_file(t_object *triangle, int fd);

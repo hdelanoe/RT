@@ -25,6 +25,8 @@ t_object	*ft_remove_begin(t_object **prev, t_object **ptr)
 
 	*prev = NULL;
 	begin_object = (*ptr)->next;
+	(*ptr)->next = NULL;
+	free((*ptr)->type);
 	free(*ptr);
 	*ptr = begin_object;
 	return (begin_object);
@@ -46,7 +48,9 @@ void		ft_object_remove_if(t_object **beg_obj, int data_ref, int (*cmp)())
 			else
 			{
 				prev->next = ptr->next;
+				free(ptr->type);
 				free(ptr);
+				ptr = NULL;
 				ptr = prev->next;
 			}
 		}

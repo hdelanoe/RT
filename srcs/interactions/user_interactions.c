@@ -55,11 +55,23 @@ void		set_mode2(int keycode, t_env *e)
 	}
 }
 
+
+void check_copy_lst(t_object *obj)
+{
+	if (obj)
+	{
+		free(obj);
+		obj = NULL;
+	}
+}
+
 void		set_mode(int keycode, t_env *e)
 {
 	if (keycode == KEY_ENTER)
 	{
 		e->edit_flag = e->edit_flag == 1 ? 0 : 1;
+		if (e->edit_flag == 0)
+			check_copy_lst(e->copy);
 		e->help_flag = 0;
 		e->pixelize = 0;
 		e->render_mode = e->edit_flag == 1 ? 0 : e->render_mode;

@@ -18,7 +18,9 @@ void		put_axis(char *name, t_vector *point, int fd)
 	char *tmp_2;
 
 	put_type_object(name, fd);
-	check_value_point(point);
+	check_value_point(&point->x);
+	check_value_point(&point->y);
+	check_value_point(&point->z);
 	tmp = ft_strdup("{\"x\": \"");
 	tmp_2 = ft_itoa(point->x);
 	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);

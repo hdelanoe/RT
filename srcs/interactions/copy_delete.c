@@ -22,18 +22,23 @@ void		init_copy2(t_object **copy, t_object *object)
 	(*copy)->bump = object->bump;
 	(*copy)->indice = object->indice;
 	(*copy)->absorbtion = object->absorbtion;
-	if (object->sub_object)
-		init_copy(&(*copy)->sub_object, object->sub_object);
+	(*copy)->sub_object = NULL;
 	(*copy)->next = NULL;
+
 }
 
 void		init_copy(t_object **copy, t_object *object)
 {
+	if (!ft_strcmp("quad", object->type) || !ft_strcmp("plane", object->type) || !ft_strcmp("triangle", object->type))
+		return ;
 	if (!((*copy) = (t_object*)ft_memalloc(sizeof(t_object))))
 		ft_kill("Error in malloc object");
-	(*copy)->type = object->type;
+	(*copy)->type = ft_strdup(object->type);
 	(*copy)->id = object->id;
 	(*copy)->point = object->point;
+	(*copy)->point_2 = object->point_2;
+	(*copy)->point_3 = object->point_3;
+	(*copy)->point_4 = object->point_4;
 	(*copy)->center = object->center;
 	(*copy)->vertex = object->vertex;
 	(*copy)->normal = object->normal;
@@ -55,6 +60,7 @@ void		add_object(t_env *e, int x, int y)
 	t_vector	tmp_vp_pointy;
 	t_object	*copy;
 
+	
 	init_copy(&copy, e->copy);
 	tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
 	tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
@@ -63,12 +69,16 @@ void		add_object(t_env *e, int x, int y)
 	e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
 	e->camera.rayon = normalize(&e->camera.rayon);
 	copy->center = viewplane_point;
-	add_new_object(&e->object, copy);
 	create_obj_to_add(&copy);
+	add_new_object(&e->object, copy);
+	//free(e->copy->type);
+	free(e->copy->type);
+	free(e->copy);
+	e->copy = NULL;
 	ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 	choose_display_mode(e);
-	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
-	0, 0);
+	//mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
+	//0, 0);
 	if (e->edit_flag)
 		print_info(e);
 }
@@ -79,6 +89,7 @@ int			copy_object(t_env *e, int x, int y)
 	t_vector	tmp_vp_pointx;
 	t_vector	tmp_vp_pointy;
 
+
 	e->is_copy = 1;
 	tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
 	tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
@@ -86,7 +97,7 @@ int			copy_object(t_env *e, int x, int y)
 	viewplane_point = v_v_subs(&viewplane_point, &tmp_vp_pointy);
 	e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
 	e->camera.rayon = normalize(&e->camera.rayon);
-	if (cast_ray(e, e->camera.rayon, e->camera.origin))
+	if (cast_ray(e, e->camera.rayon, e->camera.origin) && e->copy)
 	{
 		e->is_copy = 0;
 		return (1);
@@ -99,6 +110,7 @@ int			delete_object(t_env *e, int x, int y)
 	t_vector	viewplane_point;
 	t_vector	tmp_vp_pointx;
 	t_vector	tmp_vp_pointy;
+
 
 	e->is_delete = 1;
 	tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
@@ -113,8 +125,8 @@ int			delete_object(t_env *e, int x, int y)
 		e->is_delete = 0;
 		ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
 		choose_display_mode(e);
-		mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
-		0, 0);
+		//mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
+		//0, 0);
 		if (e->edit_flag)
 			print_info(e);
 		return (1);
