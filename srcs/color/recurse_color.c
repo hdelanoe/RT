@@ -53,7 +53,7 @@ void	recurse_color(t_env *e, t_rayon ray, t_color *c)
 {
 	double	kr;
 
-	while (--(e->recursion) > 0) 
+	while (--(e->recursion) > 0)
 	{
 		if (e->reflect && !e->refract)
 		{

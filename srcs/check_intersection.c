@@ -62,7 +62,6 @@ void			check_intersection(t_env *e, t_object *object,
 {
 	t_object	sub;
 	int			flag;
-	// t_vector	tmp;
 
 	flag = 0;
 	if (sort_type(e, object) && e->solution < e->distance &&
@@ -117,28 +116,27 @@ t_color			light_intersection(t_env *e, t_light *light)
 {
 	t_object		tmp_object;
 	t_color			tmp;
-	t_color			c;
 
 	tmp_object = *e->object;
-	c = set_color(light->color.b, light->color.g, light->color.r);
+	e->tmp_clr = set_color(light->color.b, light->color.g, light->color.r);
 	while (1)
 	{
 		if (tmp_object.id != e->id_object
 		&& ft_strcmp(tmp_object.type, "area_light")
 		&& sort_type(e, &tmp_object) && e->solution < e->distance_light_object
-		&& fabs (e->solution - e->distance_light_object) > 0.001)
+		&& fabs(e->solution - e->distance_light_object) > 0.001)
 		{
 			if (tmp_object.refract == 0)
 				return (set_color(0, 0, 0));
 			tmp = c_double_mult(&tmp_object.color, 1 - tmp_object.absorbtion);
-			c = c_c_mult(&light->color, &tmp);
+			e->tmp_clr = c_c_mult(&light->color, &tmp);
 		}
 		if (tmp_object.sub_object != NULL && light_sub_intersection(e,
-		light, &tmp_object, &c))
+		light, &tmp_object, &e->tmp_clr))
 			return (set_color(0, 0, 0));
 		if (tmp_object.next == NULL)
 			break ;
 		tmp_object = *tmp_object.next;
 	}
-	return (c);
+	return (e->tmp_clr);
 }

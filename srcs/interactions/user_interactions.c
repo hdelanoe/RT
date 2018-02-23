@@ -12,7 +12,7 @@
 
 #include "../includes/rtv1.h"
 
-void		choose_display_mode(t_env *e)
+void	choose_display_mode(t_env *e)
 {
 	if (e->aa_flag == 1 && e->pixelize == 0 && e->edit_flag == 0)
 		ft_pthread(e, aa_tracer_void);
@@ -30,7 +30,7 @@ void		choose_display_mode(t_env *e)
 	e->rotate_z = 0;
 }
 
-void		set_mode2(int keycode, t_env *e)
+void	set_mode2(int keycode, t_env *e)
 {
 	if (keycode == KEY_R)
 		e->aa_flag = e->aa_flag == 1 ? 0 : 1;
@@ -55,8 +55,7 @@ void		set_mode2(int keycode, t_env *e)
 	}
 }
 
-
-void check_copy_lst(t_object *obj)
+void	check_copy_lst(t_object *obj)
 {
 	if (obj)
 	{
@@ -65,7 +64,7 @@ void check_copy_lst(t_object *obj)
 	}
 }
 
-void		set_mode(int keycode, t_env *e)
+void	set_mode(int keycode, t_env *e)
 {
 	if (keycode == KEY_ENTER)
 	{
@@ -88,7 +87,7 @@ void		set_mode(int keycode, t_env *e)
 	set_mode2(keycode, e);
 }
 
-int			key_functions(int keycode, t_env *e)
+int		key_functions(int keycode, t_env *e)
 {
 	if (!check_keycode(keycode, e))
 		return (0);

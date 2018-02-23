@@ -26,13 +26,13 @@ void	init_rayon_values(t_env *e, t_vector rayon, t_vector origin)
 	e->indice = R_VOID;
 	e->object_indice = R_VOID;
 	e->distance = 50000;
+	e->skybox = 0;
 }
 
 int		cast_ray(t_env *e, t_vector rayon, t_vector origin)
 {
 	t_object	tmp_object;
 
-	e->skybox = 0;
 	init_rayon_values(e, rayon, origin);
 	tmp_object = *e->object;
 	while (1)
@@ -45,7 +45,7 @@ int		cast_ray(t_env *e, t_vector rayon, t_vector origin)
 	if (e->intersect)
 	{
 		tmp_object = *e->object;
-		while(1)
+		while (1)
 		{
 			if (e->is_copy && tmp_object.id == e->id_object)
 				init_copy(&e->copy, &tmp_object);

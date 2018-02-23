@@ -12,75 +12,31 @@
 
 #include "../includes/rtv1.h"
 
-void	create_obj_to_add(t_object **copy)
+void	mouse_cpy(t_env *e, int x, int y)
 {
-	if (!ft_strcmp((*copy)->type, "cylinder"))
-		create_cap_cylinder((*copy));
-	else if (!ft_strcmp((*copy)->type, "cone"))
-		create_cap_cone((*copy));
-	else if (!ft_strcmp((*copy)->type, "glass"))
-		create_child_glass((*copy));
-	else if (!ft_strcmp((*copy)->type, "sphere") && (*copy)->cap)
-		create_cap_sphere((*copy));
-}
-
-int		set_lookat(t_env *e, int x, int y)
-{
-	t_vector	viewplane_point;
-	t_vector	tmp_vp_pointx;
-	t_vector	tmp_vp_pointy;
-
-	tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
-	tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
-	viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);
-	viewplane_point = v_v_subs(&viewplane_point, &tmp_vp_pointy);
-	e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
-	e->camera.rayon = normalize(&e->camera.rayon);
-	if (cast_ray(e, e->camera.rayon, e->camera.origin))
+	if (copy_object(e, x, y) && ft_strcmp(e->copy->type, "plane"))
 	{
-		e->lookat = e->current_node;
-		return (1);
+		if (e->copy && ft_strcmp("plane", e->copy->type))
+		{
+			mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 250,
+				0xFFFFFF, e->copy->type);
+			mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 100, 250,
+				0xFFFFFF, "copied!");
+			e->is_past = 1;
+		}
+		else
+		{
+			free(e->copy->type);
+			free(e->copy);
+			e->is_past = 0;
+		}
 	}
-	return (0);
-}
-
-int obj_lst_size(t_object **lst)
-{
-	int			i;
-	t_object	*tmp;
-
-	tmp = (*lst);
-	i = 0;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return (i);
 }
 
 void	mouse_func(t_env *e, int x, int y, int button)
 {
 	if (!e->is_past && (button == 1 || button == 5))
-	{
-		if (copy_object(e, x, y) && ft_strcmp(e->copy->type, "plane"))
-		{
-			if (e->copy && ft_strcmp("plane", e->copy->type))
-			{
-				mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 250,
-					0xFFFFFF, e->copy->type);
-				mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 100, 250,
-					0xFFFFFF, "copied!");
-				e->is_past = 1;
-			}
-			else
-			{
-				free(e->copy->type);
-				free(e->copy);
-				e->is_past = 0;
-			}
-		}
-	}
+		mouse_cpy(e, x, y);
 	else if (e->is_past && (button == 1 || button == 5) && e->copy)
 	{
 		add_object(e, x, y);
@@ -93,7 +49,7 @@ void	mouse_func(t_env *e, int x, int y, int button)
 			delete_object(e, x, y);
 			e->is_past = 0;
 		}
-		else 
+		else
 			ft_printf("Scene can't be empty.\n");
 	}
 }

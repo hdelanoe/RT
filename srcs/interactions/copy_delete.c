@@ -24,7 +24,6 @@ void		init_copy2(t_object **copy, t_object *object)
 	(*copy)->absorbtion = object->absorbtion;
 	(*copy)->sub_object = NULL;
 	(*copy)->next = NULL;
-
 }
 
 void		init_copy(t_object **copy, t_object *object)
@@ -57,7 +56,7 @@ void		add_object(t_env *e, int x, int y)
 	t_vector	tmp_vp_pointx;
 	t_vector	tmp_vp_pointy;
 	t_object	*copy;
-	
+
 	init_copy(&copy, e->copy);
 	free(e->copy->type);
 	free(e->copy);
@@ -68,11 +67,7 @@ void		add_object(t_env *e, int x, int y)
 	e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
 	e->camera.rayon = normalize(&e->camera.rayon);
 	copy->center = viewplane_point;
-	tmp_vp_pointx = v_v_subs(&copy->point_2, &copy->point);
-	tmp_vp_pointy = v_v_subs(&copy->point_3, &copy->point);
-	copy->point = viewplane_point;
-	copy->point_2 = v_v_add(&copy->point, &tmp_vp_pointx);
-	copy->point_3 = v_v_add(&copy->point, &tmp_vp_pointy);
+	copy_cplx(copy, viewplane_point);
 	create_obj_to_add(&copy);
 	add_new_object(&e->object, copy);
 	ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
@@ -86,7 +81,6 @@ int			copy_object(t_env *e, int x, int y)
 	t_vector	viewplane_point;
 	t_vector	tmp_vp_pointx;
 	t_vector	tmp_vp_pointy;
-
 
 	e->is_copy = 1;
 	tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
@@ -108,7 +102,6 @@ int			delete_object(t_env *e, int x, int y)
 	t_vector	viewplane_point;
 	t_vector	tmp_vp_pointx;
 	t_vector	tmp_vp_pointy;
-
 
 	tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
 	tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);

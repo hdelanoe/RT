@@ -52,7 +52,6 @@ void		ft_object_remove_if(t_object **beg_obj, int data_ref, int (*cmp)())
 				free(ptr);
 				ptr = prev->next;
 			}
-			return ;
 		}
 		else
 		{

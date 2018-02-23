@@ -267,7 +267,6 @@ struct					s_env
 	t_matrix4x1			matrix_rstereo_origin;
 	int					tmp_rad;
 	t_color				tmp_clr;
-
 	int					i;
 	int					j;
 	double				u;
@@ -295,7 +294,6 @@ struct					s_env
 	t_vector			rayon_width_div;
 	int					p[512];
 	t_perlin			perlin;
-	t_color				near_color;
 	int					ambient_flag;
 	char				*argv_cpy;
 	char				*s_name;
@@ -559,7 +557,9 @@ void					ft_object_remove_if(t_object **beg_obj,
 int						set_lookat(t_env *e, int x, int y);
 void					create_obj_to_add(t_object **copy);
 int						copy_object(t_env *e, int x, int y);
+void					copy_cplx(t_object *copy, t_vector center);
 int						mouse(int button, int x, int y, t_env *e);
+int 					obj_lst_size(t_object **lst);
 void					init_copy(t_object **copy, t_object *object);
 int						cmp(int a, int b);
 void					add_object(t_env *e, int x, int y);

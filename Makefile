@@ -35,6 +35,7 @@ SRCS		= 	srcs/main.c \
 				srcs/save/save_loop.c \
 				srcs/interactions/user_interactions.c \
 				srcs/interactions/mouse.c \
+				srcs/interactions/mouse_tools.c \
 				srcs/interactions/inputs.c \
 				srcs/interactions/interface.c \
 				srcs/interactions/copy_delete.c \

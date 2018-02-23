@@ -94,6 +94,6 @@ void		check_value_point(double *a)
 		*a = 1;
 	else if (*a < -0.5)
 		*a = -1;
-	else 
+	else
 		*a = 0;
 }
