@@ -31,6 +31,8 @@ void			wrap_obj(t_env *e, t_object *object, t_object *parent)
 	if (!(ft_strcmp("cylinder", object->type)))
 		wrap_cylinder(e, object);
 	if (!ft_strcmp("disk", object->type))
+	{
 		if (!(ft_strcmp("cylinder", parent->type)))
 			wrap_cylinder(e, parent);
+	}
 }

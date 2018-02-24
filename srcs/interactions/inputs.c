@@ -37,7 +37,11 @@ void	inputs2(int keycode, t_env *e)
 	else if (keycode == KEY_PAD_6)
 		e->filter_flag = 6;
 	else if (keycode == KEY_PAD_ADD)
+	{
+
 		e->ti += 1;
+		e->ti = e->ti == 11 ?  0 : e->ti; 
+	}
 	else if (keycode == KEY_Y)
 		e->text_flag = e->text_flag == 1 ? 0 : 1;
 	else if (keycode == KEY_L)

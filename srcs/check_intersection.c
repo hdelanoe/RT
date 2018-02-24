@@ -71,8 +71,15 @@ void			check_intersection(t_env *e, t_object *object,
 	{
 		e->distance = e->solution;
 		get_object_values(e, object, parent);
-		if (e->text_flag == 1)
+		if (object->texture == 1)
+		{
+			e->ti = 10;
 			wrap_obj(e, object, parent);
+
+		}
+
+		// if (e->text_flag == 1)
+		// 	wrap_obj(e, object, parent);
 		e->intersect = 1;
 	}
 	if (object && object->sub_object)

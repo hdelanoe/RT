@@ -48,6 +48,11 @@ void		load_texture2(t_env *e)
 		ft_kill("Texture error");
 	e->text_data[9] = (unsigned char*)mlx_get_data_addr(e->text_img[9], &e->naz,
 	&e->naz, &e->end);
+	if (!((e->text_img[10] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
+	"./textures/snow.xpm", &(e->sl[10]), &e->bpp[10]))))
+		ft_kill("Texture error");
+	e->text_data[10] = (unsigned char*)mlx_get_data_addr(e->text_img[10], &e->naz,
+	&e->naz, &e->end);
 }
 
 void		load_texture(t_env *e)

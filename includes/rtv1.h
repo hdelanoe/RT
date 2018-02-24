@@ -91,6 +91,7 @@ struct					s_object
 	t_object			*sub_object;
 	double				indice;
 	int					bump;
+	int					texture;
 	t_object			*next;
 };
 
@@ -273,12 +274,12 @@ struct					s_env
 	double				v;
 	unsigned int		ti;
 	int					text_flag;
-	int					bpp[10];
+	int					bpp[11];
 	int					end;
 	int					naz;
-	void				*text_img[10];
-	unsigned char		*text_data[10];
-	int					sl[10];
+	void				*text_img[11];
+	unsigned char		*text_data[11];
+	int					sl[11];
 	int					skybox;
 	int					cel_shade;
 	int					render_mode;
@@ -433,6 +434,7 @@ void					choose_pmma(t_object *object);
 void					choose_diam(t_object *object);
 void					choose_mirror(t_object *object);
 void					choose_marbre(t_object *object);
+void					choose_snow(t_object *object);
 
 void					add_new_light(t_light **list, t_light *new_light);
 void					debug_light(t_light *tmp);

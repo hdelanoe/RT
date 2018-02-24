@@ -31,3 +31,14 @@ void	choose_marbre(t_object *object)
 	object->absorbtion = 0.8;
 	object->bump = 2;
 }
+
+void	choose_snow(t_object *object)
+{
+	object->ambient = 0.3;
+	object->diffuse = 0.7;
+	object->specular = 0;
+	object->reflect = 0;
+	object->refract = 0;
+	object->absorbtion = 0.8;
+	object->texture = 1;
+}

@@ -32,10 +32,10 @@ void		wrap_sphere(t_env *e, t_object *object)
 		e->u = e->u;
 	else
 		e->u = 1.0 - e->u;
-	e->i = (int)(e->v * (e->bpp[1 + (e->ti % 9)]));
-	e->j = (int)(e->u * e->sl[1 + (e->ti % 9)]);
-	e->current_color = get_texture_info(e->text_data[1 + (e->ti % 9)],
-	e, e->sl[1 + (e->ti % 9)]);
+	e->i = (int)(e->v * (e->bpp[e->ti]));
+	e->j = (int)(e->u * e->sl[e->ti]);
+	e->current_color = get_texture_info(e->text_data[e->ti],
+	e, e->sl[e->ti]);
 }
 
 void		wrap_plane(t_env *e)
@@ -57,10 +57,10 @@ void		wrap_cylinder(t_env *e, t_object *object)
 	d = normalize(&d);
 	e->u = atan2(d.x, d.z) / (2 * PI) + 0.5;
 	e->v = d.y * 0.5 + 0.5;
-	e->i = max((e->u * e->bpp[0 + (e->ti % 9)]), 0);
-	e->j = max((e->v * e->sl[0 + (e->ti % 9)]), 0);
-	e->current_color = get_texture_info(e->text_data[0 + (e->ti % 9)], e,
-	e->sl[0 + (e->ti % 9)]);
+	e->i = max((e->u * e->bpp[e->ti]), 0);
+	e->j = max((e->v * e->sl[e->ti]), 0);
+	e->current_color = get_texture_info(e->text_data[e->ti], e,
+	e->sl[e->ti]);
 }
 
 void		wrap_cone(t_env *e, t_object *object)
@@ -83,8 +83,8 @@ void		wrap_cone(t_env *e, t_object *object)
 		e->u = e->u;
 	else
 		e->u = 1.0 - e->u;
-	e->i = (int)(e->v * e->bpp[1 + (e->ti % 9)]);
-	e->j = (int)(e->u * e->sl[1 + (e->ti % 9)]);
-	e->current_color = get_texture_info(e->text_data[1 + (e->ti % 9)],
-	e, e->sl[1 + (e->ti % 9)]);
+	e->i = (int)(e->v * e->bpp[e->ti]);
+	e->j = (int)(e->u * e->sl[e->ti]);
+	e->current_color = get_texture_info(e->text_data[e->ti],
+	e, e->sl[e->ti]);
 }

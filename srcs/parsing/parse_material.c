@@ -75,6 +75,8 @@ void		parse_indice(char **material, t_object *object)
 		choose_mirror(object);
 	else if (!(ft_strcmp(*material, "marbre")))
 		choose_marbre(object);
+	else if (!(ft_strcmp(*material, "snow")))
+		choose_snow(object);
 }
 
 void		parse_material(t_json *material, t_object *object)
