@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-void			get_object_values(t_env *e, t_object *object)
+void			get_object_values(t_env *e, t_object *object, t_object *parent)
 {
 	if (!ft_strcmp(object->type, "area_light"))
 		e->area_light_on = 1;
@@ -30,6 +30,8 @@ void			get_object_values(t_env *e, t_object *object)
 	e->specular = object->specular;
 	e->absorbtion = object->absorbtion;
 	e->id_object = object->id;
+	if (parent && (e->is_copy || e->is_delete))
+		e->id_object = parent->id;
 	e->object_indice = object->indice;
 }
 
@@ -68,7 +70,7 @@ void			check_intersection(t_env *e, t_object *object,
 		e->solution >= 0 && fabs(e->distance - e->solution) > 0.001)
 	{
 		e->distance = e->solution;
-		get_object_values(e, object);
+		get_object_values(e, object, parent);
 		if (e->text_flag == 1)
 			wrap_obj(e, object, parent);
 		e->intersect = 1;

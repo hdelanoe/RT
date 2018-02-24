@@ -256,7 +256,7 @@ struct					s_env
 	int					am_flag;
 	t_object			*copy;
 	int					is_copy;
-	int					is_past;
+	int					is_delete;
 	int					stereo_flag;
 	int					filter_flag;
 	int					edit_flag;
@@ -412,6 +412,8 @@ void					create_cone(t_env *e, t_json *json);
 void					create_torus(t_env *e, t_json *json);
 void					create_cube(t_env *e, t_json *json);
 void					create_pyramide(t_env *e, t_json *json);
+void					create_cap_cube(t_object *cb);
+void					create_child_pyramide(t_object *pyramide);
 void					plane_attribut(t_object *object, t_json *json);
 void					sphere_attribut(t_json *json, t_object *sphere);
 void					cylinder_attribut(t_object *cylinder, t_json *json);
@@ -450,7 +452,7 @@ void					init_rayon_values(t_env *e,
 int						cast_ray(t_env *e, t_vector rayon, t_vector origin);
 int						cast_reflect_ray(t_env *e, t_rayon incident);
 int						cast_refract_ray(t_env *e, t_rayon origin);
-void					get_object_values(t_env *e, t_object *object);
+void					get_object_values(t_env *e, t_object *object, t_object *parent);
 int						sort_type(t_env *e, t_object *object);
 void					check_intersection(t_env *e, t_object *object,
 						t_object *parent);

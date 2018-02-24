@@ -22,6 +22,11 @@ void	create_obj_to_add(t_object **copy)
 		create_child_glass((*copy));
 	else if (!ft_strcmp((*copy)->type, "sphere") && (*copy)->cap)
 		create_cap_sphere((*copy));
+	else if (!ft_strcmp("cb", (*copy)->type))
+		create_cap_cube((*copy));
+	else if (!ft_strcmp("pyramide", (*copy)->type))
+		create_child_pyramide((*copy));
+
 }
 
 int		set_lookat(t_env *e, int x, int y)
@@ -63,10 +68,15 @@ void	copy_cplx(t_object *copy, t_vector center)
 {
 	t_vector	tmp1;
 	t_vector	tmp2;
+	t_vector	tmp3;
 
 	tmp1 = v_v_subs(&copy->point_2, &copy->point);
 	tmp2 = v_v_subs(&copy->point_3, &copy->point);
+	tmp3 = v_v_subs(&copy->point_4, &copy->point);
+
 	copy->point = center;
 	copy->point_2 = v_v_add(&copy->point, &tmp1);
 	copy->point_3 = v_v_add(&copy->point, &tmp2);
+	copy->point_4 = v_v_add(&copy->point, &tmp3);
+
 }

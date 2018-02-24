@@ -26,7 +26,7 @@
 		"coord": {"x": "-100", "y": "250", "z": "-150"}, 
 		"color": {"r": "0", "g": "0", "b": "0.8"} 
 		"radius": "130"
-		"material":"ice"
+		"material":"glass"
 		}
 	"sphere": {
 		"coord": {"x": "90", "y": "350", "z": "250"}, 
