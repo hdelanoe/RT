@@ -41,8 +41,11 @@ void		ft_object_remove_if(t_object **beg_obj, int data_ref, int (*cmp)())
 	prev = NULL;
 	while (ptr)
 	{
-		if (cmp(ptr->id, data_ref) == 0)
+		
+		if (data_ref == -999 || cmp(ptr->id, data_ref) == 0 )
 		{
+			if (ptr->sub_object)
+				ft_object_remove_if(&ptr->sub_object, -999, (*cmp));
 			if (ptr == *beg_obj)
 				*beg_obj = ft_remove_begin(&prev, &ptr);
 			else

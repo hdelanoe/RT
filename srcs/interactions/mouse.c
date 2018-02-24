@@ -14,9 +14,9 @@
 
 void	mouse_cpy(t_env *e, int x, int y)
 {
-	if (copy_object(e, x, y) && ft_strcmp(e->copy->type, "plane"))
+	if (copy_object(e, x, y))
 	{
-		if (e->copy && ft_strcmp("plane", e->copy->type))
+		if (e->copy)
 		{
 			mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 250,
 				0xFFFFFF, e->copy->type);
@@ -24,18 +24,14 @@ void	mouse_cpy(t_env *e, int x, int y)
 				0xFFFFFF, "copied!");
 			e->is_past = 1;
 		}
-		else
-		{
-			free(e->copy->type);
-			free(e->copy);
-			e->is_past = 0;
-		}
 	}
+	else
+		e->is_past = 0;
 }
 
 void	mouse_func(t_env *e, int x, int y, int button)
 {
-	if (!e->is_past && (button == 1 || button == 5))
+	if (!e->is_past && (button == 1 || button == 5) && !e->copy)
 		mouse_cpy(e, x, y);
 	else if (e->is_past && (button == 1 || button == 5) && e->copy)
 	{

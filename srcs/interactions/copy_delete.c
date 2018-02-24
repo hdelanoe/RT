@@ -60,6 +60,7 @@ void		add_object(t_env *e, int x, int y)
 	init_copy(&copy, e->copy);
 	free(e->copy->type);
 	free(e->copy);
+	e->copy = NULL;
 	tmp_vp_pointx = v_double_mult(&e->camera.x_vector, x);
 	tmp_vp_pointy = v_double_mult(&e->camera.y_vector, y);
 	viewplane_point = v_v_add(&e->viewplane_point_up_left, &tmp_vp_pointx);

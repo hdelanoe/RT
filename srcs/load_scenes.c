@@ -28,6 +28,7 @@ void		ft_delete_obj_lst(t_object **beg_obj)
 		else
 		{
 			prev->next = ptr->next;
+			free(ptr->type);
 			free(ptr);
 			ptr = prev->next;
 		}
