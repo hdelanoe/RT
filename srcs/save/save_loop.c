@@ -62,4 +62,5 @@ void		put_cam_win_file(t_env *e, int fd)
 	put_coord("camera_lookat", &e->lookat, fd);
 	put_int("window_width", (int)e->width, fd);
 	put_int("window_height", (int)e->height, fd);
+	put_int("recursion", (int)e->recursion,fd);
 }

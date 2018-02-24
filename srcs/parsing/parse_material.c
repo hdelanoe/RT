@@ -22,6 +22,11 @@ void		parse_scene(t_env *e, t_json *json)
 		e->width = ft_atod(json->content);
 	else if (!(ft_strcmp(json->name, "window_height")) && json->content)
 		e->height = ft_atod(json->content);
+	else if (!(ft_strcmp(json->name, "recursion")) && json->content)
+	{
+		e->recursion = ft_atoi(json->content);
+		e->recursion = e->recursion >= 9 ? 6 : e->recursion;
+	}
 	else
 	{
 		ft_printf("{R}WARNING:{E} %s is not valid\n", json->name);

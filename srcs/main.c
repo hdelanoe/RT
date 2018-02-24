@@ -16,7 +16,7 @@ void		default_env(t_env *e)
 {
 	e->width = WIN_X;
 	e->height = WIN_Y;
-	e->distance = WIN_X;
+	e->distance = (WIN_X + WIN_Y) / 2;
 	e->pixelize = 0;
 	e->is_past = 0;
 	e->is_copy = 0;
@@ -27,6 +27,7 @@ void		default_env(t_env *e)
 	e->perlin.b = 0.02;
 	e->perlin.c = 0.05;
 	e->perlin.d = 0.5;
+	e->recursion = 3;
 }
 
 void		init_permtab(t_env *e)

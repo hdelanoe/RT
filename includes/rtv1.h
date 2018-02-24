@@ -250,6 +250,7 @@ struct					s_env
 	int					pixelize;
 	int					aa_flag;
 	int					recursion;
+	int					rebound;
 	int					begin;
 	int					fin;
 	int					am_flag;

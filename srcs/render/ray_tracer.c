@@ -27,7 +27,7 @@ t_color	get_render_mode(t_env *e)
 
 t_color	vp_init(t_env *e, t_camera cam, t_vector vp, t_grid g)
 {
-	e->recursion = 6;
+	e->rebound = e->recursion;
 	g.ctmp = set_color(0, 0, 0);
 	g.vpx = v_double_mult(&cam.x_vector, g.x);
 	g.vpy = v_double_mult(&cam.y_vector, g.y);

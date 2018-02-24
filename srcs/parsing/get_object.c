@@ -26,6 +26,7 @@ void	get_complex(t_env *e, t_json *json)
 		create_pyramide(e, json);
 	else
 		parse_scene(e, json);
+
 }
 
 void	get_object_condition(t_env *e, t_json *tmp)
@@ -40,7 +41,7 @@ void	get_object_condition(t_env *e, t_json *tmp)
 		create_light(e, tmp);
 	else if (!(ft_strcmp(tmp->name, "disk")) && tmp->member)
 		create_disk(e, tmp);
-	else if (tmp->member)
+	else
 		get_complex(e, tmp);
 }
 
@@ -55,7 +56,8 @@ void	get_object(t_env *e, t_json *json)
 			create_sphere(e, tmp);
 		else if (!(ft_strcmp(tmp->name, "plane")) && tmp->member)
 			create_plane(e, tmp);
-		get_object_condition(e, tmp);
+		else
+			get_object_condition(e, tmp);
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}

@@ -37,7 +37,7 @@ void	init_stereo(t_env *e)
 	e->lstereo.origin = set_vector(-50, 0, -(double)WIN_X);
 	e->lstereo.width = e->width;
 	e->lstereo.height = e->height;
-	e->lstereo.distance = WIN_X;
+	e->lstereo.distance = (e->width + e->height) / 2;
 	e->lstereo.z_vector = v_v_subs(&e->lookat, &e->lstereo.origin);
 	e->lstereo.z_vector = normalize(&e->lstereo.z_vector);
 	e->lstereo.y_vector = set_vector(0, 1, 0);
@@ -46,7 +46,7 @@ void	init_stereo(t_env *e)
 	e->rstereo.origin = set_vector(50, 0, -(double)WIN_X);
 	e->rstereo.width = e->width;
 	e->rstereo.height = e->height;
-	e->rstereo.distance = WIN_X;
+	e->rstereo.distance = (e->width + e->height) / 2;
 	e->rstereo.z_vector = v_v_subs(&e->lookat, &e->rstereo.origin);
 	e->rstereo.z_vector = normalize(&e->rstereo.z_vector);
 	e->rstereo.y_vector = set_vector(0, 1, 0);
@@ -64,7 +64,7 @@ void	init_stereo(t_env *e)
 void	init_camera(t_env *e)
 {
 	e->camera.up = set_vector(0, 1, 0);
-	e->camera.distance = WIN_X;
+	e->camera.distance = (e->width + e->height) / 2;
 	e->camera.z_vector = v_v_subs(&e->lookat, &e->camera.origin);
 	e->camera.z_vector = normalize(&e->camera.z_vector);
 	e->camera.y_vector = e->camera.up;

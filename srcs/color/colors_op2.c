@@ -53,11 +53,11 @@ t_color		c_c_subs(t_color *a, t_color *b)
 
 void		print_color(t_color *color, t_env *e, int x, int y)
 {
-	if (x >= 0 && x < WIN_X && y >= 0 && y < WIN_Y)
+	if (x >= 0 && x < e->width && y >= 0 && y < e->height)
 	{
-		e->mlx.data[(x + y * WIN_X) * 4 + 0] = color->b * 255;
-		e->mlx.data[(x + y * WIN_X) * 4 + 1] = color->g * 255;
-		e->mlx.data[(x + y * WIN_X) * 4 + 2] = color->r * 255;
+		e->mlx.data[(x + y * (int)e->width) * 4 + 0] = color->b * 255;
+		e->mlx.data[(x + y * (int)e->width) * 4 + 1] = color->g * 255;
+		e->mlx.data[(x + y * (int)e->width) * 4 + 2] = color->r * 255;
 	}
 }
 

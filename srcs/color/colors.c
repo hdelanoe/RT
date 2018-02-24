@@ -104,8 +104,8 @@ t_color		add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
 	e->current_origin = light->origin;
 	e->current_rayon = light->rayon;
 	c_light = light_intersection(e, light);
-	c_light = c_double_mult(&c_light,
-			1 - (e->distance_light_object / 50000));
+//	c_light = c_double_mult(&c_light,
+//			1 - (e->distance_light_object / 50000));
 	if (c_light.r == 0 && c_light.g == 0 && c_light.b == 0)
 		return (*c);
 	diffuse = calc_diffuse(e, light, ray, c_light);

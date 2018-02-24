@@ -35,7 +35,7 @@ void		pxl_tracer(t_env *e, int sample)
 		g.x = 0;
 		while (g.x < e->width)
 		{
-			e->recursion = 6;
+			e->rebound = e->recursion;
 			color = set_color(0, 0, 0);
 			pixel_vp_init(&g, e);
 			if (cast_ray(e, e->camera.rayon, e->camera.origin))

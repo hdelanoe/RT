@@ -16,9 +16,10 @@ t_color		color_calculation(t_env *e, t_rayon ray)
 {
 	t_color new;
 
+	(void)ray;
 	new = c_double_mult(&e->current_color, e->ambient);
 	new = c_double_mult(&new, 1 - (e->distance / 50000));
-	new = ray.refract ? c_double_mult(&new, ray.absorbtion) : new;
+//	new = ray.refract ? c_double_mult(&new, ray.absorbtion) : new;
 	return (new);
 }
 
