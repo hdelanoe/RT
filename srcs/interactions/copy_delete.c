@@ -90,10 +90,7 @@ int			copy_object(t_env *e, int x, int y)
 	e->camera.rayon = v_v_subs(&viewplane_point, &e->camera.origin);
 	e->camera.rayon = normalize(&e->camera.rayon);
 	if (cast_ray(e, e->camera.rayon, e->camera.origin))
-	{
-		
 		return (1);
-	}
 	return (0);
 }
 

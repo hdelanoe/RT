@@ -70,7 +70,7 @@ void	set_mode(int keycode, t_env *e)
 		if (e->copy && e->edit_flag == 0)
 			check_copy_lst(e->copy);
 		e->copy = NULL;
-		e->is_past = 0;
+		e->is_delete = 0;
 		e->is_copy = 0;
 		e->help_flag = 0;
 		e->pixelize = 0;

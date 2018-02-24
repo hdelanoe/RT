@@ -26,7 +26,6 @@ void	get_complex(t_env *e, t_json *json)
 		create_pyramide(e, json);
 	else
 		parse_scene(e, json);
-
 }
 
 void	get_object_condition(t_env *e, t_json *tmp)

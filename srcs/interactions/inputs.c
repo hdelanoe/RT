@@ -42,10 +42,26 @@ void	inputs2(int keycode, t_env *e)
 		e->text_flag = e->text_flag == 1 ? 0 : 1;
 	else if (keycode == KEY_L)
 	{
-		if (e->is_past && e->copy)
+		if (e->copy)
 			check_copy_lst(e->copy);
-		e->is_past = 0;
 		read_scene_files(e);
+	}
+}
+
+void	inputs3(int keycode, t_env *e)
+{
+	if (keycode == KEY_M)
+		water_noise(e);
+	if (keycode == KEY_I)
+		e->ambient_flag = e->ambient_flag == 1 ? 0 : 1;
+	if (keycode == KEY_O)
+		save_image(e);
+	if (keycode == KEY_J)
+		save_scene(e);
+	if (keycode == KEY_U)
+	{
+		e->recursion++;
+		e->recursion = e->recursion == 9 ? 1 : e->recursion;
 	}
 }
 
@@ -80,20 +96,7 @@ void	inputs_conditions(int keycode, t_env *e)
 int		inputs(int keycode, t_env *e)
 {
 	inputs_conditions(keycode, e);
-	if (keycode == KEY_M)
-		water_noise(e);
-	if (keycode == KEY_I)
-		e->ambient_flag = e->ambient_flag == 1 ? 0 : 1;
-	if (keycode == KEY_O)
-		save_image(e);
-	if (keycode == KEY_J)
-		save_scene(e);
-	if (keycode == KEY_U)
-	{
-		e->recursion++;
-		 e->recursion = e->recursion == 9 ? 1 : e->recursion;
-	}
-
+	inputs3(keycode, e);
 	if ((keycode == KEY_D || keycode == KEY_A || keycode == KEY_Q ||
 	keycode == KEY_E || keycode == KEY_W || keycode == KEY_S ||
 	keycode == KEY_UP || keycode == KEY_DOWN || keycode == KEY_LEFT ||
