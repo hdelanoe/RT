@@ -573,5 +573,7 @@ void					put_triangle_file(t_object *triangle, int fd);
 void					put_pyramide_file(t_object *pyramide, int fd);
 void					put_double(char *name, double color, int fd);
 char					*ft_strjoin_fre(char **s1, char **s2, int b1, int b2);
+void 					put_cam_win_file(t_env *e, int fd);
+void					check_copy_lst(t_object *obj);
 
 #endif

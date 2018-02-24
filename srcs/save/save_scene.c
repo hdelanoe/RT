@@ -53,6 +53,7 @@ void		put_object_file(t_env *e, int fd)
 
 	tmp = *e->object;
 	tmp_l = *e->light;
+	put_cam_win_file(e, fd);
 	while (1)
 	{
 		put_obj_loop(fd, &tmp);

@@ -38,15 +38,16 @@ void	mouse_func(t_env *e, int x, int y, int button)
 		add_object(e, x, y);
 		e->is_past = 0;
 	}
-	else if ((button == 2 || button == 6) && !e->is_past)
+	else if ((button == 2 || button == 6) && !e->is_past && !e->copy)
 	{
 		if (obj_lst_size(&e->object) > 1)
 		{
 			delete_object(e, x, y);
-			e->is_past = 0;
 		}
 		else
+		{
 			ft_printf("Scene can't be empty.\n");
+		}
 	}
 }
 

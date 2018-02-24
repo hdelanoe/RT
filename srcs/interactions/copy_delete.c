@@ -31,7 +31,6 @@ void		init_copy(t_object **copy, t_object *object)
 	if (!((*copy) = (t_object*)ft_memalloc(sizeof(t_object))))
 		ft_kill("Error in malloc object");
 	(*copy)->type = ft_strdup(object->type);
-	(*copy)->id = object->id;
 	(*copy)->point = object->point;
 	(*copy)->point_2 = object->point_2;
 	(*copy)->point_3 = object->point_3;

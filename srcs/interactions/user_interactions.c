@@ -57,12 +57,9 @@ void	set_mode2(int keycode, t_env *e)
 
 void	check_copy_lst(t_object *obj)
 {
-	if (obj)
-	{
-		free(obj->type);
-		free(obj);
-		obj = NULL;
-	}
+	free(obj->type);
+	free(obj);
+	obj = NULL;
 }
 
 void	set_mode(int keycode, t_env *e)
@@ -70,7 +67,7 @@ void	set_mode(int keycode, t_env *e)
 	if (keycode == KEY_ENTER)
 	{
 		e->edit_flag = e->edit_flag == 1 ? 0 : 1;
-		if (e->edit_flag == 0 && e->copy && e->is_past)
+		if (e->copy && e->edit_flag == 0)
 			check_copy_lst(e->copy);
 		e->copy = NULL;
 		e->is_past = 0;
