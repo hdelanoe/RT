@@ -37,7 +37,6 @@ t_color	vp_init(t_env *e, t_camera cam, t_vector vp, t_grid g)
 	cam.rayon = normalize(&cam.rayon);
 	if (cast_ray(e, cam.rayon, cam.origin))
 		g.ctmp = get_render_mode(e);
-	e->skybox = 0;
 	return (c_c_add(&g.ctmp, &g.filter));
 }
 

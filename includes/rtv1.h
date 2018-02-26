@@ -92,6 +92,7 @@ struct					s_object
 	double				indice;
 	int					bump;
 	int					texture;
+	int					skybox;
 	t_object			*next;
 };
 
@@ -274,13 +275,12 @@ struct					s_env
 	double				v;
 	unsigned int		ti;
 	int					text_flag;
-	int					bpp[11];
+	int					bpp[13];
 	int					end;
 	int					naz;
-	void				*text_img[11];
-	unsigned char		*text_data[11];
-	int					sl[11];
-	int					skybox;
+	void				*text_img[13];
+	unsigned char		*text_data[13];
+	int					sl[13];
 	int					cel_shade;
 	int					render_mode;
 	int					help_flag;
@@ -580,5 +580,11 @@ void					put_double(char *name, double color, int fd);
 char					*ft_strjoin_fre(char **s1, char **s2, int b1, int b2);
 void 					put_cam_win_file(t_env *e, int fd);
 void					check_copy_lst(t_object *obj);
+void					choose_pixar(t_object *object);
+void					apply_texture(t_env *e, t_object *object);
+void					choose_paradise(t_object *object);
+void					choose_metal(t_object *object);
+void					choose_cave(t_object *object);
+
 
 #endif

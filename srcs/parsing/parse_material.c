@@ -73,10 +73,18 @@ void		parse_indice(char **material, t_object *object)
 		choose_diam(object);
 	else if (!(ft_strcmp(*material, "mirror")))
 		choose_mirror(object);
+	else if (!(ft_strcmp(*material, "metal")))
+		choose_metal(object);
 	else if (!(ft_strcmp(*material, "marbre")))
 		choose_marbre(object);
 	else if (!(ft_strcmp(*material, "snow")))
 		choose_snow(object);
+	else if (!(ft_strcmp(*material, "pixar")))
+		choose_pixar(object);
+	else if (!(ft_strcmp(*material, "paradise")))
+		choose_paradise(object);
+	else if (!(ft_strcmp(*material, "cave")))
+		choose_cave(object);
 }
 
 void		parse_material(t_json *material, t_object *object)

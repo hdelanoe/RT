@@ -100,7 +100,7 @@ int		key_functions(int keycode, t_env *e)
 		e->tmp_rad += 1;
 	else if (keycode == KEY_PAD_SUB)
 		e->tmp_rad -= 1;
-	ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
+	ft_bzero(e->mlx.data, (e->width * e->height) * 4);
 	camera_transformation(e);
 	if (e->render_mode == 2 || e->render_mode == 4)
 		reset_stereo(e);

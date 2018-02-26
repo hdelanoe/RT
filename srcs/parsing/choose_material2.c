@@ -21,6 +21,15 @@ void	choose_mirror(t_object *object)
 	object->refract = 0;
 }
 
+void	choose_metal(t_object *object)
+{
+	object->ambient = 0.3;
+	object->diffuse = 0.9;
+	object->specular = 1.5;
+	object->reflect = 1;
+	object->refract = 0;
+}
+
 void	choose_marbre(t_object *object)
 {
 	object->ambient = 0.3;
@@ -41,4 +50,25 @@ void	choose_snow(t_object *object)
 	object->refract = 0;
 	object->absorbtion = 0.8;
 	object->texture = 1;
+}
+
+void	choose_pixar(t_object *object)
+{
+	object->ambient = 1;
+	object->skybox = 1;
+	object->texture = 2;
+}
+
+void	choose_paradise(t_object *object)
+{
+	object->ambient = 1;
+	object->skybox = 1;
+	object->texture = 3;
+}
+
+void	choose_cave(t_object *object)
+{
+	object->ambient = 1;
+	object->skybox = 1;
+	object->texture = 4;
 }

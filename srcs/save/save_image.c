@@ -101,7 +101,7 @@ void		save_image(t_env *e)
 	t_header		header;
 	t_infos			h_infos;
 
-	y = WIN_Y;
+	y = e->height;
 	e->s_name = get_time_to_str(1);
 	mkdir("./save/", 0777);
 	mkdir("./save/screenshot/", 0777);
@@ -112,8 +112,8 @@ void		save_image(t_env *e)
 	while (y > 0)
 	{
 		x = 0;
-		while (x < WIN_X)
-			write(fd, &e->mlx.data[(((y * WIN_X) + x++) * 4)], 3);
+		while (x < e->width)
+			write(fd, &e->mlx.data[(((y * (int)e->width) + x++) * 4)], 3);
 		y--;
 	}
 	close(fd);

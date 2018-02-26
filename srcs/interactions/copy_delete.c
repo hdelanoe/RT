@@ -70,7 +70,7 @@ void		add_object(t_env *e, int x, int y)
 	copy_cplx(copy, viewplane_point);
 	create_obj_to_add(&copy);
 	add_new_object(&e->object, copy);
-	ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
+	ft_bzero(e->mlx.data, (e->width * e->height) * 4);
 	choose_display_mode(e);
 	if (e->edit_flag)
 		print_info(e);
@@ -110,7 +110,7 @@ int			delete_object(t_env *e, int x, int y)
 	if (cast_ray(e, e->camera.rayon, e->camera.origin))
 	{
 		ft_object_remove_if(&e->object, e->id_object, (*cmp));
-		ft_bzero(e->mlx.data, (WIN_X * WIN_Y) * 4);
+		ft_bzero(e->mlx.data, (e->width * e->height) * 4);
 		choose_display_mode(e);
 		if (e->edit_flag)
 			print_info(e);

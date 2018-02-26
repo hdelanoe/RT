@@ -72,6 +72,6 @@ double		get_specular(t_light *light, t_vector *view, t_vector *node)
 	tmp = v_double_mult(node, 2);
 	r = v_double_mult(&tmp, reflect);
 	r = v_v_subs(&r, &light->rayon);
-	phong_color = 0.2 * powf(dot_product(view, &r), 50) * 3;
+	phong_color = 0.2 * powf(dot_product(view, &r), 20) * 3;
 	return (phong_color);
 }

@@ -29,6 +29,11 @@ void		load_texture3(t_env *e)
 		ft_kill("Texture error");
 	e->text_data[6] = (unsigned char*)mlx_get_data_addr(e->text_img[6], &e->naz,
 	&e->naz, &e->end);
+	if (!((e->text_img[12] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
+	"./textures/cave.xpm", &(e->sl[12]), &e->bpp[12]))))
+		ft_kill("Texture error");
+	e->text_data[12] = (unsigned char*)mlx_get_data_addr(e->text_img[12], &e->naz,
+	&e->naz, &e->end);
 }
 
 void		load_texture2(t_env *e)
@@ -39,7 +44,7 @@ void		load_texture2(t_env *e)
 	e->text_data[7] = (unsigned char*)mlx_get_data_addr(e->text_img[7], &e->naz,
 	&e->naz, &e->end);
 	if (!((e->text_img[8] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/skyboxe.xpm", &(e->sl[8]), &e->bpp[8]))))
+	"./textures/pixar.xpm", &(e->sl[8]), &e->bpp[8]))))
 		ft_kill("Texture error");
 	e->text_data[8] = (unsigned char*)mlx_get_data_addr(e->text_img[8], &e->naz,
 	&e->naz, &e->end);
@@ -52,6 +57,11 @@ void		load_texture2(t_env *e)
 	"./textures/snow.xpm", &(e->sl[10]), &e->bpp[10]))))
 		ft_kill("Texture error");
 	e->text_data[10] = (unsigned char*)mlx_get_data_addr(e->text_img[10], &e->naz,
+	&e->naz, &e->end);
+	if (!((e->text_img[11] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
+	"./textures/paradise.xpm", &(e->sl[11]), &e->bpp[11]))))
+		ft_kill("Texture error");
+	e->text_data[11] = (unsigned char*)mlx_get_data_addr(e->text_img[11], &e->naz,
 	&e->naz, &e->end);
 }
 

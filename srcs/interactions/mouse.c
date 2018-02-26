@@ -49,7 +49,7 @@ void	mouse_func(t_env *e, int x, int y, int button)
 
 int		mouse(int button, int x, int y, t_env *e)
 {
-	if (!(x > 0 && x < WIN_X && y > 0 && y < WIN_Y) || !e->edit_flag)
+	if (!(x > 0 && x < e->width && y > 0 && y < e->height) || !e->edit_flag)
 		return (0);
 	mouse_func(e, x, y, button);
 	if ((e->stereo_flag || e->flag.deep) && (button == 1 || button == 5))

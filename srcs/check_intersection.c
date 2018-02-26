@@ -59,6 +59,18 @@ int				sort_type(t_env *e, t_object *object)
 	return (intersect);
 }
 
+void			apply_texture(t_env *e, t_object *object)
+{
+	if (object->texture == 1)
+		e->ti = 10;
+	if (object->texture == 2)
+		e->ti = 8;
+	if (object->texture == 3)
+		e->ti = 11;
+	if (object->texture == 4)
+		e->ti = 12;
+}
+
 void			check_intersection(t_env *e, t_object *object,
 				t_object *parent)
 {
@@ -71,13 +83,11 @@ void			check_intersection(t_env *e, t_object *object,
 	{
 		e->distance = e->solution;
 		get_object_values(e, object, parent);
-		if (object->texture == 1)
+		if (object->texture != 0)
 		{
-			e->ti = 10;
+			apply_texture(e, object);
 			wrap_obj(e, object, parent);
-
 		}
-
 		// if (e->text_flag == 1)
 		// 	wrap_obj(e, object, parent);
 		e->intersect = 1;
@@ -130,6 +140,8 @@ t_color			light_intersection(t_env *e, t_light *light)
 	e->tmp_clr = set_color(light->color.b, light->color.g, light->color.r);
 	while (1)
 	{
+		if (tmp_object.skybox == 1)
+			return (e->tmp_clr);
 		if (tmp_object.id != e->id_object
 		&& ft_strcmp(tmp_object.type, "area_light")
 		&& sort_type(e, &tmp_object) && e->solution < e->distance_light_object

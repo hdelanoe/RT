@@ -28,9 +28,7 @@ void		wrap_sphere(t_env *e, t_object *object)
 	phi = acos(-dot_product(&vecdiry, &vp));
 	e->v = phi / PI;
 	e->u = (acos(-dot_product(&vp, &vecdirx) / sin(phi))) / (2.0 * PI);
-	if (dot_product(&cross, &vp) > 0.0)
-		e->u = e->u;
-	else
+	if (!(dot_product(&cross, &vp) > 0.0))
 		e->u = 1.0 - e->u;
 	e->i = (int)(e->v * (e->bpp[e->ti]));
 	e->j = (int)(e->u * e->sl[e->ti]);
