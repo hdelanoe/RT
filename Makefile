@@ -82,6 +82,7 @@ SRCS		= 	srcs/main.c \
 				srcs/vector/vectors_op1.c \
 				srcs/vector/vectors_op2.c \
 				srcs/vector/vectors_op3.c \
+				srcs/paraboloid.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 
