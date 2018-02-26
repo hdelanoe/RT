@@ -61,6 +61,7 @@ void check_load(t_env *e)
 	e->mlx.img_ptr, 0, 0);
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, (e->width / 2.8), (e->height / 3.2),
 		0xFFFFFF, "At least someone is working..");
+	mlx_do_sync(e->mlx.mlx_ptr);
 }
 
 void		display_window(t_env *e)
@@ -79,11 +80,7 @@ void		display_window(t_env *e)
 		ft_printf("Scene can't be empty.\n");
 		return ;
 	}
-	if (e->loading == 0)
-	{
-		check_load(e);
-		mlx_do_sync(e->mlx.mlx_ptr);
-	}
+	check_load(e);
 	init_camera(e);
 	camera_transformation(e);
 	init_stereo(e);
