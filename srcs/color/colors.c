@@ -12,6 +12,27 @@
 
 #include "rt.h"
 
+t_rayon		init_ray(t_env *e)
+{
+	t_rayon ray;
+
+	ray.origin = e->current_origin;
+	ray.rayon = e->current_rayon;
+	ray.node = e->current_node;
+	ray.normal = e->current_node_normal;
+	ray.refract = e->refract;
+	ray.absorbtion = e->absorbtion;
+	ray.bump = e->bump;
+	if (ray.bump == 1)
+		bump_water(e, &ray);
+	if (e->ambient_flag)
+	{
+		e->ambient = 0;
+		e->diffuse = 1;
+	}
+	return (ray);
+}
+
 t_color		ambient_occlusion(t_env *e)
 {
 	t_color		c;
@@ -21,7 +42,7 @@ t_color		ambient_occlusion(t_env *e)
 	int			sample;
 
 	c = set_color(1, 1, 1);
-	init_ray_values(&origin, e);
+	origin = init_ray(e);
 	sample = 16;
 	e->hit = 0;
 	while (sample > 0)
@@ -37,31 +58,6 @@ t_color		ambient_occlusion(t_env *e)
 		sample--;
 	}
 	return (e->hit ? c_double_mult(&c, (double)1 / e->hit) : c);
-}
-
-void		init_ray_values(t_rayon *ray, t_env *e)
-{
-	double n;
-
-	*ray = init_ray(e);
-	if (e->bump == 1)
-	{
-		n = noise(e, e->perlin.a * ray->node.x,
-		e->perlin.c * ray->node.y, e->perlin.b * ray->node.z);
-		ray->node.y *= n;
-		ray->normal = v_double_add(&ray->normal, n);
-		ray->normal = normalize(&ray->normal);
-	}
-	else if (e->bump == 2)
-	{
-		n = noise(e, e->perlin.a * ray->node.x,
-			e->perlin.c * ray->node.y, e->perlin.b * ray->node.z);
-		n = e->perlin.d * sin((ray->node.y + ray->node.x)
-				* e->perlin.c + n) + e->perlin.d;
-		ray->node = v_double_mult(&ray->node, n);
-		ray->normal = v_double_add(&ray->normal, n);
-		ray->normal = normalize(&ray->normal);
-	}
 }
 
 t_color		calc_diffuse(t_env *e, t_light *light, t_rayon *ray, t_color c)
@@ -103,7 +99,7 @@ t_color		add_diffuse(t_env *e, t_color *c, t_light *light, t_rayon *ray)
 	light->rayon = normalize(&light->rayon);
 	e->current_origin = light->origin;
 	e->current_rayon = light->rayon;
-	c_light = light_intersection(e, light);
+	c_light = e->skybox ? light->color : light_intersection(e, light);
 	c_light = c_double_mult(&c_light,
 			1 - (e->distance_light_object / 50000));
 	if (c_light.r == 0 && c_light.g == 0 && c_light.b == 0)
@@ -118,12 +114,11 @@ t_color		get_color(t_env *e)
 	t_rayon	ray;
 	t_light	tmp_light;
 
-	init_ray_values(&ray, e);
-	if (e->ambient_flag)
-		reset_diffuse_ambiant(e);
-	c = color_calculation(e, ray);
+	ray = init_ray(e);
+	c = c_double_mult(&e->current_color, e->ambient);
+	c = c_double_mult(&c, 1 - (e->distance / 50000));
 	if ((c.r == 0 && c.g == 0 && c.b == 0 && !e->ambient_flag)
-	|| e->edit_flag == 1 || !e->light)
+		|| e->edit_flag == 1 || !e->light)
 		return (c);
 	tmp_light = *e->light;
 	while (1)
@@ -136,6 +131,8 @@ t_color		get_color(t_env *e)
 			break ;
 		tmp_light = *tmp_light.next;
 	}
+	c = ray.refract ? c_double_mult(&c, ray.absorbtion) : c;
 	recurse_color(e, ray, &c);
+	c = apply_bump(e, &ray, c);
 	return (c);
 }

@@ -16,8 +16,6 @@ PRINTF 		= 	ft_printf/libftprintf.a
 MLX			= 	minilibx_macos/libmlx.a
 
 SRCS		= 	srcs/main.c \
-				srcs/texture.c \
-				srcs/texture_2.c \
 				srcs/cast_ray.c \
 				srcs/basic_intersection.c \
 				srcs/check_intersection.c \
@@ -43,6 +41,7 @@ SRCS		= 	srcs/main.c \
 				srcs/render/pixelization.c \
 				srcs/render/filter.c \
 				srcs/render/ray_tracer.c \
+				srcs/render/multithread.c \
 				srcs/matrix/camera.c \
 				srcs/matrix/matrix_rotation.c \
 				srcs/matrix/matrix_translation.c \
@@ -71,16 +70,17 @@ SRCS		= 	srcs/main.c \
 				srcs/parsing/triangle.c \
 				srcs/parsing/quad.c \
 				srcs/color/colors.c \
-				srcs/color/get_color_func.c \
+				srcs/color/bump.c \
 				srcs/color/colors_op1.c \
 				srcs/color/colors_op2.c \
 				srcs/color/recurse_color.c \
 				srcs/color/area_light.c \
 				srcs/color/perlin_noise.c \
+				srcs/color/texture.c \
+				srcs/color/texture_2.c \
 				srcs/vector/vectors_op1.c \
 				srcs/vector/vectors_op2.c \
 				srcs/vector/vectors_op3.c \
-				srcs/render/multithread.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 

@@ -58,22 +58,24 @@ void		display_window(t_env *e)
 {
 	e->mlx.mlx_ptr = mlx_init();
 	e->mlx.win_ptr = mlx_new_window(e->mlx.mlx_ptr, e->width, e->height, "RT");
-	load_texture(e);
 	e->mlx.img_ptr = mlx_new_image(e->mlx.mlx_ptr, e->width, e->height);
+	load_texture(e);
 	if (!((e->mlx.pen = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
 	"./textures/pen.xpm", &(e->mlx.l_size), &e->mlx.endian))))
 		ft_kill("Texture error");
 	e->mlx.data = (unsigned char*)mlx_get_data_addr(e->mlx.img_ptr,
 		&e->mlx.bpp, &e->mlx.l_size, &e->mlx.endian);
-	init_camera(e);
-	camera_transformation(e);
-	init_stereo(e);
 	if (!e->object)
 	{
 		ft_printf("Scene can't be empty.\n");
 		return ;
 	}
+	init_camera(e);
+	camera_transformation(e);
+	init_stereo(e);
+	ft_putstr("Parsing done!\nWait for render...\n");
 	ft_pthread(e, ray_tracer_void);
+	ft_putstr("Render done!\n");
 	mlx_hook(e->mlx.win_ptr, 2, (1L << 0), key_functions, e);
 	mlx_hook(e->mlx.win_ptr, 17, (1L << 17), proper_exit, e);
 	mlx_mouse_hook(e->mlx.win_ptr, mouse, e);
@@ -96,6 +98,7 @@ int			main(int argc, char **argv)
 {
 	t_env	*e;
 
+	ft_putstr("Wait for parsing...\n");
 	e = init();
 	if (argc != 2)
 		ft_print_err(argc);

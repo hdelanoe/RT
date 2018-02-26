@@ -30,12 +30,12 @@ void	choose_metal(t_object *object)
 	object->refract = 0;
 }
 
-void	choose_marbre(t_object *object)
+void	choose_marble(t_object *object)
 {
 	object->ambient = 0.3;
 	object->diffuse = 0.725;
-	object->specular = 0.7;
-	object->reflect = 1;
+	object->specular = 0.9;
+	object->reflect = 0;
 	object->refract = 0;
 	object->absorbtion = 0.8;
 	object->bump = 2;

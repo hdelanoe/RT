@@ -23,7 +23,7 @@ void		parse_indice3(char **material, t_object *object)
 	else if (!(ft_strcmp(*material, "paradise")))
 		choose_paradise(object);
 	else
-		ft_kill("This material doesn't exist");
+		ft_printf("{R}WARNING:{E} material %s is not valid\n", material);
 }
 
 void		parse_indice2(char **material, t_object *object)
@@ -74,8 +74,8 @@ void		parse_indice(char **material, t_object *object)
 		choose_mirror(object);
 	else if (!(ft_strcmp(*material, "metal")))
 		choose_metal(object);
-	else if (!(ft_strcmp(*material, "marbre")))
-		choose_marbre(object);
+	else if (!(ft_strcmp(*material, "marble")))
+		choose_marble(object);
 	else if (!(ft_strcmp(*material, "snow")))
 		choose_snow(object);
 	else

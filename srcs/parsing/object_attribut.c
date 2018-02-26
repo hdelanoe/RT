@@ -60,7 +60,8 @@ void		cylinder_attribut(t_object *object, t_json *tmp)
 	else if (!(ft_strcmp(tmp->name, "material")))
 		parse_material(tmp, object);
 	else
-		ft_printf("{R}WARNING:{E} cylinder as a bad attribut\n");
+		ft_printf("{R}WARNING:{E} cylinder's %s is a bad attribut\n",
+			tmp->name);
 }
 
 void		cone_attribut(t_object *object, t_json *tmp)

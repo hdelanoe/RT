@@ -21,7 +21,11 @@ void	choose_display_mode(t_env *e)
 	else if ((e->render_mode == 2 || e->render_mode == 4) && !e->edit_flag)
 		ft_pthread(e, stereo_tracer_void);
 	else
+	{
+		ft_putstr("Wait for render...\n");
 		ft_pthread(e, ray_tracer_void);
+		ft_putstr("Render done!\n");
+	}
 	e->move_x = 0;
 	e->move_y = 0;
 	e->move_z = 0;

@@ -12,18 +12,27 @@
 
 #include "rt.h"
 
+t_object	*init_cap(t_object *parent)
+{
+	t_object *cap;
+
+	if (!(cap = (t_object*)ft_memalloc(sizeof(t_object))))
+		ft_kill("Error in malloc object");
+	cap->id = -1;
+	cap->radius = parent->radius;
+	cap->color = parent->color;
+	init_copy2(&cap, parent);
+	if (!(cap->type = ft_strdup("disk")))
+		exit_rt(1);
+	return (cap);
+}
+
 void		create_cap_sphere(t_object *sphere)
 {
 	t_object *disk;
 
-	disk = init_material();
-	init_copy2(&disk, sphere);
-	if (!(disk->type = ft_strdup("disk")))
-		exit_rt(1);
+	disk = init_cap(sphere);
 	disk->point = sphere->center;
-	disk->normal = sphere->normal;
-	disk->radius = sphere->radius;
-	disk->color = sphere->color;
 	add_new_object(&sphere->sub_object, disk);
 }
 
@@ -32,23 +41,13 @@ void		create_cap_cylinder(t_object *cylinder)
 	t_object		*disk;
 	t_vector		tmp;
 
-	disk = init_material();
-	init_copy2(&disk, cylinder);
-	if (!(disk->type = ft_strdup("disk")))
-		exit_rt(1);
+	disk = init_cap(cylinder);
+	disk->normal = cylinder->axis;
 	tmp = v_double_mult(&cylinder->axis, cylinder->lenght_max / 2);
 	disk->point = v_v_subs(&cylinder->center, &tmp);
-	disk->normal = cylinder->axis;
-	disk->radius = cylinder->radius;
-	disk->color = cylinder->color;
 	add_new_object(&cylinder->sub_object, disk);
-	disk = init_material();
-	init_copy2(&disk, cylinder);
-	if (!(disk->type = ft_strdup("disk")))
-		exit_rt(1);
+	disk = init_cap(cylinder);
 	disk->normal = cylinder->axis;
-	disk->radius = cylinder->radius;
-	disk->color = cylinder->color;
 	disk->point = v_v_add(&cylinder->center, &tmp);
 	add_new_object(&cylinder->sub_object, disk);
 }
@@ -85,27 +84,19 @@ void		create_cap_cone(t_object *cone)
 	t_object		*disk;
 	t_vector		tmp;
 
-	disk = init_material();
-	init_copy2(&disk, cone);
-	if (!(disk->type = ft_strdup("disk")))
-		exit_rt(1);
-	tmp = v_double_mult(&cone->axis, cone->lenght_max);
-	disk->point = v_v_add(&tmp, &cone->center);
+	disk = init_cap(cone);
 	disk->normal = cone->axis;
 	disk->radius = cone->tangent * cone->lenght_max;
-	disk->color = cone->color;
+	tmp = v_double_mult(&cone->axis, cone->lenght_max);
+	disk->point = v_v_add(&tmp, &cone->center);
 	add_new_object(&cone->sub_object, disk);
 	if (cone->radius < cone->lenght_max)
 	{
-		disk = init_material();
-		init_copy2(&disk, cone);
-		if (!(disk->type = ft_strdup("disk")))
-			exit_rt(1);
-		tmp = v_double_mult(&cone->axis, cone->radius);
-		disk->point = v_v_add(&tmp, &cone->center);
+		disk = init_cap(cone);
 		disk->normal = cone->axis;
 		disk->radius = cone->tangent * cone->radius;
-		disk->color = cone->color;
+		tmp = v_double_mult(&cone->axis, cone->radius);
+		disk->point = v_v_add(&tmp, &cone->center);
 		add_new_object(&cone->sub_object, disk);
 	}
 }

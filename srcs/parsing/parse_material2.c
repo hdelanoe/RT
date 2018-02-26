@@ -24,6 +24,8 @@ void	check_material(t_object *object, t_json *tmp)
 		object->reflect = ft_atod(tmp->content);
 	else if (!(ft_strcmp(tmp->name, "refract")) && tmp->content)
 		object->refract = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "bump")) && tmp->content)
+		object->bump = ft_atoi(tmp->content);
 	else if (!(ft_strcmp(tmp->name, "absorbtion")) && tmp->content)
 		object->absorbtion = ft_atod(tmp->content);
 	else

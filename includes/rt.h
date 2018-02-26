@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt.h                                                :+:      :+:    :+:   */
+/*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nobila <nobila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_H
-# define RT_H
+#ifndef RTV1_H
+# define RTV1_H
 # define WIN_X 1000
 # define WIN_Y 1000
 # define RANDOM (double)rand()/RAND_MAX
@@ -166,6 +166,7 @@ struct					s_rayon
 	t_vector			normal;
 	int					refract;
 	double				absorbtion;
+	int					bump;
 };
 
 struct					s_mlx
@@ -233,6 +234,7 @@ struct					s_env
 	int					refract;
 	double				absorbtion;
 	int					intersect;
+	int					skybox;
 	t_vector			viewplane_point_up_left;
 	t_vector			lviewplane;
 	t_vector			rviewplane;
@@ -397,6 +399,7 @@ void					add_new_object(t_object **list, t_object *new_object);
 t_vector				parse_point(t_json *membre);
 t_vector				parse_normal(t_json *membre);
 t_color					parse_color(t_json *membre);
+void					parse_indice(char **material, t_object *object);
 void					debug_object(t_object *tmp);
 void					create_cap_sphere(t_object *sphere);
 void					create_child_glass(t_object *glass);
@@ -434,8 +437,30 @@ void					choose_glass(t_object *object);
 void					choose_pmma(t_object *object);
 void					choose_diam(t_object *object);
 void					choose_mirror(t_object *object);
-void					choose_marbre(t_object *object);
+void					choose_marble(t_object *object);
 void					choose_snow(t_object *object);
+void					choose_paradise(t_object *object);
+void					choose_metal(t_object *object);
+void					choose_cave(t_object *object);
+void					choose_sun(t_object *object);
+void					choose_space(t_object *object);
+void					choose_wood(t_object *object);
+void					choose_jupiter(t_object *object);
+void					choose_iron(t_object *object);
+void					choose_uranus(t_object *object);
+void					choose_neptune(t_object *object);
+void					choose_mars(t_object *object);
+void					choose_moon(t_object *object);
+void					choose_cloud(t_object *object);
+void					choose_venus(t_object *object);
+void					choose_mercury(t_object *object);
+void					choose_earth(t_object *object);
+void					choose_saturn(t_object *object);
+
+
+
+
+
 
 void					add_new_light(t_light **list, t_light *new_light);
 void					debug_light(t_light *tmp);
@@ -482,13 +507,17 @@ double					noise(t_env *e, double x, double y, double z);
 t_color					choose_color(t_env *e);
 double					get_specular(t_light *light,
 						t_vector *view, t_vector *node);
-void					init_ray_values(t_rayon *ray, t_env *e);
+t_color					init_ray_values(t_rayon *ray, t_env *e);
+void					bump_water(t_env *e, t_rayon *ray);
+void					bump_marble(t_env *e, t_color *c, t_rayon *ray);
+void					bump_wood(t_env *e, t_color *c, t_rayon *ray);
 t_color					add_diffuse(t_env *e,
 						t_color *c, t_light *light, t_rayon *ray);
 void					shoot_new_color(t_env *e, t_color *c, double coef);
 void					recurse_color(t_env *e, t_rayon ray, t_color *c);
 t_color					ambient_occlusion(t_env *e);
 t_color					get_color(t_env *e);
+t_color					apply_bump(t_env *e, t_rayon *ray, t_color c);
 t_color					get_area_light_intensity(t_env *e,
 						t_light *area_light, t_rayon *ray, t_color *c);
 void					get_area_light_origin(t_light *area_light, int nb);
@@ -555,7 +584,6 @@ void					check_existance(char *text, t_env *e);
 t_object				*ft_remove_begin(t_object **prev, t_object **ptr);
 void					ft_delete_obj_lst(t_object **beg_obj);
 t_rayon					init_ray(t_env *e);
-t_color					color_calculation(t_env *e, t_rayon ray);
 void					reset_diffuse_ambiant(t_env *e);
 void					put_axis(char *name, t_vector *point, int fd);
 void					put_int(char *name, int i, int fd);
@@ -581,24 +609,7 @@ void					put_double(char *name, double color, int fd);
 char					*ft_strjoin_fre(char **s1, char **s2, int b1, int b2);
 void 					put_cam_win_file(t_env *e, int fd);
 void					check_copy_lst(t_object *obj);
-void					choose_space(t_object *object);
 void					apply_texture(t_env *e, t_object *object);
-void					choose_paradise(t_object *object);
-void					choose_metal(t_object *object);
-void					choose_cave(t_object *object);
-void					choose_sun(t_object *object);
-void					choose_earth(t_object *object);
-void					choose_iron(t_object *object);
-void					choose_moon(t_object *object);
-void					choose_mars(t_object *object);
-void					choose_mercury(t_object *object);
-void					choose_jupiter(t_object *object);
-void					choose_venus(t_object *object);
-void					choose_saturn(t_object *object);
-void					choose_neptune(t_object *object);
-void					choose_uranus(t_object *object);
-void					choose_cloud(t_object *object);
-void					parse_indice3(char **material, t_object *object);
-void					parse_indice2(char **material, t_object *object);
-void					parse_indice(char **material, t_object *object);
+
+
 #endif

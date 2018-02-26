@@ -51,8 +51,9 @@ int		mouse(int button, int x, int y, t_env *e)
 {
 	if (!(x > 0 && x < e->width && y > 0 && y < e->height) || !e->edit_flag)
 		return (0);
-	mouse_func(e, x, y, button);
-	if ((e->stereo_flag || e->flag.deep) && (button == 1 || button == 5))
+	if (!e->stereo_flag)
+		mouse_func(e, x, y, button);
+	else if (button == 1 || button == 5)
 	{
 		if (set_lookat(e, x, y))
 		{

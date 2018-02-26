@@ -6,7 +6,7 @@
 /*   By: notraore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 13:07:11 by notraore          #+#    #+#             */
-/*   Updated: 2017/12/08 13:07:13 by notraore         ###   ########.fr       */
+/*   Updated: 2018/02/26 20:20:04 by hdelanoe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		wrap_sphere(t_env *e, t_object *object)
 	e->i = (int)(e->v * (e->bpp[e->ti]));
 	e->j = (int)(e->u * e->sl[e->ti]);
 	e->current_color = get_texture_info(e->tx_dta[e->ti],
-	e, e->sl[e->ti]);
+			e, e->sl[e->ti]);
 }
 
 void		wrap_plane(t_env *e)
@@ -50,15 +50,17 @@ void		wrap_plane(t_env *e)
 void		wrap_cylinder(t_env *e, t_object *object)
 {
 	t_vector	d;
+	t_vector	mult;
 
-	d = v_v_subs(&object->center, &e->current_node);
-	d = normalize(&d);
-	e->u = atan2(d.x, d.z) / (2 * PI) + 0.5;
-	e->v = d.y * 0.5 + 0.5;
-	e->i = max((e->u * e->bpp[e->ti]), 0);
+	mult = v_v_mult(&object->center, &object->axis);
+	d = v_v_subs(&mult, &e->current_node);
+	e->u = 0.5 + atan2(d.z, d.x) / PI * 0.5;
+	e->v = d.y / (0 - object->lenght_max);
+	e->v = e->v - floor(e->v);
+	e->i = max((e->u * 2592), 0);
 	e->j = max((e->v * e->sl[e->ti]), 0);
 	e->current_color = get_texture_info(e->tx_dta[e->ti], e,
-	e->sl[e->ti]);
+			e->sl[e->ti]);
 }
 
 void		wrap_cone(t_env *e, t_object *object)
@@ -84,5 +86,5 @@ void		wrap_cone(t_env *e, t_object *object)
 	e->i = (int)(e->v * e->bpp[e->ti]);
 	e->j = (int)(e->u * e->sl[e->ti]);
 	e->current_color = get_texture_info(e->tx_dta[e->ti],
-	e, e->sl[e->ti]);
+			e, e->sl[e->ti]);
 }
