@@ -54,6 +54,15 @@ void		init_permtab(t_env *e)
 	ft_memcpy((void*)&e->p[256], (void*)permtab, 1024);
 }
 
+void check_load(t_env *e)
+{
+	e->loading++;
+	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
+	e->mlx.img_ptr, 0, 0);
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, (e->width / 2.8), (e->height / 3.2),
+		0xFFFFFF, "At least someone is working..");
+}
+
 void		display_window(t_env *e)
 {
 	e->mlx.mlx_ptr = mlx_init();
@@ -69,6 +78,11 @@ void		display_window(t_env *e)
 	{
 		ft_printf("Scene can't be empty.\n");
 		return ;
+	}
+	if (e->loading == 0)
+	{
+		check_load(e);
+		mlx_do_sync(e->mlx.mlx_ptr);
 	}
 	init_camera(e);
 	camera_transformation(e);
@@ -106,6 +120,7 @@ int			main(int argc, char **argv)
 	if (!(check_args(e->argv_cpy)))
 		ft_kill("Bad file, check your scnene name");
 	parsing(e, e->argv_cpy);
+	e->loading = 0;
 	display_window(e);
 	return (0);
 }

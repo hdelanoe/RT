@@ -300,6 +300,7 @@ struct					s_env
 	int					ambient_flag;
 	char				*argv_cpy;
 	char				*s_name;
+	int					loading;
 };
 
 struct					s_physic
