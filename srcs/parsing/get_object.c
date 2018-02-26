@@ -24,6 +24,8 @@ void	get_complex(t_env *e, t_json *json)
 		create_area_light(e, json);
 	else if (!(ft_strcmp(json->name, "pyramide")) && json->member)
 		create_pyramide(e, json);
+	else if (!(ft_strcmp(json->name, "paraboloid")) && json->member)
+		create_paraboloid(e, json);
 	else
 		parse_scene(e, json);
 }

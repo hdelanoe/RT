@@ -61,6 +61,8 @@ void	inputs3(int keycode, t_env *e)
 		e->recursion++;
 		e->recursion = e->recursion == 9 ? 1 : e->recursion;
 	}
+	if (keycode == KEY_K)
+		read_obj_files(e);
 }
 
 void	inputs_conditions(int keycode, t_env *e)

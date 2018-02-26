@@ -22,6 +22,7 @@ SRCS		= 	srcs/main.c \
 				srcs/solution.c \
 				srcs/errors_2.c \
 				srcs/load_scenes.c \
+				srcs/load_obj.c \
 				srcs/errors.c \
 				srcs/ft_remove_if.c \
 				srcs/wrap_obj.c \
@@ -81,6 +82,7 @@ SRCS		= 	srcs/main.c \
 				srcs/vector/vectors_op1.c \
 				srcs/vector/vectors_op2.c \
 				srcs/vector/vectors_op3.c \
+				srcs/paraboloid.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 

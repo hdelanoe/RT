@@ -12,61 +12,71 @@
 
 #include "rt.h"
 
-t_paraboloid	*add_new_paraboloid(t_object *object,
-									t_paraboloid *new_paraboloid)
+void		create_paraboloid(t_env *e, t_json *json)
 {
-	t_paraboloid *tmp;
+	t_object	*paraboloid;
+	t_json		*tmp;
 
-	tmp = object->start_paraboloid;
-	if (tmp)
-	{
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new_paraboloid;
-		new_paraboloid->next = NULL;
-	}
-	else
-		object->start_paraboloid = new_paraboloid;
-	return (tmp);
-}
-
-void			debug_paraboloid(t_paraboloid *tmp)
-{
-	printf("PARABOLOID:\n");
-	printf("coord :  x->%f\n", tmp->origin.x);
-	printf("         y->%f\n", tmp->origin.y);
-	printf("         z->%f\n", tmp->origin.z);
-	printf("normale : x->%f\n", tmp->normal.x);
-	printf("         y->%f\n", tmp->normal.y);
-	printf("         z->%f\n", tmp->normal.z);
-	printf("distance ->%f\n", tmp->distance);
-	printf("colors : r->%f\n", tmp->color.r);
-	printf("         g->%f\n", tmp->color.g);
-	printf("         b->%f\n", tmp->color.b);
-}
-
-void			create_paraboloid(t_object *object, t_json *json)
-{
-	t_paraboloid *paraboloid;
-
+	paraboloid = init_material();
+	if (!(paraboloid->type = ft_strdup("paraboloid")))
+		exit_rt(1);
 	while (json->member)
 	{
-		paraboloid = (t_paraboloid *)ft_memalloc(sizeof(t_paraboloid));
-		paraboloid->id = ft_atoi(json->member->name);
-		while (json->member->member)
-		{
-			if (ft_strcmp(json->member->member->name, "coord"))
-				paraboloid->origin = parse_point(json->member->member->member);
-			if (ft_strcmp(json->member->member->name, "normal"))
-				paraboloid->normal = parse_normal(json->member->member->member);
-			if (ft_strcmp(json->member->member->name, "colors"))
-				paraboloid->color = parse_color(json->member->member->member);
-			if (ft_strcmp(json->member->member->name, "distance"))
-				paraboloid->distance = ft_atod(json->member->member->content);
-			json->member->member = json->member->member->next;
-		}
-		debug_paraboloid(paraboloid);
-		paraboloid = add_new_paraboloid(object, paraboloid);
+		tmp = json->member;
+		paraboloid_attribut(paraboloid, tmp);
 		json->member = json->member->next;
+		free_json_member(&tmp);
 	}
+	add_new_object(&e->object, paraboloid);
+}
+
+void		paraboloid_attribut(t_object *object, t_json *tmp)
+{
+	if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
+		object->center = parse_point(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
+		object->axis = parse_normal(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "lenght")) && tmp->content)
+		object->lenght_max = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
+		object->color = parse_color(tmp->member);
+	else if (!(ft_strcmp(tmp->name, "material")))
+		parse_material(tmp, object);
+	else
+		ft_printf("{R}WARNING:{E} paraboloid as a bad attribut\n");
+}
+
+int			paraboloid_intersection(t_env *e, t_object *para)
+{
+	t_poly	p;
+
+	p.object_rayon = v_v_subs(&e->current_origin, &para->center);
+	p.a = 1 - (dot_product(&e->current_rayon, &para->axis) *
+		dot_product(&e->current_rayon, &para->axis));
+	p.b = 2 * (dot_product(&p.object_rayon, &e->current_rayon) -
+		(dot_product(&e->current_rayon, &para->axis) *
+		(dot_product(&p.object_rayon, &para->axis) + 2 * para->lenght_max)));
+	p.c = dot_product(&p.object_rayon, &p.object_rayon) -
+		(dot_product(&p.object_rayon, &para->axis) *
+		(dot_product(&p.object_rayon, &para->axis) + 4 * para->lenght_max));
+	p.discriminant = (p.b * p.b) - (4 * p.a * p.c);
+	return (paraboloid_solution(e, para, p));
+}
+
+int			paraboloid_solution(t_env *e, t_object *para, t_poly p)
+{
+	if (!solve_solution(e, &p))
+		return (0);
+	p.tmp_node = v_double_mult(&e->current_rayon, e->solution);
+	para->node = v_v_add(&e->current_origin, &p.tmp_node);
+	p.tmp1 = (dot_product(&e->current_rayon, &para->axis) * e->solution)
+	+ dot_product(&p.object_rayon, &para->axis);
+	// if (p.tmp1 > (para->lenght_max * 20))
+	// 	return (0);
+	p.tmp_node_normal1 = v_v_subs(&para->node, &para->center);
+	p.tmp_node_normal2 = v_double_mult(&para->axis,
+		(p.tmp1 + para->lenght_max));
+	para->node_normal = v_v_subs(&p.tmp_node_normal1, &p.tmp_node_normal2);
+	para->node_normal = normalize(&para->node_normal);
+	return (1);
 }

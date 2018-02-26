@@ -54,5 +54,6 @@ void	reset_stereo(t_env *e)
 	e->rstereo.z_vector = normalize(&e->rstereo.z_vector);
 	e->rstereo.x_vector = v_v_mult(&e->camera.y_vector, &e->rstereo.z_vector);
 	e->rstereo.y_vector = v_v_mult(&e->rstereo.z_vector, &e->rstereo.x_vector);
+	e->move_x = 0;
 	stereo_viewplane(e);
 }
