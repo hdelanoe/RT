@@ -17,6 +17,7 @@ void		create_cap_sphere(t_object *sphere)
 	t_object *disk;
 
 	disk = init_material();
+	init_copy2(&disk, sphere);
 	if (!(disk->type = ft_strdup("disk")))
 		exit_rt(1);
 	disk->point = sphere->center;
@@ -32,6 +33,7 @@ void		create_cap_cylinder(t_object *cylinder)
 	t_vector		tmp;
 
 	disk = init_material();
+	init_copy2(&disk, cylinder);
 	if (!(disk->type = ft_strdup("disk")))
 		exit_rt(1);
 	tmp = v_double_mult(&cylinder->axis, cylinder->lenght_max / 2);
@@ -41,6 +43,7 @@ void		create_cap_cylinder(t_object *cylinder)
 	disk->color = cylinder->color;
 	add_new_object(&cylinder->sub_object, disk);
 	disk = init_material();
+	init_copy2(&disk, cylinder);
 	if (!(disk->type = ft_strdup("disk")))
 		exit_rt(1);
 	disk->normal = cylinder->axis;
@@ -83,6 +86,7 @@ void		create_cap_cone(t_object *cone)
 	t_vector		tmp;
 
 	disk = init_material();
+	init_copy2(&disk, cone);
 	if (!(disk->type = ft_strdup("disk")))
 		exit_rt(1);
 	tmp = v_double_mult(&cone->axis, cone->lenght_max);
@@ -94,6 +98,7 @@ void		create_cap_cone(t_object *cone)
 	if (cone->radius < cone->lenght_max)
 	{
 		disk = init_material();
+		init_copy2(&disk, cone);
 		if (!(disk->type = ft_strdup("disk")))
 			exit_rt(1);
 		tmp = v_double_mult(&cone->axis, cone->radius);

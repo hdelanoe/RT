@@ -423,6 +423,7 @@ void					cone_attribut_2(t_object *object);
 void					cube_attribut(t_object *cb, t_json *tmp);
 void					parse_scene(t_env *e, t_json *json);
 t_object				*init_material(void);
+void					init_copy2(t_object **copy, t_object *object);
 void					parse_material(t_json *material, t_object *object);
 void					check_material(t_object *object, t_json *tmp);
 void					free_json_member(t_json **member);

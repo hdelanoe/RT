@@ -51,7 +51,6 @@ t_vector		parse_point(t_json *membre)
 	x = get_content_from_member("x", &membre);
 	y = get_content_from_member("y", &membre);
 	z = get_content_from_member("z", &membre);
-	free_content(membre);
 	return (set_vector(x, y, z));
 }
 
@@ -73,6 +72,5 @@ t_color			parse_color(t_json *membre)
 	r = get_content_from_member("r", &membre);
 	g = get_content_from_member("g", &membre);
 	b = get_content_from_member("b", &membre);
-	free_content(membre);
 	return (set_color(b, g, r));
 }

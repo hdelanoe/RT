@@ -76,5 +76,7 @@ void		free_json_member(t_json **member)
 {
 	free((*member)->name);
 	free((*member)->content);
+	if ((*member)->member)
+		free_content((*member)->member);
 	free((*member));
 }
