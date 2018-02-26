@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void	choose_mirror(t_object *object)
 {
@@ -50,33 +50,4 @@ void	choose_snow(t_object *object)
 	object->refract = 0;
 	object->absorbtion = 0.8;
 	object->texture = 1;
-}
-
-void	choose_space(t_object *object)
-{
-	object->ambient = 1;
-	object->skybox = 1;
-	object->texture = 2;
-}
-
-void	choose_paradise(t_object *object)
-{
-	object->ambient = 1;
-	object->skybox = 1;
-	object->texture = 3;
-}
-
-void	choose_cave(t_object *object)
-{
-	object->ambient = 1;
-	object->skybox = 1;
-	object->texture = 4;
-}
-
-void	choose_sun(t_object *object)
-{
-	object->ambient = 1;
-	object->specular = 0;
-	object->absorbtion = 0.8;
-	object->texture = 5;
 }

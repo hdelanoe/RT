@@ -50,8 +50,12 @@ SRCS		= 	srcs/main.c \
 				srcs/parsing/parsing.c \
 				srcs/parsing/parse_material.c \
 				srcs/parsing/parse_material2.c \
+				srcs/parsing/parse_indice.c \
 				srcs/parsing/choose_material.c \
 				srcs/parsing/choose_material2.c \
+				srcs/parsing/choose_material3.c \
+				srcs/parsing/choose_material4.c \
+				srcs/parsing/choose_material5.c \
 				srcs/parsing/parsing_tools.c \
 				srcs/parsing/get_parsing.c \
 				srcs/parsing/get_object.c \

@@ -13,7 +13,7 @@
 #ifndef COLOR_H
 # define COLOR_H
 # include "../libft/libft.h"
-# include "rtv1.h"
+# include "rt.h"
 
 typedef struct s_color		t_color;
 typedef struct s_getcolor	t_getcolor;

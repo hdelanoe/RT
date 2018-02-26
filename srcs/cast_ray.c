@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void	init_rayon_values(t_env *e, t_vector rayon, t_vector origin)
 {

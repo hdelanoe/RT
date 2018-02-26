@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void		anti_aliasing_clr_merge(t_color *anti, t_color *clr)
 {

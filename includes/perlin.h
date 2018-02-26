@@ -12,7 +12,7 @@
 
 #ifndef PERLIN_H
 # define PERLIN_H
-# include "rtv1.h"
+# include "rt.h"
 
 typedef struct s_noise	t_noise;
 typedef struct s_perlin	t_perlin;

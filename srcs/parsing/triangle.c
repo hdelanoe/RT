@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 int		triangle_intersection(t_env *e, t_object *triangle, t_object *t)
 {

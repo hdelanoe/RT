@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 t_matrix4x1		m4x4_m4x1_mult_reduced(t_matrix4x4 *translation,
 									t_matrix4x1 *matrix)

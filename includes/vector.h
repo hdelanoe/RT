@@ -13,7 +13,7 @@
 #ifndef VECTOR_H
 # define VECTOR_H
 # include "../libft/libft.h"
-# include "rtv1.h"
+# include "rt.h"
 
 typedef struct s_vector	t_vector;
 

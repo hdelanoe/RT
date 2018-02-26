@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void		wrap_sphere(t_env *e, t_object *object)
 {
@@ -32,7 +32,7 @@ void		wrap_sphere(t_env *e, t_object *object)
 		e->u = 1.0 - e->u;
 	e->i = (int)(e->v * (e->bpp[e->ti]));
 	e->j = (int)(e->u * e->sl[e->ti]);
-	e->current_color = get_texture_info(e->text_data[e->ti],
+	e->current_color = get_texture_info(e->tx_dta[e->ti],
 	e, e->sl[e->ti]);
 }
 
@@ -57,7 +57,7 @@ void		wrap_cylinder(t_env *e, t_object *object)
 	e->v = d.y * 0.5 + 0.5;
 	e->i = max((e->u * e->bpp[e->ti]), 0);
 	e->j = max((e->v * e->sl[e->ti]), 0);
-	e->current_color = get_texture_info(e->text_data[e->ti], e,
+	e->current_color = get_texture_info(e->tx_dta[e->ti], e,
 	e->sl[e->ti]);
 }
 
@@ -83,6 +83,6 @@ void		wrap_cone(t_env *e, t_object *object)
 		e->u = 1.0 - e->u;
 	e->i = (int)(e->v * e->bpp[e->ti]);
 	e->j = (int)(e->u * e->sl[e->ti]);
-	e->current_color = get_texture_info(e->text_data[e->ti],
+	e->current_color = get_texture_info(e->tx_dta[e->ti],
 	e, e->sl[e->ti]);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 t_paraboloid	*add_new_paraboloid(t_object *object,
 									t_paraboloid *new_paraboloid)

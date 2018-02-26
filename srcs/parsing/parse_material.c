@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void		parse_scene(t_env *e, t_json *json)
 {
@@ -53,40 +53,6 @@ t_object	*init_material(void)
 	object->bump = 0;
 	object->indice = R_TEST;
 	return (object);
-}
-
-void		parse_indice(char **material, t_object *object)
-{
-	if (!(ft_strcmp(*material, "void")))
-		object->indice = R_VOID;
-	else if (!(ft_strcmp(*material, "air")))
-		object->indice = R_AIR;
-	else if (!(ft_strcmp(*material, "ice")))
-		choose_ice(object);
-	else if (!(ft_strcmp(*material, "water")))
-		choose_water(object);
-	else if (!(ft_strcmp(*material, "pmma")))
-		choose_pmma(object);
-	else if (!(ft_strcmp(*material, "glass")))
-		choose_glass(object);
-	else if (!(ft_strcmp(*material, "diam")))
-		choose_diam(object);
-	else if (!(ft_strcmp(*material, "mirror")))
-		choose_mirror(object);
-	else if (!(ft_strcmp(*material, "metal")))
-		choose_metal(object);
-	else if (!(ft_strcmp(*material, "marbre")))
-		choose_marbre(object);
-	else if (!(ft_strcmp(*material, "snow")))
-		choose_snow(object);
-	else if (!(ft_strcmp(*material, "space")))
-		choose_space(object);
-	else if (!(ft_strcmp(*material, "paradise")))
-		choose_paradise(object);
-	else if (!(ft_strcmp(*material, "cave")))
-		choose_cave(object);
-	else if (!(ft_strcmp(*material, "sun")))
-		choose_sun(object);
 }
 
 void		parse_material(t_json *material, t_object *object)

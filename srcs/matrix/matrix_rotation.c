@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 t_matrix4x4	m4x4_m4x4_mult(t_matrix4x4 *camera_matrix,
 								t_matrix4x4 *rotation)

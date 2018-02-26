@@ -12,7 +12,7 @@
 
 #ifndef BITMAP_H
 # define BITMAP_H
-# include "rtv1.h"
+# include "rt.h"
 
 typedef struct			s_header
 {

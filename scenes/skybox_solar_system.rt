@@ -6,19 +6,69 @@
 	"recursion":"6",
 
 	"sphere": {
-		"coord": {"x": "0", "y": "0", "z": "0"}, 
+		"coord": {"x": "-1800", "y": "0", "z": "0"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "1700"
+		"material": "sun"
+	}
+	"sphere": {
+		"coord": {"x": "200", "y": "0", "z": "0"}, 
 		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
 		"radius": "100"
-		"material": "sun"
+		"material": "mercury"
+	}
+	"sphere": {
+		"coord": {"x": "650", "y": "0", "z": "0"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "80"
+		"material": "earth"
+	}
+	"sphere": {
+		"coord": {"x": "800", "y": "0", "z": "0"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "50"
+		"material": "mars"
+	}
+	"sphere": {
+		"coord": {"x": "1200", "y": "0", "z": "0"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "200"
+		"material": "jupiter"
+	}
+	"sphere": {
+		"coord": {"x": "400", "y": "0", "z": "0"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "80"
+		"material": "venus"
+	}
+	"sphere": {
+		"coord": {"x": "2800", "y": "-100", "z": "0"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "100"
+		"material": "neptune"
+	}
+	"sphere": {
+		"coord": {"x": "1800", "y": "0", "z": "0"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "170"
+		"material": "saturn"
+	}
+	"sphere": {
+		"coord": {"x": "2400", "y": "100", "z": "0"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "100"
+		"material": "uranus"
+	}
+	"sphere": {
+		"coord": {"x": "200", "y": "0", "z": "0"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "50"
+		"material": "moon"
 	}
 	"sphere": {
 		"coord": {"x": "0", "y": "0", "z": "0"}, 
 		"color": {"r": "1", "g": "1", "b": "1"} 
 		"radius": "4000"
 		"material": "space"
-	}
-	 "light": {
-		"coord": {"x": "-1000", "y": "2000", "z": "-2000"}, 
-		"color": {"r": "1", "g": "1", "b": "1"}
 	}
 }
