@@ -52,7 +52,7 @@ void	choose_snow(t_object *object)
 	object->texture = 1;
 }
 
-void	choose_pixar(t_object *object)
+void	choose_space(t_object *object)
 {
 	object->ambient = 1;
 	object->skybox = 1;
@@ -71,4 +71,12 @@ void	choose_cave(t_object *object)
 	object->ambient = 1;
 	object->skybox = 1;
 	object->texture = 4;
+}
+
+void	choose_sun(t_object *object)
+{
+	object->ambient = 1;
+	object->specular = 0;
+	object->absorbtion = 0.8;
+	object->texture = 5;
 }

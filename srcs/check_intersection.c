@@ -69,6 +69,8 @@ void			apply_texture(t_env *e, t_object *object)
 		e->ti = 11;
 	if (object->texture == 4)
 		e->ti = 12;
+	if (object->texture == 5)
+		e->ti = 13;
 }
 
 void			check_intersection(t_env *e, t_object *object,

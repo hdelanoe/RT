@@ -34,37 +34,19 @@ void	stereo_viewplane(t_env *e)
 
 void	init_stereo(t_env *e)
 {
-	e->lstereo.origin = set_vector(-50, 0, -(double)WIN_X);
 	e->lstereo.width = e->width;
 	e->lstereo.height = e->height;
-	e->lstereo.distance = (e->width + e->height) / 2;
-	e->lstereo.z_vector = v_v_subs(&e->lookat, &e->lstereo.origin);
-	e->lstereo.z_vector = normalize(&e->lstereo.z_vector);
-	e->lstereo.y_vector = set_vector(0, 1, 0);
-	e->lstereo.x_vector = v_v_mult(&e->lstereo.y_vector, &e->lstereo.z_vector);
-	e->lstereo.y_vector = v_v_mult(&e->lstereo.z_vector, &e->lstereo.x_vector);
-	e->rstereo.origin = set_vector(50, 0, -(double)WIN_X);
+	e->lstereo.distance = (e->width + e->height) * 0.5;
 	e->rstereo.width = e->width;
 	e->rstereo.height = e->height;
-	e->rstereo.distance = (e->width + e->height) / 2;
-	e->rstereo.z_vector = v_v_subs(&e->lookat, &e->rstereo.origin);
-	e->rstereo.z_vector = normalize(&e->rstereo.z_vector);
-	e->rstereo.y_vector = set_vector(0, 1, 0);
-	e->rstereo.x_vector = v_v_mult(&e->rstereo.y_vector, &e->rstereo.z_vector);
-	e->rstereo.y_vector = v_v_mult(&e->rstereo.z_vector, &e->rstereo.x_vector);
-	e->matrix_lstereo_system = matrix_camera_system(&e->lstereo.x_vector,
-			&e->lstereo.y_vector, &e->lstereo.z_vector);
-	e->matrix_lstereo_origin = matrix_camera_origin(&e->lstereo.origin);
-	e->matrix_rstereo_system = matrix_camera_system(&e->rstereo.x_vector,
-			&e->rstereo.y_vector, &e->rstereo.z_vector);
-	e->matrix_rstereo_origin = matrix_camera_origin(&e->rstereo.origin);
-	stereo_viewplane(e);
+	e->rstereo.distance = (e->width + e->height) * 0.5;
+	reset_stereo(e);
 }
 
 void	init_camera(t_env *e)
 {
 	e->camera.up = set_vector(0, 1, 0);
-	e->camera.distance = (e->width + e->height) / 2;
+	e->camera.distance = (e->width + e->height) * 0.5;
 	e->camera.z_vector = v_v_subs(&e->lookat, &e->camera.origin);
 	e->camera.z_vector = normalize(&e->camera.z_vector);
 	e->camera.y_vector = e->camera.up;
