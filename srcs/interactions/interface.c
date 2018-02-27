@@ -12,71 +12,49 @@
 
 #include "../includes/rt.h"
 
-void	print_create_menu(t_env *e)
-{
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 50,
-		0xAAFFFF, "-- RT CREATE MODE --");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 100,
-		0xFFFFFF, "-- CHOOSE YOUR OBJECT --");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 150,
-		0xFFFFFF, "PLANE = 1");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 200,
-		0xFFFFFF, "SPHERE = 2");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 250,
-		0xFFFFFF, "CYLINDER = 3");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 300,
-		0xFFFFFF, "CONE = 4");
-}
-
-void	print_create_menu2(t_env *e)
-{
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 50,
-		0xAAFFFF, "-- RT CREATE MODE --");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 100,
-		0xFFFFFF, "-- CHOOSE YOUR COLOR --");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 150,
-		0x00FFFF, "BLUE = 1");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 200,
-		0xFF0000, "RED = 2");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 250,
-		0x00FF00, "GREEN = 3");
-}
-
 void	print_help_mouvement(t_env *e)
 {
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 450,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 13,
 		0xFFFFFF, "MOUVEMENT :");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 500,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 14,
 		0xFFFFFF, "Translate : W, A, S, D");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 550,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 15,
 		0xFFFFFF, "Rotate : UP, LEFT, DOWN, RIGHT");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 600,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 16,
 		0xFFFFFF, "Lift : Q, E");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 650,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 17,
 		0xFFFFFF, "Pivot : Z, X");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 700,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 18,
 		0xFFFFFF, "COPY / PASTE OBJECT : LMB");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 550, 750,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 19,
 		0xFFFFFF, "DELETE OBJECT: RMB");
 }
 
 void	print_help(t_env *e)
 {
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 50,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30,
 		0xAAFFFF, "-- RT HELP MODE --");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 100,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 2,
 		0xFFFFFF, "PIXELISATION : SPACE");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 150,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 3,
 		0xFFFFFF, "EDIT MODE : ENTER");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 200,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 4,
 		0xFFFFFF, "ANTI-ALIASING : R");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 250,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 5,
 		0xFFFFFF, "STEREOSCOPIC : P");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 300,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 6,
 		0xFFFFFF, "AMBIENT OCCLUSION : T");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 350,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 7,
 		0xFFFFFF, "CEL-SHADING : C");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 500, 400,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 8,
+		0xFFFFFF, "LOAD SCENE : O");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 9,
+		0xFFFFFF, "LOAD OBJECT : K");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 10,
+		0xFFFFFF, "RANDOM PERLIN : M");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 11,
+		0xFFFFFF, "REMOVE AMBIENT : I");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50, e->height / 30 * 12,
 		0xFFFFFF, "FILTER : 0, 1, 2, 3, 4...");
 	print_help_mouvement(e);
 }
@@ -93,18 +71,21 @@ void	print_info(t_env *e)
 		mode = "Render mode : Stereoscopic";
 	if (e->render_mode == 3)
 		mode = "Render mode : Cel-Shading";
-	if (e->pixelize)
-		mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 100,
+	if (e->pixelize == 1)
+		mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->width / 50, e->height / 30,
 		0xFFFFFF, "Pixelization : ON");
+	else if (e->pixelize == 2)
+		mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->width / 50, e->height / 30,
+		0xFFFFFF, "Pixelization : TURBO");
 	else
-		mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 100,
+		mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->width / 50, e->height / 30,
 		0xFFFFFF, "Pixelization : OFF");
 	if (e->aa_flag)
-		mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 120,
+		mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->width / 50, e->height / 30 * 2,
 		0xFFFFFF, "Anti-Aliasing : ON");
 	else
-		mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 120,
+		mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->width / 50, e->height / 30 * 2,
 		0xFFFFFF, "Anti-Aliasing : OFF");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, 15, 140,
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->width / 50, e->height / 30 * 3,
 		0xFFFFFF, mode);
 }

@@ -54,16 +54,6 @@ void		init_permtab(t_env *e)
 	ft_memcpy((void*)&e->p[256], (void*)permtab, 1024);
 }
 
-void check_load(t_env *e)
-{
-	e->loading++;
-	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
-	e->mlx.img_ptr, 0, 0);
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, (e->width / 2.8), (e->height / 3.2),
-		0xFFFFFF, "At least someone is working..");
-	mlx_do_sync(e->mlx.mlx_ptr);
-}
-
 void		display_window(t_env *e)
 {
 	e->mlx.mlx_ptr = mlx_init();
@@ -94,28 +84,20 @@ void		display_window(t_env *e)
 	mlx_destroy_window(e->mlx.mlx_ptr, e->mlx.win_ptr);
 }
 
-t_env		*init(void)
+int			main(int argc, char **argv)
 {
-	t_env *e;
+	t_env	*e;
 
 	if (!(e = (t_env*)ft_memalloc(sizeof(t_env))))
 		exit_rt(1);
 	init_permtab(e);
 	default_env(e);
-	return (e);
-}
-
-int			main(int argc, char **argv)
-{
-	t_env	*e;
-
-	ft_putstr("Wait for parsing...\n");
-	e = init();
 	if (argc != 2)
 		ft_print_err(argc);
 	e->argv_cpy = argv[1];
 	if (!(check_args(e->argv_cpy)))
 		ft_kill("Bad file, check your scnene name");
+	ft_putstr("Wait for parsing...\n");
 	parsing(e, e->argv_cpy);
 	e->loading = 0;
 	display_window(e);

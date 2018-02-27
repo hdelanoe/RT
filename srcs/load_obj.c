@@ -18,7 +18,7 @@ void		read_obj(t_env *e, t_parsing *p, char *text)
 		ft_kill("This file doesn't exist or bad typography.");
 	while (get_next_line(p->fd, &p->buff) == 1)
 	{
-		if (p->i >= 1024 || p->j >= 1024)
+		if (p->i >= 4096 || p->j >= 4096)
 		{
 			free(e->argv_cpy);
 			ft_printf("Sorry, %s is too big!\n", text);
@@ -31,7 +31,6 @@ void		read_obj(t_env *e, t_parsing *p, char *text)
 		}
 		if (p->buff[0] == 'f')
 		{
-			printf("%s\n", p->buff);
 			p->f[p->j] = ft_strsplit(p->buff, ' ');
 			p->j++;
 		}
@@ -45,14 +44,14 @@ void		check_line(char *text, t_env *e)
 
 	p.i = 0;
 	p.j = 0;
-	ft_bzero(p.f, sizeof(char***) * 1024);
-	ft_bzero(p.v, sizeof(char***) * 1024);
-	ft_printf("Chargement de l'objet'...\n");
+	ft_bzero(p.f, sizeof(char***) * 4096);
+	ft_bzero(p.v, sizeof(char***) * 4096);
+	ft_printf("Chargement de l'objet...\n");
 	read_obj(e, &p, text);
 	parsing_obj(e, p.v, p.f);
 	ft_bzero(e->mlx.data, (e->width * e->height) * 4);
 	ft_pthread(e, ray_tracer_void);
-	ft_printf("Scene chargée.\n");
+	ft_printf("Object chargé.\n");
 	free(e->argv_cpy);
 }
 
@@ -81,4 +80,15 @@ void		read_obj_files(t_env *e)
 	closedir(p);
 	if (e->copy)
 		e->copy = NULL;
+}
+
+void check_load(t_env *e)
+{
+	e->loading++;
+	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
+	e->mlx.img_ptr, 0, 0);
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr,
+	(e->width / 2.8), (e->height / 3.2),
+	0xFFFFFF, "At least someone is working...");
+	mlx_do_sync(e->mlx.mlx_ptr);
 }

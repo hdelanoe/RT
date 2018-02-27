@@ -120,6 +120,7 @@ void		load_texture2(t_env *e)
 
 void		load_texture(t_env *e)
 {
+	check_load(e);
 	if (!((e->text_img[0] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
 	"./textures/2k_earth.xpm", &e->sl[0], &e->bpp[0]))))
 		ft_kill("Texture error");

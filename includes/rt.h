@@ -365,6 +365,7 @@ struct					s_poly
 t_env					*init(void);
 void					default_env(t_env *e);
 void					display_window(t_env *e);
+void 					check_load(t_env *e);
 
 void					stereo_viewplane(t_env *e);
 void					init_stereo(t_env *e);
@@ -615,6 +616,7 @@ char					*ft_strjoin_fre(char **s1, char **s2, int b1, int b2);
 void 					put_cam_win_file(t_env *e, int fd);
 void					check_copy_lst(t_object *obj);
 void					apply_texture(t_env *e, t_object *object);
+void 					put_loading_bar(t_env *e, int i);
 
 
 #endif

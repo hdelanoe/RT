@@ -20,7 +20,16 @@ void	*ray_tracer_void(void *e)
 
 void	*pxl_tracer_void(void *e)
 {
-	pxl_tracer(e, 6);
+	if (((t_env*)e)->pixelize == 1)
+		pxl_tracer(e, 6);
+	else
+		pxl_tracer(e, 18);
+	return (NULL);
+}
+
+void	*pxl_tracer_vd2(void *e)
+{
+	pxl_tracer(e, 18);
 	return (NULL);
 }
 
@@ -34,13 +43,6 @@ void	*aa_tracer_void(void *e)
 {
 	aa_tracer(e, 1);
 	return (NULL);
-}
-
-void put_loading_bar(t_env *e, int i)
-{
-		mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, (e->width / 3.8) + (i * 60), ((e->height + 60) / 3.2),
-		0xFFFFFF, "|||||||");
-		mlx_do_sync(e->mlx.mlx_ptr);
 }
 
 void	ft_pthread(t_env *e, void *(*f)(void *param))
@@ -57,17 +59,16 @@ void	ft_pthread(t_env *e, void *(*f)(void *param))
 		ft_memcpy((void*)&tab[i], (void*)e, sizeof(t_env));
 		tab[i].begin = e->height / 4 * i;
 		tab[i].fin = e->height / 4 * (i + 1);
-		if (i == 3)
-			tab[i].fin = e->height;
+		tab[i].fin = i == 3 ? e->height : tab[i].fin;
 		pthread_create(&t[i], NULL, f, &tab[i]);
-		put_loading_bar(e, j++);
+//		put_loading_bar(e, j++);
 		i++;
 	}
 	i = -1;
 	while (++i < 4)
 	{
 		pthread_join(t[i], NULL);
-		put_loading_bar(e, j++);
+	//	put_loading_bar(e, j++);
 	}
 	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
 	e->mlx.img_ptr, 0, 0);

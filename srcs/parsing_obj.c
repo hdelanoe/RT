@@ -38,7 +38,7 @@ void	set_poly_cb(t_env *e, t_object *poly)
 {
 	t_object	*poly2;
 	t_parsing	p;
-	
+
 	poly2 = init_material();
 	p.tmp1 = v_v_subs(&poly->point, &poly->point_2);
 	p.tmp2 = v_v_subs(&poly->point, &poly->point_3);
@@ -49,19 +49,20 @@ void	set_poly_cb(t_env *e, t_object *poly)
 	get_diag(&poly2, poly, p);
 	if (!(poly2->type = ft_strdup("triangle")))
 		exit_rt(1);
-			add_new_object(&e->object, poly2);
+	add_new_object(&e->object, poly2);
 }
 
-void	set_poly(t_object **poly, char ***v, int tmp[4])
+void	set_poly(t_object **poly, char ***v, int tmp[4], char *f)
 {
-	(*poly)->point = set_vector(10 * ft_atod(v[(int)tmp[0] - 1][1]), 10 *
-	ft_atod(v[(int)tmp[0] - 1][2]), 10 * ft_atod(v[(int)tmp[0] - 1][3]));
-	(*poly)->point_2 = set_vector(10 * ft_atod(v[(int)tmp[1] - 1][1]), 10 *
-	ft_atod(v[(int)tmp[1] - 1][2]), 10 * ft_atod(v[(int)tmp[1] - 1][3]));
-	(*poly)->point_3 = set_vector(10 * ft_atod(v[(int)tmp[2] - 1][1]), 10 *
-	ft_atod(v[(int)tmp[2] - 1][2]), 10 * ft_atod(v[(int)tmp[2] - 1][3]));
-	(*poly)->point_4 = set_vector(10 * ft_atod(v[(int)tmp[3] - 1][1]), 10 *
-	ft_atod(v[(int)tmp[3] - 1][2]), 10 * ft_atod(v[(int)tmp[3] - 1][3]));
+	(*poly)->point = set_vector(ft_atod(v[(int)tmp[0] - 1][1]),
+	ft_atod(v[(int)tmp[0] - 1][2]), ft_atod(v[(int)tmp[0] - 1][3]));
+	(*poly)->point_2 = set_vector(ft_atod(v[(int)tmp[1] - 1][1]),
+	ft_atod(v[(int)tmp[1] - 1][2]), ft_atod(v[(int)tmp[1] - 1][3]));
+	(*poly)->point_3 = set_vector(ft_atod(v[(int)tmp[2] - 1][1]),
+	ft_atod(v[(int)tmp[2] - 1][2]), ft_atod(v[(int)tmp[2] - 1][3]));
+	if (f)
+		(*poly)->point_4 = set_vector(ft_atod(v[(int)tmp[3] - 1][1]),
+	ft_atod(v[(int)tmp[3] - 1][2]), ft_atod(v[(int)tmp[3] - 1][3]));
 }
 
 void	parsing_obj(t_env *e, char ***v, char ***f)
@@ -79,11 +80,11 @@ void	parsing_obj(t_env *e, char ***v, char ***f)
 		tmp[2] = ft_atoi(f[i][3]);
 		if (f[i][4])
 			tmp[3] = ft_atoi(f[i][4]);
-		set_poly(&poly, v, tmp);
+		set_poly(&poly, v, tmp, f[i][4]);
 		if (f[i][4])
 			set_poly_cb(e, poly);
 		if (!(poly->type = ft_strdup("triangle")))
-				exit_rt(1);
+			exit_rt(1);
 		add_new_object(&e->object, poly);
 		i++;
 	}

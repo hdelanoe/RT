@@ -12,14 +12,22 @@
 
 #include "rt.h"
 
-void		anti_aliasing_clr_merge(t_color *anti, t_color *clr)
+void	put_loading_bar(t_env *e, int i)
+{
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr,
+	(e->width / 3.8) + (i * 60), ((e->height + 60) / 3.2),
+	0xFFFFFF, "|||||||");
+	mlx_do_sync(e->mlx.mlx_ptr);
+}
+
+void	anti_aliasing_clr_merge(t_color *anti, t_color *clr)
 {
 	anti->r += clr->r;
 	anti->g += clr->g;
 	anti->b += clr->b;
 }
 
-void		antialias_loop_init(t_grid *aa, t_env *e, int sample)
+void	antialias_loop_init(t_grid *aa, t_env *e, int sample)
 {
 	aa->y = aa->yy;
 	while (aa->y < sample + aa->yy)
@@ -35,7 +43,7 @@ void		antialias_loop_init(t_grid *aa, t_env *e, int sample)
 	}
 }
 
-void		aa_tracer(t_env *e, int sample)
+void	aa_tracer(t_env *e, int sample)
 {
 	t_grid	aa;
 
