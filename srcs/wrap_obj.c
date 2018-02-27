@@ -31,7 +31,7 @@ void		wrap_sphere(t_env *e, t_object *object)
 	if (!(dot_product(&cross, &vp) > 0.0))
 		e->u = 1.0 - e->u;
 	e->i = (int)(e->v * (e->bpp[e->ti]));
-	e->j = (int)(e->u * e->sl[e->ti]);
+	e->j = (int)(e->u * e->sl[e->ti] - e->pet);
 	e->current_color = get_texture_info(e->tx_dta[e->ti],
 			e, e->sl[e->ti]);
 }

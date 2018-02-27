@@ -77,6 +77,10 @@ void		check_existance(char *text, t_env *e)
 		ft_printf("Chargement de la scene...\n");
 		default_env(e);
 		init_camera(e);
+		ft_bzero(e->mlx.data, (e->width * e->height) * 4);
+		mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
+		0, 0);
+		check_load(e);
 		camera_transformation(e);
 		init_stereo(e);
 		parsing(e, text);
@@ -103,6 +107,7 @@ void		read_scene_files(t_env *e)
 		while ((pp = readdir(p)) != NULL)
 			ft_printf("%s\n", pp->d_name);
 	}
+	e->loading = 0;
 	ft_printf("\nEntrez une scene a changer :\n");
 	if (get_next_line(fileno(stdin), &e->argv_cpy) == 1)
 	{

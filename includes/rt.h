@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RTV1_H
-# define RTV1_H
+#ifndef RT_H
+# define RT_H
 # define WIN_X 1000
 # define WIN_Y 1000
 # define RANDOM (double)rand()/RAND_MAX
@@ -269,7 +269,7 @@ struct					s_env
 	t_matrix4x1			matrix_lstereo_origin;
 	t_matrix4x4			matrix_rstereo_system;
 	t_matrix4x1			matrix_rstereo_origin;
-	int					tmp_rad;
+	int					pet;
 	t_color				tmp_clr;
 	int					i;
 	int					j;
@@ -301,6 +301,11 @@ struct					s_env
 	char				*argv_cpy;
 	char				*s_name;
 	int					loading;
+	char				*img_bat;
+	char				*barre_bat;
+	int					sonic;
+	char				*sonic_d;
+	char				*sonic_u;
 };
 
 struct					s_physic
@@ -365,8 +370,7 @@ struct					s_poly
 t_env					*init(void);
 void					default_env(t_env *e);
 void					display_window(t_env *e);
-void 					check_load(t_env *e);
-
+void					check_load(t_env *e);
 void					stereo_viewplane(t_env *e);
 void					init_stereo(t_env *e);
 void					init_camera(t_env *e);
@@ -458,31 +462,22 @@ void					choose_venus(t_object *object);
 void					choose_mercury(t_object *object);
 void					choose_earth(t_object *object);
 void					choose_saturn(t_object *object);
-
-
-
-
-
-
 void					add_new_light(t_light **list, t_light *new_light);
 void					debug_light(t_light *tmp);
 void					create_light(t_env *e, t_json *json);
 void					fill_area_light_infos(t_json *tmp,
 						t_object *al_object, t_light *al_light);
 void					create_area_light(t_env *e, t_json *json);
-
 double					get_content_from_member(char *name, t_json **membre);
-
 void					free_content(t_json *member);
-
 int						max(int a, int b);
-
 void					init_rayon_values(t_env *e,
 						t_vector rayon, t_vector origin);
 int						cast_ray(t_env *e, t_vector rayon, t_vector origin);
 int						cast_reflect_ray(t_env *e, t_rayon incident);
 int						cast_refract_ray(t_env *e, t_rayon origin);
-void					get_object_values(t_env *e, t_object *object, t_object *parent);
+void					get_object_values(t_env *e, t_object *object,
+						t_object *parent);
 int						sort_type(t_env *e, t_object *object);
 void					check_intersection(t_env *e, t_object *object,
 						t_object *parent);
@@ -575,7 +570,7 @@ void					create_obj_to_add(t_object **copy);
 int						copy_object(t_env *e, int x, int y);
 void					copy_cplx(t_object *copy, t_vector center);
 int						mouse(int button, int x, int y, t_env *e);
-int 					obj_lst_size(t_object **lst);
+int						obj_lst_size(t_object **lst);
 void					init_copy(t_object **copy, t_object *object);
 int						cmp(int a, int b);
 void					add_object(t_env *e, int x, int y);
@@ -613,10 +608,9 @@ void					put_triangle_file(t_object *triangle, int fd);
 void					put_pyramide_file(t_object *pyramide, int fd);
 void					put_double(char *name, double color, int fd);
 char					*ft_strjoin_fre(char **s1, char **s2, int b1, int b2);
-void 					put_cam_win_file(t_env *e, int fd);
+void					put_cam_win_file(t_env *e, int fd);
 void					check_copy_lst(t_object *obj);
 void					apply_texture(t_env *e, t_object *object);
-void 					put_loading_bar(t_env *e, int i);
-
+void					put_loading_bar(t_env *e, int i);
 
 #endif

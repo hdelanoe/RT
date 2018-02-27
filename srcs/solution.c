@@ -44,7 +44,7 @@ int		sphere_solution(t_env *e, t_object *sphere, t_poly p)
 	p.tmp1 = (dot_product(&e->current_rayon, &sphere->normal) * e->solution)
 	+ dot_product(&p.object_rayon, &sphere->normal);
 	if (sphere->cap == 1 && p.tmp1 < 0)
-		return (disk_intersection(e, sphere->sub_object));
+		return (0);
 	sphere->node = v_v_add(&e->current_origin, &p.tmp_node);
 	sphere->node_normal = v_v_subs(&sphere->node, &sphere->center);
 	sphere->node_normal = normalize(&sphere->node_normal);

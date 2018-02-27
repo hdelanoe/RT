@@ -95,10 +95,7 @@ void		cube_attribut(t_object *cb, t_json *tmp)
 	else if (!(ft_strcmp(tmp->name, "height")))
 		cb->radius = ft_atod(tmp->content);
 	else if (!(ft_strcmp(tmp->name, "axis")))
-	{
 		cb->axis = parse_normal(tmp->member);
-		cb->axis = normalize(&cb->axis);
-	}
 	else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 		cb->color = parse_color(tmp->member);
 	else if (!(ft_strcmp(tmp->name, "material")))

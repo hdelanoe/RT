@@ -39,12 +39,6 @@ void	*stereo_tracer_void(void *e)
 	return (NULL);
 }
 
-void	*aa_tracer_void(void *e)
-{
-	aa_tracer(e, 1);
-	return (NULL);
-}
-
 void	ft_pthread(t_env *e, void *(*f)(void *param))
 {
 	t_env		tab[4];
@@ -61,15 +55,15 @@ void	ft_pthread(t_env *e, void *(*f)(void *param))
 		tab[i].fin = e->height / 4 * (i + 1);
 		tab[i].fin = i == 3 ? e->height : tab[i].fin;
 		pthread_create(&t[i], NULL, f, &tab[i]);
-//		put_loading_bar(e, j++);
+		put_loading_bar(e, j++);
 		i++;
 	}
-	i = -1;
-	while (++i < 4)
+	while (i--)
 	{
 		pthread_join(t[i], NULL);
-	//	put_loading_bar(e, j++);
+		put_loading_bar(e, j++);
 	}
+	e->loading = 1;
 	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
 	e->mlx.img_ptr, 0, 0);
 }

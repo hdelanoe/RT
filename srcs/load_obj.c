@@ -82,13 +82,14 @@ void		read_obj_files(t_env *e)
 		e->copy = NULL;
 }
 
-void check_load(t_env *e)
+void		check_load(t_env *e)
 {
-	e->loading++;
+	if (e->loading == 1)
+		return ;
 	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
-	e->mlx.img_ptr, 0, 0);
+	e->img_bat, e->width / 4 - 40, e->height / 3);
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr,
-	(e->width / 2.8), (e->height / 3.2),
+	(e->width / 2.8), (e->height / 4),
 	0xFFFFFF, "At least someone is working...");
 	mlx_do_sync(e->mlx.mlx_ptr);
 }

@@ -14,9 +14,24 @@
 
 void	put_loading_bar(t_env *e, int i)
 {
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr,
-	(e->width / 3.8) + (i * 60), ((e->height + 60) / 3.2),
-	0xFFFFFF, "|||||||");
+	int x;
+	int y;
+
+	x = e->width / 4 + 10 + (i * 60);
+	y = e->height / 3 + 25;
+	if (e->loading == 1)
+		return ;
+	if (e->sonic % 2 == 0)
+		mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
+	e->sonic_d, 50, e->height - 250);
+	else
+		mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
+	e->sonic_u, 50, e->height - 250);
+	e->sonic++;
+	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
+	e->barre_bat, x, y);
+	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
+	e->barre_bat, x + 10, y);
 	mlx_do_sync(e->mlx.mlx_ptr);
 }
 
@@ -41,6 +56,12 @@ void	antialias_loop_init(t_grid *aa, t_env *e, int sample)
 		}
 		aa->y += 0.25;
 	}
+}
+
+void	*aa_tracer_void(void *e)
+{
+	aa_tracer(e, 1);
+	return (NULL);
 }
 
 void	aa_tracer(t_env *e, int sample)

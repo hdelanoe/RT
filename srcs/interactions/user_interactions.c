@@ -84,7 +84,7 @@ void	set_mode(int keycode, t_env *e)
 	else if (keycode == KEY_SPACEBAR)
 	{
 		e->pixelize++;
-		e->pixelize = e->pixelize == 3 ? 0 : e->pixelize; 
+		e->pixelize = e->pixelize == 3 ? 0 : e->pixelize;
 	}
 	set_mode2(keycode, e);
 }
@@ -98,9 +98,7 @@ int		key_functions(int keycode, t_env *e)
 		return (0);
 	inputs2(keycode, e);
 	if (keycode == KEY_PAD_ADD)
-		e->tmp_rad += 1;
-	else if (keycode == KEY_PAD_SUB)
-		e->tmp_rad -= 1;
+		e->pet += 5;
 	ft_bzero(e->mlx.data, (e->width * e->height) * 4);
 	camera_transformation(e);
 	if (e->render_mode == 2)

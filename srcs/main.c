@@ -54,15 +54,30 @@ void		init_permtab(t_env *e)
 	ft_memcpy((void*)&e->p[256], (void*)permtab, 1024);
 }
 
+void		load_text_loading(t_env *e)
+{
+	if (!((e->img_bat = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
+	"./textures/battery.xpm", &(e->mlx.l_size), &e->mlx.endian))))
+		ft_kill("Texture error");
+	if (!((e->barre_bat = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
+	"./textures/bar.xpm", &(e->mlx.l_size), &e->mlx.endian))))
+		ft_kill("Texture error");
+	if (!((e->sonic_u = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
+	"./textures/sonic_fu.xpm", &(e->mlx.l_size), &e->mlx.endian))))
+		ft_kill("Texture error");
+	if (!((e->sonic_d = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
+	"./textures/sonic_fd.xpm", &(e->mlx.l_size), &e->mlx.endian))))
+		ft_kill("Texture error");
+}
+
 void		display_window(t_env *e)
 {
 	e->mlx.mlx_ptr = mlx_init();
 	e->mlx.win_ptr = mlx_new_window(e->mlx.mlx_ptr, e->width, e->height, "RT");
 	e->mlx.img_ptr = mlx_new_image(e->mlx.mlx_ptr, e->width, e->height);
+	if (e->loading == 0)
+		load_text_loading(e);
 	load_texture(e);
-	if (!((e->mlx.pen = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/pen.xpm", &(e->mlx.l_size), &e->mlx.endian))))
-		ft_kill("Texture error");
 	e->mlx.data = (unsigned char*)mlx_get_data_addr(e->mlx.img_ptr,
 		&e->mlx.bpp, &e->mlx.l_size, &e->mlx.endian);
 	if (!e->object)
@@ -99,7 +114,6 @@ int			main(int argc, char **argv)
 		ft_kill("Bad file, check your scnene name");
 	ft_putstr("Wait for parsing...\n");
 	parsing(e, e->argv_cpy);
-	e->loading = 0;
 	display_window(e);
 	return (0);
 }

@@ -38,7 +38,7 @@ struct						s_parsing
 	char					*stock;
 	char					*tmp;
 	char					**v[4096];
-	char					**f[4096];	
+	char					**f[4096];
 	t_vector				tmp1;
 	t_vector				tmp2;
 	t_vector				tmp3;

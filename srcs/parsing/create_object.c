@@ -68,6 +68,8 @@ void		create_sphere(t_env *e, t_json *json)
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
+	if (sphere->cap == 1)
+		create_cap_sphere(sphere);
 	add_new_object(&e->object, sphere);
 }
 
