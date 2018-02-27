@@ -33,9 +33,16 @@ struct						s_parsing
 	int						fd;
 	int						i;
 	int						j;
+	int						k;
 	char					*buff;
 	char					*stock;
 	char					*tmp;
+	char					**v[1024];
+	char					**f[1024];	
+	t_vector				tmp1;
+	t_vector				tmp2;
+	t_vector				tmp3;
+
 };
 
 t_json						*new_object(void);
@@ -53,5 +60,8 @@ void						ft_kill(char *text);
 int							check_args(char *argv);
 void						open_close(char *src_file);
 void						exit_rt(int flag);
+t_vector					parse_point(t_json *membre);
+t_vector					parse_normal(t_json *membre);
+t_color						parse_color(t_json *membre);
 
 #endif

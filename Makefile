@@ -23,6 +23,7 @@ SRCS		= 	srcs/main.c \
 				srcs/errors_2.c \
 				srcs/load_scenes.c \
 				srcs/load_obj.c \
+				srcs/parsing_obj.c \
 				srcs/errors.c \
 				srcs/ft_remove_if.c \
 				srcs/wrap_obj.c \

@@ -36,9 +36,9 @@
 # include "../libft/libft.h"
 # include "../ft_printf/printf.h"
 # include "../minilibx_macos/mlx.h"
-# include "json_parser.h"
-# include "color.h"
 # include "vector.h"
+# include "color.h"
+# include "json_parser.h"
 # include "matrix.h"
 # include "perlin.h"
 # include "bitmap.h"
@@ -397,9 +397,7 @@ void					add_new_member(t_json **list, t_json *new_member);
 void					create_tree(t_env *e, char **str);
 int						parsing(t_env *e, char *src_file);
 void					add_new_object(t_object **list, t_object *new_object);
-t_vector				parse_point(t_json *membre);
-t_vector				parse_normal(t_json *membre);
-t_color					parse_color(t_json *membre);
+
 void					parse_indice(char **material, t_object *object);
 void					debug_object(t_object *tmp);
 void					create_cap_sphere(t_object *sphere);
@@ -530,6 +528,7 @@ void					init_area_size(t_object	*al_object,
 						t_light *area_light);
 t_color					get_area_color(t_env *e);
 void					load_texture(t_env *e);
+void					parsing_obj(t_env *e, char ***v, char ***f);
 void					wrap_sphere(t_env *e, t_object *object);
 void					wrap_cylinder(t_env *e, t_object *object);
 void					wrap_plane(t_env *e);
