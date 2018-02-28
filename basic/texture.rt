@@ -1,0 +1,35 @@
+{
+	"plane": {
+	"coord": {"x": "0", "y": "-250", "z": "0"},
+	"normal": {"x": "0", "y": "1", "z": "0"},
+	"color": {"r": "0.5", "g": "0.5", "b": "0.5"}
+	"material":"space"
+	}
+	"sphere": {
+	"coord": {"x": "300", "y": "0", "z": "0"}, 
+	"color": {"r": "0.3", "g": "0.3", "b": "0.9"},
+	"radius": "150"
+	"material":"earth"
+	}
+	"cylinder": {
+	"coord": {"x": "0", "y": "100", "z": "150"},
+	"axis": {"x": "0", "y": "1", "z": "0"},
+	"radius": "100"
+	"length": "300"
+	"color": {"r": "0.5", "g": "0.3", "b": "0.1"}
+	"material":"earth"
+	}
+	"cone": {
+	"coord": {"x": "-400", "y": "100", "z": "150"},
+	"tangent": "0.65"
+	"maxlength": "100"
+	"minlength": "0"
+	"axis": {"x": "0", "y": "-1", "z": "0"},
+	"color": {"r": "0.2", "g": "0.7", "b": "0.2"}
+	"material":"earth"
+	}
+	"light": {
+	"coord": {"x": "-200", "y": "400", "z": "-600"}, 
+	"color": {"r": "1", "g": "1", "b": "1"}
+	} 
+}

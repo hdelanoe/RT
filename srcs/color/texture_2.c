@@ -24,17 +24,22 @@ t_color		normalize_color(t_color *color)
 
 void		wrap_obj(t_env *e, t_object *object, t_object *parent)
 {
+	(void)parent;
 	apply_texture(e, object);
 	if (!(ft_strcmp("plane", object->type)))
-		wrap_plane(e);
+		wrap_plane(e, object);
 	if (!(ft_strcmp("sphere", object->type)))
 		wrap_sphere(e, object);
+	if (!(ft_strcmp("cone", object->type)))
+		wrap_cone(e, object);
 	if (!(ft_strcmp("cylinder", object->type)))
 		wrap_cylinder(e, object);
 	if (!ft_strcmp("disk", object->type))
 	{
 		if (!(ft_strcmp("cylinder", parent->type)))
 			wrap_cylinder(e, parent);
+		if (!(ft_strcmp("cone", parent->type)))
+			wrap_cone(e, parent);
 	}
 }
 

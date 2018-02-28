@@ -66,14 +66,12 @@ int		disk_intersection(t_env *e, t_object *disk)
 {
 	t_vector	distance;
 	double		d;
-	t_object	tmp;
 
-	tmp = *disk;
-	if (plane_intersection(e, &tmp))
+	if (plane_intersection(e, disk))
 	{
-		distance = v_v_subs(&tmp.node, &tmp.point);
+		distance = v_v_subs(&disk->node, &disk->point);
 		d = dot_product(&distance, &distance);
-		if (d <= (tmp.radius * tmp.radius))
+		if (d <= (disk->radius * disk->radius))
 			return (1);
 	}
 	return (0);

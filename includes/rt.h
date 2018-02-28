@@ -470,7 +470,7 @@ void					fill_area_light_infos(t_json *tmp,
 void					create_area_light(t_env *e, t_json *json);
 double					get_content_from_member(char *name, t_json **membre);
 void					free_content(t_json *member);
-int						max(int a, int b);
+double					max(double a, double b);
 void					init_rayon_values(t_env *e,
 						t_vector rayon, t_vector origin);
 int						cast_ray(t_env *e, t_vector rayon, t_vector origin);
@@ -527,7 +527,7 @@ void					load_texture(t_env *e);
 void					parsing_obj(t_env *e, char ***v, char ***f);
 void					wrap_sphere(t_env *e, t_object *object);
 void					wrap_cylinder(t_env *e, t_object *object);
-void					wrap_plane(t_env *e);
+void					wrap_plane(t_env *e, t_object *object);
 void					wrap_obj(t_env *e, t_object *object, t_object *parent);
 t_color					get_texture_info(unsigned char *text_data,
 						t_env *e, int sl);
@@ -613,4 +613,6 @@ void					check_copy_lst(t_object *obj);
 void					apply_texture(t_env *e, t_object *object);
 void					put_loading_bar(t_env *e, int i);
 void					put_material(int fd, t_object *object);
+void					wrap_cone(t_env *e, t_object *object);
+
 #endif
