@@ -58,7 +58,7 @@ void		put_color(t_color *color, int fd)
 	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
 	tmp_2 = check_color_value(color->b);
 	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
-	tmp_2 = ft_strdup("\"}\n");
+	tmp_2 = ft_strdup("\"},\n");
 	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
 	write(fd, tmp, ft_strlen(tmp));
 	free(tmp);
