@@ -27,6 +27,7 @@ SRCS		= 	srcs/main.c \
 				srcs/errors.c \
 				srcs/ft_remove_if.c \
 				srcs/wrap_obj.c \
+				srcs/paraboloid.c \
 				srcs/save/save_image.c \
 				srcs/save/save_scene.c \
 				srcs/save/create_save.c \
@@ -38,6 +39,7 @@ SRCS		= 	srcs/main.c \
 				srcs/interactions/mouse.c \
 				srcs/interactions/mouse_tools.c \
 				srcs/interactions/inputs.c \
+				srcs/interactions/inputs4.c \
 				srcs/interactions/interface.c \
 				srcs/interactions/copy_delete.c \
 				srcs/render/anti_aliasing.c \
@@ -84,7 +86,6 @@ SRCS		= 	srcs/main.c \
 				srcs/vector/vectors_op1.c \
 				srcs/vector/vectors_op2.c \
 				srcs/vector/vectors_op3.c \
-				srcs/paraboloid.c \
 
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 

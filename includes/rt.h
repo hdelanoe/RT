@@ -275,6 +275,8 @@ struct					s_env
 	int					j;
 	double				u;
 	double				v;
+	double				strechx;
+	double				strechy;
 	unsigned int		ti;
 	int					text_flag;
 	int					bpp[22];
@@ -556,6 +558,7 @@ void					pxl_edit_tracer(t_env *e, int sample);
 
 int						proper_exit(t_env *e);
 void					inputs2(int keycode, t_env *e);
+void					inputs4(int keycode, t_env *e);
 void					choose_display_mode(t_env *e);
 void					print_info(t_env *e);
 void					reset_mov_rotate(t_env *e);

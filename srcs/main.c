@@ -27,6 +27,8 @@ void		default_env(t_env *e)
 	e->perlin.b = 0.02;
 	e->perlin.c = 0.05;
 	e->perlin.d = 0.5;
+	e->strechx = 1;
+	e->strechy = 1;
 	e->recursion = 3;
 }
 

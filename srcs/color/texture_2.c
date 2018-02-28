@@ -49,6 +49,8 @@ t_color		get_texture_info(unsigned char *text_data, t_env *e, int sl)
 	t_color		clr;
 
 	nb = (e->j * 4) + (e->i * sl * 4);
+	// if (nb > (int)ft_strlen((char*)text_data))
+	// 	nb = 0;
 	clr.b = text_data[nb];
 	clr.g = text_data[nb + 1];
 	clr.r = text_data[nb + 2];

@@ -97,8 +97,7 @@ int		key_functions(int keycode, t_env *e)
 	if (!inputs(keycode, e))
 		return (0);
 	inputs2(keycode, e);
-	if (keycode == KEY_PAD_ADD)
-		e->pet += 5;
+	inputs4(keycode, e);
 	ft_bzero(e->mlx.data, (e->width * e->height) * 4);
 	camera_transformation(e);
 	if (e->render_mode == 2)
