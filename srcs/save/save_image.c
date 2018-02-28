@@ -81,9 +81,9 @@ char		*get_time_to_str(int bl)
 	t = time(NULL);
 	tm = localtime(&t);
 	if (bl == 1)
-		name = ft_strdup("./save/screenshot/screenshot_");
+		name = ft_strdup("./images/screenshot_");
 	else
-		name = ft_strdup("./save/sceneshot/sceneshot_");
+		name = ft_strdup("./scenes/sceneshot/sceneshot_");
 	get_time_extend(&name, tm);
 	if (bl == 1)
 		tmp = ft_strdup(".bmp");
@@ -103,8 +103,7 @@ void		save_image(t_env *e)
 
 	y = e->height;
 	e->s_name = get_time_to_str(1);
-	mkdir("./save/", 0777);
-	mkdir("./save/screenshot/", 0777);
+	mkdir("./images/", 0777);
 	if (!(fd = open(e->s_name, O_CREAT | O_TRUNC | O_WRONLY, 0666)))
 		ft_kill("something is went with screenshot");
 	create_header(e, &header, &h_infos);

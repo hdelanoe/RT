@@ -50,6 +50,7 @@ void		put_int(char *name, int i, int fd)
 	tmp_2 = ft_strdup("\"");
 	tmp = ft_strjoin_fre(&tmp, &tmp_2, 1, 1);
 	write(fd, tmp, ft_strlen(tmp));
+	write(fd, "\n", 1);
 	free(tmp);
 }
 
@@ -73,6 +74,7 @@ void		put_cylinder_file(t_object *cylinder, int fd)
 	put_int("length", cylinder->lenght_max, fd);
 	write(fd, "\t\t", 2);
 	put_color(&cylinder->color, fd);
+	put_material(fd, cylinder);
 	write(fd, "\t\t}\n\t", 5);
 }
 
@@ -91,5 +93,6 @@ void		put_cube_file(t_object *cube, int fd)
 	put_axis("axis", &cube->axis, fd);
 	write(fd, "\n\t\t", 3);
 	put_color(&cube->color, fd);
+	put_material(fd, cube);
 	write(fd, "\t\t}\n\t", 5);
 }

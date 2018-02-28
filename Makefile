@@ -33,6 +33,7 @@ SRCS		= 	srcs/main.c \
 				srcs/save/put_save.c \
 				srcs/save/utils_save.c \
 				srcs/save/save_loop.c \
+				srcs/save/put_material.c \
 				srcs/interactions/user_interactions.c \
 				srcs/interactions/mouse.c \
 				srcs/interactions/mouse_tools.c \

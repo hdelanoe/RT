@@ -58,15 +58,14 @@ void		put_double(char *name, double color, int fd)
 
 void		put_cam_win_file(t_env *e, int fd)
 {
-
 	put_coord("camera_origin", &e->camera.origin, fd);
 	write(fd, "\t", 1);
 	put_coord("camera_lookat", &e->lookat, fd);
 	write(fd, "\t", 1);
 	put_int("window_width", (int)e->width, fd);
-	write(fd, "\n\t", 2);
+	write(fd, "\t", 1);
 	put_int("window_height", (int)e->height, fd);
-	write(fd, "\n\t", 2);
+	write(fd, "\t", 1);
 	put_int("recursion", (int)e->recursion, fd);
-	write(fd, "\n\t", 2);
+	write(fd, "\t", 1);
 }

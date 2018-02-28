@@ -612,5 +612,5 @@ void					put_cam_win_file(t_env *e, int fd);
 void					check_copy_lst(t_object *obj);
 void					apply_texture(t_env *e, t_object *object);
 void					put_loading_bar(t_env *e, int i);
-
+void					put_material(int fd, t_object *object);
 #endif

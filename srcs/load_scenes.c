@@ -76,16 +76,11 @@ void		check_existance(char *text, t_env *e)
 		ft_delete_light_lst(&e->light);
 		ft_printf("Chargement de la scene...\n");
 		default_env(e);
-		init_camera(e);
-		ft_bzero(e->mlx.data, (e->width * e->height) * 4);
-		mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr, e->mlx.img_ptr,
-		0, 0);
-		check_load(e);
-		camera_transformation(e);
-		init_stereo(e);
 		parsing(e, text);
-		ft_pthread(e, ray_tracer_void);
-		ft_printf("Scene chargée.\n");
+		mlx_destroy_window(e->mlx.mlx_ptr, e->mlx.win_ptr);
+		e->loading = 0;
+		e->mlx.mlx_ptr = NULL;
+		display_window(e);
 	}
 	else
 	{

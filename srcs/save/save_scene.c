@@ -23,6 +23,7 @@ void		put_glass_file(t_object *glass, int fd)
 	put_int("length", glass->lenght_max, fd);
 	write(fd, "\t\t", 2);
 	put_color(&glass->color, fd);
+	put_material(fd, glass);
 	write(fd, "\t\t}\n\t", 5);
 }
 
@@ -37,6 +38,7 @@ void		put_triangle_file(t_object *triangle, int fd)
 	put_coord("coord_3", &triangle->point_3, fd);
 	write(fd, "\t\t", 2);
 	put_color(&triangle->color, fd);
+	put_material(fd, triangle);
 	write(fd, "\t\t}\n\t", 5);
 }
 
@@ -53,6 +55,7 @@ void		put_pyramide_file(t_object *pyramide, int fd)
 	put_coord("coord_4", &pyramide->point_4, fd);
 	write(fd, "\t\t", 2);
 	put_color(&pyramide->color, fd);
+	put_material(fd, pyramide);
 	write(fd, "\t\t}\n\t", 5);
 }
 
@@ -86,8 +89,7 @@ void		save_scene(t_env *e)
 	int	fd;
 
 	e->s_name = get_time_to_str(0);
-	mkdir("./save/", 0777);
-	mkdir("./save/sceneshot/", 0777);
+	mkdir("./scenes/sceneshot/", 0777);
 	if (!(fd = open(e->s_name, O_CREAT | O_TRUNC | O_WRONLY, 0666)))
 		ft_kill("something is went wrong when saving scene");
 	write(fd, "{\n\t", 3);

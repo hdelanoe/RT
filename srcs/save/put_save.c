@@ -21,6 +21,7 @@ void		put_plane_file(t_object *plane, int fd)
 	put_axis("normal", &plane->normal, fd);
 	write(fd, "\n\t\t", 3);
 	put_color(&plane->color, fd);
+	put_material(fd, plane);
 	write(fd, "\t\t}\n\t", 5);
 }
 
@@ -49,6 +50,7 @@ void		put_cone_file(t_object *cone, int fd)
 	put_axis("axis", &cone->axis, fd);
 	write(fd, "\n\t\t", 3);
 	put_color(&cone->color, fd);
+	put_material(fd, cone);
 	write(fd, "\t\t}\n\t", 5);
 }
 
@@ -65,6 +67,7 @@ void		put_quad_file(t_object *quad, int fd)
 	put_coord("coord_4", &quad->point_4, fd);
 	write(fd, "\t\t", 2);
 	put_color(&quad->color, fd);
+	put_material(fd, quad);
 	write(fd, "\t\t}\n\t", 5);
 }
 
@@ -81,5 +84,6 @@ void		put_sphere_file(t_object *sphere, int fd)
 		write(fd, "\n\t\t", 3);
 	}
 	put_color(&sphere->color, fd);
+	put_material(fd, sphere);
 	write(fd, "\t\t}\n\t", 5);
 }
