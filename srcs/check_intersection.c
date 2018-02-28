@@ -123,8 +123,8 @@ t_color	light_intersection(t_env *e, t_light *light)
 	e->tmp_clr = set_color(light->color.b, light->color.g, light->color.r);
 	while (1)
 	{
-		if (tmp_object.id != e->id_object &&
-		ft_strcmp(tmp_object.type, "area_light")
+		if (tmp_object.id != e->id_object
+		&& ft_strcmp(tmp_object.type, "area_light")
 		&& sort_type(e, &tmp_object) && e->solution < e->distance_light_object
 		&& fabs(e->solution - e->distance_light_object) > 0.001)
 		{
@@ -132,9 +132,9 @@ t_color	light_intersection(t_env *e, t_light *light)
 				return (set_color(0, 0, 0));
 			tmp = c_double_mult(&tmp_object.color, 1 - tmp_object.absorbtion);
 			e->tmp_clr = c_c_mult(&light->color, &tmp);
-			if (tmp_object.sub_object != NULL)
-				light_sub_intersection(e, light, &tmp_object, &e->tmp_clr);
 		}
+		if (tmp_object.sub_object != NULL)
+			light_sub_intersection(e, light, &tmp_object, &e->tmp_clr);
 		if (tmp_object.next == NULL)
 			break ;
 		tmp_object = *tmp_object.next;

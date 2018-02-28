@@ -55,9 +55,9 @@ void		wrap_cylinder(t_env *e, t_object *object)
 	mult = v_v_mult(&object->center, &object->axis);
 	d = v_v_subs(&mult, &e->current_node);
 	e->u = 0.5 + atan2(d.z, d.x) / PI * 0.5;
-	e->v = d.y / (0 - object->lenght_max);
+	e->v = d.y / -object->lenght_max;
 	e->v = e->v - floor(e->v);
-	e->i = max((e->u * 2592), 0);
+	e->i = max((e->u * e->bpp[e->ti]), 0);
 	e->j = max((e->v * e->sl[e->ti]), 0);
 	e->current_color = get_texture_info(e->tx_dta[e->ti], e,
 			e->sl[e->ti]);
