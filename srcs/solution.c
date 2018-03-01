@@ -27,6 +27,8 @@ void	sphere_solution_norme(t_env *e, t_poly *p)
 
 int		sphere_solution(t_env *e, t_object *sphere, t_poly p)
 {
+	t_object tmp;
+
 	if (p.discriminant < 0)
 		return (0);
 	if (p.discriminant == 0)
@@ -43,8 +45,9 @@ int		sphere_solution(t_env *e, t_object *sphere, t_poly p)
 	sphere->node = v_v_add(&e->current_origin, &p.tmp_node);
 	p.tmp1 = (dot_product(&e->current_rayon, &sphere->normal) * e->solution)
 	+ dot_product(&p.object_rayon, &sphere->normal);
+	tmp = *sphere->sub_object;
 	if (sphere->cap == 1 && p.tmp1 < 0)
-		return (0);
+		return (disk_intersection(e, &tmp, sphere));
 	sphere->node = v_v_add(&e->current_origin, &p.tmp_node);
 	sphere->node_normal = v_v_subs(&sphere->node, &sphere->center);
 	sphere->node_normal = normalize(&sphere->node_normal);

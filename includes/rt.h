@@ -490,7 +490,8 @@ int						plane_intersection(t_env *e, t_object *plane);
 int						glass_intersection(t_env *e, t_object *parent);
 int						sphere_intersection(t_env *e, t_object *sphere);
 int						cylinder_intersection(t_env *e, t_object *cylinder);
-int						disk_intersection(t_env *e, t_object *disk);
+int						disk_intersection(t_env *e, t_object *disk,
+	t_object *parent);
 int						cone_intersection(t_env *e, t_object *cone);
 int						quad_intersection(t_env *e, t_object *quad);
 int						cube_intersection(t_env *e, t_object *cube);

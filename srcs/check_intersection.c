@@ -56,7 +56,7 @@ int		sort_type(t_env *e, t_object *object)
 	else if (!(ft_strcmp(object->type, "paraboloid")))
 		intersect = paraboloid_intersection(e, object);
 	else if (!(ft_strcmp(object->type, "disk")))
-		intersect = disk_intersection(e, object);
+		intersect = disk_intersection(e, object, NULL);
 	else if (!(ft_strcmp(object->type, "area_light")))
 		intersect = quad_intersection(e, object);
 	return (intersect);
@@ -77,7 +77,7 @@ void	check_intersection(t_env *e, t_object *object, t_object *parent)
 			wrap_obj(e, object, parent);
 		e->intersect = 1;
 	}
-	if (object && object->sub_object)
+	if (object && object->sub_object && ft_strcmp(object->type, "sphere"))
 	{
 		sub = *object->sub_object;
 		while (1)
@@ -99,6 +99,8 @@ void	light_sub_intersection(t_env *e, t_light *light,
 	sub = *object->sub_object;
 	while (1)
 	{
+		if (!ft_strcmp(object->type, "sphere"))
+			return ;
 		if (sub.id != e->id_object && ft_strcmp(sub.type, "area_light")
 		&& sort_type(e, &sub) && e->solution < e->distance_light_object
 		&& fabs(e->solution - e->distance_light_object) > 0.001)

@@ -62,7 +62,7 @@ int		cylinder_intersection(t_env *e, t_object *cylinder)
 	return (cylinder_solution(e, cylinder, p));
 }
 
-int		disk_intersection(t_env *e, t_object *disk)
+int		disk_intersection(t_env *e, t_object *disk, t_object *parent)
 {
 	t_vector	distance;
 	double		d;
@@ -72,7 +72,14 @@ int		disk_intersection(t_env *e, t_object *disk)
 		distance = v_v_subs(&disk->node, &disk->point);
 		d = dot_product(&distance, &distance);
 		if (d <= (disk->radius * disk->radius))
+		{
+			if (parent)
+			{
+				parent->node = disk->node;
+				parent->node_normal = disk->node_normal;
+			}
 			return (1);
+		}
 	}
 	return (0);
 }

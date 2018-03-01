@@ -33,7 +33,7 @@ void		create_cap_sphere(t_object *sphere)
 
 	disk = init_cap(sphere);
 	disk->point = sphere->center;
-	disk->normal = v_double_mult(&sphere->normal, -1.00);
+	disk->normal = v_double_mult(&sphere->normal, 1.00);
 	add_new_object(&sphere->sub_object, disk);
 }
 
