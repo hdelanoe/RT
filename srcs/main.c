@@ -77,11 +77,10 @@ void		display_window(t_env *e)
 	e->mlx.mlx_ptr = mlx_init();
 	e->mlx.win_ptr = mlx_new_window(e->mlx.mlx_ptr, e->width, e->height, "RT");
 	e->mlx.img_ptr = mlx_new_image(e->mlx.mlx_ptr, e->width, e->height);
-	if (e->loading == 0)
-		load_text_loading(e);
-	load_texture(e);
 	e->mlx.data = (unsigned char*)mlx_get_data_addr(e->mlx.img_ptr,
 		&e->mlx.bpp, &e->mlx.l_size, &e->mlx.endian);
+	load_text_loading(e);
+	load_texture(e);
 	if (!e->object)
 	{
 		ft_printf("Scene can't be empty.\n");

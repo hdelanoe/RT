@@ -618,5 +618,6 @@ void					apply_texture(t_env *e, t_object *object);
 void					put_loading_bar(t_env *e, int i);
 void					put_material(int fd, t_object *object);
 void					wrap_cone(t_env *e, t_object *object);
+void					ft_pthread_no_load(t_env *e, void *(*f)(void *param));
 
 #endif

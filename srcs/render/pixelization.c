@@ -51,3 +51,9 @@ void		pxl_tracer(t_env *e, int sample)
 		g.y += sample;
 	}
 }
+
+void	*stereo_tracer_void(void *e)
+{
+	stereo_tracer(e);
+	return (NULL);
+}

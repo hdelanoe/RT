@@ -1,0 +1,62 @@
+{
+	"camera_origin": {"x": "0", "y": "200", "z": "-800"},
+	"camera_lookat": {"x": "0", "y": "0", "z": "0"},
+	"window_width": "1200"
+	"window_height": "700"
+	"recursion": "6"
+	"sphere": {
+		"coord": {"x": "0", "y": "0", "z": "-200"},
+		"radius": "80"
+"color": {"r": "0.6", "g": "0.6", "b": "0.8"},
+		"material": {
+			"ambient": "0"
+			"diffuse": "0"
+			"specular": "0"
+			"reflect": "1"
+			"refract": "1"
+			"absorbtion": "0"
+			"radius": "80"
+			"texture": "0"
+			"bump": "0"
+			"indice": "1"
+			}
+		}
+	"sphere": {
+		"coord": {"x": "200", "y": "0", "z": "200"},
+		"radius": "150"
+"color": {"r": "0.1", "g": "0.1", "b": "0.1"},
+		"material": {
+			"ambient": "0"
+			"diffuse": "0"
+			"specular": "1"
+			"reflect": "1"
+			"refract": "0"
+			"absorbtion": "0"
+			"radius": "150"
+			"texture": "0"
+			"bump": "0"
+			"indice": "1"
+			}
+		}
+	"sphere": {
+		"coord": {"x": "0", "y": "0", "z": "0"},
+		"radius": "4000"
+"color": {"r": "1", "g": "1", "b": "1"},
+		"material": {
+			"ambient": "1"
+			"diffuse": "0"
+			"specular": "0"
+			"reflect": "0"
+			"refract": "0"
+			"absorbtion": "0"
+			"radius": "4000"
+			"texture": "3"
+			"bump": "0"
+			"indice": "1"
+			}
+		}
+	"light": {
+		"coord": {"x": "-1000", "y": "2000", "z": "-2000"},
+		"color": {"r": "1", "g": "1", "b": "1"},
+		}
+	}

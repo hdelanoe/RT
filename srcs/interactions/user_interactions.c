@@ -23,11 +23,7 @@ void	choose_display_mode(t_env *e)
 	else if (e->stereo_flag)
 		ft_pthread(e, stereo_tracer_void);
 	else
-	{
-		ft_putstr("Wait for render...\n");
-		ft_pthread(e, ray_tracer_void);
-		ft_putstr("Render done!\n");
-	}
+		ft_pthread_no_load(e, ray_tracer_void);
 	e->move_x = 0;
 	e->move_y = 0;
 	e->move_z = 0;
