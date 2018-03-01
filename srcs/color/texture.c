@@ -14,8 +14,8 @@
 
 void		load_texture5(t_env *e)
 {
-	if (!((e->text_img[13] = (unsigned char*)mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/2k_sun.xpm", &(e->sl[13]), &e->bpp[13]))))
+	if (!((e->text_img[13] = (unsigned char*)mlx_xpm_file_to_image(
+	e->mlx.mlx_ptr, "./textures/2k_sun.xpm", &(e->sl[13]), &e->bpp[13]))))
 		ft_kill("Texture error");
 	e->tx_dta[13] = (unsigned char*)mlx_get_data_addr(e->text_img[13], &e->naz,
 	&e->naz, &e->end + 1);
@@ -38,8 +38,8 @@ void		load_texture5(t_env *e)
 
 void		load_texture4(t_env *e)
 {
-	if (!((e->text_img[14] = (unsigned char*)mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/2k_mars.xpm", &(e->sl[14]), &e->bpp[14]))))
+	if (!((e->text_img[14] = (unsigned char*)mlx_xpm_file_to_image(
+	e->mlx.mlx_ptr, "./textures/2k_mars.xpm", &(e->sl[14]), &e->bpp[14]))))
 		ft_kill("Texture error");
 	e->tx_dta[14] = (unsigned char*)mlx_get_data_addr(e->text_img[14], &e->naz,
 	&e->naz, &e->end + 1);
@@ -67,8 +67,8 @@ void		load_texture4(t_env *e)
 
 void		load_texture3(t_env *e)
 {
-	if (!((e->text_img[4] = (unsigned char*)mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/wall.xpm", &(e->sl[4]), &e->bpp[4]))))
+	if (!((e->text_img[4] = (unsigned char*)mlx_xpm_file_to_image(
+	e->mlx.mlx_ptr, "./textures/wall.xpm", &(e->sl[4]), &e->bpp[4]))))
 		ft_kill("Texture error");
 	e->tx_dta[4] = (unsigned char*)mlx_get_data_addr(e->text_img[4], &e->naz,
 	&e->naz, &e->end + 1);
@@ -91,8 +91,8 @@ void		load_texture3(t_env *e)
 
 void		load_texture2(t_env *e)
 {
-	if (!((e->text_img[7] = (unsigned char*)mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/metal.xpm", &(e->sl[7]), &e->bpp[7]))))
+	if (!((e->text_img[7] = (unsigned char*)mlx_xpm_file_to_image(
+	e->mlx.mlx_ptr, "./textures/metal.xpm", &(e->sl[7]), &e->bpp[7]))))
 		ft_kill("Texture error");
 	e->tx_dta[7] = (unsigned char*)mlx_get_data_addr(e->text_img[7], &e->naz,
 	&e->naz, &e->end + 1);
@@ -120,9 +120,9 @@ void		load_texture2(t_env *e)
 
 void		load_texture(t_env *e)
 {
-	 check_load(e);
-	if (!((e->text_img[0] = (unsigned char*)mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/2k_earth.xpm", &e->sl[0], &e->bpp[0]))))
+	check_load(e);
+	if (!((e->text_img[0] = (unsigned char*)mlx_xpm_file_to_image(
+	e->mlx.mlx_ptr, "./textures/2k_earth.xpm", &e->sl[0], &e->bpp[0]))))
 		ft_kill("Texture error");
 	e->tx_dta[0] = (unsigned char*)mlx_get_data_addr(e->text_img[0], &e->naz,
 	&e->naz, &e->end + 1);
