@@ -90,17 +90,16 @@ void		check_existance(char *text, t_env *e)
 void		read_scene_files(t_env *e)
 {
 	DIR				*p;
-	// struct dirent	*pp;
+	struct dirent	*pp;
 	char			*tmp;
 
 	p = opendir("./scenes/");
 	ft_printf("\nListe des scenes :\n\n");
-	system("ls -l */*rt | cut -d '/' -f 2");
-	// if (p != NULL)
-	// {
-	// 	while ((pp = readdir(p)) != NULL)
-	// 		ft_printf("%s\n", pp->d_name);
-	// }
+	if (p != NULL)
+	{
+		while ((pp = readdir(p)) != NULL)
+			ft_printf("%s\n", pp->d_name);
+	}
 	e->loading = 0;
 	ft_printf("\nEntrez une scene a changer :\n");
 	if (get_next_line(fileno(stdin), &e->argv_cpy) == 1)
