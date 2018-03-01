@@ -16,6 +16,7 @@
 # include "rt.h"
 # include <unistd.h>
 # include <fcntl.h>
+# include <dirent.h>
 
 typedef struct s_json		t_json;
 typedef struct s_parsing	t_parsing;
@@ -37,6 +38,9 @@ struct						s_parsing
 	char					*buff;
 	char					*stock;
 	char					*tmp;
+	char					*tmp_2;
+	DIR						*directory;
+	struct dirent			*name;
 	char					**v[4096];
 	char					**f[4096];
 	t_vector				tmp1;
@@ -58,7 +62,7 @@ void						ft_print_err(int argc);
 void						ft_help(void);
 void						ft_kill(char *text);
 int							check_args(char *argv);
-void						open_close(char *src_file);
+int						open_close(char *src_file);
 void						exit_rt(int flag);
 t_vector					parse_point(t_json *membre);
 t_vector					parse_normal(t_json *membre);

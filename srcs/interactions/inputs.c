@@ -38,12 +38,14 @@ void	inputs2(int keycode, t_env *e)
 		e->filter_flag = 6;
 	else if (keycode == KEY_Y)
 		e->text_flag = e->text_flag == 1 ? 0 : 1;
-	else if (keycode == KEY_L)
-	{
-		if (e->copy)
-			check_copy_lst(e->copy);
-		read_scene_files(e);
-	}
+	else if (keycode == KEY_PAD_ADD && e->pet <= 1000)
+		e->pet = e->pet + 5;
+	else if (keycode == KEY_PAD_SUB && e->pet >= 5)
+		e->pet = e->pet - 5;
+	else if (keycode == KEY_PAD_EQUAL && e->strechx <= 220)
+		e->strechx += 5;
+	else if (keycode == KEY_PAD_DIVIDE && e->strechx >= 5)
+		e->strechx -= 5;
 }
 
 void	inputs3(int keycode, t_env *e)
@@ -61,8 +63,6 @@ void	inputs3(int keycode, t_env *e)
 		e->recursion++;
 		e->recursion = e->recursion == 9 ? 1 : e->recursion;
 	}
-	if (keycode == KEY_K)
-		read_obj_files(e);
 }
 
 void	inputs_conditions(int keycode, t_env *e)

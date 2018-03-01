@@ -102,21 +102,18 @@ int		parsing(t_env *e, char *src_file)
 {
 	t_parsing	p;
 
-	p.stock = NULL;
-	open_close(src_file);
 	if ((p.fd = open(src_file, O_RDONLY)) < 0)
-		ft_kill("This file doesn't exist or bad typography.");
-	p.j = 0;
+	{
+		ft_putendl("This file doesn't exist or bad typography.");
+		return (0);
+	}
+	ft_putstr("Wait for parsing...\n");
 	while (get_next_line(p.fd, &p.buff) == 1)
 	{
-		p.j = 1;
-		p.tmp = p.stock;
-		p.stock = ft_strjoin_free(&p.tmp, &p.buff);
+		p.tmp = e->stock;
+		e->stock = ft_strjoin_free(&p.tmp, &p.buff);
 		ft_strdel(&p.tmp);
 	}
 	close(p.fd);
-	if (p.i >= 0)
-		create_tree(e, &p.stock);
-	free(p.stock);
-	return (p.j);
+	return (1);
 }

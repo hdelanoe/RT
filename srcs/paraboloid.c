@@ -71,8 +71,6 @@ int			paraboloid_solution(t_env *e, t_object *para, t_poly p)
 	para->node = v_v_add(&e->current_origin, &p.tmp_node);
 	p.tmp1 = (dot_product(&e->current_rayon, &para->axis) * e->solution)
 	+ dot_product(&p.object_rayon, &para->axis);
-	// if (p.tmp1 > (para->lenght_max * 20))
-	// 	return (0);
 	p.tmp_node_normal1 = v_v_subs(&para->node, &para->center);
 	p.tmp_node_normal2 = v_double_mult(&para->axis,
 		(p.tmp1 + para->lenght_max));

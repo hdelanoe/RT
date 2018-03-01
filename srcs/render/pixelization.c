@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-void		pixel_vp_init(t_grid *g, t_env *e)
+void	pixel_vp_init(t_grid *g, t_env *e)
 {
 	g->xx = g->x;
 	g->yy = g->y;
@@ -24,7 +24,7 @@ void		pixel_vp_init(t_grid *g, t_env *e)
 	e->camera.rayon = normalize(&e->camera.rayon);
 }
 
-void		pxl_tracer(t_env *e, int sample)
+void	pxl_tracer(t_env *e, int sample)
 {
 	t_grid		g;
 	t_color		color;

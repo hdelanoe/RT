@@ -61,26 +61,3 @@ void	ft_pthread(t_env *e, void *(*f)(void *param))
 	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
 	e->mlx.img_ptr, 0, 0);
 }
-
-void	ft_pthread_no_load(t_env *e, void *(*f)(void *param))
-{
-	t_env		tab[4];
-	pthread_t	t[4];
-	int			i;
-
-	i = 0;
-	while (i < 4)
-	{
-		ft_memcpy((void*)&tab[i], (void*)e, sizeof(t_env));
-		tab[i].begin = e->height / 4 * i;
-		tab[i].fin = e->height / 4 * (i + 1);
-		tab[i].fin = i == 3 ? e->height : tab[i].fin;
-		pthread_create(&t[i], NULL, f, &tab[i]);
-		i++;
-	}
-	while (i--)
-		pthread_join(t[i], NULL);
-	e->loading = 1;
-	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
-	e->mlx.img_ptr, 0, 0);
-}

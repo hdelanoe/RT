@@ -45,7 +45,6 @@
 # include "mlx_key_macos.h"
 # include <sys/types.h>
 # include <sys/stat.h>
-# include <dirent.h>
 
 typedef struct s_env	t_env;
 typedef struct s_mlx	t_mlx;
@@ -220,6 +219,7 @@ struct					s_env
 	t_vector			object_normal;
 	t_color				current_color;
 	t_vector			light_rayon;
+	char				*stock;
 	double				width;
 	double				height;
 	int					id_object;
@@ -399,14 +399,13 @@ void					update_system_translation(t_env *e,
 						t_matrix4x4 *rot);
 t_matrix4x4				translation(t_env *e, t_matrix4x4 *rot);
 
+int						parsing(t_env *e, char *src_file);
 void					get_object(t_env *e, t_json *json);
 void					add_new_member(t_json **list, t_json *new_member);
 void					create_tree(t_env *e, char **str);
-int						parsing(t_env *e, char *src_file);
 void					add_new_object(t_object **list, t_object *new_object);
 
 void					parse_indice(char **material, t_object *object);
-void					debug_object(t_object *tmp);
 void					create_cap_sphere(t_object *sphere);
 void					create_child_glass(t_object *glass);
 void					create_glass(t_env *e, t_json *json);
@@ -419,7 +418,6 @@ void					create_cylinder(t_env *e, t_json *json);
 void					create_disk(t_env *e, t_json *json);
 void					create_cap_cone(t_object *cone);
 void					create_cone(t_env *e, t_json *json);
-void					create_torus(t_env *e, t_json *json);
 void					create_cube(t_env *e, t_json *json);
 void					create_pyramide(t_env *e, t_json *json);
 void					create_cap_cube(t_object *cb);
@@ -465,7 +463,6 @@ void					choose_mercury(t_object *object);
 void					choose_earth(t_object *object);
 void					choose_saturn(t_object *object);
 void					add_new_light(t_light **list, t_light *new_light);
-void					debug_light(t_light *tmp);
 void					create_light(t_env *e, t_json *json);
 void					fill_area_light_infos(t_json *tmp,
 						t_object *al_object, t_light *al_light);
@@ -473,9 +470,10 @@ void					create_area_light(t_env *e, t_json *json);
 double					get_content_from_member(char *name, t_json **membre);
 void					free_content(t_json *member);
 double					max(double a, double b);
+
+int						cast_ray(t_env *e, t_vector rayon, t_vector origin);
 void					init_rayon_values(t_env *e,
 						t_vector rayon, t_vector origin);
-int						cast_ray(t_env *e, t_vector rayon, t_vector origin);
 int						cast_reflect_ray(t_env *e, t_rayon incident);
 int						cast_refract_ray(t_env *e, t_rayon origin);
 void					get_object_values(t_env *e, t_object *object,
@@ -484,7 +482,6 @@ int						sort_type(t_env *e, t_object *object);
 void					check_intersection(t_env *e, t_object *object,
 						t_object *parent);
 t_color					light_intersection(t_env *e, t_light *light);
-
 void					save_node(t_object *buff, t_object *source, int *tmp);
 int						plane_intersection(t_env *e, t_object *plane);
 int						glass_intersection(t_env *e, t_object *parent);
@@ -559,7 +556,7 @@ void					pxl_edit_tracer(t_env *e, int sample);
 
 int						proper_exit(t_env *e);
 void					inputs2(int keycode, t_env *e);
-void					inputs4(int keycode, t_env *e);
+int						inputs4(int keycode, t_env *e);
 void					choose_display_mode(t_env *e);
 void					print_info(t_env *e);
 void					reset_mov_rotate(t_env *e);
@@ -582,10 +579,12 @@ int						copy_object(t_env *e, int x, int y);
 int						delete_object(t_env *e, int x, int y);
 void					save_image(t_env *e);
 void					save_scene(t_env *e);
+int						print_list_scenes(char *file, char *path);
+int						print_list_obj(char *file, char *path);
 char					*get_time_to_str(int bl);
-void					read_scene_files(t_env *e);
-void					read_obj_files(t_env *e);
-void					check_existance(char *text, t_env *e);
+int						read_scene_files(t_env *e);
+int						read_obj_files(t_env *e);
+int						check_existance(char *text, t_env *e);
 t_object				*ft_remove_begin(t_object **prev, t_object **ptr);
 void					ft_delete_obj_lst(t_object **beg_obj);
 t_rayon					init_ray(t_env *e);
