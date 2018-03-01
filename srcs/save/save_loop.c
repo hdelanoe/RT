@@ -12,6 +12,38 @@
 
 #include "../includes/rt.h"
 
+void put_arealight_file(t_object *area, int fd)
+{
+	put_type_object(area->type, fd);
+	write(fd, "{\n\t\t", 4);
+	put_coord("coord_1", &area->point, fd);
+	write(fd, "\t\t", 2);
+	put_coord("coord_2", &area->point_2, fd);
+	write(fd, "\t\t", 2);
+	put_coord("coord_3", &area->point_3, fd);
+	write(fd, "\t\t", 2);
+	put_coord("coord_4", &area->point_4, fd);
+	write(fd, "\t\t", 2);
+	put_color(&area->color, fd);
+	put_material(fd, area);
+	write(fd, "\t\t}\n\t", 5);
+}
+
+void put_paraboloid_file(t_object *paraboloid, int fd)
+{
+	put_type_object(paraboloid->type, fd);
+	write(fd, "{\n\t\t", 4);
+	put_coord("coord", &paraboloid->center, fd);
+	write(fd, "\t\t", 2);
+	put_axis("axis", &paraboloid->axis, fd);
+	write(fd, "\n\t\t", 3);
+	put_int("length", paraboloid->lenght_max, fd);
+	write(fd, "\t\t", 2);
+	put_color(&paraboloid->color, fd);
+	put_material(fd, paraboloid);
+	write(fd, "\t\t}\n\t", 5);
+}
+
 void		put_obj_loop(int fd, t_object *tmp)
 {
 	if (!ft_strcmp("quad", tmp->type))
@@ -32,6 +64,10 @@ void		put_obj_loop(int fd, t_object *tmp)
 		put_triangle_file(tmp, fd);
 	if (!ft_strcmp("pyramide", tmp->type))
 		put_pyramide_file(tmp, fd);
+	if (!ft_strcmp("area_light", tmp->type))
+		put_arealight_file(tmp, fd);
+	if (!ft_strcmp("paraboloid", tmp->type))
+		put_paraboloid_file(tmp, fd);
 }
 
 void		put_double(char *name, double color, int fd)

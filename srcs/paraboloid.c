@@ -36,7 +36,7 @@ void		paraboloid_attribut(t_object *object, t_json *tmp)
 		object->center = parse_point(tmp->member);
 	else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
 		object->axis = parse_normal(tmp->member);
-	else if (!(ft_strcmp(tmp->name, "lenght")) && tmp->content)
+	else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
 		object->lenght_max = ft_atod(tmp->content);
 	else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 		object->color = parse_color(tmp->member);
