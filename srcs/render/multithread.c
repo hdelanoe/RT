@@ -33,12 +33,6 @@ void	*pxl_tracer_vd2(void *e)
 	return (NULL);
 }
 
-void	*stereo_tracer_void(void *e)
-{
-	stereo_tracer(e);
-	return (NULL);
-}
-
 void	ft_pthread(t_env *e, void *(*f)(void *param))
 {
 	t_env		tab[4];

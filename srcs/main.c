@@ -77,11 +77,10 @@ void		display_window(t_env *e)
 	e->mlx.mlx_ptr = mlx_init();
 	e->mlx.win_ptr = mlx_new_window(e->mlx.mlx_ptr, e->width, e->height, "RT");
 	e->mlx.img_ptr = mlx_new_image(e->mlx.mlx_ptr, e->width, e->height);
-	if (e->loading == 0)
-		load_text_loading(e);
-	load_texture(e);
 	e->mlx.data = (unsigned char*)mlx_get_data_addr(e->mlx.img_ptr,
 		&e->mlx.bpp, &e->mlx.l_size, &e->mlx.endian);
+	load_text_loading(e);
+	load_texture(e);
 	if (!e->object)
 	{
 		ft_printf("Scene can't be empty.\n");
@@ -111,11 +110,21 @@ int			main(int argc, char **argv)
 	default_env(e);
 	if (argc != 2)
 		ft_print_err(argc);
-	e->argv_cpy = argv[1];
-	if (!(check_args(e->argv_cpy)))
-		ft_kill("Bad file, check your scnene name");
-	ft_putstr("Wait for parsing...\n");
-	parsing(e, e->argv_cpy);
-	display_window(e);
+	e->i = -1;
+	while (argv[1][++e->i])
+	{
+		if (argv[1][e->i] == '.'
+			&& (argv[1][e->i + 1] != 'r' || argv[1][e->i + 2] != 't'))
+		{
+			ft_printf("%s is not a valid scene.\n", argv[1]);
+			ft_kill("Please check the .rt format in \"input.txt\".");
+		}
+	}
+	if (parsing(e, argv[1]))
+	{
+		create_tree(e, &e->stock);
+		ft_strdel(&e->stock);
+		display_window(e);
+	}
 	return (0);
 }

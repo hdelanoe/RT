@@ -12,7 +12,7 @@
 
 #include "../includes/rt.h"
 
-void		ft_delete_obj_lst(t_object **beg_obj)
+void	ft_delete_obj_lst(t_object **beg_obj)
 {
 	t_object *ptr;
 	t_object *prev;
@@ -35,7 +35,7 @@ void		ft_delete_obj_lst(t_object **beg_obj)
 	}
 }
 
-t_light		*ft_remove_light_begin(t_light **prev, t_light **ptr)
+t_light	*ft_remove_light_begin(t_light **prev, t_light **ptr)
 {
 	t_light *begin_object;
 
@@ -47,7 +47,7 @@ t_light		*ft_remove_light_begin(t_light **prev, t_light **ptr)
 	return (begin_object);
 }
 
-void		ft_delete_light_lst(t_light **beg_obj)
+void	ft_delete_light_lst(t_light **beg_obj)
 {
 	t_light *ptr;
 	t_light *prev;
@@ -68,51 +68,49 @@ void		ft_delete_light_lst(t_light **beg_obj)
 	}
 }
 
-void		check_existance(char *text, t_env *e)
+int		check_existance(char *text, t_env *e)
 {
-	if (access(text, F_OK) != -1)
+	if (parsing(e, text))
 	{
 		ft_delete_obj_lst(&e->object);
 		ft_delete_light_lst(&e->light);
 		ft_printf("Chargement de la scene...\n");
 		default_env(e);
-		parsing(e, text);
+		create_tree(e, &e->stock);
+		ft_strdel(&e->stock);
 		mlx_destroy_window(e->mlx.mlx_ptr, e->mlx.win_ptr);
 		e->loading = 0;
 		e->mlx.mlx_ptr = NULL;
 		display_window(e);
+		return (1);
 	}
-	else
-	{
-		ft_printf("This file doesn't exist. Loading scene aborted.\n");
-	}
-	free(e->argv_cpy);
+	return (0);
 }
 
-void		read_scene_files(t_env *e)
+int		read_scene_files(t_env *e)
 {
-	DIR				*p;
-	struct dirent	*pp;
-	char			*tmp;
+	char	*tmp;
 
-	p = opendir("./scenes/");
 	ft_printf("\nListe des scenes :\n\n");
-	if (p != NULL)
-	{
-		while ((pp = readdir(p)) != NULL)
-			ft_printf("%s\n", pp->d_name);
-	}
-	e->loading = 0;
-	ft_printf("\nEntrez une scene a changer :\n");
+	if (!print_list_scenes("scenes", "."))
+		return (0);
+	ft_printf("\nEntrez une scene a charger :\n");
 	if (get_next_line(fileno(stdin), &e->argv_cpy) == 1)
 	{
+		if (!e->argv_cpy[0])
+			return (0);
 		tmp = ft_strdup("./scenes/");
 		e->argv_cpy = ft_strjoin_fre(&tmp, &e->argv_cpy, 1, 1);
-		check_existance(e->argv_cpy, e);
+		if (!check_existance(e->argv_cpy, e))
+		{
+			ft_strdel(&e->argv_cpy);
+			return (0);
+		}
+		ft_strdel(&e->argv_cpy);
 	}
 	else
 		ft_printf("Error input scene");
-	closedir(p);
 	if (e->copy)
 		e->copy = NULL;
+	return (1);
 }

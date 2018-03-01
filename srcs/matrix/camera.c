@@ -78,7 +78,8 @@ void	viewplane_transformation(t_env *e)
 
 	tmp_vpx = v_double_mult(&e->camera.x_vector, (e->width * 0.5));
 	tmp_vpy = v_double_mult(&e->camera.y_vector, (e->height * 0.5));
-	tmp_vpz = v_double_mult(&e->camera.z_vector, (e->camera.distance));
+	tmp_vpz = v_double_mult(&e->camera.z_vector,
+		(e->camera.distance));
 	e->viewplane_point_up_left = v_v_add(&tmp_vpz, &tmp_vpy);
 	e->viewplane_point_up_left = v_v_add(&e->camera.origin,
 			&e->viewplane_point_up_left);

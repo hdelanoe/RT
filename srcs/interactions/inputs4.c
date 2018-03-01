@@ -12,14 +12,23 @@
 
 #include "rt.h"
 
-void	inputs4(int keycode, t_env *e)
+int	inputs4(int keycode, t_env *e)
 {
-	if (keycode == KEY_PAD_ADD && e->pet <= 1000)
-		e->pet = e->pet + 5;
-	if (keycode == KEY_PAD_SUB && e->pet >= 5)
-		e->pet = e->pet - 5;
-	else if (keycode == KEY_PAD_EQUAL && e->strechx <= 220)
-		e->strechx += 5;
-	else if (keycode == KEY_PAD_DIVIDE && e->strechx >= 5)
-		e->strechx -= 5;
+	if (keycode == KEY_L)
+	{
+		if (e->copy)
+			check_copy_lst(e->copy);
+		if (read_scene_files(e))
+			return (1);
+		else
+			return (0);
+	}
+	else if (keycode == KEY_K)
+	{
+		if (read_obj_files(e))
+			return (1);
+		else
+			return (0);
+	}
+	return (1);
 }

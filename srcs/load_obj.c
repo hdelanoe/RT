@@ -12,77 +12,106 @@
 
 #include "rt.h"
 
-void		read_obj(t_env *e, t_parsing *p, char *text)
+void	free_obj(t_parsing *p)
+{
+	p->i = -1;
+	while (++p->i < 4096)
+	{
+		p->j = -1;
+		while (p->f[p->i] && p->f[p->i][++p->j])
+			free(p->f[p->i][p->j]);
+		p->j = -1;
+		while (p->v[p->i] && p->v[p->i][++p->j])
+			free(p->v[p->i][p->j]);
+		free(p->f[p->i]);
+		free(p->v[p->i]);
+	}
+}
+
+int		read_obj(t_env *e, t_parsing *p, char *text)
 {
 	if ((p->fd = open(text, O_RDONLY)) < 0)
-		ft_kill("This file doesn't exist or bad typography.");
+		return (0);
+	ft_printf("Loading object...\n");
 	while (get_next_line(p->fd, &p->buff) == 1)
 	{
 		if (p->i >= 4096 || p->j >= 4096)
 		{
 			free(e->argv_cpy);
 			ft_printf("Sorry, %s is too big!\n", text);
-			return ;
+			return (0);
 		}
 		if (p->buff[0] == 'v' && p->buff[1] == ' ')
-		{
-			p->v[p->i] = ft_strsplit(p->buff, ' ');
-			p->i++;
-		}
+			p->v[++p->i] = ft_strsplit(p->buff, ' ');
 		if (p->buff[0] == 'f')
-		{
-			p->f[p->j] = ft_strsplit(p->buff, ' ');
-			p->j++;
-		}
+			p->f[++p->j] = ft_strsplit(p->buff, ' ');
+		ft_strdel(&p->buff);
 	}
 	close(p->fd);
+	parsing_obj(e, p->v, p->f);
+	free_obj(p);
+	return (1);
 }
 
-void		check_line(char *text, t_env *e)
+int		check_line(char *text, t_env *e)
 {
 	t_parsing	p;
 
-	p.i = 0;
-	p.j = 0;
+	p.i = -1;
+	p.j = -1;
 	ft_bzero(p.f, sizeof(char***) * 4096);
 	ft_bzero(p.v, sizeof(char***) * 4096);
-	ft_printf("Chargement de l'objet...\n");
-	read_obj(e, &p, text);
-	parsing_obj(e, p.v, p.f);
+	if (!ft_strcmp(ft_strstr(text, ".rt"), ".rt"))
+	{
+		if (!parsing(e, text))
+			return (0);
+		create_tree(e, &e->stock);
+		ft_strdel(&e->stock);
+	}
+	else if (ft_strcmp(ft_strstr(text, ".obj"), ".obj")
+		&& !read_obj(e, &p, text))
+	{
+		ft_printf("Sorry, %s is not a valid object\n", text);
+		return (0);
+	}
 	ft_bzero(e->mlx.data, (e->width * e->height) * 4);
+	e->loading = 0;
 	ft_pthread(e, ray_tracer_void);
-	ft_printf("Object chargé.\n");
-	free(e->argv_cpy);
+	ft_printf("Object loaded.\n");
+	ft_strdel(&e->argv_cpy);
+	return (1);
 }
 
-void		read_obj_files(t_env *e)
+int		read_obj_files(t_env *e)
 {
-	DIR				*p;
-	struct dirent	*pp;
 	char			*tmp;
 
-	p = opendir("./object/");
 	ft_printf("\nListe des obj :\n\n");
-	if (p != NULL)
-	{
-		while ((pp = readdir(p)) != NULL)
-			ft_printf("%s\n", pp->d_name);
-	}
-	ft_printf("\nEntrez un objet a charger :\n");
+	if (!print_list_obj("object", "."))
+		return (0);
+	e->loading = 0;
+	ft_printf("\nPlease choose an object to load :\n");
 	if (get_next_line(fileno(stdin), &e->argv_cpy) == 1)
 	{
+		if (!e->argv_cpy[0])
+			return (0);
 		tmp = ft_strdup("./object/");
 		e->argv_cpy = ft_strjoin_fre(&tmp, &e->argv_cpy, 1, 1);
-		check_line(e->argv_cpy, e);
+		if (!check_line(e->argv_cpy, e))
+		{
+			ft_strdel(&e->argv_cpy);
+			return (0);
+		}
+		ft_strdel(&e->argv_cpy);
 	}
 	else
 		ft_printf("Error input obj");
-	closedir(p);
 	if (e->copy)
 		e->copy = NULL;
+	return (1);
 }
 
-void		check_load(t_env *e)
+void	check_load(t_env *e)
 {
 	if (e->loading == 1)
 		return ;
