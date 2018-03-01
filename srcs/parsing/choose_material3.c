@@ -26,20 +26,19 @@ void	choose_cave(t_object *object)
 	object->texture = 4;
 }
 
+void	choose_space(t_object *object)
+{
+	object->ambient = 1;
+	object->skybox = 1;
+	object->texture = 2;
+}
+
 void	choose_sun(t_object *object)
 {
 	object->ambient = 1;
 	object->specular = 0;
-	object->absorbtion = 0.8;
 	object->texture = 5;
-}
-
-void	choose_earth(t_object *object)
-{
-	object->ambient = 1;
-	object->specular = 0;
-	object->absorbtion = 0.8;
-	object->texture = 6;
+	object->sun = 1;
 }
 
 void	choose_iron(t_object *object)

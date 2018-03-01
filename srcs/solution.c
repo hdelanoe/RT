@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-void	sphere_solution_norme(t_env *e, t_poly *p)
+int		sphere_solution_norme(t_env *e, t_poly *p)
 {
 	p->discriminant = sqrt(p->discriminant);
 	p->s1 = (-p->b + p->discriminant);
@@ -23,6 +23,9 @@ void	sphere_solution_norme(t_env *e, t_poly *p)
 		e->solution = p->s2;
 	else if (p->s1 > 0 && p->s2 < 0)
 		e->solution = p->s1;
+	if (p->s1 < 0 && p->s2 < 0)
+		return (0);
+	return (1);
 }
 
 int		sphere_solution(t_env *e, t_object *sphere, t_poly p)
@@ -33,11 +36,8 @@ int		sphere_solution(t_env *e, t_object *sphere, t_poly p)
 		return (0);
 	e->solution = (p.discriminant == 0) ? -p.b : e->solution;
 	if (p.discriminant > 0)
-	{
-		sphere_solution_norme(e, &p);
-		if (p.s1 < 0 && p.s2 < 0)
+		if (!(sphere_solution_norme(e, &p)))
 			return (0);
-	}
 	if (e->solution < 0)
 		return (0);
 	p.tmp_node = v_double_mult(&e->current_rayon, e->solution);

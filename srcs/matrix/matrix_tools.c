@@ -49,11 +49,15 @@ void	reset_stereo(t_env *e)
 	e->lstereo.z_vector = v_v_subs(&e->lookat, &e->lstereo.origin);
 	e->lstereo.z_vector = normalize(&e->lstereo.z_vector);
 	e->lstereo.x_vector = v_v_mult(&e->camera.y_vector, &e->lstereo.z_vector);
+	e->lstereo.x_vector = normalize(&e->lstereo.x_vector);
 	e->lstereo.y_vector = v_v_mult(&e->lstereo.z_vector, &e->lstereo.x_vector);
+	e->lstereo.y_vector = normalize(&e->lstereo.y_vector);
 	e->rstereo.z_vector = v_v_subs(&e->lookat, &e->rstereo.origin);
 	e->rstereo.z_vector = normalize(&e->rstereo.z_vector);
 	e->rstereo.x_vector = v_v_mult(&e->camera.y_vector, &e->rstereo.z_vector);
+	e->rstereo.x_vector = normalize(&e->rstereo.x_vector);
 	e->rstereo.y_vector = v_v_mult(&e->rstereo.z_vector, &e->rstereo.x_vector);
+	e->rstereo.y_vector = normalize(&e->rstereo.y_vector);
 	e->move_x = 0;
 	stereo_viewplane(e);
 }

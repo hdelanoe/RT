@@ -49,9 +49,10 @@ void	init_camera(t_env *e)
 	e->camera.distance = (e->width + e->height) * 0.5;
 	e->camera.z_vector = v_v_subs(&e->lookat, &e->camera.origin);
 	e->camera.z_vector = normalize(&e->camera.z_vector);
-	e->camera.y_vector = e->camera.up;
-	e->camera.x_vector = v_v_mult(&e->camera.y_vector, &e->camera.z_vector);
+	e->camera.x_vector = v_v_mult(&e->camera.up, &e->camera.z_vector);
+	e->camera.x_vector = normalize(&e->camera.x_vector);
 	e->camera.y_vector = v_v_mult(&e->camera.z_vector, &e->camera.x_vector);
+	e->camera.y_vector = normalize(&e->camera.y_vector);
 	e->matrix_camera_system = matrix_camera_system(&e->camera.x_vector,
 			&e->camera.y_vector, &e->camera.z_vector);
 	e->matrix_camera_origin = matrix_camera_origin(&e->camera.origin);

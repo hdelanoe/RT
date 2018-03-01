@@ -12,7 +12,7 @@
 
 #include "../includes/rt.h"
 
-void put_arealight_file(t_object *area, int fd)
+void		put_arealight_file(t_object *area, int fd)
 {
 	put_type_object(area->type, fd);
 	write(fd, "{\n\t\t", 4);
@@ -29,7 +29,7 @@ void put_arealight_file(t_object *area, int fd)
 	write(fd, "\t\t}\n\t", 5);
 }
 
-void put_paraboloid_file(t_object *paraboloid, int fd)
+void		put_paraboloid_file(t_object *paraboloid, int fd)
 {
 	put_type_object(paraboloid->type, fd);
 	write(fd, "{\n\t\t", 4);

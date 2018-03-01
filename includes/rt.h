@@ -92,6 +92,7 @@ struct					s_object
 	int					bump;
 	int					texture;
 	int					skybox;
+	int					sun;
 	t_object			*next;
 };
 

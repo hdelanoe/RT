@@ -20,7 +20,7 @@ void		default_env(t_env *e)
 	e->pixelize = 0;
 	e->is_delete = 0;
 	e->is_copy = 0;
-	e->camera.origin = set_vector(0, 0, -1000.0);
+	e->camera.origin = set_vector(0, 0, -e->distance);
 	e->lookat = set_vector(0, 0, 0);
 	e->indice = R_VOID;
 	e->perlin.a = 0.01;

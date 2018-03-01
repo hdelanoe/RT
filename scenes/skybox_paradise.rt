@@ -1,8 +1,8 @@
 {
 	"camera_origin": {"x": "0", "y": "200.0", "z": "-800.0"},
 	"camera_lookat": {"x": "0", "y": "0", "z": "0"},
-	"window_width": "1200.0",
-	"window_height": "700.0",
+	"window_width": "1600.0",
+	"window_height": "1000.0",
 	"recursion":"6",
 
 	"sphere": {

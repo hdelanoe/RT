@@ -14,7 +14,8 @@
 
 void	choose_moon(t_object *object)
 {
-	object->ambient = 1;
+	object->ambient = 0.15;
+	object->diffuse = 1;
 	object->specular = 0;
 	object->absorbtion = 0.8;
 	object->texture = 8;
@@ -22,7 +23,8 @@ void	choose_moon(t_object *object)
 
 void	choose_mars(t_object *object)
 {
-	object->ambient = 1;
+	object->ambient = 0.15;
+	object->diffuse = 1;
 	object->specular = 0;
 	object->absorbtion = 0.8;
 	object->texture = 9;
@@ -30,7 +32,8 @@ void	choose_mars(t_object *object)
 
 void	choose_mercury(t_object *object)
 {
-	object->ambient = 1;
+	object->ambient = 0.15;
+	object->diffuse = 1;
 	object->specular = 0;
 	object->absorbtion = 0.8;
 	object->texture = 10;
@@ -38,7 +41,8 @@ void	choose_mercury(t_object *object)
 
 void	choose_jupiter(t_object *object)
 {
-	object->ambient = 1;
+	object->ambient = 0.15;
+	object->diffuse = 1;
 	object->specular = 0;
 	object->absorbtion = 0.8;
 	object->texture = 11;
@@ -46,7 +50,8 @@ void	choose_jupiter(t_object *object)
 
 void	choose_venus(t_object *object)
 {
-	object->ambient = 1;
+	object->ambient = 0.15;
+	object->diffuse = 1;
 	object->specular = 0;
 	object->absorbtion = 0.8;
 	object->texture = 12;

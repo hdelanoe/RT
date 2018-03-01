@@ -1,74 +1,115 @@
 {
-	"camera_origin": {"x": "0", "y": "0", "z": "-800.0"},
+	"camera_origin": {"x": "0", "y": "1700", "z": "-3000.0"},
 	"camera_lookat": {"x": "0", "y": "0", "z": "0"},
-	"window_width": "1200.0",
-	"window_height": "700.0",
+	"window_width": "1600.0",
+	"window_height": "1000.0",
 	"recursion":"6",
 
 	"sphere": {
-		"coord": {"x": "-1800", "y": "0", "z": "0"}, 
+		"coord": {"x": "0", "y": "0", "z": "0"}, 
 		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
-		"radius": "1700"
+		"radius": "240"
 		"material": "sun"
 	}
 	"sphere": {
-		"coord": {"x": "200", "y": "0", "z": "0"}, 
+		"coord": {"x": "99", "y": "0", "z": "-317"}, 
 		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
-		"radius": "100"
+		"radius": "20"
 		"material": "mercury"
 	}
 	"sphere": {
-		"coord": {"x": "650", "y": "0", "z": "0"}, 
+		"coord": {"x": "440", "y": "0", "z": "-188"}, 
 		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
-		"radius": "80"
-		"material": "earth"
-	}
-	"sphere": {
-		"coord": {"x": "800", "y": "0", "z": "0"}, 
-		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
-		"radius": "50"
-		"material": "mars"
-	}
-	"sphere": {
-		"coord": {"x": "1200", "y": "0", "z": "0"}, 
-		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
-		"radius": "200"
-		"material": "jupiter"
-	}
-	"sphere": {
-		"coord": {"x": "400", "y": "0", "z": "0"}, 
-		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
-		"radius": "80"
+		"radius": "40"
 		"material": "venus"
 	}
 	"sphere": {
-		"coord": {"x": "2800", "y": "-100", "z": "0"}, 
+		"coord": {"x": "622", "y": "0", "z": "143"}, 
 		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
-		"radius": "100"
-		"material": "neptune"
+		"radius": "40"
+		"material": "earth"
 	}
 	"sphere": {
-		"coord": {"x": "1800", "y": "0", "z": "0"}, 
+		"coord": {"x": "573", "y": "0", "z": "215"}, 
 		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
-		"radius": "170"
+		"radius": "10"
+		"material": "moon"
+		}
+	"sphere": {
+		"coord": {"x": "571", "y": "0", "z": "561"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "25"
+		"material": "mars"
+	}
+	"sphere": {
+		"coord": {"x": "147", "y": "0", "z": "1232"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "120"
+		"material": "jupiter"
+	}
+	"sphere": {
+		"coord": {"x": "-591", "y": "0", "z": "1460"}, 
+		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
+		"radius": "100"
 		"material": "saturn"
 	}
+	"disk": {
+		"coord": {"x": "-591", "y": "0", "z": "1460"}, 
+		"normal": {"x": "0.5", "y": "1", "z": "-0.3"}
+		"color": {"r": "0.4", "g": "0.2", "b": "0.1"} 
+		"radius": "150"
+	}
+	"cylinder": {
+		"coord": {"x": "-591", "y": "0", "z": "1460"}, 
+		"color": {"r": "0.01", "g": "0.01", "b": "0.01"} 
+		"radius": "120"
+		"length": "5"
+		"axis": {"x": "0.5", "y": "1", "z": "-0.3"}
+	}
 	"sphere": {
-		"coord": {"x": "2400", "y": "100", "z": "0"}, 
+		"coord": {"x": "-1358", "y": "0", "z": "1313"}, 
 		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
-		"radius": "100"
+		"radius": "70"
 		"material": "uranus"
 	}
 	"sphere": {
-		"coord": {"x": "200", "y": "0", "z": "0"}, 
+		"coord": {"x": "-1966", "y": "0", "z": "831"}, 
 		"color": {"r": "0.1", "g": "0.1", "b": "0.1"} 
-		"radius": "50"
-		"material": "moon"
+		"radius": "70"
+		"material": "neptune"
 	}
 	"sphere": {
 		"coord": {"x": "0", "y": "0", "z": "0"}, 
 		"color": {"r": "1", "g": "1", "b": "1"} 
 		"radius": "4000"
 		"material": "space"
+	}
+	"light": {
+		"coord": {"x": "0", "y": "0", "z": "0"}, 
+		"color": {"r": "0.5", "g": "0.5", "b": "0.5"}
+	}
+	"light": {
+		"coord": {"x": "0", "y": "200", "z": "0"}, 
+		"color": {"r": "0.5", "g": "0.5", "b": "0.5"}
+	}
+	"light": {
+		"coord": {"x": "0", "y": "-200", "z": "0"}, 
+		"color": {"r": "0.5", "g": "0.5", "b": "0.5"}
+	}
+	"light": {
+		"coord": {"x": "200", "y": "0", "z": "0"}, 
+		"color": {"r": "0.5", "g": "0.5", "b": "0.5"}
+	}
+	"light": {
+		"coord": {"x": "-200", "y": "0", "z": "0"}, 
+		"color": {"r": "0.5", "g": "0.5", "b": "0.5"}
+	}
+	"light": {
+		"coord": {"x": "0", "y": "0", "z": "200"}, 
+		"color": {"r": "0.5", "g": "0.5", "b": "0.5"}
+	}
+	"light": {
+		"coord": {"x": "0", "y": "0", "z": "-200"}, 
+		"color": {"r": "0.5", "g": "0.5", "b": "0.5"}
 	}
 }

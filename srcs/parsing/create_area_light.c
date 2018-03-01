@@ -42,15 +42,25 @@ void			fill_area_light_infos(t_json *tmp,
 	}
 }
 
+void			area_light_norme(t_env *e,
+				t_object *al_object, t_light *al_light)
+{
+	al_object->ambient = 1;
+	add_new_light(&e->light, al_light);
+	add_new_object(&e->object, al_object);
+	init_area_size(al_object, al_light);
+}
+
 void			create_area_light(t_env *e, t_json *json)
 {
 	t_light		*al_light;
 	t_object	*al_object;
 	t_json		*tmp;
 
+	al_object = NULL;
 	if (!((al_light = ft_memalloc(sizeof(t_light))) &&
 		(al_light->type = ft_strdup("area_light")) &&
-		(al_object = ft_memalloc(sizeof(t_object))) &&
+		(al_object = init_material()) &&
 		(al_object->type = ft_strdup("area_light"))))
 		exit_rt(1);
 	while (json->member)
@@ -65,7 +75,5 @@ void			create_area_light(t_env *e, t_json *json)
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
-	add_new_light(&e->light, al_light);
-	add_new_object(&e->object, al_object);
-	init_area_size(al_object, al_light);
+	area_light_norme(e, al_object, al_light);
 }

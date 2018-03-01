@@ -12,16 +12,19 @@
 
 #include "rt.h"
 
-void	choose_space(t_object *object)
+void	choose_earth(t_object *object)
 {
-	object->ambient = 1;
-	object->skybox = 1;
-	object->texture = 2;
+	object->ambient = 0.15;
+	object->diffuse = 1;
+	object->specular = 0;
+	object->absorbtion = 0.8;
+	object->texture = 6;
 }
 
 void	choose_saturn(t_object *object)
 {
-	object->ambient = 1;
+	object->ambient = 0.15;
+	object->diffuse = 1;
 	object->specular = 0;
 	object->absorbtion = 0.8;
 	object->texture = 13;
@@ -29,7 +32,8 @@ void	choose_saturn(t_object *object)
 
 void	choose_neptune(t_object *object)
 {
-	object->ambient = 1;
+	object->ambient = 0.15;
+	object->diffuse = 1;
 	object->specular = 0;
 	object->absorbtion = 0.8;
 	object->texture = 14;
@@ -37,7 +41,8 @@ void	choose_neptune(t_object *object)
 
 void	choose_uranus(t_object *object)
 {
-	object->ambient = 1;
+	object->ambient = 0.15;
+	object->diffuse = 1;
 	object->specular = 0;
 	object->absorbtion = 0.8;
 	object->texture = 15;

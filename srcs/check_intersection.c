@@ -124,7 +124,7 @@ t_color	light_intersection(t_env *e, t_light *light)
 	while (1)
 	{
 		if (tmp_object.id != e->id_object
-		&& ft_strcmp(tmp_object.type, "area_light")
+		&& ft_strcmp(tmp_object.type, "area_light") && tmp_object.sun != 1
 		&& sort_type(e, &tmp_object) && e->solution < e->distance_light_object
 		&& fabs(e->solution - e->distance_light_object) > 0.001)
 		{
@@ -133,7 +133,8 @@ t_color	light_intersection(t_env *e, t_light *light)
 			tmp = c_double_mult(&tmp_object.color, 1 - tmp_object.absorbtion);
 			e->tmp_clr = c_c_mult(&light->color, &tmp);
 		}
-		if (tmp_object.sub_object != NULL && ft_strcmp(tmp_object.type, "sphere"))
+		if (tmp_object.sub_object != NULL &&
+			ft_strcmp(tmp_object.type, "sphere"))
 			light_sub_intersection(e, light, &tmp_object, &e->tmp_clr);
 		if (tmp_object.next == NULL)
 			break ;

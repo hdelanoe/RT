@@ -1,4 +1,10 @@
 {
+	"camera_origin": {"x": "0", "y": "100", "z": "-1000.0"},
+	"camera_lookat": {"x": "0", "y": "0", "z": "0"},
+	"window_width": "1600.0",
+	"window_height": "1000.0",
+	"recursion":"6",
+
 	"plane": {
 		"coord": {"x": "0", "y": "0", "z": "1200"}, 
 		"normal": {"x": "0", "y": "0", "z": "1"},
