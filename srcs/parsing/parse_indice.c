@@ -23,7 +23,7 @@ void		parse_indice3(char **material, t_object *object)
 	else if (!(ft_strcmp(*material, "paradise")))
 		choose_paradise(object);
 	else
-		ft_printf("{R}WARNING:{E} material %s is not valid\n", material);
+		ft_printf("{R}WARNING:{E} material %s is not valid\n", *material);
 }
 
 void		parse_indice2(char **material, t_object *object)
