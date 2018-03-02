@@ -374,6 +374,7 @@ t_env					*init(void);
 void					default_env(t_env *e);
 void					display_window(t_env *e);
 void					check_load(t_env *e);
+int						check_argv(char *argv);
 void					stereo_viewplane(t_env *e);
 void					init_stereo(t_env *e);
 void					init_camera(t_env *e);

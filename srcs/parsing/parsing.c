@@ -63,7 +63,10 @@ void	create_tree(t_env *e, char **str)
 		json = new_object();
 		create_object(json, (*str), 0);
 		if (!json->member->name)
-			ft_kill("Bad file");
+		{
+			ft_putendl("This file does not describe a scene");
+			ft_kill("Please check the .rt format in \"input.txt\".");
+		}
 		get_object(e, json);
 		free(json);
 	}

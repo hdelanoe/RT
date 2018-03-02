@@ -110,21 +110,13 @@ int			main(int argc, char **argv)
 	default_env(e);
 	if (argc != 2)
 		ft_print_err(argc);
-	e->i = -1;
-	while (argv[1][++e->i])
-	{
-		if (argv[1][e->i] == '.'
-			&& (argv[1][e->i + 1] != 'r' || argv[1][e->i + 2] != 't'))
-		{
-			ft_printf("%s is not a valid scene.\n", argv[1]);
-			ft_kill("Please check the .rt format in \"input.txt\".");
-		}
-	}
-	if (parsing(e, argv[1]))
+	if (parsing(e, argv[1]) && e->stock)
 	{
 		create_tree(e, &e->stock);
 		ft_strdel(&e->stock);
 		display_window(e);
 	}
+	else
+		ft_printf("%s is empty or is a directory.\n", argv[1]);
 	return (0);
 }

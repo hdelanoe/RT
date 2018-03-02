@@ -36,7 +36,12 @@ double			get_content_from_member(char *name, t_json **membre)
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->name, name) == 0)
-			res = ft_atod(tmp->content);
+		{
+			if (ft_strlen(tmp->content) > 19)
+				return (0);
+			else
+				res = ft_atod(tmp->content);
+		}
 		tmp = tmp->next;
 	}
 	return (res);
