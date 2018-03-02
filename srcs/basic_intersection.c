@@ -73,6 +73,8 @@ int		disk_intersection(t_env *e, t_object *disk, t_object *parent)
 		d = dot_product(&distance, &distance);
 		if (d <= (disk->radius * disk->radius))
 		{
+			if (d <= (disk->lenght_max * disk->lenght_max))
+				return (0);
 			if (parent)
 			{
 				parent->node = disk->node;

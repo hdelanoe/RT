@@ -69,6 +69,8 @@ void		create_disk(t_env *e, t_json *json)
 			disk->normal = parse_normal(json->member->member);
 		else if (ft_strcmp(json->member->name, "radius") == 0)
 			disk->radius = ft_atod(json->member->content);
+		else if (ft_strcmp(json->member->name, "minradius") == 0)
+			disk->lenght_max = ft_atod(json->member->content);
 		else if (ft_strcmp(json->member->name, "material") == 0)
 			parse_material(json->member, disk);
 		else if (ft_strcmp(json->member->name, "color") == 0)
