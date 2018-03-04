@@ -51,3 +51,10 @@ void	choose_snow(t_object *object)
 	object->absorbtion = 0.8;
 	object->texture = 1;
 }
+
+void	choose_arc(t_object *object)
+{
+	object->ambient = 1;
+	object->specular = 0;
+	object->sun = 1;
+}

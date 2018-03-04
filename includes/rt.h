@@ -464,6 +464,7 @@ void					choose_venus(t_object *object);
 void					choose_mercury(t_object *object);
 void					choose_earth(t_object *object);
 void					choose_saturn(t_object *object);
+void					choose_arc(t_object *object);
 void					add_new_light(t_light **list, t_light *new_light);
 void					create_light(t_env *e, t_json *json);
 void					fill_area_light_infos(t_json *tmp,

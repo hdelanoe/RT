@@ -22,6 +22,8 @@ void		parse_indice3(char **material, t_object *object)
 		choose_cloud(object);
 	else if (!(ft_strcmp(*material, "paradise")))
 		choose_paradise(object);
+	else if (!(ft_strcmp(*material, "arc")))
+		choose_arc(object);
 	else
 		ft_printf("{R}WARNING:{E} material %s is not valid\n", *material);
 }
