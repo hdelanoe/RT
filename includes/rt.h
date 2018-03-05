@@ -113,6 +113,8 @@ struct					s_light
 	t_vector			width;
 	t_vector			width_div;
 	t_light				*next;
+	double				ratio_length;
+	double				ratio_width;
 };
 
 struct					s_cube
@@ -472,6 +474,9 @@ void					create_light(t_env *e, t_json *json);
 void					fill_area_light_infos(t_json *tmp,
 						t_object *al_object, t_light *al_light);
 void					create_area_light(t_env *e, t_json *json);
+void					area_rays_ratio(t_light *al_light,
+						double *magn_length, double *magn_width);
+void					init_area_size_2(t_object *al_object, t_light *al_light);
 double					get_content_from_member(char *name, t_json **membre);
 void					free_content(t_json *member);
 double					max(double a, double b);
@@ -495,7 +500,7 @@ int						glass_intersection(t_env *e, t_object *parent);
 int						sphere_intersection(t_env *e, t_object *sphere);
 int						cylinder_intersection(t_env *e, t_object *cylinder);
 int						disk_intersection(t_env *e, t_object *disk,
-	t_object *parent);
+						t_object *parent);
 int						cone_intersection(t_env *e, t_object *cone);
 int						quad_intersection(t_env *e, t_object *quad);
 int						cube_intersection(t_env *e, t_object *cube);
