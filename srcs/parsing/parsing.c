@@ -105,7 +105,8 @@ int		parsing(t_env *e, char *src_file)
 {
 	t_parsing	p;
 
-	open_close(src_file, e);
+	if (open_close(src_file, e))
+		return (0);
 	if ((p.fd = open(src_file, O_RDONLY)) < 0)
 		return (0);
 	ft_putstr("Wait for parsing...\n");

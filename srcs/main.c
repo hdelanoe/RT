@@ -30,6 +30,7 @@ void		default_env(t_env *e)
 	e->strechx = 1;
 	e->strechy = 1;
 	e->recursion = 3;
+	e->strechx = 10;
 }
 
 void		init_permtab(t_env *e)

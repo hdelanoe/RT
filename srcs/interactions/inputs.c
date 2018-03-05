@@ -44,7 +44,7 @@ void	inputs2(int keycode, t_env *e)
 		e->pet = e->pet - 5;
 	else if (keycode == KEY_PAD_EQUAL && e->strechx <= 220)
 		e->strechx += 5;
-	else if (keycode == KEY_PAD_DIVIDE && e->strechx >= 5)
+	else if (keycode == KEY_PAD_DIVIDE && e->strechx >= 15)
 		e->strechx -= 5;
 }
 

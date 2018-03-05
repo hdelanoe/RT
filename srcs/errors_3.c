@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-void	open_close(char *src_file, t_env *e)
+int		open_close(char *src_file, t_env *e)
 {
 	int		fd;
 	char	*line;
@@ -29,7 +29,14 @@ void	open_close(char *src_file, t_env *e)
 	}
 	close(fd);
 	if ((!i) && e->pars_flag == 1)
+	{
 		ft_printf("Bad file. Please enter a valid scene to read.\n");
+		return (1);
+	}
 	else if (!i)
+	{
 		ft_kill("Bad file. Please enter a valid scene to read.");
+		return (1);
+	}
+	return (0);
 }

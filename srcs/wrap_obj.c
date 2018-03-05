@@ -30,16 +30,13 @@ t_color		wrap_sphere(t_env *e, t_object *object)
 	e->u = (acos(-dot_product(&vp, &vecdirx) / sin(phi))) / (2.0 * PI);
 	if (!(dot_product(&cross, &vp) > 0.0))
 		e->u = 1.0 - e->u;
-	e->i = (int)(e->v * (e->bpp[e->ti]));
-	e->j = (int)(e->u * e->sl[e->ti] - e->pet);
-	return (get_texture_info(e->tx_dta[e->ti],
-	e, e->sl[e->ti]));
-	if (object->skybox)
-		e->j = (int)(e->u * e->sl[e->ti]);
-	else
-		e->j = (int)(e->u * e->sl[e->ti] - e->pet);
+	e->i = !ft_strcmp(object->type, "plane") ? (int)(e->v * (e->bpp[e->ti]))
+	: (int)(e->v * (e->bpp[e->ti] - e->strechx));
+	e->j = object->skybox || !ft_strcmp(object->type, "plane") ?
+	(int)(e->u * e->sl[e->ti]) : (int)(e->u * e->sl[e->ti] + e->pet);
 	e->current_color = get_texture_info(e->tx_dta[e->ti],
 	e, e->sl[e->ti]);
+	return (e->current_color);
 }
 
 t_color		wrap_plane(t_env *e, t_object *object)
@@ -74,7 +71,7 @@ t_color		wrap_cylinder(t_env *e, t_object *object)
 	e->u = sub.y * 0.5 + 0.5;
 	e->v = -atan2(sub.x, sub.z) / (2 * PI) + 0.5;
 	e->i = (int)(e->u * (e->bpp[e->ti] - e->strechx));
-	e->j = (int)(e->v * e->sl[e->ti] - (e->pet % e->sl[e->ti]));
+	e->j = (int)(e->v * e->sl[e->ti] + (e->pet % e->sl[e->ti]));
 	return (get_texture_info(e->tx_dta[e->ti], e,
 	e->sl[e->ti]));
 }
@@ -92,7 +89,7 @@ t_color		wrap_cone(t_env *e, t_object *object)
 	e->u = sub.y * 0.5 + 0.5;
 	e->v = -atan2(sub.x, sub.z) / (2 * PI) + 0.5;
 	e->i = (int)(e->u * (e->bpp[e->ti] - e->strechx));
-	e->j = (int)(e->v * e->sl[e->ti] - e->pet);
+	e->j = (int)(e->v * e->sl[e->ti] + e->pet);
 	return (get_texture_info(e->tx_dta[e->ti], e,
 	e->sl[e->ti]));
 }
