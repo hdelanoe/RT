@@ -97,7 +97,7 @@ SRC =	ft_memccpy.c \
 
 OBJ	=	$(SRC:.c=.o)
 CC	= gcc
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g -O2
 RM = rm -rf
 CG = \033[92m
 CY = \033[93m
@@ -105,18 +105,21 @@ CE = \033[0m
 
 all	: $(NAME)
 $(NAME)	: $(OBJ)
+	@echo "\033[K$(CY)[LIBFT] :$(CE) $(CG)Creating Library$(CE) \033[1A";
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
+	@echo "\033[K$(CY)[LIBFT] : $(CE) $(CG)LIBFT Compiled!$(CE)";
 
-$(OBJ):
-	@$(CC) $(FLAGS) -c $(SRC)
+%.o: %.c
+	@$(CC) $(FLAGS) -c $< -o $@
+	@echo "\033[K$(CY)[LIBFT] :$(CE) $(CG)Compiling $<$(CE) \033[1A";
 
 clean	: 
 	@$(RM) $(OBJ)
 
 fclean	: clean
 	@$(RM) $(NAME)
-	@echo "\033[K$(CY)[LIBFT] : $(CE) $(CG)Cleaning Library $(CE)";
+	@echo "\033[K$(CY)[LIBFT] : $(CE) $(CG)Cleaning Library$(CE)";
 
 re		: fclean all
 

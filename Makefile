@@ -19,6 +19,7 @@ SRCS		= 	srcs/main.c \
 				srcs/cast_ray.c \
 				srcs/basic_intersection.c \
 				srcs/check_intersection.c \
+				srcs/intersection_tools.c \
 				srcs/solution.c \
 				srcs/errors.c \
 				srcs/errors_2.c \
@@ -91,25 +92,25 @@ SRCS		= 	srcs/main.c \
 OBJS		= 	$(patsubst srcs/%.c,objs/%.o,$(SRCS))
 
 CC			= 	gcc 
-CFLAGS		= 	-Wall -Wextra -Werror 
+CFLAGS		= 	-Wall -Wextra -Werror -g -O2
 INC			= 	-I./includes/
-
-LIBFTINC	= 	-I./libft/includes/
 LIBFTLINK	= 	-L./libft -lft
-
-MLXINC		= 	-I./minilibx_macos/
 MLXLINK		= 	-L./minilibx_macos -framework OpenGL -framework AppKit -Iminilibx_macos
+
+CG = \033[92m
+CY = \033[93m
+CE = \033[0m
 
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
 			@ make -C ./libft all
 			@ make -C ./ft_printf all
+			@ make -C ./minilibx_macos all
 			@ $(CC) $(CFLAGS) $(LIBFT) $(PRINTF) $(MLX) $(LIBFTLINK) $(MLXLINK) -o $@ $^
-			@ echo "\n\033[1;33m---> Libft created\033[0m \033[92m✓\033[0m"
-			@ echo "\n\033[92m---> RT program created ✓\033[0m"
+			@ echo "\n\033[92m---> RT program created ✓\033[0m";
 
-objs/%.o: 	srcs/%.c
+objs/%.o:	srcs/%.c
 			@ mkdir -p objs
 			@ mkdir -p objs/parsing
 			@ mkdir -p objs/color
@@ -118,19 +119,22 @@ objs/%.o: 	srcs/%.c
 			@ mkdir -p objs/render
 			@ mkdir -p objs/interactions
 			@ mkdir -p objs/save
-		 	@ $(CC) $(CFLAGS) $(INC) $(LIBFTINC) $(MLXINC) -c $< -o $@
+		 	@ $(CC) $(CFLAGS) $(INC) -c $< -o $@
+		 	@ echo "\033[K$(CY)[RT] :$(CE) $(CG)Compiling $<$(CE) \033[1A";
+
 
 clean:		
-			@ /bin/rm -rf objs/
 			@ make -C libft/ clean
 			@ make -C ./ft_printf clean
-			@ echo "\033[1;33m---> All .o files cleared\033[0m \033[92m✓\033[0m"
+			@ make -C ./minilibx_macos clean
+			@ /bin/rm -rf objs/
+			@ echo "\033[1;33m---> All .o files cleared\033[0m \033[92m✓\033[0m";
 
 fclean:		clean
 			@ /bin/rm -f $(NAME)
 			@ make -C libft/ fclean
 			@ make -C ./ft_printf fclean
-			@ echo "\n\033[1;33m---> Everything cleared\033[2;00m \033[92m✓\033[0m"
+			@ echo "\n\033[1;33m---> Everything cleared\033[2;00m \033[92m✓\033[0m";
 re : fclean all
 
 .PHONY: clean, fclean, re

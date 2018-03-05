@@ -63,7 +63,7 @@ t_color	apply_bump(t_env *e, t_rayon *ray, t_color c)
 		bump_marble(e, &new, ray);
 	else if (ray->bump == 3)
 		bump_wood(e, &new, ray);
-	else if (ray->bump = 4 && carre % 2 == 0)
+	else if (ray->bump == 4 && carre % 2 == 0)
 		return ((t_color){0, 0, 0});
 	return (new);
 }

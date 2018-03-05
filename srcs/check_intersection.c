@@ -103,8 +103,7 @@ void	light_sub_intersection(t_env *e, t_light *light,
 		&& sort_type(e, &sub) && e->solution < e->distance_light_object
 		&& fabs(e->solution - e->distance_light_object) > 0.001)
 		{
-			if (sub.refract == 0)
-				*c = set_color(0, 0, 0);
+			sub.color = change_color(e, &sub, object);
 			tmp = c_double_mult(&sub.color, 1 - sub.absorbtion);
 			*c = c_c_mult(&light->color, &tmp);
 		}
@@ -128,10 +127,7 @@ t_color	light_intersection(t_env *e, t_light *light)
 		&& sort_type(e, &tmp_object) && e->solution < e->distance_light_object
 		&& fabs(e->solution - e->distance_light_object) > 0.001)
 		{
-			if (tmp_object.refract == 0)
-				return (set_color(0, 0, 0));
-			if (tmp_object.texture != 0)
-				tmp_object.color = wrap_obj(e, &tmp_object, NULL);
+			tmp_object.color = change_color(e, &tmp_object, NULL);
 			tmp = c_double_mult(&tmp_object.color, 1 - tmp_object.absorbtion);
 			e->tmp_clr = c_c_mult(&light->color, &tmp);
 		}

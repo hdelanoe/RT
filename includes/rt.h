@@ -486,6 +486,8 @@ int						sort_type(t_env *e, t_object *object);
 void					check_intersection(t_env *e, t_object *object,
 						t_object *parent);
 t_color					light_intersection(t_env *e, t_light *light);
+t_color					change_color(t_env *e, t_object *object,
+						t_object *parent);
 void					save_node(t_object *buff, t_object *source, int *tmp);
 int						plane_intersection(t_env *e, t_object *plane);
 int						glass_intersection(t_env *e, t_object *parent);

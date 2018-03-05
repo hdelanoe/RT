@@ -25,7 +25,7 @@ void		parse_indice3(char **material, t_object *object)
 	else if (!(ft_strcmp(*material, "arc")))
 		choose_arc(object);
 	else if (!(ft_strcmp(*material, "damier")))
-		object->damier = 1;
+		object->bump = 4;
 	else
 		ft_printf("{R}WARNING:{E} material %s is not valid\n", *material);
 }
