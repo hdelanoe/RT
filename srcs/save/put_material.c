@@ -28,7 +28,13 @@ void	put_material(int fd, t_object *object)
 	write(fd, "\t\t\t", 3);
 	put_int("refract", object->refract, fd);
 	write(fd, "\t\t\t", 3);
+	put_int("texture", object->texture, fd);
+	write(fd, "\t\t\t", 3);
+	put_int("skybox", object->skybox, fd);
+	write(fd, "\t\t\t", 3);
 	put_double("absorbtion", object->absorbtion, fd);
+	write(fd, "\n\t\t\t", 4);
+	put_double("indice", object->indice, fd);
 	write(fd, "\n\t\t\t", 4);
 	put_int("bump", object->bump, fd);
 	write(fd, "\t\t\t}\n", 5);
