@@ -23,7 +23,7 @@ void	ft_print_err(int argc)
 
 void	ft_help(void)
 {
-	ft_putendl("usage : ./rtv1 [scene]\n");
+	ft_putendl("usage : ./rt [scene]\n");
 	ft_putendl("Scene instruction:\n");
 	ft_putendl("Scene attributs: width, height, recursion and objects");
 	ft_putendl("Objects name");

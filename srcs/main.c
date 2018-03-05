@@ -116,7 +116,5 @@ int			main(int argc, char **argv)
 		ft_strdel(&e->stock);
 		display_window(e);
 	}
-	else
-		ft_printf("%s is empty or is a directory.\n", argv[1]);
 	return (0);
 }

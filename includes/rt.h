@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtv1.h                                             :+:      :+:    :+:   */
+/*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nobila <nobila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -310,6 +310,7 @@ struct					s_env
 	int					sonic;
 	char				*sonic_d;
 	char				*sonic_u;
+	int					pars_flag;
 };
 
 struct					s_physic
@@ -623,5 +624,5 @@ void					put_material(int fd, t_object *object);
 void					wrap_cone(t_env *e, t_object *object);
 void					ft_pthread_no_load(t_env *e, void *(*f)(void *param));
 void					wrap_damier(t_env *e, t_object *object);
-
+void					open_close(char *src_file, t_env *e);
 #endif
