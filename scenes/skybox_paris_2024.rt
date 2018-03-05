@@ -1,0 +1,58 @@
+{
+	"camera_origin": {"x": "0", "y": "0", "z": "-400.0"},
+	"camera_lookat": {"x": "0", "y": "-50", "z": "0"},
+	"window_width": "1600.0",
+	"window_height": "1000.0",
+	"recursion":"6",
+
+	 "disk": {
+        "coord": {"x": "-42", "y": "12", "z": "0"}, 
+        "normal": {"x": "0", "y": "0", "z": "-1"}
+        "color": {"r": "0.2", "g": "0.2", "b": "1"} 
+        "radius": "20"
+        "minradius": "15"
+		"material": "pmma"
+    }
+    "disk": {
+        "coord": {"x": "0", "y": "12", "z": "0"}, 
+        "normal": {"x": "0", "y": "0", "z": "-1"}
+        "color": {"r": "0.3", "g": "0.3", "b": "0.3"} 
+        "radius": "20"
+        "minradius": "15"
+		"material": "pmma"
+    }
+    "disk": {
+        "coord": {"x": "42", "y": "12", "z": "0"}, 
+        "normal": {"x": "0", "y": "0", "z": "-1"}
+        "color": {"r": "1", "g": "0.2", "b": "0.2"} 
+        "radius": "20"
+        "minradius": "15"
+		"material": "pmma"
+    }
+    "disk": {
+        "coord": {"x": "-23", "y": "0", "z": "0"}, 
+        "normal": {"x": "0", "y": "0", "z": "-1"}
+        "color": {"r": "0.9", "g": "0.65", "b": "0"} 
+        "radius": "20"
+        "minradius": "15"
+		"material": "pmma"
+    }
+    "disk": {
+        "coord": {"x": "23", "y": "0", "z": "0"}, 
+        "normal": {"x": "0", "y": "0", "z": "-1"}
+        "color": {"r": "0.2", "g": "0.9", "b": "0.2"} 
+        "radius": "20"
+        "minradius": "15"
+		"material": "pmma"
+    }
+	"sphere": {
+		"coord": {"x": "0", "y": "0", "z": "0"}, 
+		"color": {"r": "1", "g": "1", "b": "1"} 
+		"radius": "4000"
+		"material": "paris"
+	}
+	 "light": {
+		"coord": {"x": "-2000", "y": "2000", "z": "0"}, 
+		"color": {"r": "1", "g": "1", "b": "1"}
+	}
+}

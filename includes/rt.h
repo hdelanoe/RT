@@ -280,12 +280,12 @@ struct					s_env
 	double				strechy;
 	unsigned int		ti;
 	int					text_flag;
-	int					bpp[22];
+	int					bpp[23];
 	int					end;
 	int					naz;
-	void				*text_img[22];
-	unsigned char		*tx_dta[22];
-	int					sl[22];
+	void				*text_img[23];
+	unsigned char		*tx_dta[23];
+	int					sl[23];
 	int					cel_shade;
 	int					render_mode;
 	int					help_flag;
@@ -466,6 +466,7 @@ void					choose_mercury(t_object *object);
 void					choose_earth(t_object *object);
 void					choose_saturn(t_object *object);
 void					choose_arc(t_object *object);
+void					choose_paris(t_object *object);
 void					add_new_light(t_light **list, t_light *new_light);
 void					create_light(t_env *e, t_json *json);
 void					fill_area_light_infos(t_json *tmp,
@@ -625,6 +626,7 @@ void					put_loading_bar(t_env *e, int i);
 void					put_material(int fd, t_object *object);
 void					ft_pthread_no_load(t_env *e, void *(*f)(void *param));
 void					wrap_damier(t_env *e, t_object *object);
-int						open_close(char *src_file, t_env *e);
+void					open_close(char *src_file, t_env *e);
 t_object				*init_cap(t_object *parent, int type);
+
 #endif

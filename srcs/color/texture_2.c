@@ -79,6 +79,8 @@ void		apply_texture2(t_env *e, t_object *object)
 		e->ti = 21;
 	else if (object->texture == 17)
 		e->ti = 1;
+	else if (object->texture == 18)
+		e->ti = 22;
 }
 
 void		apply_texture(t_env *e, t_object *object)

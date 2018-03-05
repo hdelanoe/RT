@@ -34,6 +34,11 @@ void		load_texture5(t_env *e)
 		ft_kill("Texture error");
 	e->tx_dta[21] = (unsigned char*)mlx_get_data_addr(e->text_img[21], &e->naz,
 	&e->naz, &e->end + 1);
+	if (!((e->text_img[22] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
+	"./textures/paris.xpm", &(e->sl[22]), &e->bpp[22]))))
+		ft_kill("Texture error");
+	e->tx_dta[22] = (unsigned char*)mlx_get_data_addr(e->text_img[22], &e->naz,
+	&e->naz, &e->end + 1);
 }
 
 void		load_texture4(t_env *e)
