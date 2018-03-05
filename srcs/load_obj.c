@@ -121,7 +121,7 @@ void	check_load(t_env *e)
 	mlx_put_image_to_window(e->mlx.mlx_ptr, e->mlx.win_ptr,
 	e->img_bat, e->width / 2 - 310, e->height / 2 - 150);
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr,
-	(e->width / 2.8), (e->height / 4),
+	(e->width / 2 - 150), (e->height / 4),
 	0xFFFFFF, "At least someone is working...");
 	mlx_do_sync(e->mlx.mlx_ptr);
 }
