@@ -46,7 +46,7 @@ t_color		wrap_obj(t_env *e, t_object *object, t_object *parent)
 	else if (!ft_strcmp("disk", object->type) && parent
 		&& !(ft_strcmp("cone", parent->type)))
 		return (wrap_cone(e, parent));
-	else if (object->damier && )carre % 2 == 0
+	else if (object->damier && carre % 2 == 0)
 		return ((t_color){0, 0, 0});
 	return (object->color);
 }
