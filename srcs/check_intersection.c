@@ -75,6 +75,7 @@ void	check_intersection(t_env *e, t_object *object, t_object *parent)
 		get_object_values(e, object, parent);
 		if (object->texture != 0)
 			wrap_obj(e, object, parent);
+		wrap_damier(e, object);
 		e->intersect = 1;
 	}
 	if (object && object->sub_object && ft_strcmp(object->type, "sphere"))

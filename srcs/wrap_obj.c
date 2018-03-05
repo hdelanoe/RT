@@ -31,9 +31,23 @@ void		wrap_sphere(t_env *e, t_object *object)
 	if (!(dot_product(&cross, &vp) > 0.0))
 		e->u = 1.0 - e->u;
 	e->i = (int)(e->v * (e->bpp[e->ti]));
-	e->j = (int)(e->u * e->sl[e->ti] - e->pet);
+	if (object->skybox)
+		e->j = (int)(e->u * e->sl[e->ti]);
+	else
+		e->j = (int)(e->u * e->sl[e->ti] - e->pet);
 	e->current_color = get_texture_info(e->tx_dta[e->ti],
 	e, e->sl[e->ti]);
+}
+
+void		wrap_damier(t_env *e, t_object *object)
+{
+	int carre;
+
+	if (!object->damier)
+		return ;
+	carre = floor(e->current_node.x) + floor(e->current_node.z);
+	if (carre % 2 == 0)
+		e->current_color = (t_color){0, 0, 0};
 }
 
 void		wrap_plane(t_env *e, t_object *object)

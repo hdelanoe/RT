@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-int	check_arg(t_parsing *p, char *type)
+int		check_arg(t_parsing *p, char *type)
 {
 	if (p->directory != NULL)
 	{

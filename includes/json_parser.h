@@ -62,7 +62,7 @@ void						ft_print_err(int argc);
 void						ft_help(void);
 void						ft_kill(char *text);
 int							check_args(char *argv);
-int						open_close(char *src_file);
+int							open_close(char *src_file);
 void						exit_rt(int flag);
 t_vector					parse_point(t_json *membre);
 t_vector					parse_normal(t_json *membre);

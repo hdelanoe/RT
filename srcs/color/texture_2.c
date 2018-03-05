@@ -24,7 +24,6 @@ t_color		normalize_color(t_color *color)
 
 void		wrap_obj(t_env *e, t_object *object, t_object *parent)
 {
-	(void)parent;
 	apply_texture(e, object);
 	if (!(ft_strcmp("plane", object->type)))
 		wrap_plane(e, object);
