@@ -19,9 +19,9 @@ void		parse_scene(t_env *e, t_json *json)
 	else if (!(ft_strcmp(json->name, "camera_lookat")) && json->member)
 		e->lookat = parse_point(json->member);
 	else if (!(ft_strcmp(json->name, "window_width")) && json->content)
-		e->width = ft_atod(json->content);
+		e->width = (ft_atod(json->content) > 0) ? ft_atod(json->content) : -ft_atod(json->content);
 	else if (!(ft_strcmp(json->name, "window_height")) && json->content)
-		e->height = ft_atod(json->content);
+		e->height = (ft_atod(json->content) > 0) ? ft_atod(json->content) : -ft_atod(json->content);
 	else if (!(ft_strcmp(json->name, "recursion")) && json->content)
 	{
 		e->recursion = ft_atoi(json->content);
