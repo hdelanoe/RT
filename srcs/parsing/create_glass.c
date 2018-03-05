@@ -16,7 +16,8 @@ t_object		*create_glass_cyl(t_object *glass)
 {
 	t_object *new;
 
-	new = init_material();
+	new = init_cap(glass);
+	free(new->type);
 	if (!(new->type = ft_strdup("cylinder")))
 		exit_rt(1);
 	new->center = glass->center;
@@ -35,7 +36,8 @@ t_object		*create_glass_cone(t_object *glass, t_vector *tmp,
 {
 	t_object *new;
 
-	new = init_material();
+	new = init_cap(glass);
+	free(new->type);
 	if (!(new->type = ft_strdup("cone")))
 		exit_rt(1);
 	new->axis = v_double_mult(&glass->axis, -1.00);
@@ -60,7 +62,8 @@ void			create_child_glass(t_object *glass)
 
 	g_cylinder = create_glass_cyl(glass);
 	g_cone = create_glass_cone(glass, &tmp, g_cylinder);
-	g_sphere = init_material();
+	g_sphere = init_cap(glass);
+	free(g_sphere->type);
 	if (!(g_sphere->type = ft_strdup("sphere")))
 		exit_rt(1);
 	g_sphere->normal = v_double_mult(&glass->axis, -1.00);
@@ -105,6 +108,8 @@ void			create_glass(t_env *e, t_json *json)
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
+	if (glass->lenght_max < 0)
+		glass->lenght_max *= -1;
 	create_child_glass(glass);
 	add_new_object(&e->object, glass);
 }

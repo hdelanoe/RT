@@ -68,6 +68,8 @@ void		create_sphere(t_env *e, t_json *json)
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
+	if (sphere->radius < 0)
+		sphere->radius *= -1;
 	if (sphere->cap == 1)
 		create_cap_sphere(sphere);
 	add_new_object(&e->object, sphere);
@@ -88,6 +90,10 @@ void		create_cylinder(t_env *e, t_json *json)
 		json->member = json->member->next;
 		free_json_member(&tmp);
 	}
+	if (cylinder->lenght_max < 0)
+		cylinder->lenght_max *= -1;
+	if (cylinder->radius < 0)
+		cylinder->radius *= -1;
 	create_cap_cylinder(cylinder);
 	add_new_object(&e->object, cylinder);
 }
@@ -109,6 +115,8 @@ void		create_cone(t_env *e, t_json *json)
 	}
 	if (cone->radius < 0)
 		cone->radius *= -1;
+	if (cone->radius > cone->lenght_max)
+		cone->radius = 0;
 	create_cap_cone(cone);
 	add_new_object(&e->object, cone);
 }

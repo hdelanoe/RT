@@ -625,4 +625,5 @@ void					put_material(int fd, t_object *object);
 void					ft_pthread_no_load(t_env *e, void *(*f)(void *param));
 void					wrap_damier(t_env *e, t_object *object);
 void					open_close(char *src_file, t_env *e);
+t_object				*init_cap(t_object *parent);
 #endif
