@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-t_object	*init_cap(t_object *parent)
+t_object	*init_cap(t_object *parent, int type)
 {
 	t_object *cap;
 
@@ -22,8 +22,9 @@ t_object	*init_cap(t_object *parent)
 	cap->radius = parent->radius;
 	cap->color = parent->color;
 	init_copy2(&cap, parent);
-	if (!(cap->type = ft_strdup("disk")))
-		exit_rt(1);
+	if (type)
+		if (!(cap->type = ft_strdup("disk")))
+			exit_rt(1);
 	return (cap);
 }
 
@@ -31,7 +32,7 @@ void		create_cap_sphere(t_object *sphere)
 {
 	t_object *disk;
 
-	disk = init_cap(sphere);
+	disk = init_cap(sphere, 1);
 	disk->point = sphere->center;
 	disk->normal = v_double_mult(&sphere->normal, 1.00);
 	add_new_object(&sphere->sub_object, disk);
@@ -42,12 +43,12 @@ void		create_cap_cylinder(t_object *cylinder)
 	t_object		*disk;
 	t_vector		tmp;
 
-	disk = init_cap(cylinder);
+	disk = init_cap(cylinder, 1);
 	disk->normal = cylinder->axis;
 	tmp = v_double_mult(&cylinder->axis, cylinder->lenght_max / 2);
 	disk->point = v_v_subs(&cylinder->center, &tmp);
 	add_new_object(&cylinder->sub_object, disk);
-	disk = init_cap(cylinder);
+	disk = init_cap(cylinder, 1);
 	disk->normal = cylinder->axis;
 	disk->point = v_v_add(&cylinder->center, &tmp);
 	add_new_object(&cylinder->sub_object, disk);
@@ -87,7 +88,7 @@ void		create_cap_cone(t_object *cone)
 	t_object		*disk;
 	t_vector		tmp;
 
-	disk = init_cap(cone);
+	disk = init_cap(cone, 1);
 	disk->normal = cone->axis;
 	disk->radius = cone->tangent * cone->lenght_max;
 	tmp = v_double_mult(&cone->axis, cone->lenght_max);
@@ -95,7 +96,7 @@ void		create_cap_cone(t_object *cone)
 	add_new_object(&cone->sub_object, disk);
 	if (cone->radius < cone->lenght_max)
 	{
-		disk = init_cap(cone);
+		disk = init_cap(cone, 1);
 		disk->normal = cone->axis;
 		disk->radius = cone->tangent * cone->radius;
 		tmp = v_double_mult(&cone->axis, cone->radius);

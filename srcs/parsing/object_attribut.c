@@ -101,8 +101,6 @@ void		cube_attribut(t_object *cb, t_json *tmp)
 	else if (!(ft_strcmp(tmp->name, "material")))
 		parse_material(tmp, cb);
 	else
-	{
-		ft_printf("%s\n", tmp->name);
-		ft_printf("{R}WARNING:{E} cb as a bad attribut\n");
-	}
+		ft_printf("{R}WARNING:{E} cube's %s is a bad attribut\n",
+			tmp->name);
 }

@@ -16,8 +16,7 @@ t_object		*create_glass_cyl(t_object *glass)
 {
 	t_object *new;
 
-	new = init_cap(glass);
-	free(new->type);
+	new = init_cap(glass, 0);
 	if (!(new->type = ft_strdup("cylinder")))
 		exit_rt(1);
 	new->center = glass->center;
@@ -36,8 +35,7 @@ t_object		*create_glass_cone(t_object *glass, t_vector *tmp,
 {
 	t_object *new;
 
-	new = init_cap(glass);
-	free(new->type);
+	new = init_cap(glass, 0);
 	if (!(new->type = ft_strdup("cone")))
 		exit_rt(1);
 	new->axis = v_double_mult(&glass->axis, -1.00);
@@ -62,8 +60,7 @@ void			create_child_glass(t_object *glass)
 
 	g_cylinder = create_glass_cyl(glass);
 	g_cone = create_glass_cone(glass, &tmp, g_cylinder);
-	g_sphere = init_cap(glass);
-	free(g_sphere->type);
+	g_sphere = init_cap(glass, 0);
 	if (!(g_sphere->type = ft_strdup("sphere")))
 		exit_rt(1);
 	g_sphere->normal = v_double_mult(&glass->axis, -1.00);

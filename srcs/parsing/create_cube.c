@@ -14,8 +14,7 @@
 
 void		cube1(t_cube *c, t_object *cb)
 {
-	c->carre_1 = init_cap(cb);
-	free(c->carre_1->type);
+	c->carre_1 = init_cap(cb, 0);
 	if (!(c->carre_1->type = ft_strdup("quad")))
 		exit_rt(1);
 	c->carre_1->point = cb->point;
@@ -27,8 +26,7 @@ void		cube1(t_cube *c, t_object *cb)
 	cb->radius, cb->point.z);
 	c->carre_1->color = cb->color;
 	add_new_object(&cb->sub_object, c->carre_1);
-	c->carre_2 = init_cap(cb);
-	free(c->carre_2->type);
+	c->carre_2 = init_cap(cb, 0);
 	if (!(c->carre_2->type = ft_strdup("quad")))
 		exit_rt(1);
 	c->carre_2->point = cb->point;
@@ -44,8 +42,7 @@ void		cube1(t_cube *c, t_object *cb)
 
 void		cube2(t_cube *c, t_object *cb)
 {
-	c->carre_3 = init_cap(cb);
-	free(c->carre_3->type);
+	c->carre_3 = init_cap(cb, 0);
 	if (!(c->carre_3->type = ft_strdup("quad")))
 		exit_rt(1);
 	c->carre_3->point = set_vector(cb->point.x + cb->lenght_max, cb->point.y,
@@ -58,8 +55,7 @@ void		cube2(t_cube *c, t_object *cb)
 	cb->point.z + cb->tangent);
 	c->carre_3->color = cb->color;
 	add_new_object(&cb->sub_object, c->carre_3);
-	c->carre_4 = init_cap(cb);
-	free(c->carre_4->type);
+	c->carre_4 = init_cap(cb, 0);
 	if (!(c->carre_4->type = ft_strdup("quad")))
 		exit_rt(1);
 	c->carre_4->point = set_vector(cb->point.x + cb->lenght_max, cb->point.y +
@@ -75,8 +71,7 @@ void		cube2(t_cube *c, t_object *cb)
 
 void		cube3(t_cube *c, t_object *cb)
 {
-	c->carre_5 = init_cap(cb);
-	free(c->carre_5->type);
+	c->carre_5 = init_cap(cb, 0);
 	if (!(c->carre_5->type = ft_strdup("quad")))
 		exit_rt(1);
 	c->carre_5->point = set_vector(cb->point.x, cb->point.y +
@@ -89,8 +84,7 @@ void		cube3(t_cube *c, t_object *cb)
 	cb->point.y + cb->radius, cb->point.z);
 	c->carre_5->color = cb->color;
 	add_new_object(&cb->sub_object, c->carre_5);
-	c->carre_6 = init_cap(cb);
-	free(c->carre_6->type);
+	c->carre_6 = init_cap(cb, 0);
 	if (!(c->carre_6->type = ft_strdup("quad")))
 		exit_rt(1);
 	c->carre_6->point = set_vector(cb->point.x, cb->point.y, cb->point.z);

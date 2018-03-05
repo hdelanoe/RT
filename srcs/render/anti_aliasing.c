@@ -17,8 +17,8 @@ void	put_loading_bar(t_env *e, int i)
 	int x;
 	int y;
 
-	x = e->width / 4 + 10 + (i * 60);
-	y = e->height / 3 + 25;
+	x = e->width / 2 - 275 + (i * 60);
+	y = e->height / 2 - 125;
 	if (e->loading == 1)
 		return ;
 	if (e->sonic % 2 == 0)
