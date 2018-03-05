@@ -94,7 +94,6 @@ struct					s_object
 	int					skybox;
 	int					sun;
 	t_object			*next;
-	int					damier;
 };
 
 struct					s_light

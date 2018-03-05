@@ -24,12 +24,9 @@ t_color		normalize_color(t_color *color)
 
 t_color		wrap_obj(t_env *e, t_object *object, t_object *parent)
 {
-	int carre;
-
 	if (!object->texture)
 		return (object->color);
 	apply_texture(e, object);
-	carre = floor(e->current_node.x) + floor(e->current_node.z);
 	if (!(ft_strcmp("quad", object->type)))
 		return (wrap_plane(e, object));
 	else if (!(ft_strcmp("plane", object->type)))
@@ -46,8 +43,6 @@ t_color		wrap_obj(t_env *e, t_object *object, t_object *parent)
 	else if (!ft_strcmp("disk", object->type) && parent
 		&& !(ft_strcmp("cone", parent->type)))
 		return (wrap_cone(e, parent));
-	else if (object->damier && carre % 2 == 0)
-		return ((t_color){0, 0, 0});
 	return (object->color);
 }
 
