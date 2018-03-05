@@ -103,6 +103,8 @@ void		apply_texture(t_env *e, t_object *object)
 		e->ti = 7;
 	else if (object->texture == 8)
 		e->ti = 6;
+	else if (object->texture == 21)
+		e->ti = 5;
 	else
 		apply_texture2(e, object);
 }

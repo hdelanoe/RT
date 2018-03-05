@@ -73,7 +73,7 @@ void		load_texture3(t_env *e)
 	e->tx_dta[4] = (unsigned char*)mlx_get_data_addr(e->text_img[4], &e->naz,
 	&e->naz, &e->end + 1);
 	if (!((e->text_img[5] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/thewood.xpm", &(e->sl[5]), &e->bpp[5]))))
+	"./textures/link.xpm", &(e->sl[5]), &e->bpp[5]))))
 		ft_kill("Texture error");
 	e->tx_dta[5] = (unsigned char*)mlx_get_data_addr(e->text_img[5], &e->naz,
 	&e->naz, &e->end + 1);

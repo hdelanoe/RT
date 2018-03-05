@@ -30,7 +30,7 @@
 		"material": {
 			"ambient":"0.6"
 			"refract":"1"
-			"texture": "20"
+			"texture": "21"
 			"absorbtion": "0.25"
 			"indice":"1.51"
 			}
