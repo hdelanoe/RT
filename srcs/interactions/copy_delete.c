@@ -20,9 +20,10 @@ void		init_copy2(t_object **copy, t_object *object)
 	(*copy)->reflect = object->reflect;
 	(*copy)->refract = object->refract;
 	(*copy)->bump = object->bump;
+	(*copy)->absorbtion = object->absorbtion;
 	(*copy)->texture = object->texture;
 	(*copy)->indice = object->indice;
-	(*copy)->absorbtion = object->absorbtion;
+	(*copy)->skybox = object->skybox;
 	(*copy)->sub_object = NULL;
 	(*copy)->next = NULL;
 }

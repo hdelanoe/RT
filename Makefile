@@ -138,4 +138,5 @@ fclean:		clean
 			@ echo "\n\033[1;33m---> Everything cleared\033[2;00m \033[92m✓\033[0m";
 re : fclean all
 
-.PHONY: clean, fclean, re
+.PHONY: all, clean, fclean, re
+.SILENT:

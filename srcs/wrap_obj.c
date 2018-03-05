@@ -47,15 +47,12 @@ t_color		wrap_plane(t_env *e, t_object *object)
 	double					yy;
 
 	x = fabs(object->point.x - object->point_2.x);
-	y = fabs(object->point.x - object->point_2.x);
-	if (fabs(object->node_normal.x) < fabs(object->node_normal.y))
-		xx = fabs(object->point.x  - e->current_node.x);
-	else
-		xx = fabs(object->point.z  - e->current_node.z);
+	y = fabs(object->point.y - object->point_3.y);
+	xx = fabs(object->point.x - object->node.x);
 	if (fabs(object->node_normal.z) < fabs(object->node_normal.y))
-		yy = fabs(object->point.z  - e->current_node.z);
+		yy = fabs(object->point.z - object->node.z);
 	else
-		yy = fabs(object->point.y  - e->current_node.y);
+		yy = fabs(object->point.y - object->node.y);
 	e->i = (int)(yy * (e->bpp[e->ti]) / y);
 	e->j = (int)(xx * (e->sl[e->ti]) / x);
 	return (get_texture_info(e->tx_dta[e->ti],

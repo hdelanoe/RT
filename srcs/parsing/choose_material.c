@@ -48,12 +48,12 @@ void	choose_pmma(t_object *object)
 
 void	choose_glass(t_object *object)
 {
-	object->ambient = 0.4;
-	object->diffuse = 0.6;
-	object->specular = 1;
+	object->ambient = 0.2;
+	object->diffuse = 0.8;
+	object->specular = 0.9;
 	object->reflect = 1;
 	object->refract = 1;
-	object->absorbtion = 0.2;
+	object->absorbtion = 0.25;
 	object->indice = R_GLASS;
 }
 

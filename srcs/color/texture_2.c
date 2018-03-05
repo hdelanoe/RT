@@ -24,12 +24,10 @@ t_color		normalize_color(t_color *color)
 
 t_color		wrap_obj(t_env *e, t_object *object, t_object *parent)
 {
-	if (!object->texture)
-		return (object->color);
 	apply_texture(e, object);
 	if (!(ft_strcmp("quad", object->type)))
 		return (wrap_plane(e, object));
-	else if (!(ft_strcmp("plane", object->type)))
+	if (!(ft_strcmp("plane", object->type)))
 		return (wrap_sphere(e, object));
 	else if (!(ft_strcmp("sphere", object->type)))
 		return (wrap_sphere(e, object));
@@ -81,6 +79,10 @@ void		apply_texture2(t_env *e, t_object *object)
 		e->ti = 1;
 	else if (object->texture == 18)
 		e->ti = 22;
+	else if (object->texture == 19)
+		e->ti = 9;
+	else if (object->texture == 20)
+		e->ti = 2;
 }
 
 void		apply_texture(t_env *e, t_object *object)

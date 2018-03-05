@@ -34,11 +34,6 @@ void		load_texture5(t_env *e)
 		ft_kill("Texture error");
 	e->tx_dta[21] = (unsigned char*)mlx_get_data_addr(e->text_img[21], &e->naz,
 	&e->naz, &e->end + 1);
-	if (!((e->text_img[22] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/paris.xpm", &(e->sl[22]), &e->bpp[22]))))
-		ft_kill("Texture error");
-	e->tx_dta[22] = (unsigned char*)mlx_get_data_addr(e->text_img[22], &e->naz,
-	&e->naz, &e->end + 1);
 }
 
 void		load_texture4(t_env *e)
@@ -107,7 +102,7 @@ void		load_texture2(t_env *e)
 	e->tx_dta[8] = (unsigned char*)mlx_get_data_addr(e->text_img[8], &e->naz,
 	&e->naz, &e->end + 1);
 	if (!((e->text_img[9] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/jean.xpm", &(e->sl[9]), &e->bpp[9]))))
+	"./textures/sunset.xpm", &(e->sl[9]), &e->bpp[9]))))
 		ft_kill("Texture error");
 	e->tx_dta[9] = (unsigned char*)mlx_get_data_addr(e->text_img[9], &e->naz,
 	&e->naz, &e->end + 1);
@@ -137,7 +132,7 @@ void		load_texture(t_env *e)
 	e->tx_dta[1] = (unsigned char*)mlx_get_data_addr(e->text_img[1], &e->naz,
 	&e->naz, &e->end + 1);
 	if (!((e->text_img[2] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/stars.xpm", &(e->sl[2]), &e->bpp[2]))))
+	"./textures/vitrail.xpm", &(e->sl[2]), &e->bpp[2]))))
 		ft_kill("Texture error");
 	e->tx_dta[2] = (unsigned char*)mlx_get_data_addr(e->text_img[2], &e->naz,
 	&e->naz, &e->end + 1);

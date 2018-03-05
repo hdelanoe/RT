@@ -77,3 +77,6 @@ fclean: clean
 	@$(RM) $(NAME)
 	@echo "\033[K$(CY)[PRINTF] :$(CE) $(CG)Cleaning Library$(CE)";
 re: fclean all
+
+.PHONY: all, clean, fclean, re
+.SILENT:

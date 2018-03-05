@@ -32,6 +32,8 @@ void	check_material(t_object *object, t_json *tmp)
 		object->texture = ft_atoi(tmp->content);
 	else if (!(ft_strcmp(tmp->name, "indice")) && tmp->content)
 		object->indice = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "skybox")) && tmp->content)
+		object->skybox = ft_atoi(tmp->content);
 	else
 		ft_printf("{R}WARNING:{E} material %s is not valid\n", tmp->name);
 }

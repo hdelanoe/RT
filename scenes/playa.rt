@@ -21,7 +21,7 @@
 		"coord": {"x": "0", "y": "0", "z": "0"}, 
 		"color": {"r": "1", "g": "1", "b": "1"} 
 		"radius": "1000"
-		"material": "space"
+		"material": {"texture": "19"}
 	}
 	"sphere": {
 		"coord": {"x": "600", "y": "200", "z": "600"}, 
