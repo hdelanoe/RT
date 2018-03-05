@@ -28,6 +28,10 @@ void	check_material(t_object *object, t_json *tmp)
 		object->bump = ft_atoi(tmp->content);
 	else if (!(ft_strcmp(tmp->name, "absorbtion")) && tmp->content)
 		object->absorbtion = ft_atod(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "texture")) && tmp->content)
+		object->texture = ft_atoi(tmp->content);
+	else if (!(ft_strcmp(tmp->name, "indice")) && tmp->content)
+		object->indice = ft_atod(tmp->content);
 	else
 		ft_printf("{R}WARNING:{E} material %s is not valid\n", tmp->name);
 }

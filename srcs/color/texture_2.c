@@ -22,24 +22,31 @@ t_color		normalize_color(t_color *color)
 	return (new);
 }
 
-void		wrap_obj(t_env *e, t_object *object, t_object *parent)
+t_color		wrap_obj(t_env *e, t_object *object, t_object *parent)
 {
+	if (!object->texture)
+		return (object->color);
 	apply_texture(e, object);
-	if (!(ft_strcmp("plane", object->type)))
-		wrap_plane(e, object);
-	if (!(ft_strcmp("sphere", object->type)))
-		wrap_sphere(e, object);
-	if (!(ft_strcmp("cone", object->type)))
-		wrap_cone(e, object);
-	if (!(ft_strcmp("cylinder", object->type)))
-		wrap_cylinder(e, object);
-	if (!ft_strcmp("disk", object->type))
+	if (!(ft_strcmp("quad", object->type)))
+		return (wrap_plane(e, object));
+	else if (!(ft_strcmp("plane", object->type)))
+		return (wrap_sphere(e, object));
+	else if (!(ft_strcmp("sphere", object->type)))
+		return (wrap_sphere(e, object));
+	else if (!(ft_strcmp("cone", object->type)))
+		return (wrap_cone(e, object));
+	else if (!(ft_strcmp("cylinder", object->type)))
+		return (wrap_cylinder(e, object));
+	else if (!ft_strcmp("disk", object->type) && parent)
 	{
 		if (!(ft_strcmp("cylinder", parent->type)))
-			wrap_cylinder(e, parent);
-		if (!(ft_strcmp("cone", parent->type)))
-			wrap_cone(e, parent);
+			return (wrap_cylinder(e, parent));
+		else if (!(ft_strcmp("cone", parent->type)))
+			return (wrap_cone(e, parent));
 	}
+	else 
+		return (wrap_damier(e, object));
+	return (object->color);
 }
 
 t_color		get_texture_info(unsigned char *text_data, t_env *e, int sl)
@@ -73,6 +80,8 @@ void		apply_texture2(t_env *e, t_object *object)
 		e->ti = 20;
 	else if (object->texture == 16)
 		e->ti = 21;
+	else if (object->texture == 17)
+		e->ti = 1;
 }
 
 void		apply_texture(t_env *e, t_object *object)

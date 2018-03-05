@@ -74,8 +74,7 @@ void	check_intersection(t_env *e, t_object *object, t_object *parent)
 		e->distance = e->solution;
 		get_object_values(e, object, parent);
 		if (object->texture != 0)
-			wrap_obj(e, object, parent);
-		wrap_damier(e, object);
+			e->current_color = wrap_obj(e, object, parent);
 		e->intersect = 1;
 	}
 	if (object && object->sub_object && ft_strcmp(object->type, "sphere"))
@@ -131,6 +130,8 @@ t_color	light_intersection(t_env *e, t_light *light)
 		{
 			if (tmp_object.refract == 0)
 				return (set_color(0, 0, 0));
+			if (tmp_object.texture != 0)
+				tmp_object.color = wrap_obj(e, &tmp_object, NULL);
 			tmp = c_double_mult(&tmp_object.color, 1 - tmp_object.absorbtion);
 			e->tmp_clr = c_c_mult(&light->color, &tmp);
 		}

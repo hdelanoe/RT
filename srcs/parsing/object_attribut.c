@@ -88,13 +88,13 @@ void		cube_attribut(t_object *cb, t_json *tmp)
 {
 	if (!(ft_strcmp(tmp->name, "coord")) && tmp->member)
 		cb->point = parse_point(tmp->member);
-	else if (!(ft_strcmp(tmp->name, "width")))
+	else if (!(ft_strcmp(tmp->name, "width")) && tmp->content)
 		cb->lenght_max = ft_atod(tmp->content);
-	else if (!(ft_strcmp(tmp->name, "length")))
+	else if (!(ft_strcmp(tmp->name, "length")) && tmp->content)
 		cb->tangent = ft_atod(tmp->content);
-	else if (!(ft_strcmp(tmp->name, "height")))
+	else if (!(ft_strcmp(tmp->name, "height")) && tmp->content)
 		cb->radius = ft_atod(tmp->content);
-	else if (!(ft_strcmp(tmp->name, "axis")))
+	else if (!(ft_strcmp(tmp->name, "axis")) && tmp->member)
 		cb->axis = parse_normal(tmp->member);
 	else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 		cb->color = parse_color(tmp->member);

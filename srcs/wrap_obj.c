@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-void		wrap_sphere(t_env *e, t_object *object)
+t_color		wrap_sphere(t_env *e, t_object *object)
 {
 	t_vector			vp;
 	double				phi;
@@ -31,6 +31,9 @@ void		wrap_sphere(t_env *e, t_object *object)
 	if (!(dot_product(&cross, &vp) > 0.0))
 		e->u = 1.0 - e->u;
 	e->i = (int)(e->v * (e->bpp[e->ti]));
+	e->j = (int)(e->u * e->sl[e->ti] - e->pet);
+	return (get_texture_info(e->tx_dta[e->ti],
+	e, e->sl[e->ti]));
 	if (object->skybox)
 		e->j = (int)(e->u * e->sl[e->ti]);
 	else
@@ -39,6 +42,7 @@ void		wrap_sphere(t_env *e, t_object *object)
 	e, e->sl[e->ti]);
 }
 
+t_color		wrap_plane(t_env *e, t_object *object)
 void		wrap_damier(t_env *e, t_object *object)
 {
 	int carre;
@@ -52,29 +56,28 @@ void		wrap_damier(t_env *e, t_object *object)
 
 void		wrap_plane(t_env *e, t_object *object)
 {
-	t_vector			vp;
-	double				phi;
-	t_vector			vecdirx;
-	t_vector			vecdiry;
-	t_vector			cross;
+	double					x;
+	double					y;
+	double					xx;
+	double					yy;
 
-	vecdirx = (t_vector){0, 1, 0};
-	vecdiry = (t_vector){1, 0, 0};
-	cross = v_v_mult(&vecdiry, &vecdirx);
-	vp = v_v_subs(&object->center, &e->current_node);
-	vp = normalize(&vp);
-	phi = acos(-dot_product(&vecdiry, &vp));
-	e->v = phi / PI;
-	e->u = -dot_product(&vp, &vecdirx);
-	if (!(dot_product(&cross, &vp) > 0.0))
-		e->u = 1.0 - e->u;
-	e->i = (int)(e->v * (e->bpp[e->ti]));
-	e->j = (int)(e->u * e->sl[e->ti]);
-	e->current_color = get_texture_info(e->tx_dta[e->ti],
-	e, e->sl[e->ti]);
+	x = fabs(object->point.x - object->point_2.x);
+	y = fabs(object->point.x - object->point_2.x);
+	if (fabs(object->node_normal.x) < fabs(object->node_normal.y))
+		xx = fabs(object->point.x  - e->current_node.x);
+	else
+		xx = fabs(object->point.z  - e->current_node.z);
+	if (fabs(object->node_normal.z) < fabs(object->node_normal.y))
+		yy = fabs(object->point.z  - e->current_node.z);
+	else
+		yy = fabs(object->point.y  - e->current_node.y);
+	e->i = (int)(yy * (e->bpp[e->ti]) / y);
+	e->j = (int)(xx * (e->sl[e->ti]) / x);
+	return (get_texture_info(e->tx_dta[e->ti],
+	e, e->sl[e->ti]));
 }
 
-void		wrap_cylinder(t_env *e, t_object *object)
+t_color		wrap_cylinder(t_env *e, t_object *object)
 {
 	t_vector sub;
 
@@ -84,11 +87,11 @@ void		wrap_cylinder(t_env *e, t_object *object)
 	e->v = -atan2(sub.x, sub.z) / (2 * PI) + 0.5;
 	e->i = (int)(e->u * (e->bpp[e->ti] - e->strechx));
 	e->j = (int)(e->v * e->sl[e->ti] - (e->pet % e->sl[e->ti]));
-	e->current_color = get_texture_info(e->tx_dta[e->ti], e,
-	e->sl[e->ti]);
+	return (get_texture_info(e->tx_dta[e->ti], e,
+	e->sl[e->ti]));
 }
 
-void		wrap_cone(t_env *e, t_object *object)
+t_color		wrap_cone(t_env *e, t_object *object)
 {
 	t_vector	sub;
 	t_vector	tmp;
@@ -102,6 +105,6 @@ void		wrap_cone(t_env *e, t_object *object)
 	e->v = -atan2(sub.x, sub.z) / (2 * PI) + 0.5;
 	e->i = (int)(e->u * (e->bpp[e->ti] - e->strechx));
 	e->j = (int)(e->v * e->sl[e->ti] - e->pet);
-	e->current_color = get_texture_info(e->tx_dta[e->ti], e,
-	e->sl[e->ti]);
+	return (get_texture_info(e->tx_dta[e->ti], e,
+	e->sl[e->ti]));
 }

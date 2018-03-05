@@ -127,7 +127,7 @@ void		load_texture(t_env *e)
 	e->tx_dta[0] = (unsigned char*)mlx_get_data_addr(e->text_img[0], &e->naz,
 	&e->naz, &e->end + 1);
 	if (!((e->text_img[1] = mlx_xpm_file_to_image(e->mlx.mlx_ptr,
-	"./textures/foot.xpm", &(e->sl[1]), &e->bpp[1]))))
+	"./textures/sand.xpm", &(e->sl[1]), &e->bpp[1]))))
 		ft_kill("Texture error");
 	e->tx_dta[1] = (unsigned char*)mlx_get_data_addr(e->text_img[1], &e->naz,
 	&e->naz, &e->end + 1);

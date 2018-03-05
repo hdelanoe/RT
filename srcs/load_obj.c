@@ -30,8 +30,11 @@ void	free_obj(t_parsing *p)
 
 int		read_obj(t_env *e, t_parsing *p, char *text)
 {
+	int ret;
+
+	ret = 0;
 	if ((p->fd = open(text, O_RDONLY)) < 0)
-		return (0);
+		return (ret);
 	ft_printf("Loading object...\n");
 	while (get_next_line(p->fd, &p->buff) == 1)
 	{
@@ -39,7 +42,7 @@ int		read_obj(t_env *e, t_parsing *p, char *text)
 		{
 			free(e->argv_cpy);
 			ft_printf("Sorry, %s is too big!\n", text);
-			return (0);
+			return (ret);
 		}
 		if (p->buff[0] == 'v' && p->buff[1] == ' ')
 			p->v[++p->i] = ft_strsplit(p->buff, ' ');
@@ -48,9 +51,9 @@ int		read_obj(t_env *e, t_parsing *p, char *text)
 		ft_strdel(&p->buff);
 	}
 	close(p->fd);
-	parsing_obj(e, p->v, p->f);
+	ret = parsing_obj(e, p->v, p->f);
 	free_obj(p);
-	return (1);
+	return (ret);
 }
 
 int		check_line(char *text, t_env *e)
@@ -68,7 +71,7 @@ int		check_line(char *text, t_env *e)
 		create_tree(e, &e->stock);
 		ft_strdel(&e->stock);
 	}
-	else if (ft_strcmp(ft_strstr(text, ".obj"), ".obj")
+	else if (!ft_strcmp(ft_strstr(text, ".obj"), ".obj")
 		&& !read_obj(e, &p, text))
 	{
 		ft_printf("Sorry, %s is not a valid object\n", text);

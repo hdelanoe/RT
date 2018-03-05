@@ -53,10 +53,10 @@ void		quad_attribut(t_object *quad, t_json *tmp)
 		quad->point_4 = parse_point(tmp->member);
 	else if (!(ft_strcmp(tmp->name, "color")) && tmp->member)
 		quad->color = parse_color(tmp->member);
-	else if (!(ft_strcmp(tmp->name, "material")) && tmp->member)
+	else if (!(ft_strcmp(tmp->name, "material")))
 		parse_material(tmp, quad);
 	else
-		ft_printf("{R}WARNING:{E} quad as a bad attribut\n");
+		ft_printf("{R}WARNING:{E} quad %s is a bad attribut\n", tmp->name);
 }
 
 void		create_quad(t_env *e, t_json *json)

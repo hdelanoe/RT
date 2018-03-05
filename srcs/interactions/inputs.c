@@ -54,10 +54,6 @@ void	inputs3(int keycode, t_env *e)
 		water_noise(e);
 	if (keycode == KEY_I)
 		e->ambient_flag = e->ambient_flag == 1 ? 0 : 1;
-	if (keycode == KEY_O)
-		save_image(e);
-	if (keycode == KEY_J)
-		save_scene(e);
 	if (keycode == KEY_U)
 	{
 		e->recursion++;

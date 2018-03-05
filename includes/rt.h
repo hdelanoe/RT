@@ -529,11 +529,12 @@ void					init_area_size(t_object	*al_object,
 						t_light *area_light);
 t_color					get_area_color(t_env *e);
 void					load_texture(t_env *e);
-void					parsing_obj(t_env *e, char ***v, char ***f);
-void					wrap_sphere(t_env *e, t_object *object);
-void					wrap_cylinder(t_env *e, t_object *object);
-void					wrap_plane(t_env *e, t_object *object);
-void					wrap_obj(t_env *e, t_object *object, t_object *parent);
+int						parsing_obj(t_env *e, char ***v, char ***f);
+t_color					wrap_sphere(t_env *e, t_object *object);
+t_color					wrap_cylinder(t_env *e, t_object *object);
+t_color					wrap_plane(t_env *e, t_object *object);
+t_color					wrap_obj(t_env *e, t_object *object, t_object *parent);
+t_color					wrap_cone(t_env *e, t_object *object);
 t_color					get_texture_info(unsigned char *text_data,
 						t_env *e, int sl);
 t_color					set_filter(t_env *e, t_color c);
@@ -621,7 +622,6 @@ void					check_copy_lst(t_object *obj);
 void					apply_texture(t_env *e, t_object *object);
 void					put_loading_bar(t_env *e, int i);
 void					put_material(int fd, t_object *object);
-void					wrap_cone(t_env *e, t_object *object);
 void					ft_pthread_no_load(t_env *e, void *(*f)(void *param));
 void					wrap_damier(t_env *e, t_object *object);
 void					open_close(char *src_file, t_env *e);

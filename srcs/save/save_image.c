@@ -95,27 +95,28 @@ char		*get_time_to_str(int bl)
 
 void		save_image(t_env *e)
 {
-	int				fd;
-	int				y;
-	int				x;
+	t_parsing		p;
 	t_header		header;
 	t_infos			h_infos;
 
-	y = e->height;
+	p.j = e->height;
 	e->s_name = get_time_to_str(1);
 	mkdir("./images/", 0777);
-	if (!(fd = open(e->s_name, O_CREAT | O_TRUNC | O_WRONLY, 0666)))
-		ft_kill("something is went with screenshot");
-	create_header(e, &header, &h_infos);
-	write_header(fd, header, h_infos);
-	while (y > 0)
+	if (!(p.fd = open(e->s_name, O_CREAT | O_TRUNC | O_WRONLY, 0666)))
 	{
-		x = 0;
-		while (x < e->width)
-			write(fd, &e->mlx.data[(((y * (int)e->width) + x++) * 4)], 3);
-		y--;
+		ft_putendl("something went wrong with screenshot");
+		return ;
 	}
-	close(fd);
+	create_header(e, &header, &h_infos);
+	write_header(p.fd, header, h_infos);
+	while (p.j > 0)
+	{
+		p.i = 0;
+		while (p.i < e->width)
+			write(p.fd, &e->mlx.data[((p.j * (int)e->width + p.i++) * 4)], 3);
+		p.j--;
+	}
+	close(p.fd);
 	ft_printf("Screenshot has been saved on path : %s\n", e->s_name);
 	free(e->s_name);
 	return ;

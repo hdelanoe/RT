@@ -18,17 +18,19 @@ int	inputs4(int keycode, t_env *e)
 	{
 		if (e->copy)
 			check_copy_lst(e->copy);
-		if (read_scene_files(e))
-			return (1);
-		else
-			return (0);
+		return (read_scene_files(e));
 	}
 	else if (keycode == KEY_K)
+		return (read_obj_files(e));
+	else if (keycode == KEY_O)
 	{
-		if (read_obj_files(e))
-			return (1);
-		else
-			return (0);
+		save_image(e);
+		return (0);
+	}
+	else if (keycode == KEY_J)
+	{
+		save_scene(e);
+		return (0);
 	}
 	return (1);
 }

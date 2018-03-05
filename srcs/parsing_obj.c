@@ -65,12 +65,14 @@ void	set_poly(t_object **poly, char ***v, int tmp[4], char *f)
 	ft_atod(v[(int)tmp[3] - 1][2]), ft_atod(v[(int)tmp[3] - 1][3]));
 }
 
-void	parsing_obj(t_env *e, char ***v, char ***f)
+int		parsing_obj(t_env *e, char ***v, char ***f)
 {
 	int			tmp[4];
 	t_object	*poly;
 	int			i;
 
+	if (!v[2] || !f[0])
+		return (0);
 	i = 0;
 	while (f[i] && f[i][3])
 	{
@@ -88,4 +90,5 @@ void	parsing_obj(t_env *e, char ***v, char ***f)
 		add_new_object(&e->object, poly);
 		i++;
 	}
+	return (1);
 }
