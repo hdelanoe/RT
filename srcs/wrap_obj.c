@@ -43,18 +43,6 @@ t_color		wrap_sphere(t_env *e, t_object *object)
 }
 
 t_color		wrap_plane(t_env *e, t_object *object)
-void		wrap_damier(t_env *e, t_object *object)
-{
-	int carre;
-
-	if (!object->damier)
-		return ;
-	carre = floor(e->current_node.x) + floor(e->current_node.z);
-	if (carre % 2 == 0)
-		e->current_color = (t_color){0, 0, 0};
-}
-
-void		wrap_plane(t_env *e, t_object *object)
 {
 	double					x;
 	double					y;
