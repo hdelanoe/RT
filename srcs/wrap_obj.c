@@ -30,7 +30,8 @@ t_color		wrap_sphere(t_env *e, t_object *object)
 	e->u = (acos(-dot_product(&vp, &vecdirx) / sin(phi))) / (2.0 * PI);
 	if (!(dot_product(&cross, &vp) > 0.0))
 		e->u = 1.0 - e->u;
-	e->i = !ft_strcmp(object->type, "plane") ? (int)(e->v * (e->bpp[e->ti]))
+	e->i = !ft_strcmp(object->type, "plane") || object->skybox
+	? (int)(e->v * (e->bpp[e->ti]))
 	: (int)(e->v * (e->bpp[e->ti] - e->strechx));
 	e->j = object->skybox || !ft_strcmp(object->type, "plane") ?
 	(int)(e->u * e->sl[e->ti]) : (int)(e->u * e->sl[e->ti] + e->pet);
