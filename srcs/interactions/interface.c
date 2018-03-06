@@ -15,29 +15,29 @@
 void	print_help_mouvement(t_env *e)
 {
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 13, 0xAAFFFF, "MOUVEMENT :");
+		e->height / 30 * 15, 0xAAFFFF, "MOUVEMENT :");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 14, 0xFFFFFF, "Translate : W, A, S, D");
+		e->height / 30 * 16, 0xFFFFFF, "Translate : W, A, S, D");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 15, 0xFFFFFF, "Rotate : UP, LEFT, DOWN, RIGHT");
+		e->height / 30 * 17, 0xFFFFFF, "Rotate : UP, LEFT, DOWN, RIGHT");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 16, 0xFFFFFF, "Lift : Q, E");
+		e->height / 30 * 19, 0xFFFFFF, "Lift : Q, E");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 17, 0xFFFFFF, "Pivot : Z, X");
+		e->height / 30 * 20, 0xFFFFFF, "Pivot : Z, X");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 18, 0xFFFFFF, "COPY / PASTE OBJECT : LMB");
+		e->height / 30 * 21, 0xFFFFFF, "COPY / PASTE OBJECT : LMB");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 19, 0xFFFFFF, "DELETE OBJECT: RMB");
+		e->height / 30 * 23, 0xFFFFFF, "DELETE OBJECT: RMB");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 21, 0xAAFFFF, "SAVE / IMPORT :");
+		e->height / 30 * 24, 0xAAFFFF, "SAVE / IMPORT :");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 22, 0xFFFFFF, "SAVE IMAGE : O");
+		e->height / 30 * 25, 0xFFFFFF, "SAVE IMAGE : O");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 23, 0xFFFFFF, "SAVE SCENE : J");
+		e->height / 30 * 26, 0xFFFFFF, "SAVE SCENE : J");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 24, 0xFFFFFF, "LOAD OBJECT : K");
+		e->height / 30 * 27, 0xFFFFFF, "LOAD OBJECT : K");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 25, 0xFFFFFF, "LOAD SCENE : L");
+		e->height / 30 * 28, 0xFFFFFF, "LOAD SCENE : L");
 }
 
 void	print_help(t_env *e)
@@ -63,7 +63,11 @@ void	print_help(t_env *e)
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
 		e->height / 30 * 10, 0xFFFFFF, "ADD RECURSION : U");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 11, 0xFFFFFF, "FILTER : 0, 1, 2, 3, 4...");
+		e->height / 30 * 11, 0xFFFFFF, "STRECH TEXTURE : '=', '/'");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
+		e->height / 30 * 12, 0xFFFFFF, "ROTATE TEXTURE : '-' / '+'");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
+		e->height / 30 * 13, 0xFFFFFF, "FILTER : 0, 1, 2, 3, 4...");
 	print_help_mouvement(e);
 }
 

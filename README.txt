@@ -38,6 +38,9 @@ with :
  	- RANDOM PERLIN : M
  	- REMOVE AMBIENT : I
  	- ADD RECURSION : U
+ 	- STRECH TEXTURE : =, /
+ 	- ROTATE TEXTURE : -, +
+
 
 
  - Files formats - 
