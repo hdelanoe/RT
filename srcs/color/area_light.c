@@ -12,8 +12,6 @@
 
 #include "rt.h"
 
-
-
 void		area_rays_ratio(t_light *al_light,
 			double *magn_length, double *magn_width)
 {
@@ -48,7 +46,7 @@ void		init_area_size_2(t_object *al_object, t_light *al_light)
 	t_vector	ray_range_max;
 	t_vector	half_length;
 	t_vector	half_width;
-	
+
 	half_length = v_double_div(&al_light->length, 2);
 	half_width = v_double_div(&al_light->width, 2);
 	al_object->center = v_v_add(&al_object->point, &half_length);
@@ -125,25 +123,4 @@ t_color		get_area_light_intensity(t_env *e,
 	*c = c_double_div(c, 225);
 	free(a_c);
 	return (*c);
-}
-
-t_color		get_area_color(t_env *e)
-{
-	t_object	*area_light;
-	t_vector	ray_current_range;
-	double		current_range;
-	double		indice;
-	t_color		c;
-
-	area_light = e->object;
-	while (area_light->id != e->id_object)
-		area_light = area_light->next;
-	ray_current_range = v_v_subs(&area_light->center, &e->current_node);
-	current_range = magnitude(&ray_current_range);
-	indice = 1 - (current_range / area_light->range_max * 0.6);
-	indice *= 1.6;
-	indice = (indice > 1) ? 1 : indice;
-	indice = (indice < 0.5) ? 0.5 : indice;
-	c = set_color(1, 1, 1);
-	return (c_double_mult(&c, indice));
 }

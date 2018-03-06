@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-void	bump_water(t_env *e, t_rayon *ray)
+void		bump_water(t_env *e, t_rayon *ray)
 {
 	double n;
 
@@ -23,7 +23,7 @@ void	bump_water(t_env *e, t_rayon *ray)
 	ray->normal = normalize(&ray->normal);
 }
 
-void	bump_marble(t_env *e, t_color *c, t_rayon *ray)
+void		bump_marble(t_env *e, t_color *c, t_rayon *ray)
 {
 	double n;
 
@@ -34,7 +34,7 @@ void	bump_marble(t_env *e, t_color *c, t_rayon *ray)
 	c->b *= 1.0 * (1 - n) + 0.7 * n;
 }
 
-void	bump_wood(t_env *e, t_color *c, t_rayon *ray)
+void		bump_wood(t_env *e, t_color *c, t_rayon *ray)
 {
 	double		n;
 	double		value;
@@ -52,7 +52,7 @@ void	bump_wood(t_env *e, t_color *c, t_rayon *ray)
 	c->b *= (tmp1.b * (1 - n) + tmp2.b * n);
 }
 
-t_color	apply_bump(t_env *e, t_rayon *ray, t_color c)
+t_color		apply_bump(t_env *e, t_rayon *ray, t_color c)
 {
 	t_color new;
 	int		carre;
@@ -66,4 +66,25 @@ t_color	apply_bump(t_env *e, t_rayon *ray, t_color c)
 	else if (ray->bump == 4 && carre % 2 == 0)
 		return ((t_color){0, 0, 0});
 	return (new);
+}
+
+t_color		get_area_color(t_env *e)
+{
+	t_object	*area_light;
+	t_vector	ray_current_range;
+	double		current_range;
+	double		indice;
+	t_color		c;
+
+	area_light = e->object;
+	while (area_light->id != e->id_object)
+		area_light = area_light->next;
+	ray_current_range = v_v_subs(&area_light->center, &e->current_node);
+	current_range = magnitude(&ray_current_range);
+	indice = 1 - (current_range / area_light->range_max * 0.6);
+	indice *= 1.6;
+	indice = (indice > 1) ? 1 : indice;
+	indice = (indice < 0.5) ? 0.5 : indice;
+	c = set_color(1, 1, 1);
+	return (c_double_mult(&c, indice));
 }

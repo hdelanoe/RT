@@ -83,6 +83,8 @@ void		put_sphere_file(t_object *sphere, int fd)
 		put_axis("plan_cut", &sphere->normal, fd);
 		write(fd, "\n\t\t", 3);
 	}
+	else
+		write(fd, "\t\t", 2);
 	put_color(&sphere->color, fd);
 	put_material(fd, sphere);
 	write(fd, "\t\t}\n\t", 5);

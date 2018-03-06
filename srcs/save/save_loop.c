@@ -25,7 +25,6 @@ void		put_arealight_file(t_object *area, int fd)
 	put_coord("coord_4", &area->point_4, fd);
 	write(fd, "\t\t", 2);
 	put_color(&area->color, fd);
-	put_material(fd, area);
 	write(fd, "\t\t}\n\t", 5);
 }
 

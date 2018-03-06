@@ -476,7 +476,8 @@ void					fill_area_light_infos(t_json *tmp,
 void					create_area_light(t_env *e, t_json *json);
 void					area_rays_ratio(t_light *al_light,
 						double *magn_length, double *magn_width);
-void					init_area_size_2(t_object *al_object, t_light *al_light);
+void					init_area_size_2(t_object *al_object,
+						t_light *al_light);
 double					get_content_from_member(char *name, t_json **membre);
 void					free_content(t_json *member);
 double					max(double a, double b);
