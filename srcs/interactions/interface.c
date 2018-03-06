@@ -37,7 +37,7 @@ void	print_help_mouvement(t_env *e)
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
 		e->height / 30 * 24, 0xFFFFFF, "LOAD OBJECT : K");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 25, 0xFFFFFF, "LOAD OBJECT : L");
+		e->height / 30 * 25, 0xFFFFFF, "LOAD SCENE : L");
 }
 
 void	print_help(t_env *e)

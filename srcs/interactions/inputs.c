@@ -46,6 +46,7 @@ void	inputs2(int keycode, t_env *e)
 		e->strechx += 5;
 	else if (keycode == KEY_PAD_DIVIDE && e->strechx >= 15)
 		e->strechx -= 5;
+	e->filter_flag = keycode == KEY_PAD_7 ? 7 : e->filter_flag;
 }
 
 void	inputs3(int keycode, t_env *e)

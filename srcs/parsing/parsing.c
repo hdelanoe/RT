@@ -65,7 +65,7 @@ void	create_tree(t_env *e, char **str)
 		if (!json->member->name)
 		{
 			ft_putendl("This file does not describe a scene");
-			ft_kill("Please check the .rt format in \"input.txt\".");
+			ft_kill("Please check the .rt format in \"README.txt\".");
 		}
 		get_object(e, json);
 		free(json);
