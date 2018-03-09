@@ -18,7 +18,7 @@ void	choose_display_mode(t_env *e)
 		ft_pthread(e, aa_tracer_void);
 	else if (e->pixelize)
 		ft_pthread(e, pxl_tracer_void);
-	else if (e->stereo_flag)
+	else if (e->stereo_flag && e->edit_flag == 0)
 		ft_pthread(e, stereo_tracer_void);
 	else
 		ft_pthread(e, ray_tracer_void);

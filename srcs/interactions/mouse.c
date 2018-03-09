@@ -28,6 +28,8 @@ void	mouse_cpy(t_env *e, int x, int y)
 
 void	mouse_func(t_env *e, int x, int y, int button)
 {
+	if (e->stereo_flag)
+		return ;
 	if ((button == 1 || button == 5) && !e->copy)
 	{
 		mouse_cpy(e, x, y);

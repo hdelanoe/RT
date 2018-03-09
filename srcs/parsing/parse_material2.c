@@ -29,7 +29,7 @@ void	check_material(t_object *object, t_json *tmp)
 	else if (!(ft_strcmp(tmp->name, "absorbtion")) && tmp->content)
 		object->absorbtion = ft_atod(tmp->content);
 	else if (!(ft_strcmp(tmp->name, "texture")) && tmp->content)
-		object->texture = (ft_atoi(tmp->content) < 22 &&
+		object->texture = (ft_atoi(tmp->content) < 24 &&
 			ft_atoi(tmp->content) > 0) ? ft_atoi(tmp->content) : 10;
 	else if (!(ft_strcmp(tmp->name, "indice")) && tmp->content)
 		object->indice = ft_atod(tmp->content);

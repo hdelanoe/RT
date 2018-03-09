@@ -40,6 +40,22 @@ void	print_help_mouvement(t_env *e)
 		e->height / 30 * 28, 0xFFFFFF, "LOAD SCENE : L");
 }
 
+void	print_help2(t_env *e)
+{
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
+		e->height / 30 * 8, 0xFFFFFF, "RANDOM PERLIN : M");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
+		e->height / 30 * 9, 0xFFFFFF, "REMOVE AMBIENT : I");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
+		e->height / 30 * 10, 0xFFFFFF, "ADD RECURSION : U");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
+		e->height / 30 * 11, 0xFFFFFF, "STRECH TEXTURE : '=', '/'");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
+		e->height / 30 * 12, 0xFFFFFF, "ROTATE TEXTURE : '-' / '+'");
+	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
+		e->height / 30 * 13, 0xFFFFFF, "FILTER : 0, 1, 2, 3, 4...");
+}
+
 void	print_help(t_env *e)
 {
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
@@ -56,18 +72,7 @@ void	print_help(t_env *e)
 		e->height / 30 * 6, 0xFFFFFF, "AMBIENT OCCLUSION : T");
 	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
 		e->height / 30 * 7, 0xFFFFFF, "CEL-SHADING : C");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 8, 0xFFFFFF, "RANDOM PERLIN : M");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 9, 0xFFFFFF, "REMOVE AMBIENT : I");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 10, 0xFFFFFF, "ADD RECURSION : U");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 11, 0xFFFFFF, "STRECH TEXTURE : '=', '/'");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 12, 0xFFFFFF, "ROTATE TEXTURE : '-' / '+'");
-	mlx_string_put(e->mlx.mlx_ptr, e->mlx.win_ptr, e->height / 50,
-		e->height / 30 * 13, 0xFFFFFF, "FILTER : 0, 1, 2, 3, 4...");
+	print_help2(e);
 	print_help_mouvement(e);
 }
 
