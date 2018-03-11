@@ -11,7 +11,7 @@ with :
 
  - Commands -
 
- Mouvement :
+ Mouvement : 
  	- Translate : W, A, S, D
  	- Rotate : UP, LEFT, DOWN, RIGHT
  	- Lift : Q, E
