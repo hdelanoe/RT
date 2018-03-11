@@ -7,8 +7,7 @@ with :
 	- import 3D object
 	- Save scene file, screenshot
 	- texturing, perturbation
-	- Stereoscopy, ambient, occlusion, cel-shading, filter
-
+	- Stereoscopy, ambient, occlusion, cel-shading, filterq
 
  - Commands -
 
