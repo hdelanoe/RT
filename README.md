@@ -61,6 +61,8 @@ Check in the scenes/basic directory for the complete format of all objects.
 
 Here is a preview of the program :
 
+![image 3](https://user-images.githubusercontent.com/27351943/37253487-96c84d94-2532-11e8-8616-81b5ee1ac6e3.png)
+
 ![screenshot_2202018_11582](https://user-images.githubusercontent.com/27351943/37253276-ee2d4470-252f-11e8-95cb-3bef9bbbad61.png)
 
 
