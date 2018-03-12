@@ -1,64 +1,76 @@
-Welcome to 1/4 de cerle's RT !
-
-with :
-	- Refraction, reflection, transparency
-	- Anti-Aliasing, pixelisation
-	- Live edition, copy, add, delete object
-	- import 3D object
-	- Save scene file, screenshot
-	- texturing, perturbation
-	- Stereoscopy, ambient, occlusion, cel-shading, filterq
-
- - Commands -
-
- Mouvement : 
- 	- Translate : W, A, S, D
- 	- Rotate : UP, LEFT, DOWN, RIGHT
- 	- Lift : Q, E
- 	- Pivot : Z, X
-
- Render mode : 
- 	- PIXELISATION : SPACE
- 	- EDIT MODE : ENTER
- 	- ANTI-ALIASING : R
- 	- STEREOSCOPIC : P
- 	- AMBIENT OCCLUSION : T
- 	- CEL-SHADING : C
- 	- FILTER : 0, 1, 2, 3, 4...
-
- Save / import :
- 	- SAVE IMAGE : O
- 	- SAVE SCENE : J
- 	- LOAD OBJECT : K
- 	- LOAD SCENE : L
- 	- COPY / PASTE OBJECT : LMB
- 	- DELETE OBJECT: RMB
-
- Others :
- 	- RANDOM PERLIN : M
- 	- REMOVE AMBIENT : I
- 	- ADD RECURSION : U
- 	- STRECH TEXTURE : =, /
- 	- ROTATE TEXTURE : -, +
+<h1>Raytracing</h1><br />
+<br />
+Welcome to 1/4 de cerle's RT !<br />
 
 
+usage : `make`<br />
+`./rt scenes/[your map]`<br />
 
- - Files formats - 
+<h2>Introducing to :</h2><br />
+<ul>
+<li>Refraction, reflection, transparency</li><br />
+<li>Anti-Aliasing, pixelisation</li><br />
+<li>Live edition, copy, add, delete object, import 3D object</li><br />
+<li>Save scene file, screenshot</li><br />
+<li>texturing, perturbation</li><br />
+<li>Stereoscopy, ambient, occlusion, cel-shading, filterq</li><br />
+</ul>
+ - Commands -<br />
 
- 3D objects must be set in .obj format,
- Textures must be set on .xpm format,
- Description scene must be set on .rt format.
+ <h2>Mouvement :</h2> <br />
+ <ul>
+  <li>Translate : W, A, S, D</li><br />
+<li>Rotate : UP, LEFT, DOWN, RIGHT</li><br />
+<li> Lift : Q, E</li><br />
+<li>Pivot : Z, X</li><br />
+</ul>
 
- - Input file format - 
+ <h2>Render mode : </h2><br />
+ <ul>
+<li>PIXELISATION : SPACE</li><br />
+<li>EDIT MODE : ENTER</li><br />
+<li>ANTI-ALIASING : R</li><br />
+<li>STEREOSCOPIC : P</li><br />
+<li>AMBIENT OCCLUSION : T</li><br />
+<li>CEL-SHADING : C</li><br />
+<li>FILTER : 0, 1, 2, 3, 4...</li><br />
+</ul>
+ <h2>Save / import :</h2><br />
+ <ul>
+<li>SAVE IMAGE : O</li><br />
+<li>SAVE SCENE : J</li><br />
+<li>LOAD OBJECT : K</li><br />
+<li>LOAD SCENE : L</li><br />
+<li>COPY / PASTE OBJECT : LMB</li><br />
+<li>DELETE OBJECT: RMB</li><br />
+ </ul>
 
-The scene and all the object are describe between '{' and '}'.
-The objects set by our RT are : "plane", "sphere", "cone", "cylinder",
-"disk", "triangle", "quad", "pyramide", "cube", "glass", "paraboloid".
-For the lights it's : "light", "area_light".
+<h3> Others :</h3><br />
+<ul>
+<li>RANDOM PERLIN : M</li><br />
+<li>REMOVE AMBIENT : I</li><br />
+<li>ADD RECURSION : U</li><br />
+<li>STRECH TEXTURE : =, /</li><br />
+<li>ROTATE TEXTURE : -, +</li><br />
+</ul>
+<h2> Files formats </h2> <br />
 
-Check in the scenes/basic directory for the complete format of all objects.	
+ 3D objects must be set in .obj format,<br />
+ Textures must be set on .xpm format,<br />
+ Description scene must be set on .rt format.<br />
 
-Here is a preview of the program :
+ <h2>Input file format</h2><br />
+
+The scene and all the object are describe between '{' and '}'.<br />
+The objects set by our RT are : "plane", "sphere", "cone", "cylinder",<br />
+"disk", "triangle", "quad", "pyramide", "cube", "glass", "paraboloid".<br />
+For the lights it's : "light", "area_light".<br />
+
+Check in the scenes/basic directory for the complete format of all objects.<br />
+
+<h2>Here is a preview of the program :</h2><br />
+
+![screenshot_392018_171118](https://user-images.githubusercontent.com/27351943/37294364-f202237c-2615-11e8-868e-4aa78b797bec.png)
 
 ![image 3](https://user-images.githubusercontent.com/27351943/37253487-96c84d94-2532-11e8-8616-81b5ee1ac6e3.png)
 
